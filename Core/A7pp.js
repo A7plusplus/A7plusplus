@@ -361,6 +361,10 @@ function linesChanged()
         lista.appendChild(charNumText);
         lista.appendChild(rs);
         lista.appendChild(rsText);
+    
+    // Rend visible le tableau des séquences maintenant que le chargement est terminé
+    lista.children[0].style.setProperty('visibility', 'visible');
+    lista.children[1].style.setProperty('visibility', 'visible');
     }
 }
 
