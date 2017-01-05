@@ -1,0 +1,864 @@
+
+/* Titre des colonnes */
+.NewsTitle > div {
+    text-align: center;
+}
+
+/* Cases du tableau -> sauf textBox cliquée */
+table[cellpadding="1"] td:not(.textClicked) {
+    vertical-align: middle;
+}
+
+/* Petit indicateur -> ligne originalText (au survol) */
+.originalText:hover .timeInitial:after {
+    border-width: 1px 2px;
+    padding: .5px 5px .5px 4px;
+    box-shadow: 0 0 4px 1px #888888;
+}
+
+/* TextBox -> dans une ligne originalText et cliquée  */
+.originalText .textClicked {
+    background-color: #ffc4ff;
+    box-shadow: -1.35px 0 0 0 #ffc4ff;
+}
+
+/* TimeBox -> dans une ligne originalText et non cliquée  */
+.originalText .timeInitial {
+    cursor: pointer;
+}
+
+/* TimeBox ou textBox -> non cliquée et dans une ligne originalText (au survol) */
+.originalText .timeInitial:hover,
+.originalText .cursorEdit:hover {
+    box-shadow: 0 0 20px 1px #ff9999 inset, 0 0 2px 1.4px #ff7777;
+}
+
+/* Liens du tableau -> ligne originalText et lockedText */
+.originalText a,
+.lockedText a {
+    font-weight: 600;
+}
+
+/* Lien -> colonne séquence dans les lignes originalText et lockedText */
+.originalText a[href^="/user/"],
+.lockedText a[href^="/user/"] {
+    font-weight: unset;
+}
+
+/* Cases du tableau -> lignes lockedText */
+/* Spans du compteur -> lignes lockedText */
+.lockedText td,
+.lockedText .counter span {
+    color: white;
+}
+
+/* Cases du tableau -> lignes lockedText (au survol) */
+.lockedText:hover td {
+    background-color: #ffbbbb;
+    color: black;
+    cursor: not-allowed;
+}
+
+/* Case langage secondaire -> lockedText */
+.lockedText td[bgcolor="white"] {
+    background-color: red;
+}
+
+/* Cases du tableau -> lockedText (au survol) */
+.lockedText:hover td {
+    background-color: #ffbbbb;
+}
+
+/* Petit indicateur -> ligne lockedText */
+.lockedText .lockedTime:after {
+    border-color: #000000;
+    box-shadow: 0 0 5px 2px #ffffff;
+}
+
+/* Petit indicateur -> ligne lockedText (au survol) */
+.lockedText:hover .lockedTime:after {
+    border-color: #222222;
+    box-shadow: none;
+}
+
+/* Lignes -> quotedText */
+.quotedText {
+    background-color: #e5e5e5;
+    color: #444444;
+}
+
+/* Lignes -> quotedText (au survol) */
+.quotedText:hover {
+    color: #000000;
+}
+
+/* Petit indicateur -> ligne quotedText */
+.quotedText .timeInitial:after {
+    border-color: #aaaaaa;
+    box-shadow: none;
+}
+
+/* Petit indicateur -> ligne quotedText (au survol) */
+.quotedText:hover .timeInitial:after {
+    border-color: #222222;
+}
+
+/* Première ligne du tableau -> nom des colonnes */
+#trseqtop td {
+    padding-bottom: 0;
+    padding-top: 1em;
+}
+
+tr[id^="trseq"] {
+    height: 30px;
+}
+
+tr[id^="trseq"] td {
+    height: 2em;
+}
+
+tr[id^="trseq"] a {
+    color: #444444;
+    text-decoration: none;
+}
+
+tr[id^="trseq"].lockedText a {
+    color: #ffffff;
+}
+
+tr[id^="trseq"]:hover a {
+    color: blue;
+    text-decoration: underline;
+}
+
+/* Not 0 for Opera support */
+tr[id^="trseq"]  td:nth-of-type(-n+5){
+    width: .1px;
+    padding: 0 8px;
+}
+
+tr[id^="trseq"] td[id^="lock"]{
+    padding: 0;
+    text-align: center;
+}
+
+.timeWithoutIndicator,
+.timeWithIndicator {
+    padding: 0 6px;
+    text-align: right;
+    white-space: nowrap;
+    width: 15rem;
+    max-width: 15rem;
+    min-width: 15rem;
+}
+
+tr[id^="trseq"] td[bgcolor="white"],
+tr[id^="trseq"] td:last-of-type:not(.textClicked) {
+    padding-left: 2px;
+    padding-bottom: 3px;
+}
+
+tr[id^="trseq"] td.counter {
+    padding-bottom: 3px;
+}
+
+tr[id^="trseq"] td[bgcolor="white"] {
+    padding-right: 8px;
+    white-space: nowrap;
+    width: 170px;
+}
+
+tr[id^="trseq"] td:last-child {
+    white-space: nowrap;
+}
+
+tr[id^="trseq"] td:last-child:after {
+    content: " ";
+    white-space: pre;
+}
+
+
+/* ========================= TextBox ========================= */
+
+.textClicked textarea {
+    animation-direction: alternate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    display: block;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 16.9px;
+    margin-bottom: 5px;
+    margin-left: -1px;
+    overflow: hidden;
+    resize: none;
+}
+
+ /* Compatibilité autres navigateurs */
+.textClicked textarea {
+    -webkit-animation-direction: alternate;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+}
+
+textarea[borderglowing="bad"] {
+    animation-name: borderGlowingBad;
+    outline: none;
+}
+
+ /* Compatibilité autres navigateurs */
+textarea[borderglowing="bad"] {
+    -webkit-animation-name: borderGlowingBad;
+}
+
+textarea[borderglowing="pass"] {
+    animation-name: borderGlowingPass;
+    outline: none;
+}
+
+ /* Compatibilité autres navigateurs */
+textarea[borderglowing="pass"] {
+    -webkit-animation-name: borderGlowingPass;
+}
+
+@keyframes borderGlowingBad {
+    0%   { box-shadow: unset; }
+    100% { box-shadow: 0 0 6px 2px red; }
+}
+
+ /* Compatibilité autres navigateurs */
+@-webkit-keyframes borderGlowingBad {
+    from {box-shadow: unset;}
+    to   { box-shadow: 0 0 6px 1px red; }
+}
+
+@keyframes borderGlowingPass {
+    0%   { box-shadow: unset; }
+    100% { box-shadow: 0 0 6px 2px #ee8800; }
+}
+
+ /* Compatibilité autres navigateurs */
+@-webkit-keyframes borderGlowingPass {
+    from { box-shadow: unset; }
+    to   { box-shadow: 0 0 6px 1px #ee8800; }
+}
+
+.textClicked span:not(.ajaxError) {
+    padding: 2px 5px 5px 2px;
+}
+
+.ajaxError {
+    animation-direction: alternate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: borderGlowingBad;
+    display: inline-block;
+    outline: medium none;
+    padding: 0;
+    width: 100%;
+}
+
+.ajaxError > textarea {
+    margin-top: 13px;
+}
+
+.ajaxError a7button:last-of-type {
+    animation-direction: alternate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: borderGlowingBad;
+    border-radius: 1rem;
+    outline: medium none;
+}
+
+
+/* ========================= Compteur de caractères ========================= */
+
+.counter,
+.openedCounter {
+    max-width: 30px;
+    min-width: 30px;
+    text-align: right;
+    width: 30px;
+}
+
+.counter div,
+.openedCounter span {
+    margin-right: 2px;
+}
+
+.openedCounter {
+    border-top: 15px solid #ffc4ff;
+    padding-top: 1px;
+    background-color: #fce8fc;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 16.9px;
+    vertical-align: top !important;
+    border-bottom: 30px solid #ffc4ff;
+}
+
+/* Spans du compteur -> classe green et lignes lockedText (au survol) */
+.ccc_green,
+.lockedText:hover span.ccc_green {
+    color: green;
+}
+
+/* Spans du compteur -> classe orange et lignes lockedText (au survol) */
+.ccc_orange,
+.lockedText:hover span.ccc_orange {
+    color: #ee8800;
+}
+
+/* Spans du compteur -> classe red et lignes lockedText (au survol) */
+.ccc_red,
+.lockedText:hover span.ccc_red {
+    color: red;
+}
+
+
+/* ========================= TimeBox ========================= */
+
+/* Parent flex */
+.timeClicked > span {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: .5rem 0 .5rem 0;
+}
+
+/* Mets l'indicateur à la fin */
+.timeClicked > span > :nth-child(8) {
+    order: 2;
+    width: calc(80% - 5px);
+    margin-left: calc(10% + 5px);
+}
+
+.timeClicked input {
+    margin-bottom: .1rem;
+    width: calc(50% - 5px);
+}
+
+.timeClicked a7button {
+    margin: 0;
+}
+
+.timeClicked a7button:first-of-type {
+  margin-left: 6px;
+}
+
+.timeClicked t {
+    width: 10%;
+    margin-right: 5px;
+    text-align: right;
+    padding-top: .1rem;
+}
+
+.timeClicked div {
+    width: calc(30% - 6px);
+    text-align: center;
+    padding-top: .1rem;
+    margin-left: 4px;
+    margin-bottom: .1rem;
+}
+
+.timeWithoutIndicator:after {
+    border-radius: 5px;
+    border: 1px solid #222222;
+    box-shadow: 0 0 3px 1px #888888;
+    content: "";
+    margin-left: 8px;
+    padding: .5px 6px .5px 5px;
+    font-size: 10px;
+}
+
+.quotedTime:after {
+    border-color: #aaaaaa;
+    box-shadow: none;
+}
+
+.timeWithIndicator {
+    text-align: center;
+}
+
+
+.timeWithIndicator > div {
+    margin-top: 5%;
+}
+
+.timeWithIndicator > div > div, .timeWithIndicator > span > div {
+    background-color: rgba(255, 255, 255, .65);
+    border: 1px solid #d3d3d3;
+    box-shadow: 0 0 5px .1px #d3d3d3;
+}
+
+.timeWithIndicator > div > div {
+    margin: auto;
+    margin-top: .3rem;
+    width: 30%;
+}
+
+.timeWithIndicator input {
+    border: 1px solid #d3d3d3;
+    font-family: monospace;
+    font-size: 13px;
+    height: 16px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.timeWithIndicator input:last-of-type {
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.timeWithIndicator > div > input:last-of-type {
+    cursor: pointer;
+}
+
+
+/* =================== Indicateurs de couleur =================== */
+
+.empty input:last-of-type,
+.empty::after {
+    background-color: #ffffff;
+}
+
+.undef input:last-of-type,
+.undef::after {
+    background-color: #cccccc;
+}
+
+.tslow input:last-of-type,
+.tslow::after {
+    background-color: #9999ff;
+}
+
+.aslow input:last-of-type,
+.aslow::after {
+    background-color: #99ccff;
+}
+
+.bslow input:last-of-type,
+.bslow::after {
+    background-color: #99ffff;
+}
+
+.sgood input:last-of-type,
+.sgood::after {
+    background-color: #99ffcc;
+}
+
+.perfe input:last-of-type,
+.perfe::after {
+    background-color: #99ff99;
+}
+
+.fgood input:last-of-type,
+.fgood::after {
+    background-color: #ccff99;
+}
+
+.bfast input:last-of-type,
+.bfast::after {
+    background-color: #ffff99;
+}
+
+.afast input:last-of-type,
+.afast::after {
+    background-color: #ffcc99;
+}
+
+.tfast input:last-of-type,
+.tfast::after {
+    background-color: #ff9999;
+}
+
+
+/* ============================== Boutons ============================== */
+
+input[type="button"]:hover,
+input[type="submit"]:hover {
+    color: lime;
+    cursor: pointer;
+}
+
+a7button {
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: inline-block;
+    border-radius: 15px;
+}
+
+a7button:hover {
+    background-color: rgba(255, 255, 255, .5);
+    cursor: pointer;
+}
+
+.textClicked a7button {
+    height: 22px;
+    margin-left: 3px;
+    width: 22px;
+}
+
+.textClicked > span > span > a7button:nth-child(1) {
+    margin-left: 0;
+}
+
+.textClicked separator {
+    background-color: #5d5d5d;
+    display: inline-block;
+    height: 22px;
+    margin-left: 6px;
+    margin-right: 3px;
+    width: 1px;
+}
+
+.timeClicked a7button {
+    height: 20px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+    vertical-align: middle;
+    width: 20px;
+}
+
+/* Gras */
+.textClicked a7button:nth-of-type(1) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABM0lEQVR42mNgGAWjYBSMglEwCoY8iI2N/U8C/grE16KioqYEBwebDGaHouDIyMhOoBGMg96hUJw9IA6Njo5+B8QP0DE02v9jUf/a2NiYle4OBUZnAS61oaGhWjExMUfR9QDTrNmgcijUsZZY9AQMOocCQ08VS4i6DzqHAuUr0NLoHyAtNhCZaRmQTkDHQPFiIF6Hrh6YZucNheJpra+vL9egdigwJL8A02YOMHMxD4kCH+jgNXSpnUhIoxlAejooJNH1REREJA26XA9UowPEv9A8d3zQORQEgKG6F82hPwelQ4EO24aubzBWoZyghgtaiH4YVA4FZhoFYLRvwpIBNw6mZt4rXEUUsDx1GfTlKNCRs4dCgT99sNZMn4DJ4DyocxceHm462jUeBaNgFIyCUTA8AACv4m8A1h8SRQAAAABJRU5ErkJggg==");
+}
+
+/* Italique */
+.textClicked a7button:nth-of-type(2) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABBElEQVR42u2XrQrCYBSGByKIWYyC17AuH4Jh4bNtsD8xGAbDWxCjwYsQLGI1eAtaDV6DFjWJGtQjmA5H695wHvhYffaen+1zHEVRFEVRiiRN0zyO4xM9X79OkiRHGGGSGQiSD3oJDy3ZNhclyTlcC4RhOBJK3oUTJakNE71Za6tQkiRUozI/WZpruDSjKOrxslMrDBFX1EKY+CaUpO/7JZI6M8k9XJpBELSENKeI0z4R1pKBE6Vp37Elf3Fdt4zWnw2h7EvENDNBtI+4llas7J+lX4eSNMZUSOzK0twilt0Tpn2MKDoTPpsduDTp3IX/zwxJ8vDv2vG9luR6SVMURVGUQnkDrhz12etuFXEAAAAASUVORK5CYII=");
+}
+
+/* Enlever les tags */
+.textClicked a7button:nth-of-type(3) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABGklEQVR42u2WPQrCQBCF0woqFjaeJSdIEUgTyC+5gqWlYGPpEbydKVKkUCx1nhhYAruJ+TEE3geL7O7M26ebGWNZhBBCCCENeJ63SZLkGEXRRV3HHOvYn9Sg4zhrGInjuEzT9CWfV3Uf8+96iTjE/9Wg7/vLMAwPYqKAkWrojCqjQB7yJzH4g9FxDYvgQoT3cnCuOfhzvUEQpGoe5tVjocnJoQv93iYhJKI33WHy7N1NBVMVGuJ0GtDHOb2MNhg8u667baODOMSbDA9t9PltO7sueshDPnRotDYeXa4eeaNcfZtikl/oZCom7I9eTGp7MhlGG5KYrPYlM1N7qgwO0p5m1fBn9xdax7bt1S8vJYjnax4hhBBCCFF4A0XDw8hNeryDAAAAAElFTkSuQmCC");
+}
+
+/* Restaurer */
+.textClicked a7button:nth-of-type(4),
+.timeClicked a7button:nth-of-type(1) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABd0lEQVR42mNgGAWjYBSMglEwCkAgJiamA480U2hoqD1QTR8Qn4iOjn4XGxv7H0j/A+IXQLG9QH4NUI0KzR0KshjdsQ4ODixAh2QA5e6A5InBQDPW09TBSBaBHRsREWEFdORVYh2Ihr8DcRpNHQrFu4GO/EOmI/+je5qWDqUajoyMLBgSDgXGzO/w8HD9gXDoK2CUzgTS2cDQCgDSoUDcCHTQITx6DtDTofeBOMLY2JgVTxGnDnTwNmz6gaFqSheHgspQEsrkInT9UVFRE+gW9aTkYmCyaEPTf46uaZRYx4KSCDS5wDLVN6o4FGjQAmIxMBrNyEkCg7b9AHScDlKI/hm0DgXW+cxIIXpnULfKkNL2ksEcotJI5WjQoHUosIgKhjr0Eb6KYjBE+wpowyRmMEe7HNCRv4B486DORMDiaDHQkTeBZa7goHUk0HHuwFx+OygoSGbQOhLkOGBIrgViscGcLnmAIRk2qHP4KBgFo2AUjIJRQBIAANwr7Dv/e3ltAAAAAElFTkSuQmCC");
+}
+
+/* Annuler */
+.textClicked a7button:nth-of-type(5),
+.timeClicked a7button:nth-of-type(2) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABLUlEQVR42u3XMQ6CMBQG4H+oHbyLriY66QGcTbyhC4MxiiB3cnFAjfKixEYptEhtTd6fEKa2X3mlTQEOh8PhcN6zBvoHyNUWcti2jxRymUEk1JczZAqRZZC34n3coDdqgyzaXp99ZJ1jVWT52GJVpNJHt1gqlTqALbYK+epDRp1B6weqx8aQi7ZtnWD3wOSzEpgX1ch/hnzDXqoGLkCnGGLmHWkCKLHekabYpon8dPOvxwaCtMd6RJpjA0A+9kn6eWhdaqE5TSZwZADYGBibIT1iaR+k/VAP0k1A5HSkBoLEvG5J0DFMJ5x3pMn6dYq1QXrDJpADW2SZHcRU17ZzLN2TNMizyZ/cUI3E9VXE6mtUYZ3fm9qWTMU6QapYKtU36+qBlZEzJIfD4XD+O3dpMRQZWPX4rgAAAABJRU5ErkJggg==");
+}
+
+/* Sauver */
+.textClicked a7button:nth-of-type(6),
+.timeClicked a7button:nth-of-type(3) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABWElEQVR42u3Wr0sFQRAH8K8IBkEsCqIviNy7u2ITBKNgtQmCxfqKNpvw0Pdj9/AvsBusVsFiMohBo0lsJhEMguiMsscr3j7kYObBfGHawn6Y290bwGKxWCwWyyhlrofZ1OEmO8a6WuSSw3TucZsX+EoLvKvEMpI7ychQjG16bKhGDtRH0sOmOHLmAFMVyN/OOlyLIufbmMw8rqqQVPfccfVIfgXq23UL43kHa+qRWYEzOkefeRe70fVtTBDiUgQ5uAk9J3tVSFp/IY4MRZ/18F9Ih4d6kZS/kKESjxNaNjYskh73xwWPRu23tllgP/IJuUOnjKTzey6CLLvq0IphCfEkigxJ+tj5ufGx7koiQ9IutvmfrBpZdpYGh2GxhHwWQZYXjEYyHs1iyEYfifg0xMMu3fY31ciQxSOsEupVNbIchjtYIdyLamQIHYFlQt6pRlosFotlNPINrYZ+dbbgvtcAAAAASUVORK5CYII=");
+}
+
+
+/* ========================= Commentaires ========================= */
+
+#commentsSection {
+    transition: bottom .5s ease .4s;
+    border-radius: 15px 15px 0 0;
+    box-sizing: padding-box;
+    background-color: black;
+    min-height: 170px;
+    position: fixed;
+    padding: 0 10px;
+    bottom: -60vh;
+    height: 60%;
+    height: 60vh;
+    left: 5%;
+    left: 5vw;
+    right: 5%;
+    right: 5vw;
+}
+
+#commentsSection:hover, #commentsSection.comment-pined, #commentsSection.resizing {
+    bottom: 0 !important;
+}
+
+#commentsSection > div:nth-of-type(1) {
+    width: 100%;
+    height: 5px;
+    position: relative;
+    cursor: row-resize;
+    margin-top: -2.5px;
+    transition: all .2s ease .1s;
+    z-index: 1;
+}
+
+#commentsSection > div:nth-of-type(1):hover, #commentsSection.resizing  > div:nth-of-type(1) {
+    border-radius: 2.5px;
+    background-color: #555;
+    box-shadow: 0 1px 1px 0 white, 0 -1px 1px 0 white;
+}
+
+#commentsSection > div:nth-of-type(2) {
+    width: 200px;
+    color: white;
+    display: flex;
+    cursor: pointer;
+    font-weight: 900;
+    min-height: 45px;
+    max-height: 45px;
+    margin-top: -45px;
+    padding-top: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: black;
+    border-radius: 15px 15px 0 0;
+    transition-delay: .4s;
+    transition-duration: .5s;
+    transition-timing-function: ease;
+    transition-property: margin-top, padding-top, min-height, max-height;
+}
+
+#commentsSection:hover > div:nth-of-type(2), #commentsSection.comment-pined > div:nth-of-type(2), #commentsSection.resizing > div:nth-of-type(2) {
+    padding-top: 12px;
+    margin-top: -36px;
+    min-height: 36px;
+    max-height: 36px;
+}
+
+#commentsSection > div:nth-of-type(3) {
+    display: flex;
+    min-height: calc(100% - 11px);
+    max-height: calc(100% - 11px);
+    flex-direction: column;
+}
+
+#commentsSection > div:nth-child(3) > center {
+    min-height: 50px;
+}
+
+#commentsSection > div:nth-of-type(2) > p {
+    display: inline-block;
+    position: relative;
+    margin: 0 10px;
+}
+
+#commentsSection > div:nth-of-type(2) > a7button {
+    margin: 0;
+    opacity: 0;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: unset;
+}
+
+#commentsSection > div:nth-of-type(2) > p > span {
+    top: -4px;
+    width: 17px;
+    color: white;
+    right: -16px;
+    height: 12px;
+    position: absolute;
+    font-size: 10px;
+    text-align: center;
+    line-height: 10px;
+    border-radius: 4px;
+    background-color: rgba(255, 0, 0, .8);
+}
+
+#commentsSection > div:nth-of-type(2) > p > span:empty {
+    display: none;
+}
+
+/* Pin normal */
+#commentsSection > div:nth-of-type(2) > a7button:first-of-type {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAADEAAAAxAHPilhMAAABMElEQVQ4y63VvUoDQRSG4W8hahP8ATvFykKxUEQEQey8ASGWNpYWYmNjmoCQG7CwsTVehKKl4A1YiSI2IiaiAUHktfAUUXdmnZ35YGF2Z8/DLJyZFaCIq+6aUyTcAZqp4X7gje80UsFV4JSfqcfCo8AV+dktC08A1/izEwpPA/ce8BN4t/FWHjACZL+eLQJPBSvdtHf7gOGK/mZQ0pmkG0kXktqSDiVV5c6BpCMbf0jquD57CnjkfzkHKiHtNm8bwJdb65LgDbIMdB1oF5iN2dItB7zuqytCtw1pAc89aLNoQb7JmvXmnt0vAG2Da2XhFeAV2Mjp5xdgvww8A9wBq46iJeA4FB4DLoG5gsLJEHgIOLGDJvYHoN5Du2HnhFLBGbAGDKRCAWXAuKQHSShhvgC5moz9+oKS0AAAAABJRU5ErkJggg==');
+}
+
+/* Pin activé */
+#commentsSection.comment-pined > div:nth-of-type(2) > a7button:first-of-type {
+    opacity: .5;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAADEAAAAxAHPilhMAAABrUlEQVQ4y63VO2vUURDG4Wc2EgUDIaJVgoIIKhaKBEs7L0VAEBQtg8nuxgtCELUIioUXLLQR3b+FhSKIjWChkEKCWohIwC8gaC1ELFKoOBYGTcjekuzAac4758e5vDNHZlr2qJhopJWsJNI5lbheT1o++Gh0YxUuqsaVzoBPRY8+L7B2bueXVGNifkpk5tKglViPlxiso15Q5M2lgyuxEZPY2iRrXJG32wePxnYlkxhokPEbP7Eapxff8cnoExEL5sZij5I3TaCEsiLXoNsPjxfveCQ26fIMnzAlzQg19DQ5zx1Fnmn9eJXYhtfY0IaXp/Tb53L+as8VldiNV+htgv2MQUV+bd/HRU5jCLMNMmaFQ/WgrQukyLd43uAKhtXyY6OlzcHlOItjeIKZecoN9/Nps6WlJsVwRLiFCUUeF/bj25w63epN64OrsRcPhGFFXgW1/KDkAL5j59LB5dghPRIOq+XDBdq9fC8clDa3tuH8Bl3Vn2XvctSupg3+hC2tPoH/Pq5ELwqcV+QXK4zSv6YdxnUZ6wT0LzgirDOk2zV3c0anIkcM5Fxpd3L8AQvsMbuy4KKtAAAAAElFTkSuQmCC');
+}
+
+/* Roulette normale */
+#commentsSection > div:nth-of-type(2) > a7button:last-of-type {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAMAAABhEH5lAAAAolBMVEVMaXEAAAAAAAAAAAAAAAAAAAAAAAACAgIAAAD29vYAAAAAAAC1tbUUFBQAAADd3d0AAAC8vLywsLDMzMzu7u6pqanOzs5GRkYAAAAAAABXV1egoKAsLCwAAAD09PQ3NzcfHx8AAAAAAAD4+PiQkJD7+/vBwcHV1dUAAAAAAAAAAABlZWXR0dHg4ODl5eXa2tqGhoZ2dnaAgIAKCgrFxcX///+RxQhpAAAANXRSTlMANAMKHl95mZL5KGfWnoPqddrU4fTQ4qxWRbLNpS34qKE/bvrG/NvmTheNtuTs7+jCvL+b3aigkngAAACySURBVHhehdDFzsMwFIRRB2yHmRnK/MO8/6s1ka2qm6pn+a3mXvKVTnUZ1JJxfgoUi0dUFIX97oEkzr3QNERxMwg+RFKDGEiih2MCMo0/wL9LDyx8JbZH8tdafCkyqXyLlBK+wytpLrA5EGviK6MgC2OGY5OVphEhiNEN4zp9cFs5tALuPbOnJq0rS1xjR8CcObvbxcnlibq92WLR+WeFSBrt0+zq102pvj+FeV5xJB88AQLsE2Pt9J9zAAAAAElFTkSuQmCC');
+    animation-duration: .75s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+/* Roulette en actualisation */
+#commentsSection > div:nth-of-type(2) > a7button[loading="true"]:last-of-type {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAB9ElEQVQ4y6VSMYsTYRB9s/k0GyNywbgkAZt0CVilshMsTH7BwV2hIIqwFieiNnYXFe8QPEOagHdVqhSKsARswtZ29oGAcG620APdrBu/nbHZhCOX3BU++OAr3rw382ZIRLAMlmVdDMPwPQBkMpm7vu//XkoUkaVPKdUEIABEKdVcyZsJVSqV61EUbRPRqFgsPhKR3DGTHIALjuM8E5GSUqpVr9e/ApgLUBRF2wBuigh83/+STqebURStAUAcxy8Gg0EDwAYA1loDwD0AMGYmRDRK3ISZx0EQfNdab2qtN0XkcDKZ/ADwh4gMIjqcdUezEInILJfLd4jIGw6Hn0SEF+Iix3FuAMgXCoWPtVrtLwBQo9FIa623iGgtn8/vdLvdnzgF/X7/EjPfJ6JfQRAcKK312ziObxPRufF4nAPw4DQBZn4KYF1EdDabLRj4Tyil1BaAkYisBUGwe1aBYRg7zHw0G2EeYq/XO++67joR+a1W63NyRGeGOB/Bdd1XIrLHzAe2bd9adE6K3wF46Xne8/kIxzhXRSQGkBGRK51OJ6+1fgIAYRjuVqvVy8xsJustnRBIpVKvk+83EfnAzA9FZAMATNM8sixrz/O8awBKSqnWiUNaRLvdtonocXKdb2zbbi/dwqq0p9PpvmmaJQCIomh/Fe8fWXsgarkiLsYAAAAASUVORK5CYII=);
+    pointer-events: none;
+    background-size: 16px 16px;
+    background-position: center;
+    filter: brightness(200%);
+    animation-name: spinningDotsRefreshingComments;
+    opacity: 1 !important;
+}
+
+/* Compatibilité autres navigateurs */
+#commentsSection > div:nth-of-type(2) > a7button[loading="true"]:last-of-type {
+    -webkit-animation-name: spinningDotsRefreshingComments;
+}
+
+@keyframes spinningDotsRefreshingComments {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Compatibilité autres navigateurs */
+@-webkit-keyframes spinningDotsRefreshingComments {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+#commentsSection:hover > div:nth-of-type(2) > a7button, #commentsSection.comment-pined > div:nth-of-type(2) > a7button, #commentsSection.resizing > div:nth-of-type(2) > a7button {
+    opacity: .72;
+}
+
+#commentsSection > div:nth-of-type(2) > a7button:hover, #commentsSection.comment-pined > div:nth-of-type(2) > a7button:hover {
+    opacity: 1;
+}
+
+#commentsSection table {
+    background-color: white;
+    border-radius: 3px 0 0;
+    overflow-y: auto;
+    display: block;
+    margin-top: 7px;
+    height: 100%;
+    flex: 1;
+}
+
+#commentsSection table tr {
+    border-bottom: 1px solid #DADADA;
+    display: block;
+}
+
+#commentsSection table tr:first-of-type td:first-of-type {
+    margin-top: 15px;
+}
+
+#commentsSection table tr > td {
+    display: block;
+    margin-left: 15px;
+}
+
+#commentsSection table tr > td:nth-of-type(1) {
+    width: auto;
+    margin-top: 6px;
+    padding: 3px 12px;
+    border-radius: 3px;
+    display: inline-block;
+    box-shadow: 0 0 4px .5px #888;
+}
+
+#commentsSection table font[color="#FFD700"] {
+    color: orange;
+}
+
+#commentsSection table tr > td:nth-of-type(2) {
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: 500;
+    padding-left: 8px;
+    margin-bottom: 6px;
+    white-space: pre-wrap;
+    width: calc(100% - 28px);
+}
+
+#commentsSection center {
+    display: flex;
+    margin-top: 5px;
+}
+
+#commentsSection center textarea {
+    flex: 20;
+    resize: none;
+    padding: 3px;
+    font-size: 12px;
+}
+
+#commentsSection center textarea:focus::-moz-placeholder {
+    color: transparent;
+}
+
+/* Compatibilité autres navigateurs */
+#commentsSection center textarea:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+#commentsSection center a7button {
+    flex: 1;
+    opacity: .72;
+    min-width: 54px;
+    background-size: auto;
+    margin: 10px 20px 10px 25px;
+    background-color: rgba(255, 255, 255, .05);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAARCAYAAADQWvz5AAAACXBIWXMAAACdAAAAnQGPcuduAAAA1klEQVQ4y63UvS5EURSG4e9MpppMNSFqOpG4Co07UCm09Aq92gWISFQuY0KjVBE/pUJQiopHc8SEw5nDfpPVvll7rfXtCmdJhkmOkuwnecxfwIFPHrCHRaRLBau+84JjrHQR9XClmTeMsY5+myjY1c4FtjH6TbSMV9NxVwsHTaLgRDeusfnx5EnRBs5xi3s8Tyk8xXyFny5jkGQhyVKSuSSzDTWTZJRkXKyj/8zoBltfZ9R1azsYTm6tX89jLUmvJU2XSQ7rPD41Za3YZRfLWpH0V6X+o3c3xUrXeVFAzwAAAABJRU5ErkJggg==");
+}
+
+#commentsSection center a7button:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, .5);
+}
+
+#lista {
+    display: block;
+    margin-bottom: calc(60vh - 10px);
+}
+
+
+/* ========================= État d'avancement ========================= */
+
+#spanState {
+    float: left;
+    height: 17px;
+    font-size: 13px;
+    padding: 2px 10px 3px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 1px 1px grey, 0 0 1px 1px lightgrey inset;
+}
+
+#spanState:hover {
+    box-shadow: 0 0 1px 1px #777, 0 0 3px 1px #999 inset;
+}
+
+.stateRefreshing {
+    background-image: url(/images/loader.gif);
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    color: transparent;
+    background-position: center;
+}
+
+/* ===================== Informations de l'extension ===================== */
+
+div.tabelborder {
+    width: calc(100% - 10px);
+}
+
+#A7Info {
+    float: right;
+    height: 17px;
+    font-size: 13px;
+    border-radius: 10px;
+    padding: 2px 10px 3px;
+    box-shadow: 0 0 1px 1px grey, 0 0 1px 1px lightgrey inset;
+}
+
+/* ===================== Cache le tableau pendant le chargement ===================== */
+
+#lista table {
+	visibility:  hidden;
+}
