@@ -1638,6 +1638,7 @@ function createTextUtils(seqNumber)
 
     // Zone de texte
     textArea.setAttribute('name', 'ttext');
+    textArea.setAttribute('tabIndex', seqNumber);
     textArea.setAttribute('oninput', 'updateRsRatingAndCharCount(' + seqNumber + ');');
 
     // Contrôles
