@@ -138,8 +138,16 @@ else
 // Déclare l'objet page et la liste des lignes
 var page;
 
-// Attend la fin du chargement de la page
-document.addEventListener('DOMContentLoaded', function() { init(); }, false);
+// Si la page est déjà chargée
+if (document.readyState === 'interactive' || document.readyState === 'complete')
+{
+    init();
+}
+// Sinon, attend la fin du chargement de la page
+else
+{
+    document.addEventListener('DOMContentLoaded', function() { init(); }, false);
+}
 
 
 /**
