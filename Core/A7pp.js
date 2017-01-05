@@ -76,7 +76,9 @@ var loc =
         pinComment        : 'Verrouiller la fenêtre de commentaires',
         scrollComments    : 'Cliquer pour afficher les derniers',
         sendComment       : 'Envoyer le commentaire',
-        commTextareaHint  : 'Écrire un commentaire ici.'
+        commTextareaHint  : 'Écrire un commentaire ici.',
+        reloadPageQuestion: 'CHANGEMENT DE LA LANGUE DU SITE :\n\n' +
+                            'Pour recharger la page maintenant avec la nouvelle langue, cliquer sur OK.\nSinon cliquer sur Annuler.'
 
     },
 
@@ -110,7 +112,9 @@ var loc =
         pinComment        : 'Pin chatbox',
         scrollComments    : 'Show latest comments',
         sendComment       : 'Send comment',
-        commTextareaHint  : 'Write a comment here'
+        commTextareaHint  : 'Write a comment here',
+        reloadPageQuestion: 'SITE LANGUAGE CHANGE:\n\n' +
+                            'In order to reload the page now with new language, click on OK.\nElse click on Cancel.'
 
     }
 };
@@ -200,6 +204,9 @@ function init()
     refreshComments();
 
     linesChanged();
+    
+    // Permet le changement de la langue d'affichage du site (bugfix du site)
+    changeAppLang();
 }
 
 
@@ -2371,3 +2378,27 @@ function getStateOfTextCell(textCell)
 
 
 //==================================== END INTERFACES UTILS ======================================//
+
+//==================================== SITE BUGFIX ======================================//
+
+// 
+/**
+* @fn changeAppLang Ajoute la fonction manquante pour permettre le changement de la langue d'affichage du site
+*/
+function changeAppLang()
+{
+    var comboLang = document.getElementById('comboLang');
+
+    comboLang.removeAttribute('onchange');
+    comboLang.addEventListener('change', function(event)
+    {
+        var lang = event.target.value;
+        fetch('/changeapplang.php?applang=' + lang, {credentials: 'include'});
+        if(confirm(loc.reloadPageQuestion))
+        {
+            location.reload();
+        }
+    }, false);
+}
+
+//================================== END SITE BUGFIX ====================================//
