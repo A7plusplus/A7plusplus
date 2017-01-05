@@ -1,13 +1,13 @@
 ﻿/**
 * @file Addic7ed.js
 * @author Accent - HitOrRun - Retrojex - Mmoi
-* @version 1.3.0 stable
+* @version 1.4.0 dev
 * @brief Script de l'extension du site Addic7ed.com
 * @detail Ajoute des fonctionnalités au mode édition du site Addic7ed.com
 */
 
-var MAJOR_VERSION_INFO = 'A7++ 1.3',
-    MINOR_VERSION_INFO = '1.3.0 stable';
+var MAJOR_VERSION_INFO = 'A7++ 1.4',
+    MINOR_VERSION_INFO = '1.4.0 bêta';
 
 //========================================== SETTINGS ============================================//
 
