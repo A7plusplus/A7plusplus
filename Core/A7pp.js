@@ -224,7 +224,7 @@ function init()
 function linesChanged()
 {
     // Attend le chargement des séquences
-    if ($('lista').innerHTML === '<img src="/images/loader.gif">')
+    if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
     {
         setTimeout(linesChanged, 250);
         return;
