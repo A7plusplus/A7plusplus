@@ -434,6 +434,9 @@ function pre_mouseclick(tipo, seqNumber)
 
     // Remet la textArea à la bonne taille
     updateTextAreaSize(textCell.firstElementChild.firstElementChild);
+    
+    // Actualise les compteurs (permet d'afficher l'avertissement en cas de dépassement nombre de lignes / nombre de caractères)
+    updateRsRatingAndCharCount(seqNumber);
 }
 
 
