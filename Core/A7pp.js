@@ -212,7 +212,7 @@ function init()
     refreshComments();
 
     linesChanged();
-    
+
     // Permet le changement de la langue d'affichage du site (bugfix du site)
     changeAppLang();
 }
@@ -376,7 +376,7 @@ function linesChanged()
         lista.appendChild(charNumText);
         lista.appendChild(rs);
         lista.appendChild(rsText);
-    
+
     // Rend visible le tableau des séquences maintenant que le chargement est terminé
     lista.children[0].style.setProperty('visibility', 'visible');
     lista.children[1].style.setProperty('visibility', 'visible');
@@ -442,7 +442,7 @@ function pre_mouseclick(tipo, seqNumber)
 
     // Remet la textArea à la bonne taille
     updateTextAreaSize(textCell.firstElementChild.firstElementChild);
-    
+
     // Actualise les compteurs (permet d'afficher l'avertissement en cas de dépassement nombre de lignes / nombre de caractères)
     updateRsRatingAndCharCount(seqNumber);
 }
@@ -1390,7 +1390,7 @@ function windowMouseMove(e)
     {
         localStorage.setItem('A7ppCommentWindowSize', height / window.innerHeight);
     }
-    
+
 }
 
 
@@ -2393,7 +2393,7 @@ function getStateOfTextCell(textCell)
 
 //==================================== SITE BUGFIX ======================================//
 
-// 
+//
 /**
 * @fn changeAppLang Ajoute la fonction manquante pour permettre le changement de la langue d'affichage du site
 */
