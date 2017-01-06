@@ -267,8 +267,8 @@ function createA7Info(parentDiv)
 
     // Mise en place
     versionInfo.id          = 'A7Info';
-    versionInfo.textContent = MAJOR_VERSION_INFO;
-    versionInfo.title       = MINOR_VERSION_INFO;
+    versionInfo.textContent = A7Settings.MAJOR_VERSION_INFO;
+    versionInfo.title       = A7Settings.MINOR_VERSION_INFO;
 
     return versionInfo;
 }

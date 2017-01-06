@@ -122,7 +122,7 @@ function getRSRatingIndex(counts, duration)
     rsr = totalChars * 1000 / (ms - 500);
 
     for (i = 0; i < 10; i++)
-        if (rsr > RSR[i-1][0] && rsr <= RSR[i][0])
+        if (rsr > A7Settings.RSR[i-1][0] && rsr <= A7Settings.RSR[i][0])
             return i;
 
     return 0;
@@ -147,7 +147,7 @@ function ajax(action, url, params, readyFunction, seqNumber, backupInfos, second
 
     // L'initialise
     xhr.open(action, url, true);
-    xhr.timeout = updateTimeout * 1000;
+    xhr.timeout = A7Settings.updateTimeout * 1000;
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function()

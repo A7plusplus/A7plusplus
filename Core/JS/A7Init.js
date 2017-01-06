@@ -57,7 +57,7 @@ function init()
             tempDisablePopupRemoval: false};
 
     // Démarre l'actualisation de l'avancement (toutes les minutes)
-    page.stateIntervalId = setInterval(updateStateOfTranslation, stateUpdateInterval * 1000);
+    page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
 
     // Change la langue secondaire si possible
     changeLangIfEnglish();

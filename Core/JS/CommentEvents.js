@@ -52,7 +52,7 @@ function post_commentRefresh(newCommentsString, isError)
     }, 750);
 
     // Enclenche un compte à rebours pour réactualiser les commentaires dans x secondes
-    page.refreshCommentsTimeoutId = setTimeout(refreshComments, commentUpdateInterval * 1000);
+    page.refreshCommentsTimeoutId = setTimeout(refreshComments, A7Settings.commentUpdateInterval * 1000);
 
     if(isError)
     {

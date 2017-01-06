@@ -110,7 +110,7 @@ function updateRsRatingAndCharCount(seqNumber)
         var bigIndicator = timeCell.lastElementChild;
 
         // Actualise son texte
-        bigIndicator.children[bigIndicator.childElementCount - 2].value = RSR[index][1];
+        bigIndicator.children[bigIndicator.childElementCount - 2].value = A7Settings.RSR[index][1];
 
         // Met l'indicateur de temps en couleur et affiche sa valeur
         updateBigIndicatorLegend(timeCell, duration);
@@ -139,9 +139,9 @@ function updateRsRatingAndCharCount(seqNumber)
 */
 function updateTimeCellClass(timeCell, rsIndex, duration)
 {
-    timeCell.className = timeCell.className.substr(0, timeCell.className.length - 5) + RSR[rsIndex][2];
+    timeCell.className = timeCell.className.substr(0, timeCell.className.length - 5) + A7Settings.RSR[rsIndex][2];
 
-    timeCell.title = loc.duration + ' : ' + duration.toFixed(3) + " s\nRS Rating : " + RSR[rsIndex][1];
+    timeCell.title = loc.duration + ' : ' + duration.toFixed(3) + " s\nRS Rating : " + A7Settings.RSR[rsIndex][1];
 }
 
 
@@ -174,7 +174,7 @@ function updateCharCountCell(countCell, counts)
             countCell.innerHTML = '';
             countCell.appendChild(span);
 
-            if (counts[0] <= maxPerLineOneLineSETTING)
+            if (counts[0] <= A7Settings.maxPerLineOneLineSETTING)
             {
                 span.className = 'ccc_green';
                 return 'ok';
@@ -209,11 +209,11 @@ function updateCharCountCell(countCell, counts)
                     countCell.appendChild(document.createElement('br'));
 
                 // On determine la couleur
-                if (counts[i] <= maxPerLineSETTING)
+                if (counts[i] <= A7Settings.maxPerLineSETTING)
                 {
                     color = 'ccc_green';
                 }
-                else if (counts[i] <= strictMaxPerLineSETTING)
+                else if (counts[i] <= A7Settings.strictMaxPerLineSETTING)
                 {
                     color = 'ccc_orange';
 
@@ -249,10 +249,10 @@ function updateBigIndicatorLegend(timeCell, duration)
     var indicatorLegend = timeCell.lastElementChild.lastElementChild;
 
 
-    if (duration < strictMinDurationSETTING)
+    if (duration < A7Settings.strictMinDurationSETTING)
         indicatorLegend.style.color = 'red';
 
-    else if (duration < minDurationSETTING)
+    else if (duration < A7Settings.minDurationSETTING)
         indicatorLegend.style.color = '#e70';
 
     else
@@ -348,7 +348,7 @@ function updateStateOfTranslation()
                 // Si l'intervalle est désactivé, le réactive
                 if (timeIntervalId === null)
                 {
-                    page.stateIntervalId = setInterval(updateStateOfTranslation, stateUpdateInterval * 1000);
+                    page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
                 }
 
                 spanState.setAttribute('class', 'stateNotCompleted');
