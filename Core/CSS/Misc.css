@@ -1,0 +1,38 @@
+/* =========================== État d'avancement =========================== */
+
+#spanState {
+    float: left;
+    height: 17px;
+    font-size: 13px;
+    padding: 2px 10px 3px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 1px 1px grey, 0 0 1px 1px lightgrey inset;
+}
+
+#spanState:hover {
+    box-shadow: 0 0 1px 1px #777, 0 0 3px 1px #999 inset;
+}
+
+.stateRefreshing {
+    background-image: url(/images/loader.gif);
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    color: transparent;
+    background-position: center;
+}
+
+/* ====================== Informations de l'extension ====================== */
+
+div.tabelborder {
+    width: calc(100% - 10px);
+}
+
+#A7Info {
+    float: right;
+    height: 17px;
+    font-size: 13px;
+    border-radius: 10px;
+    padding: 2px 10px 3px;
+    box-shadow: 0 0 1px 1px grey, 0 0 1px 1px lightgrey inset;
+}

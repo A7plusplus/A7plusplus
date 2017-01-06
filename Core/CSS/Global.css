@@ -1,0 +1,213 @@
+#lista {
+    display: block;
+    margin-bottom: calc(60vh - 10px);
+}
+
+/* Cache le tableau pendant le chargement */
+#lista table {
+	visibility:  hidden;
+}
+
+/* ============================== Erreurs AJAX ============================== */
+.ajaxError {
+    animation-direction: alternate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: borderGlowingBad;
+    display: inline-block;
+    outline: medium none;
+    padding: 0;
+    width: 100%;
+}
+
+.ajaxError > textarea {
+    margin-top: 13px;
+}
+
+.ajaxError a7button:last-of-type {
+    animation-direction: alternate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: borderGlowingBad;
+    border-radius: 1rem;
+    outline: medium none;
+}
+
+/* ================================ Tableau ================================ */
+/* Titre des colonnes */
+.NewsTitle > div {
+    text-align: center;
+}
+
+/* Cases du tableau -> sauf textBox cliquée */
+table[cellpadding="1"] td:not(.textClicked) {
+    vertical-align: middle;
+}
+
+/* Petit indicateur -> ligne originalText (au survol) */
+.originalText:hover .timeInitial:after {
+    border-width: 1px 2px;
+    padding: .5px 5px .5px 4px;
+    box-shadow: 0 0 4px 1px #888888;
+}
+
+/* TextBox -> dans une ligne originalText et cliquée  */
+.originalText .textClicked {
+    background-color: #ffc4ff;
+    box-shadow: -1.35px 0 0 0 #ffc4ff;
+}
+
+/* TimeBox -> dans une ligne originalText et non cliquée  */
+.originalText .timeInitial {
+    cursor: pointer;
+}
+
+/* TimeBox ou textBox -> non cliquée et dans une ligne originalText (au survol) */
+.originalText .timeInitial:hover,
+.originalText .cursorEdit:hover {
+    box-shadow: 0 0 20px 1px #ff9999 inset, 0 0 2px 1.4px #ff7777;
+}
+
+/* Liens du tableau -> ligne originalText et lockedText */
+.originalText a,
+.lockedText a {
+    font-weight: 600;
+}
+
+/* Lien -> colonne séquence dans les lignes originalText et lockedText */
+.originalText a[href^="/user/"],
+.lockedText a[href^="/user/"] {
+    font-weight: unset;
+}
+
+/* Cases du tableau -> lignes lockedText */
+/* Spans du compteur -> lignes lockedText */
+.lockedText td,
+.lockedText .counter span {
+    color: white;
+}
+
+/* Cases du tableau -> lignes lockedText (au survol) */
+.lockedText:hover td {
+    background-color: #ffbbbb;
+    color: black;
+    cursor: not-allowed;
+}
+
+/* Case langage secondaire -> lockedText */
+.lockedText td[bgcolor="white"] {
+    background-color: red;
+}
+
+/* Cases du tableau -> lockedText (au survol) */
+.lockedText:hover td {
+    background-color: #ffbbbb;
+}
+
+/* Petit indicateur -> ligne lockedText */
+.lockedText .lockedTime:after {
+    border-color: #000000;
+    box-shadow: 0 0 5px 2px #ffffff;
+}
+
+/* Petit indicateur -> ligne lockedText (au survol) */
+.lockedText:hover .lockedTime:after {
+    border-color: #222222;
+    box-shadow: none;
+}
+
+/* Lignes -> quotedText */
+.quotedText {
+    background-color: #e5e5e5;
+    color: #444444;
+}
+
+/* Lignes -> quotedText (au survol) */
+.quotedText:hover {
+    color: #000000;
+}
+
+/* Petit indicateur -> ligne quotedText */
+.quotedText .timeInitial:after {
+    border-color: #aaaaaa;
+    box-shadow: none;
+}
+
+/* Petit indicateur -> ligne quotedText (au survol) */
+.quotedText:hover .timeInitial:after {
+    border-color: #222222;
+}
+
+/* Première ligne du tableau -> nom des colonnes */
+#trseqtop td {
+    padding-bottom: 0;
+    padding-top: 1em;
+}
+
+tr[id^="trseq"] {
+    height: 30px;
+}
+
+tr[id^="trseq"] td {
+    height: 2em;
+}
+
+tr[id^="trseq"] a {
+    color: #444444;
+    text-decoration: none;
+}
+
+tr[id^="trseq"].lockedText a {
+    color: #ffffff;
+}
+
+tr[id^="trseq"]:hover a {
+    color: blue;
+    text-decoration: underline;
+}
+
+/* Not 0 for Opera support */
+tr[id^="trseq"]  td:nth-of-type(-n+5){
+    width: .1px;
+    padding: 0 8px;
+}
+
+tr[id^="trseq"] td[id^="lock"]{
+    padding: 0;
+    text-align: center;
+}
+
+.timeWithoutIndicator,
+.timeWithIndicator {
+    padding: 0 6px;
+    text-align: right;
+    white-space: nowrap;
+    width: 15rem;
+    max-width: 15rem;
+    min-width: 15rem;
+}
+
+tr[id^="trseq"] td[bgcolor="white"],
+tr[id^="trseq"] td:last-of-type:not(.textClicked) {
+    padding-left: 2px;
+    padding-bottom: 3px;
+}
+
+tr[id^="trseq"] td.counter {
+    padding-bottom: 3px;
+}
+
+tr[id^="trseq"] td[bgcolor="white"] {
+    padding-right: 8px;
+    white-space: nowrap;
+    width: 170px;
+}
+
+tr[id^="trseq"] td:last-child {
+    white-space: nowrap;
+}
+
+tr[id^="trseq"] td:last-child:after {
+    content: " ";
+    white-space: pre;
+}
