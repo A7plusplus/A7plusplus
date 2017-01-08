@@ -100,7 +100,7 @@ function linesChanged()
     // Attend le chargement des séquences
     if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
     {
-        setTimeout(linesChanged, 250);
+        setTimeout(linesChanged, 100);
         return;
     }
 
