@@ -258,10 +258,9 @@ function createStateUtil(parentDiv)
 
 /**
 * @fn createA7Info Crée un nœud contenant la structure de l'affichage des info de l'extension
-* @param {!Object} parentDiv Nœud HTML dans lequel doit être ajouté l'utilitaire d'état
 * @return {!Object} Nœud HTML de la structure
 */
-function createA7Info(parentDiv)
+function createA7Info()
 {
     var versionInfo = document.createElement('span');
 
