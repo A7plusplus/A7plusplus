@@ -22,11 +22,13 @@
         "data/JS/Extra.js",
         "data/JS/HTMLCreation.js",
         "data/JS/InitFunctions.js",
+        "data/JS/Jsmodal-1.0d.min.js",
         "data/JS/Localization.js",
         "data/JS/Settings.js",
         "data/JS/TextEvents.js",
         "data/JS/TimeEvents.js",
         "data/JS/UpdateEvents.js",
+        "data/JS/UserEvents.js",
         "data/JS/UtilsFunctions.js"
     ],
 
@@ -34,9 +36,11 @@
         {
             "matches": ["http://www.addic7ed.com/list.php*"],
             "css": [
+                "data/CSS/Jsmodal-light.css",
                 "data/CSS/Global.css",
                 "data/CSS/OpenedLines.css",
                 "data/CSS/Comments.css",
+                "data/CSS/UserOptions.css",
                 "data/CSS/Misc.css"
             ],
             "js": ["data/Launcher.js"],

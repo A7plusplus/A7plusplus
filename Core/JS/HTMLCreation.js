@@ -272,6 +272,88 @@ function createA7Info()
     return versionInfo;
 }
 
+
+/**
+* @fn createUserOptions Crée un nœud contenant la structure de l'affichage des options utilisateurs
+* @param {number} userId ID du site de l'utilisateur
+* @param {string} userName Nom de l'utilisateur
+* @return {!Object} Nœud HTML de la structure
+*/
+function createUserOptionsIcon(userId, userName)
+{
+    var infoDiv = document.createElement('a7button');
+
+    // Mise en place
+    infoDiv.classList.add('userInfoSmall');
+    infoDiv.setAttribute('onclick', 'userModal(' + userId + ', "' + userName + '")');
+
+    return infoDiv;
+}
+
+
+/**
+* @fn createUserOptions Crée un nœud contenant la structure de l'affichage de la popup des options
+* @param {number} userId ID du site de l'utilisateur
+* @param {string} userName Nom de l'utilisateur
+* @return {!Object} Nœud HTML de la structure
+*/
+function createUserOptionsModal(userId, userName)
+{
+    // Création de la structure
+    var optionsContainer = document.createElement('div'),
+        title            = document.createElement('p'),
+        optionsSelector  = document.createElement('div'),
+        PMOtion          = document.createElement('a7button'),
+        userInfo         = document.createElement('a7button'),
+        reportOption     = document.createElement('a7button');
+
+    // Stylisation
+    optionsContainer.classList.add('ModalOptionContainer');
+    title.textContent = userName;
+
+    reportOption.classList.add('reportOption');
+    reportOption.setAttribute('title', loc.reportUser);
+
+    userInfo.classList.add('userInfoOption');
+    userInfo.setAttribute('title', loc.getUserInfo);
+    userInfo.setAttribute('onclick', "userModalOption('http://www.addic7ed.com/user/" + userId + "');");
+
+    PMOtion.classList.add('PMOption');
+    PMOtion.setAttribute('title', loc.sendUserPM);
+    PMOtion.setAttribute('onclick', "userModalOption('http://www.addic7ed.com/msgcreate.php?to=" + userId + "');");
+
+    // Mise en place
+    optionsSelector.appendChild(userInfo);
+    optionsSelector.appendChild(PMOtion);
+    optionsSelector.appendChild(reportOption);
+
+    optionsContainer.appendChild(title);
+    optionsContainer.appendChild(optionsSelector);
+
+    return optionsContainer;
+}
+
+
+/**
+* @fn createIFrameModal Crée un nœud contenant la structure de l'affichage de la popup contenant l'options choisie
+* @param {string} link Lien à afficher
+* @return {!Object} Nœud HTML de la structure
+*/
+function createIFrameModal(link)
+{
+    // Création de la structure
+    var iframe = document.createElement('iframe'),
+        error  = document.createElement('p');
+
+    // Mise en place
+    iframe.setAttribute('src', link);
+    error.textContent = loc.iframeNotSupported;
+
+    iframe.appendChild(error);
+
+    return iframe;
+}
+
 // Gestion graphique des indicateurs du RS Rating //
 
 /**

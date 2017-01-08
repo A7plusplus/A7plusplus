@@ -22,8 +22,11 @@ var waitForHead = setInterval(function()
         document.head.appendChild(createScript('HTMLCreation.js'));
         document.head.appendChild(createScript('Accessors.js'));
 
+        document.head.appendChild(createScript('Jsmodal-1.0d.min.js'));
+
         document.head.appendChild(createScript('TextEvents.js'));
         document.head.appendChild(createScript('TimeEvents.js'));
+        document.head.appendChild(createScript('UserEvents.js'));
         document.head.appendChild(createScript('CommentEvents.js'));
         document.head.appendChild(createScript('UpdateEvents.js'));
 

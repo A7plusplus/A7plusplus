@@ -161,9 +161,15 @@ function linesChanged()
         cell.setAttribute('class', 'counter');
 
         // Cellules utiles
+        var userCell = currentLine.children[page.lock + 3];
         var timeCell = currentLine.children[page.lock + 4];
         var textCell = currentLine.lastElementChild;
 
+        // Récupère l'ID utilisateur et ajoute les options utilisateurs
+        var link     = userCell.firstElementChild.firstElementChild;
+        var userId   = link.getAttribute('href').substr(6);
+        var userName = link.textContent;
+        userCell.firstElementChild.insertBefore(createUserOptionsIcon(userId, userName), userCell.firstElementChild.firstElementChild);
 
         // Si la ligne a un texte modifiable
         if (currentLine.className === 'originalText')
