@@ -303,9 +303,9 @@ function createUserOptionsModal(userId, userName)
     var optionsContainer = document.createElement('div'),
         title            = document.createElement('p'),
         optionsSelector  = document.createElement('div'),
-        PMOtion          = document.createElement('a7button'),
-        userInfo         = document.createElement('a7button'),
-        reportOption     = document.createElement('a7button');
+        PMOtion          = document.createElement('img'),
+        userInfo         = document.createElement('img'),
+        reportOption     = document.createElement('img');
 
     // Stylisation
     optionsContainer.classList.add('ModalOptionContainer');
@@ -313,13 +313,16 @@ function createUserOptionsModal(userId, userName)
 
     reportOption.classList.add('reportOption');
     reportOption.setAttribute('title', loc.reportUser);
+    reportOption.setAttribute('src', A7Settings.images.userReport);
 
     userInfo.classList.add('userInfoOption');
     userInfo.setAttribute('title', loc.getUserInfo);
+    userInfo.setAttribute('src', A7Settings.images.userInfo);
     userInfo.setAttribute('onclick', "userModalOption('http://www.addic7ed.com/user/" + userId + "');");
 
     PMOtion.classList.add('PMOption');
     PMOtion.setAttribute('title', loc.sendUserPM);
+    PMOtion.setAttribute('src', A7Settings.images.userPM);
     PMOtion.setAttribute('onclick', "userModalOption('http://www.addic7ed.com/msgcreate.php?to=" + userId + "');");
 
     // Mise en place

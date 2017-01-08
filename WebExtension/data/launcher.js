@@ -31,6 +31,24 @@ var waitForHead = setInterval(function()
         document.head.appendChild(createScript('UpdateEvents.js'));
 
         document.head.appendChild(createScript('Extra.js'));
-        document.head.appendChild(createScript('A7Init.js'));
+
+        // Communication des sources des images de grande taille
+        var A7Init = createScript('A7Init.js');
+        A7Init.onload = function()
+        {
+            // Injection des images de grandes tailles
+            var sources = {
+                userInfo :   chrome.extension.getURL('data/IMG/UserInfo.png'),
+                userPM :     chrome.extension.getURL('data/IMG/UserPM.png'),
+                userReport : chrome.extension.getURL('data/IMG/UserReport.png'),
+            };
+
+            // Création et envoi de l'évènement
+            var event = document.createEvent("CustomEvent");
+            event.initCustomEvent("A7SettingsImageInjection", true, true, sources);
+            document.dispatchEvent(event);
+        };
+
+        document.head.appendChild(A7Init);
     }
 }, 25);

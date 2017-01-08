@@ -29,7 +29,11 @@
         "data/JS/TimeEvents.js",
         "data/JS/UpdateEvents.js",
         "data/JS/UserEvents.js",
-        "data/JS/UtilsFunctions.js"
+        "data/JS/UtilsFunctions.js",
+
+        "data/IMG/UserInfo.png",
+        "data/IMG/UserPM.png",
+        "data/IMG/UserReport.png"
     ],
 
     "content_scripts": [
