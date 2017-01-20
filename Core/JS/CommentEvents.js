@@ -106,16 +106,8 @@ function post_commentRefresh(newCommentsString, isError)
     // Re peuple les commentaires du tableau
     for(var i = 2; i < listOfNewCommLength + 2; i++)
     {
-        // Mets en cache
-        var userCell = listOfNewComments[i].firstElementChild;
-
         // Retire l'image
-        userCell.firstElementChild.remove();
-
-        // Ajoute les options utilisateur
-        var id = userCell.firstElementChild.getAttribute('href').substr(6);
-        var userName = userCell.firstElementChild.textContent;
-        userCell.appendChild(createUserOptionsIcon(id, userName));
+        listOfNewComments[i].firstElementChild.firstElementChild.remove();
 
         // Ajoute le commentaire
         commentList.appendChild(listOfNewComments[i]);

@@ -38,11 +38,7 @@ var loc =
         sendComment       : 'Envoyer le commentaire',
         commTextareaHint  : 'Écrire un commentaire ici.',
         reloadPageQuestion: 'CHANGEMENT DE LA LANGUE DU SITE :\n\n' +
-                            'Pour recharger la page maintenant avec la nouvelle langue, cliquer sur OK.\nSinon cliquer sur Annuler.',
-        reportUser        : "Signaler l'utilisateur",
-        getUserInfo       : "Informations de l'utilisateur",
-        sendUserPM        : 'Envoyer un message privé',
-        iframeNotSupported: 'Votre navigateur ne supporte pas les iFrame'
+                            'Pour recharger la page maintenant avec la nouvelle langue, cliquer sur OK.\nSinon cliquer sur Annuler.'
 
     },
 
@@ -78,11 +74,7 @@ var loc =
         sendComment       : 'Send comment',
         commTextareaHint  : 'Write a comment here',
         reloadPageQuestion: 'SITE LANGUAGE CHANGE:\n\n' +
-                            'In order to reload the page now with new language, click on OK.\nElse click on Cancel.',
-        reportUser        : 'Report user',
-        getUserInfo       : 'User informations',
-        sendUserPM        : 'Send a private message',
-        iframeNotSupported: 'Your browser does not support iframes'
+                            'In order to reload the page now with new language, click on OK.\nElse click on Cancel.'
 
     }
 };

@@ -4,17 +4,6 @@
 */
 
 
-// Receptionne les liens des images
-document.addEventListener('A7SettingsImageInjection', function(e)
-{
-    // Injection des images de grandes tailles
-    A7Settings.images = {
-        userInfo :   e.detail.userInfo,
-        userPM :     e.detail.userPM,
-        userReport : e.detail.userReport
-    };
-});
-
 // Déclare l'objet page et la liste des lignes
 var page;
 
