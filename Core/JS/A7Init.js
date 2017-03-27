@@ -49,12 +49,15 @@ function init()
     });
 
     // Initialise l'objet page
-    page = {lock: (document.getElementById('locktop') !== null) ? 1 : 0,
-            stateIntervalId: null,
-            refreshCommentsTimeoutId: null,
-            queryInfos: pageInfos,
-            commentNumber: -1,
-            tempDisablePopupRemoval: false};
+    page = {
+        lock: (document.getElementById('locktop') !== null) ? 1 : 0,
+        stateIntervalId: null,
+        refreshCommentsTimeoutId: null,
+        queryInfos: pageInfos,
+        commentNumber: -1,
+        tempDisablePopupRemoval: false,
+        isHearingImpaired: false
+        };
 
     // Démarre l'actualisation de l'avancement (toutes les minutes)
     page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
@@ -80,6 +83,9 @@ function init()
             lockComment();
         }
     }
+
+    // Initie la requête pour savoir si on est en HI
+    requestHICheck();
 
     // Actualisation des commentaires (ce qui active aussi l'actualisation à intervalles réguliers)
     refreshComments();

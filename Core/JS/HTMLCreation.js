@@ -275,6 +275,22 @@ function createStateUtil(parentDiv)
 
 
 /**
+* @fn createHIImg Crée un nœud contenant la structure de l'image malentendant
+* @return {!Object} Nœud HTML de la structure
+*/
+function createHIImg()
+{
+    var img = document.createElement('span');
+
+    // Mise en place
+    img.id          = 'hearingImpaired';
+    img.title       = loc.hearingImpaired;
+
+    return img;
+}
+
+
+/**
 * @fn createA7Info Crée un nœud contenant la structure de l'affichage des info de l'extension
 * @return {!Object} Nœud HTML de la structure
 */

@@ -29,6 +29,14 @@ div.tabelborder {
     width: calc(100% - 10px);
 }
 
+#hearingImpaired {
+    float: right;
+    height: 17px;
+    margin-right: 10px;
+    padding: 2px 10px 3px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA+ElEQVR42q2Vyw2EMAxEUwvXHLlRAB3QAt1QRlqiHS9GmtXE2ElYLdKIQJyH409IIpJaWtdVcs4yz7O07K5Lpmnqg9QI0mdVCLvuLky9YZAVQ/mjN7wF40UYY45DwLYuDMbWUw/82D4G27ZVwV+W5QFjKD5mY/rwDgmBsb6HLNTzMtng8riUUhnrLhjCTlRALhH2zqsAhOI4DgHwPM86Kfu+f2sM8AiIeV0Tevir/grsZtnKqzE7r9KYdoFcf1EcbbeEQNu3dh4JjE6fVzBbr03gCGwYOAobAr6Bafx6dmkUxn1sS8UFRhCcMthq998S9SzXm3dKR/oApLwnHhLhYcIAAAAASUVORK5CYII=');
+}
+
 #A7Info {
     float: right;
     height: 17px;

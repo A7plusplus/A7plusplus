@@ -120,6 +120,12 @@ function linesChanged()
         parentDiv.insertBefore(createCommentLockUtil(), parentDiv.firstElementChild);
         parentDiv.insertBefore(createStateUtil(), parentDiv.firstElementChild);
 
+        // Ajoute l'indicateur HI en cas de sous-titre malentendants
+        if(page.isHearingImpaired)
+        {
+            parentDiv.appendChild(createHIImg());
+        }
+
         // Créé le span contenant les informations de l'extension
         parentDiv.appendChild(createA7Info());
     }
@@ -256,4 +262,71 @@ function linesChanged()
     lista.children[0].style.setProperty('visibility', 'visible');
     lista.children[1].style.setProperty('visibility', 'visible');
     }
+}
+
+
+/**
+* @fn requestHICheck Engage la requête ajax pour la verification de version
+*/
+function requestHICheck()
+{
+    // Récupère les infos
+    var episodeUrl = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild.lastElementChild.firstElementChild.href;
+
+    // Envoie la requête
+    ajax('GET', episodeUrl, '', post_requestHICheck, null, null);
+}
+
+
+/**
+* @fn post_requestHICheck Récupère les données de l'épisode et vérifie l'il est en HI
+*/
+function post_requestHICheck(episodeHTMLString, isError)
+{
+    // Re-envoi la requête en cas d'échec
+    if (isError)
+    {
+        requestHICheck();
+        return;
+    }
+
+    // Info et stockage
+    var currentUrl = window.location.href,
+        episodeHTML = document.createElement('html'),
+        imgs = null;
+
+    // De chaine à objet
+    episodeHTML.innerHTML = episodeHTMLString;
+
+    // Repère le lien de l'épisode
+    var links = episodeHTML.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++)
+    {
+        if (links[i].href === currentUrl)
+        {
+            // Récupère les indicateurs
+            imgs = links[i].parentElement.previousElementSibling.getElementsByTagName('img');
+            break;
+        }
+    }
+
+    // Vérifie la présence du hearingImpaired
+    for (i = 0; i < imgs.length; i++)
+    {
+        if (imgs[i].src === 'http://www.addic7ed.com/images/hi.jpg')
+        {
+            // Ajoute le logo et met à jour la variable page
+            var parentDiv = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
+
+            if(parentDiv.lastElementChild.id !== 'hearingImpaired')
+            {
+                parentDiv.appendChild(createHIImg());
+            }
+
+            page.isHearingImpaired = true;
+            break;
+        }
+    }
+
+    console.log('[A7++] ' + loc.HIStatusLoaded);
 }
