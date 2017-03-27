@@ -116,7 +116,8 @@ function linesChanged()
         // Récupère la div parent des éléments à insérer
         var parentDiv = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
 
-        // Crée le span d'avancement
+        // Crée le span d'avancement et de lock des commentaires
+        parentDiv.insertBefore(createCommentLockUtil(), parentDiv.firstElementChild);
         parentDiv.insertBefore(createStateUtil(), parentDiv.firstElementChild);
 
         // Créé le span contenant les informations de l'extension

@@ -238,6 +238,24 @@ function createCommentStruct()
 
 
 /**
+* @fn createCommentLockUtil Crée un nœud contenant la structure de l'utilitaire d'état de lock des commentaires
+* @param {!Object} parentDiv Nœud HTML dans lequel doit être ajouté l'utilitaire d'état
+* @return {!Object} Nœud HTML de la structure
+*/
+function createCommentLockUtil(parentDiv)
+{
+    var lockSpan = document.createElement('span');
+
+    // Mise en place
+    lockSpan.id          = 'lockComment';
+    lockSpan.title       = loc.lockComment;
+    lockSpan.addEventListener('click', lockComment, false);
+
+    return lockSpan;
+}
+
+
+/**
 * @fn createStateUtil Crée un nœud contenant la structure de l'utilitaire d'état
 * @param {!Object} parentDiv Nœud HTML dans lequel doit être ajouté l'utilitaire d'état
 * @return {!Object} Nœud HTML de la structure

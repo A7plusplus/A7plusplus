@@ -38,7 +38,8 @@ var loc =
         sendComment       : 'Envoyer le commentaire',
         commTextareaHint  : 'Écrire un commentaire ici.',
         reloadPageQuestion: 'CHANGEMENT DE LA LANGUE DU SITE :\n\n' +
-                            'Pour recharger la page maintenant avec la nouvelle langue, cliquer sur OK.\nSinon cliquer sur Annuler.'
+                            'Pour recharger la page maintenant avec la nouvelle langue, cliquer sur OK.\nSinon cliquer sur Annuler.',
+        lockComment       : 'Verrouiller / déverrouiller la fenêtre de commentaires'
 
     },
 
@@ -74,7 +75,8 @@ var loc =
         sendComment       : 'Send comment',
         commTextareaHint  : 'Write a comment here',
         reloadPageQuestion: 'SITE LANGUAGE CHANGE:\n\n' +
-                            'In order to reload the page now with new language, click on OK.\nElse click on Cancel.'
+                            'In order to reload the page now with new language, click on OK.\nElse click on Cancel.',
+        lockComment       : 'Lock / Unlock comment section'
 
     }
 };

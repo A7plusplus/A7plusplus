@@ -206,7 +206,7 @@ function pinComments()
 {
     var commentsSection = document.getElementById('commentsSection');
 
-    if(commentsSection.className && commentsSection.className === 'comment-pined')
+    if(commentsSection.className && commentsSection.classList.contains('comment-pined'))
     {
         commentsSection.classList.remove('comment-pined');
         if(localStorage)
@@ -220,6 +220,32 @@ function pinComments()
         if(localStorage)
         {
             localStorage.setItem('A7ppCommentWindowPined', true);
+        }
+    }
+}
+
+
+/**
+* @fn lockCommentAsClosed Empêche les commentaires de s'ouvrir
+*/
+function lockComment()
+{
+    var commentsSection = document.getElementById('commentsSection');
+
+    if(commentsSection.className && commentsSection.classList.contains('lockdown'))
+    {
+        commentsSection.classList.remove('lockdown');
+        if(localStorage)
+        {
+            localStorage.setItem('A7ppCommentWindowLockedDown', false);
+        }
+    }
+    else
+    {
+        commentsSection.classList.add('lockdown');
+        if(localStorage)
+        {
+            localStorage.setItem('A7ppCommentWindowLockedDown', true);
         }
     }
 }

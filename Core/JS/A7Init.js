@@ -67,13 +67,17 @@ function init()
 
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
-    // Récupère la taille enregistrée et l'état d'épinglement
+    // Récupère la taille enregistrée, l'état de lock et l'état d'épinglement
     if(localStorage)
     {
         updateCommentHeightFromSaved(listaParent.lastElementChild.previousElementSibling, 'A7ppCommentWindowSize', 180, 0.8);
         if(localStorage.getItem('A7ppCommentWindowPined') === "true")
         {
             pinComments();
+        }
+        if(localStorage.getItem('A7ppCommentWindowLockedDown') === "true")
+        {
+            lockComment();
         }
     }
 
