@@ -318,15 +318,13 @@ function post_requestHICheck(episodeHTMLString, isError)
     {
         if (imgs[i].src === 'http://www.addic7ed.com/images/hi.jpg')
         {
-            // Ajoute le logo et met à jour la variable page
+            // Ajoute le logo
             var parentDiv = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
 
             if(parentDiv.lastElementChild.id !== 'hearingImpaired')
             {
                 parentDiv.appendChild(createHIImg());
             }
-
-            page.isHearingImpaired = true;
             break;
         }
     }
@@ -353,18 +351,21 @@ function post_searchForUpdate(data, isError)
         return;
     }
 
-    // Comparaison
+    // Comparaison (MAJ dispo)
     if(A7Settings.NUMERIC_VERSION_INFO < parseInt(data))
     {
-        // MAJ dispo
-        page.updateAvailable = true;
-
         // Mets de la couleur
         var A7Info = document.getElementById('A7Info');
         if(A7Info)
         {
             A7Info.classList.add('updateAvailable');
             A7Info.title = loc.updateAvailable;
+        }
+        else
+        {
+            setTimeout(function(){
+                post_searchForUpdate(data, isError);
+            }, 250);
         }
     }
 }
