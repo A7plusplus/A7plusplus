@@ -38,9 +38,6 @@ if(location.search.search(new RegExp('&lang=1$')) === -1)
         this._url = url;
         return origOpen.apply(this, arguments);
     };
-
-    // Demande la page avec complément anglais
-    list(0, false, 1);
 }
 
 
@@ -50,6 +47,10 @@ var page;
 // Si la page est déjà chargée
 if (document.readyState === 'interactive' || document.readyState === 'complete')
 {
+    // Demande la page avec complément anglais
+    list(0, false, 1);
+
+    // Initie l'extension
     init();
 }
 // Sinon, attend la fin du chargement de la page
