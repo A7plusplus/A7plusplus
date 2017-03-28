@@ -34,6 +34,12 @@ function init()
         return;
     }
 
+    // Récupère la langue du site
+    var lang = document.getElementById('comboLang'),
+        choosen = lang ? lang.options[lang.selectedIndex].value : (navigator.language || navigator.userLanguage || 'en');
+    // Ne garde que le nescessaire
+    loc = loc[choosen] ? loc[choosen] : loc.en;
+
     // La page ne contient pas de lignes de traduction
     if (!document.getElementById('trseqtop'))
     {

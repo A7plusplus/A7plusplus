@@ -86,13 +86,3 @@ var loc =
 
     }
 };
-
-// Ne garde que le nescessaire
-if(loc[navigator.language || navigator.userLanguage || "en"])
-{
-    loc = loc[navigator.language || navigator.userLanguage || "en"];
-}
-else
-{
-    loc = loc.en;
-}
