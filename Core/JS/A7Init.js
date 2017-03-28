@@ -55,8 +55,7 @@ function init()
         refreshCommentsTimeoutId: null,
         queryInfos: pageInfos,
         commentNumber: -1,
-        tempDisablePopupRemoval: false,
-        isHearingImpaired: false
+        tempDisablePopupRemoval: false
         };
 
     // Démarre l'actualisation de l'avancement (toutes les minutes)
@@ -94,4 +93,7 @@ function init()
 
     // Permet le changement de la langue d'affichage du site (bugfix du site)
     changeAppLang();
+
+    // Vérifie les mises à jour
+    searchForUpdate();
 }

@@ -41,7 +41,8 @@ var loc =
                             'Pour recharger la page maintenant avec la nouvelle langue, cliquer sur OK.\nSinon cliquer sur Annuler.',
         lockComment       : 'Verrouiller / déverrouiller la fenêtre de commentaires',
         hearingImpaired   : 'Version malentendants',
-        HIStatusLoaded    : 'Vérification de version malentendant effectuée'
+        HIStatusLoaded    : 'Vérification de version malentendant effectuée',
+        updateAvailable   : 'Une mise à jour est disponible'
 
     },
 
@@ -80,7 +81,8 @@ var loc =
                             'In order to reload the page now with new language, click on OK.\nElse click on Cancel.',
         lockComment       : 'Lock / Unlock comment section',
         hearingImpaired   : 'Hearing Impaired version',
-        HIStatusLoaded    : 'HI status loaded'
+        HIStatusLoaded    : 'HI status loaded',
+        updateAvailable   : 'An update is available'
 
     }
 };

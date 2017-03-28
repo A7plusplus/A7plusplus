@@ -120,12 +120,6 @@ function linesChanged()
         parentDiv.insertBefore(createCommentLockUtil(), parentDiv.firstElementChild);
         parentDiv.insertBefore(createStateUtil(), parentDiv.firstElementChild);
 
-        // Ajoute l'indicateur HI en cas de sous-titre malentendants
-        if(page.isHearingImpaired)
-        {
-            parentDiv.appendChild(createHIImg());
-        }
-
         // Créé le span contenant les informations de l'extension
         parentDiv.appendChild(createA7Info());
     }
@@ -338,4 +332,39 @@ function post_requestHICheck(episodeHTMLString, isError)
     }
 
     console.log('[A7++] ' + loc.HIStatusLoaded);
+}
+
+/**
+* @fn searchForUpdate Envoi la requête de vérification de mise à jour
+*/
+function searchForUpdate()
+{
+    ajax('GET', 'https://raw.githubusercontent.com/Mmoi-Fr/A7plusplus/master/VERSION', '', post_searchForUpdate, null, null);
+}
+
+/**
+* @fn post_searchForUpdate Récupère les infos de version
+*/
+function post_searchForUpdate(data, isError)
+{
+    // On considère qu'il n'y a pas de MAJ
+    if (isError)
+    {
+        return;
+    }
+
+    // Comparaison
+    if(A7Settings.NUMERIC_VERSION_INFO < parseInt(data))
+    {
+        // MAJ dispo
+        page.updateAvailable = true;
+
+        // Mets de la couleur
+        var A7Info = document.getElementById('A7Info');
+        if(A7Info)
+        {
+            A7Info.classList.add('updateAvailable');
+            A7Info.title = loc.updateAvailable;
+        }
+    }
 }
