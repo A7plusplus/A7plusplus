@@ -271,7 +271,16 @@ function linesChanged()
 function requestHICheck()
 {
     // Récupère les infos
-    var episodeUrl = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild.lastElementChild.firstElementChild.href;
+    var episodeUrl = '',
+        parent = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
+    for(var i = 0; i < parent.childElementCount; i++)
+    {
+        if(parent.children[i].nodeName === 'BIG')
+        {
+            episodeUrl = parent.children[i].firstElementChild.href;
+            break;
+        }
+    }
 
     // Envoie la requête
     ajax('GET', episodeUrl, '', post_requestHICheck, null, null);
