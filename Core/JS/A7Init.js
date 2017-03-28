@@ -4,6 +4,46 @@
 */
 
 
+// Si la langue n'est pas anglais
+if(location.search.search(new RegExp('&lang=1$')) === -1)
+{
+    // Remplacement des AJAX
+    var xhrProto = XMLHttpRequest.prototype,
+        sendOrig = xhrProto.send,
+        origOpen = xhrProto.open;
+
+    xhrProto.send = function()
+    {
+        /* Wrap onreadystaechange callback */
+        var callback = this.onreadystatechange;
+        this.onreadystatechange = function()
+        {
+             if (this.readyState == 4)
+             {
+                 if(this._url === '/ajax_list.php' + location.search + '&start=0&updated=false&slang=')
+                 {
+                     XMLHttpRequest.prototype = xhrProto;
+                     return;
+                 }
+             }
+             callback.apply(this, arguments);
+        };
+
+        sendOrig.apply(this, arguments);
+    };
+
+    // Ajoute l'url à l'objet AJAX
+    xhrProto.open = function (method, url)
+    {
+        this._url = url;
+        return origOpen.apply(this, arguments);
+    };
+
+    // Demande la page avec complément anglais
+    list(0, false, 1);
+}
+
+
 // Déclare l'objet page et la liste des lignes
 var page;
 
@@ -66,9 +106,6 @@ function init()
 
     // Démarre l'actualisation de l'avancement (toutes les minutes)
     page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
-
-    // Change la langue secondaire si possible
-    changeLangIfEnglish();
 
     // Ajoute la structure d'accueil des commentaires
     var listaParent = list.parentElement;

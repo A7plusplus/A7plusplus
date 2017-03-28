@@ -64,33 +64,6 @@ function changeButtonEvents()
     }
 }
 
-                                        // Fonction de langue //
-/**
-* @fn changeLangIfEnglish Change le langue si l'anglais est poposé
-*/
-function changeLangIfEnglish()
-{
-    // Récupération de la comboBox
-    var comboBox = document.getElementById('slang');
-
-    // S'il n'y a pas de comboBox
-    if (comboBox === null)
-        return;
-
-    var comboBoxOptions = comboBox.options;
-
-    // Vérifie que l'anglais est présent
-    for (var i = comboBoxOptions.length; i--;)
-    {
-        if (comboBoxOptions[i].value == 1)
-        {
-            console.log('[A7++] ' + loc.secondLangLoad);
-            comboBoxOptions[i].selected = true;
-            comboBox.onchange();
-        }
-    }
-}
-
 
 /**
 * @fn linesChanged Met en cache les lignes et ajoute un évènement sur les liens
