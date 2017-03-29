@@ -14,28 +14,28 @@ if(location.search.search(new RegExp('&lang=1$')) === -1)
 
     xhrProto.send = function()
     {
-        /* Wrap onreadystaechange callback */
-        var callback = this.onreadystatechange;
-        this.onreadystatechange = function()
+        try
         {
-             if (this.readyState == 4)
-             {
-                 if(this._url === '/ajax_list.php' + location.search + '&start=0&updated=false&slang=')
-                 {
-                     XMLHttpRequest.prototype = xhrProto;
-                     return;
-                 }
-             }
-             callback.apply(this, arguments);
-        };
-
-        sendOrig.apply(this, arguments);
+            sendOrig.apply(this, arguments);
+        }
+        catch(err)
+        {
+            // Remet en place jes AJAX de base
+            XMLHttpRequest.prototype.send = sendOrig;
+            XMLHttpRequest.prototype.open = origOpen;
+            XMLHttpRequest.prototype = xhrProto;
+        }
     };
 
     // Ajoute l'url à l'objet AJAX
     xhrProto.open = function (method, url)
     {
-        this._url = url;
+        // Fait échouer la première requête
+        if(url === '/ajax_list.php' + location.search + '&start=0&updated=false&slang=')
+        {
+            return;
+        }
+
         return origOpen.apply(this, arguments);
     };
 }
