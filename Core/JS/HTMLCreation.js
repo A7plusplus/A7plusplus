@@ -369,3 +369,73 @@ function removeBigIndicator(timeCell)
     // On remet le style du petit indicateur
     timeCell.className = timeCell.className.replace(/timeWithIndicator /, 'timeWithoutIndicator ');
 }
+
+                     // Gestion de la barre utilisateur //
+
+/**
+* @fn createUserBarStruct Créer la structure qui accueuillera les fonctions de l'utilisateur
+* @return {!Object} Nœud HTML de la structure
+*/
+function createUserBarStruct()
+{
+    // Création des éléments
+    var useBarContainer  = document.createElement('div');
+
+    var containerPM      = document.createElement('span');
+    var containerReport  = document.createElement('span');
+    var containerProfil  = document.createElement('span');
+
+    var dataContainer    = document.createElement('div');
+
+    var PM               = document.createElement('p');
+    var Report           = document.createElement('p');
+    var Profil           = document.createElement('p');
+
+
+    // Mise en place des info
+    containerPM.title      = loc.PMTitle;
+    containerReport.title  = loc.ReportTitle;
+    containerProfil.title  = loc.ProfilTitle;
+    PM.innerText           = loc.PM;
+    Report.innerText       = loc.Report;
+    Profil.innerText       = loc.Profil;
+
+
+    // Ajout des events
+    containerPM.addEventListener('click', function(event)
+    {
+        triggerPM(false);
+        event.stopImmediatePropagation();
+    }, false);
+    containerReport.addEventListener('click', function(event)
+    {
+        triggerReport(false);
+        event.stopImmediatePropagation();
+    }, false);
+    containerProfil.addEventListener('click', function(event)
+    {
+        triggerProfile(false);
+        event.stopImmediatePropagation();
+    }, false);
+
+    dataContainer.setAttribute('id', 'userBarData');
+    useBarContainer.setAttribute('id', 'userBar');
+    useBarContainer.addEventListener('click', function()
+    {
+        triggerUserBar(useBarContainer);
+    }, false);
+
+
+    // Ajout des nœuds
+    containerPM.appendChild(PM);
+    containerReport.appendChild(Report);
+    containerProfil.appendChild(Profil);
+
+    useBarContainer.appendChild(containerPM);
+    useBarContainer.appendChild(containerReport);
+    useBarContainer.appendChild(containerProfil);
+
+    useBarContainer.appendChild(dataContainer);
+
+    return useBarContainer;
+}

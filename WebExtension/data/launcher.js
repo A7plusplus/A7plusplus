@@ -25,6 +25,7 @@ var waitForHead = setInterval(function()
         document.head.appendChild(createScript('TextEvents.js'));
         document.head.appendChild(createScript('TimeEvents.js'));
         document.head.appendChild(createScript('CommentEvents.js'));
+        document.head.appendChild(createScript('UserBarEvents.js'));
         document.head.appendChild(createScript('UpdateEvents.js'));
 
         document.head.appendChild(createScript('Extra.js'));

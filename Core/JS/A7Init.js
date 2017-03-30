@@ -113,9 +113,10 @@ function init()
     // Démarre l'actualisation de l'avancement (toutes les minutes)
     page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
 
-    // Ajoute la structure d'accueil des commentaires
+    // Ajoute la structure d'accueil, des commentaires et de la barre utilisateur
     var listaParent = list.parentElement;
 
+    listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
     // Récupère la taille enregistrée, l'état de lock et l'état d'épinglement

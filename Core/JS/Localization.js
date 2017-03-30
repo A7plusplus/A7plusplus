@@ -41,7 +41,13 @@ var loc =
         lockComment       : 'Verrouiller / déverrouiller la fenêtre de commentaires',
         hearingImpaired   : 'Version malentendants',
         HIStatusLoaded    : 'Vérification de version malentendant effectuée',
-        updateAvailable   : 'Une mise à jour est disponible'
+        updateAvailable   : 'Une mise à jour est disponible',
+        PMTitle           : 'Ecrire un message',
+        ReportTitle       : "Reporter l'utilisateur",
+        ProfilTitle       : 'Voir le profil',
+        PM                : 'Mess. priv.',
+        Report            : 'Reporter',
+        Profil            : 'Utilisateur'
 
     },
 
@@ -80,7 +86,13 @@ var loc =
         lockComment       : 'Lock / Unlock comment section',
         hearingImpaired   : 'Hearing Impaired version',
         HIStatusLoaded    : 'HI status loaded',
-        updateAvailable   : 'An update is available'
+        updateAvailable   : 'An update is available',
+        PMTitle           : 'Write a message',
+        ReportTitle       : "Report user",
+        ProfilTitle       : 'See user profil',
+        PM                : 'PM',
+        Report            : 'Report',
+        Profil            : 'User'
 
     }
 };

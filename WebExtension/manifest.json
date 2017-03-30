@@ -27,6 +27,7 @@
         "data/JS/TextEvents.js",
         "data/JS/TimeEvents.js",
         "data/JS/UpdateEvents.js",
+        "data/JS/UserBarEvents.js",
         "data/JS/UtilsFunctions.js"
     ],
 
@@ -37,6 +38,7 @@
                 "data/CSS/Global.css",
                 "data/CSS/OpenedLines.css",
                 "data/CSS/Comments.css",
+                "data/CSS/UserBar.css",
                 "data/CSS/Misc.css"
             ],
             "js": ["data/Launcher.js"],
