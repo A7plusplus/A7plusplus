@@ -47,9 +47,13 @@ var page;
 // Si la page est déjà chargée
 if (document.readyState === 'interactive' || document.readyState === 'complete')
 {
-    // Demande la page avec complément anglais
-    list(0, false, 1);
-
+    // Si la langue n'est pas anglais
+    if(location.search.search(new RegExp('&lang=1$')) === -1)
+    {
+        // Demande la page avec complément anglais
+        list(0, false, 1);
+    }
+    
     // Initie l'extension
     init();
 }
