@@ -16,6 +16,7 @@ if(location.search.search(new RegExp('&lang=1$')) === -1)
     {
         try
         {
+            // Envoi une exception si l'objet n'est pas ouvert
             sendOrig.apply(this, arguments);
         }
         catch(err)
@@ -27,7 +28,7 @@ if(location.search.search(new RegExp('&lang=1$')) === -1)
         }
     };
 
-    // Ajoute l'url à l'objet AJAX
+    // Empêche l'ouverture de l'objet si c'est la requête de base
     xhrProto.open = function (method, url)
     {
         // Fait échouer la première requête
@@ -53,7 +54,7 @@ if (document.readyState === 'interactive' || document.readyState === 'complete')
         // Demande la page avec complément anglais
         list(0, false, 1);
     }
-    
+
     // Initie l'extension
     init();
 }
