@@ -1,0 +1,38 @@
+#userBar {
+    top: 20px;
+    left: 20px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    position: absolute;
+    justify-content: space-around;
+
+    background-color: lawngreen;
+}
+
+#userBar.userBarOpened {
+    width: 600px;
+}
+
+/* Boutons */
+#userBar:not(.userBarOpened) > span {
+    display: none;
+}
+
+#userBar > span:first-of-type {
+    margin-left: 80px;
+}
+
+#userBar > span {
+    flex: 1;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+
+    background-color: aquamarine;
+}
+
+/* Page incrustée */
+#userBarData {
+    display: none;
+}
