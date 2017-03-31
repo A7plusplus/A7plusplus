@@ -67,7 +67,7 @@ function triggerUserBar(bar)
 function triggerPM(close)
 {
     // Récupère le bouton
-    var button = document.getElementById('userBar').firstElementChild;
+    var button = document.getElementById('userBar').firstElementChild.children[1];
 
     // Ouvre ou ferme
     if(close || button.classList.contains('userBarButtonClicked'))
@@ -105,7 +105,7 @@ function triggerPM(close)
 function triggerReport(close)
 {
     // Récupère le bouton
-    var button = document.getElementById('userBar').children[1];
+    var button = document.getElementById('userBar').firstElementChild.children[2];
 
     // Ouvre ou ferme
     if(close || button.classList.contains('userBarButtonClicked'))
@@ -129,7 +129,7 @@ function triggerReport(close)
 function triggerProfile(close)
 {
     // Récupère le bouton
-    var button = document.getElementById('userBar').lastElementChild;
+    var button = document.getElementById('userBar').firstElementChild.lastElementChild;
 
     // Ouvre ou ferme
     if(close || button.classList.contains('userBarButtonClicked'))
