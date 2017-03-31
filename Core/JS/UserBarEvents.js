@@ -76,10 +76,24 @@ function triggerPM(close)
         document.getElementById('userBarData').classList.remove('pageLoaded');
     }
     else
-    {console.log('pm open')
+    {
+        // Ferme les autres boutons
         triggerReport(true);
         triggerProfile(true);
         button.classList.add('userBarButtonClicked');
+
+        // Affiche le logo de chargement
+        var dataContainer = document.getElementById('userBarData');
+        dataContainer.innerHTML = '';
+        var img = document.createElement('img');
+        img.src = '/images/loader.gif';
+        dataContainer.appendChild(img);
+        dataContainer.classList.add('pageLoaded');
+
+        var id = document.getElementById('selectUser'),
+            value = id.options[id.selectedIndex].value;
+
+        ajax('GET', '/msgcreate.php?to=' + value, '', post_triggerPM, null, null, null);
     }
 }
 
@@ -125,15 +139,55 @@ function triggerProfile(close)
     }
     else
     {
+        // Ferme le reste
         triggerPM(true);
         triggerReport(true);
         button.classList.add('userBarButtonClicked');
+
+        // Affiche le logo de chargement
+        var dataContainer = document.getElementById('userBarData');
+        dataContainer.innerHTML = '';
+        var img = document.createElement('img');
+        img.src = '/images/loader.gif';
+        dataContainer.appendChild(img);
+        dataContainer.classList.add('pageLoaded');
 
         var id = document.getElementById('selectUser'),
             value = id.options[id.selectedIndex].value;
 
         ajax('GET', '/user/' + value, '', post_triggerProfile, null, null, null);
     }
+}
+
+
+/**
+* @fn post_triggerPM Traite l'AJAX du message privé
+*/
+function post_triggerPM(HTMLString, isError)
+{
+    // Créé le DOM virtuel
+    var PMHTML = document.createElement('html');
+    PMHTML.innerHTML = HTMLString;
+
+    // Récupère le formulaire
+    var form = PMHTML.getElementsByTagName('form')[0];
+
+    // Place le sujet
+    var inputs =  form.getElementsByTagName('input');
+    inputs[0].setAttribute('onkeyup', '');
+    inputs[1].value = '[' + document.getElementsByTagName('i')[0].innerText + ']';
+
+    // Pas de lien en hat de page
+    form.firstElementChild.firstElementChild.firstElementChild.remove();
+
+    // Réécrit la fonction d'envoi
+    form.setAttribute('action', '#');
+    form.setAttribute('onsubmit', 'return userBarSendPM(this)');
+
+    // L'affiche
+    var dataContainer = document.getElementById('userBarData');
+    dataContainer.innerHTML = '';
+    dataContainer.appendChild(form);
 }
 
 
@@ -146,7 +200,7 @@ function post_triggerProfile(HTMLString, isError)
     var profHTML = document.createElement('html');
     profHTML.innerHTML = HTMLString;
 
-    // Récupé le tableau des données
+    // Récupère le tableau des données
     var tables = profHTML.getElementsByTagName('table'),
         dataTable;
     for (var i = 0; i < tables.length; i++)
@@ -161,6 +215,69 @@ function post_triggerProfile(HTMLString, isError)
 
     var dataContainer = document.getElementById('userBarData');
     dataContainer.innerHTML = '';
-    dataContainer.classList.add('pageLoaded');
     dataContainer.appendChild(dataTable);
+}
+
+
+/**
+* @fn userBarSendPM Envoi un message privé
+* @param {Object} form Noeud HTML du formulaire de mesage privé
+*/
+function userBarSendPM(form)
+{
+    // Déjà en cours d'envoi
+    if(form.classList.contains('messageSent'))
+    {
+        return false;
+    }
+
+    // Récupère les données
+    var inputs   = form.getElementsByTagName('input');
+    var textarea = form.getElementsByTagName('textarea')[0];
+
+    // Prépare les données
+    var params = 'to='         + inputs[0].value +
+                 '&subject='   + encodeURIComponent(inputs[1].value) +
+                 '&msgtext='   + encodeURIComponent('<p>' + textarea.value + '</p>'),
+        url    = '/msgsend.php',
+        action = 'POST';
+
+    // Indique que c'est en envoi
+    var parent = form.classList.add('messageSent');
+
+    // Effectue l'envoi des données
+    ajax(action, url, params, post_userBarSendPM, null, null, null);
+
+    return false;
+}
+
+
+/**
+* @fn post_userBarSendPM Traite le retour du l'envoi du message
+*/
+function post_userBarSendPM(HTMLstring, isError)
+{
+    // On est toujours sur la page
+    var form = document.getElementById('userBarData').firstElementChild;
+    if(!form || form.onsubmit.toString().substr(36, 19) !== 'userBarSendPM(this)' || !form.classList.contains('messageSent'))
+    {
+        return;
+    }
+
+    if(isError)
+    {
+        form.classList.add('ajaxError');
+        form.title = loc.messageSendError;
+        form.classList.remove('messageSent');
+        return;
+    }
+
+    // Tout va bien
+    var p = document.createElement('p');
+    p.classList.add('messageSentSuccess');
+    p.title = loc.messageSent;
+
+    var parent = form.parentElement;
+    parent.innerHTML = '';
+    parent.appendChild(p);
 }

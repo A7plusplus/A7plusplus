@@ -49,7 +49,9 @@ var loc =
         SelectUser        : 'Utilisateur :',
         PM                : 'Mess. priv.',
         Report            : 'Reporter',
-        Profil            : 'Utilisateur'
+        Profil            : 'Utilisateur',
+        messageSendError  : "Une erreur s'est produite lors de l'envoi du message",
+        messageSent       : 'Message envoyé'
 
     },
 
@@ -96,7 +98,9 @@ var loc =
         SelectUser        : 'User:',
         PM                : 'PM',
         Report            : 'Report',
-        Profil            : 'User'
+        Profil            : 'User',
+        messageSendError  : 'An error occured while sending the message',
+        messageSent       : 'Message sent'
 
     }
 };

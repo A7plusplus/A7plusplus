@@ -43,5 +43,20 @@
 #userBarData.pageLoaded {
     display: block;
     max-height: 75vh;
-    overflow-y: scroll;
+    overflow-y: auto;
+    text-align: center;
+    background-color: magenta;
+}
+
+#userBarData > form > table > tbody > tr:first-of-type {
+    display: none;
+}
+
+.messageSentSuccess {
+    width: 40px;
+    height: 40px;
+    margin-left: 45%;
+    margin-left: calc(50% - 40px);
+
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABWElEQVR42u3Wr0sFQRAH8K8IBkEsCqIviNy7u2ITBKNgtQmCxfqKNpvw0Pdj9/AvsBusVsFiMohBo0lsJhEMguiMsscr3j7kYObBfGHawn6Y290bwGKxWCwWyyhlrofZ1OEmO8a6WuSSw3TucZsX+EoLvKvEMpI7ychQjG16bKhGDtRH0sOmOHLmAFMVyN/OOlyLIufbmMw8rqqQVPfccfVIfgXq23UL43kHa+qRWYEzOkefeRe70fVtTBDiUgQ5uAk9J3tVSFp/IY4MRZ/18F9Ih4d6kZS/kKESjxNaNjYskh73xwWPRu23tllgP/IJuUOnjKTzey6CLLvq0IphCfEkigxJ+tj5ufGx7koiQ9IutvmfrBpZdpYGh2GxhHwWQZYXjEYyHs1iyEYfifg0xMMu3fY31ciQxSOsEupVNbIchjtYIdyLamQIHYFlQt6pRlosFotlNPINrYZ+dbbgvtcAAAAASUVORK5CYII=");
 }
