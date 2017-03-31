@@ -73,7 +73,7 @@ function init()
     var list = document.getElementById('lista');
 
     // Attend le chargement des séquences
-    if (list.innerHTML === '<img src="/images/loader.gif">' || list.innerHTML === '&nbsp;')
+    if (list === null || list.innerHTML === '<img src="/images/loader.gif">' || list.innerHTML === '&nbsp;')
     {
         setTimeout(init, 250);
         return;
