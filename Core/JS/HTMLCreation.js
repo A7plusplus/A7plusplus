@@ -430,6 +430,10 @@ function createUserBarStruct()
     }, false);
 
     dataContainer.setAttribute('id', 'userBarData');
+    dataContainer.addEventListener('click', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
     useBarContainer.setAttribute('id', 'userBar');
     useBarContainer.addEventListener('click', function()
     {
