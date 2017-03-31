@@ -2,28 +2,31 @@
     top: 20px;
     left: 20px;
     width: 80px;
-    height: 80px;
     display: flex;
+    min-height: 80px;
     position: absolute;
-    justify-content: space-around;
+    flex-direction: column;
 
     background-color: lawngreen;
 }
 
 #userBar.userBarOpened {
-    width: 600px;
+    width: 800px;
 }
 
 /* Boutons */
-#userBar:not(.userBarOpened) > span {
+#userBar:not(.userBarOpened) > div:first-of-type > span {
     display: none;
 }
 
-#userBar > span:first-of-type {
+#userBar > div:first-of-type {
+    display: flex;
+    min-height: 80px;
     margin-left: 80px;
+    justify-content: space-around;
 }
 
-#userBar > span {
+#userBar > div:first-of-type > span {
     flex: 1;
     font-size: 20px;
     font-weight: bold;
@@ -35,4 +38,10 @@
 /* Page incrustée */
 #userBarData {
     display: none;
+}
+
+#userBarData.pageLoaded {
+    display: block;
+    max-height: 75vh;
+    overflow-y: scroll;
 }

@@ -229,6 +229,9 @@ function linesChanged()
     lista.children[0].style.setProperty('visibility', 'visible');
     lista.children[1].style.setProperty('visibility', 'visible');
     }
+
+    // Charge la liste des utilisateurs dans la userBar
+    loadUserBarUsers();
 }
 
 
@@ -262,7 +265,9 @@ function post_requestHICheck(episodeHTMLString, isError)
     // Re-envoi la requête en cas d'échec
     if (isError)
     {
-        requestHICheck();
+        setTimeout(function(){
+            requestHICheck();
+        }, 250);
         return;
     }
 

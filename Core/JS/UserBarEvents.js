@@ -5,6 +5,41 @@
 
 
 /**
+* @fn loadUserBarUsers Charge la liste des utilisateurs dans la userBar
+*/
+function loadUserBarUsers()
+{
+    // Récupère les utilisateurs
+    var selects = document.getElementsByTagName('select'),
+        requestedSelect;
+    for (var i = 0; i < selects.length; i++)
+    {
+        if (selects[i].name === 'user')
+        {
+            // Récupère les données
+            requestedSelect = selects[i];
+            break;
+        }
+    }
+
+    // Clone les utilisateurs
+    var clone = requestedSelect.cloneNode(true);
+    clone.removeChild(clone.firstElementChild);
+    clone.setAttribute('id', 'selectUser');
+    document.getElementById('userBar').firstElementChild.firstElementChild.appendChild(clone);
+
+    // Ajoute l'event
+    clone.addEventListener('change', function()
+    {
+        // Ferme les fenêtres
+        triggerPM(true);
+        triggerReport(true);
+        triggerProfile(true);
+    });
+}
+
+
+/**
 * @fn openUserBar Ouvre la barre utilisateur
 * @param bar {Object} Objet HTML de la barre
 */
@@ -36,8 +71,9 @@ function triggerPM(close)
 
     // Ouvre ou ferme
     if(close || button.classList.contains('userBarButtonClicked'))
-    {console.log('pm close')
+    {
         button.classList.remove('userBarButtonClicked');
+        document.getElementById('userBarData').classList.remove('pageLoaded');
     }
     else
     {console.log('pm open')
@@ -59,8 +95,9 @@ function triggerReport(close)
 
     // Ouvre ou ferme
     if(close || button.classList.contains('userBarButtonClicked'))
-    {console.log('report close')
+    {
         button.classList.remove('userBarButtonClicked');
+        document.getElementById('userBarData').classList.remove('pageLoaded');
     }
     else
     {console.log('report open')
@@ -82,13 +119,48 @@ function triggerProfile(close)
 
     // Ouvre ou ferme
     if(close || button.classList.contains('userBarButtonClicked'))
-    {console.log('profil close')
+    {
         button.classList.remove('userBarButtonClicked');
+        document.getElementById('userBarData').classList.remove('pageLoaded');
     }
     else
-    {console.log('profil open')
+    {
         triggerPM(true);
         triggerReport(true);
         button.classList.add('userBarButtonClicked');
+
+        var id = document.getElementById('selectUser'),
+            value = id.options[id.selectedIndex].value;
+
+        ajax('GET', '/user/' + value, '', post_triggerProfile, null, null, null);
     }
+}
+
+
+/**
+* @fn post_triggerProfile Traite l'AJAX du profile
+*/
+function post_triggerProfile(HTMLString, isError)
+{
+    // Créé le DOM virtuel
+    var profHTML = document.createElement('html');
+    profHTML.innerHTML = HTMLString;
+
+    // Récupé le tableau des données
+    var tables = profHTML.getElementsByTagName('table'),
+        dataTable;
+    for (var i = 0; i < tables.length; i++)
+    {
+        if (tables[i].classList.contains('tabel') && tables[i].width === '90%' && tables[i].border === '0')
+        {
+            // Récupère les données
+            dataTable = tables[i];
+            break;
+        }
+    }
+
+    var dataContainer = document.getElementById('userBarData');
+    dataContainer.innerHTML = '';
+    dataContainer.classList.add('pageLoaded');
+    dataContainer.appendChild(dataTable);
 }
