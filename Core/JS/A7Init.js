@@ -25,6 +25,9 @@ if(location.search.search(new RegExp('&lang=1$')) === -1)
             XMLHttpRequest.prototype.send = sendOrig;
             XMLHttpRequest.prototype.open = origOpen;
             XMLHttpRequest.prototype = xhrProto;
+
+            // Demande la page avec complément anglais
+            list(0, false, 1);
         }
     };
 
@@ -48,20 +51,16 @@ var page;
 // Si la page est déjà chargée
 if (document.readyState === 'interactive' || document.readyState === 'complete')
 {
-    // Si la langue n'est pas anglais
-    if(location.search.search(new RegExp('&lang=1$')) === -1)
-    {
-        // Demande la page avec complément anglais
-        list(0, false, 1);
-    }
-
     // Initie l'extension
     init();
 }
 // Sinon, attend la fin du chargement de la page
 else
 {
-    document.addEventListener('DOMContentLoaded', function() { init(); }, false);
+    document.addEventListener('DOMContentLoaded', function()
+    {
+        init();
+    }, false);
 }
 
 
