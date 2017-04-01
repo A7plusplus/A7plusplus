@@ -389,6 +389,9 @@ function post_userBarSendPM(HTMLstring, isError)
     var parent = form.parentElement;
     parent.innerHTML = '';
     parent.appendChild(p);
+
+    // Vide le cache
+    page.userBarData.PM = null;
 }
 
 
@@ -469,6 +472,9 @@ function post_userBarSendReport(HTMLstring, isError)
     var parent = form.parentElement;
     parent.innerHTML = '';
     parent.appendChild(p);
+
+    // Vide le cache
+    page.userBarData.Report = null;
 }
 
 
