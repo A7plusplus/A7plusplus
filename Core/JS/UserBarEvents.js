@@ -26,7 +26,14 @@ function loadUserBarUsers()
     var clone = requestedSelect.cloneNode(true);
     clone.removeChild(clone.firstElementChild);
     clone.setAttribute('id', 'selectUser');
-    document.getElementById('userBar').firstElementChild.firstElementChild.appendChild(clone);
+
+    // Les injecte dans la barre utilisateur
+    var userSpan = document.getElementById('userBar').firstElementChild.firstElementChild;
+    if(userSpan.lastElementChild.tagName === 'SELECT')
+    {
+        userSpan.lastElementChild.remove();
+    }
+    userSpan.appendChild(clone);
 
     // Ajoute l'event
     clone.addEventListener('change', function()
