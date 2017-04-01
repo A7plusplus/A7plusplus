@@ -68,6 +68,17 @@ function triggerUserBar(bar)
 
 
 /**
+* @fn closeUserBarData Ferme la barre de données utilisateur
+*/
+function closeUserBarData()
+{
+    var userBarData = document.getElementById('userBarData');
+    userBarData.classList.remove('userBarDataMinimized');
+    userBarData.classList.remove('pageLoaded');
+}
+
+
+/**
 * @fn openPM Ouvre les messages privés
 * @param close {boolean} Force la fermeture
 */
@@ -80,7 +91,7 @@ function triggerPM(close)
     if(close || button.classList.contains('userBarButtonClicked'))
     {
         button.classList.remove('userBarButtonClicked');
-        document.getElementById('userBarData').classList.remove('pageLoaded');
+        closeUserBarData();
     }
     else
     {
@@ -116,7 +127,7 @@ function triggerReport(close)
     if(close || button.classList.contains('userBarButtonClicked'))
     {
         button.classList.remove('userBarButtonClicked');
-        document.getElementById('userBarData').classList.remove('pageLoaded');
+        closeUserBarData();
     }
     else
     {
@@ -147,7 +158,7 @@ function triggerProfile(close)
     if(close || button.classList.contains('userBarButtonClicked'))
     {
         button.classList.remove('userBarButtonClicked');
-        document.getElementById('userBarData').classList.remove('pageLoaded');
+        closeUserBarData();
     }
     else
     {
@@ -399,4 +410,22 @@ function post_userBarSendReport(HTMLstring, isError)
     var parent = form.parentElement;
     parent.innerHTML = '';
     parent.appendChild(p);
+}
+
+
+/**
+* @fn minimizeUserData Réduit la fenêtre de données de la barre utilisateur
+*/
+function triggerUserData()
+{
+    var userBarData = document.getElementById('userBarData');
+
+    if(userBarData.classList.contains('userBarDataMinimized'))
+    {
+        userBarData.classList.remove('userBarDataMinimized');
+    }
+    else
+    {
+        userBarData.classList.add('userBarDataMinimized');
+    }
 }

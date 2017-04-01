@@ -52,6 +52,20 @@
     background-color: magenta;
 }
 
+#userBarData.pageLoaded.userBarDataMinimized {
+    max-height: 0;
+}
+
+#userBarData + div {
+    display: none;
+    min-height: 25px;
+}
+
+#userBarData.pageLoaded + div {
+    display: block;
+}
+
+/* Nom du destinateire - risque d'être supprimé */
 #userBarData > form > table.tabel > tbody > tr:first-of-type {
     display: none;
 }

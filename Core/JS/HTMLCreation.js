@@ -383,6 +383,7 @@ function createUserBarStruct()
 
     var buttonContainer  = document.createElement('div');
     var dataContainer    = document.createElement('div');
+    var minimizeButton   = document.createElement('div');
 
     var containerUser    = document.createElement('span');
     var containerPM      = document.createElement('span');
@@ -434,6 +435,13 @@ function createUserBarStruct()
     {
         event.stopImmediatePropagation();
     }, false);
+
+    minimizeButton.addEventListener('click', function(event)
+    {
+        triggerUserData();
+        event.stopImmediatePropagation();
+    }, false);
+
     useBarContainer.setAttribute('id', 'userBar');
     useBarContainer.addEventListener('click', function()
     {
@@ -454,6 +462,7 @@ function createUserBarStruct()
 
     useBarContainer.appendChild(buttonContainer);
     useBarContainer.appendChild(dataContainer);
+    useBarContainer.appendChild(minimizeButton);
 
     return useBarContainer;
 }
