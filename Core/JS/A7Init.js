@@ -106,7 +106,8 @@ function init()
         refreshCommentsTimeoutId: null,
         queryInfos: pageInfos,
         commentNumber: -1,
-        tempDisablePopupRemoval: false
+        tempDisablePopupRemoval: false,
+        userBarData: {}
         };
 
     // Démarre l'actualisation de l'avancement (toutes les minutes)

@@ -42,6 +42,9 @@ function loadUserBarUsers()
         triggerPM(true);
         triggerReport(true);
         triggerProfile(true);
+
+        // Vide le cache
+        page.userBarData = {};
     });
 }
 
@@ -88,8 +91,14 @@ function triggerPM(close)
     var button = document.getElementById('userBar').firstElementChild.children[1];
 
     // Ouvre ou ferme
-    if(close || button.classList.contains('userBarButtonClicked'))
+    var isOpened = button.classList.contains('userBarButtonClicked');
+    if(close || isOpened)
     {
+        if(isOpened)
+        {
+            // Sauvegarde l'état
+            page.userBarData.PM = document.getElementById('userBarData').firstElementChild;
+        }
         button.classList.remove('userBarButtonClicked');
         closeUserBarData();
     }
@@ -100,16 +109,26 @@ function triggerPM(close)
         triggerProfile(true);
         button.classList.add('userBarButtonClicked');
 
-        // Affiche le logo de chargement
         var dataContainer = document.getElementById('userBarData');
-        resetToLoadingImage(dataContainer);
         dataContainer.classList.add('pageLoaded');
 
-        // Récupère l'id utilisateur
-        var id = document.getElementById('selectUser'),
-            value = id.options[id.selectedIndex].value;
+        // Ne recharge pas s'il n'y a pas besoin
+        if(page.userBarData.PM)
+        {
+            dataContainer.innerHTML = '';
+            dataContainer.appendChild(page.userBarData.PM);
+        }
+        else
+        {
+            // Affiche le logo de chargement
+            resetToLoadingImage(dataContainer);
 
-        ajax('GET', '/msgcreate.php?to=' + value, '', post_triggerPM, null, null, null);
+            // Récupère l'id utilisateur
+            var id = document.getElementById('selectUser'),
+                value = id.options[id.selectedIndex].value;
+
+            ajax('GET', '/msgcreate.php?to=' + value, '', post_triggerPM, null, null, null);
+        }
     }
 }
 
@@ -124,8 +143,14 @@ function triggerReport(close)
     var button = document.getElementById('userBar').firstElementChild.children[2];
 
     // Ouvre ou ferme
-    if(close || button.classList.contains('userBarButtonClicked'))
+    var isOpened = button.classList.contains('userBarButtonClicked');
+    if(close || isOpened)
     {
+        if(isOpened)
+        {
+            // Sauvegarde l'état
+            page.userBarData.Report = document.getElementById('userBarData').firstElementChild;
+        }
         button.classList.remove('userBarButtonClicked');
         closeUserBarData();
     }
@@ -135,12 +160,22 @@ function triggerReport(close)
         triggerProfile(true);
         button.classList.add('userBarButtonClicked');
 
-        // Affiche le logo de chargement
         var dataContainer = document.getElementById('userBarData');
-        resetToLoadingImage(dataContainer);
         dataContainer.classList.add('pageLoaded');
 
-        ajax('GET', '/badsub.php' + location.search, '', post_triggerReport, null, null, null);
+        // Ne recharge pas s'il n'y a pas besoin
+        if(page.userBarData.Report)
+        {
+            dataContainer.innerHTML = '';
+            dataContainer.appendChild(page.userBarData.Report);
+        }
+        else
+        {
+            // Affiche le logo de chargement
+            resetToLoadingImage(dataContainer);
+
+            ajax('GET', '/badsub.php' + location.search, '', post_triggerReport, null, null, null);
+        }
     }
 }
 
@@ -155,8 +190,14 @@ function triggerProfile(close)
     var button = document.getElementById('userBar').firstElementChild.lastElementChild;
 
     // Ouvre ou ferme
-    if(close || button.classList.contains('userBarButtonClicked'))
+    var isOpened = button.classList.contains('userBarButtonClicked');
+    if(close || isOpened)
     {
+        if(isOpened)
+        {
+            // Sauvegarde l'état
+            page.userBarData.Prof = document.getElementById('userBarData').firstElementChild;
+        }
         button.classList.remove('userBarButtonClicked');
         closeUserBarData();
     }
@@ -167,16 +208,26 @@ function triggerProfile(close)
         triggerReport(true);
         button.classList.add('userBarButtonClicked');
 
-        // Affiche le logo de chargement
         var dataContainer = document.getElementById('userBarData');
-        resetToLoadingImage(dataContainer);
         dataContainer.classList.add('pageLoaded');
 
-        // Récupère l'id utilisateur
-        var id = document.getElementById('selectUser'),
-            value = id.options[id.selectedIndex].value;
+        // Ne recharge pas s'il n'y a pas besoin
+        if(page.userBarData.Prof)
+        {
+            dataContainer.innerHTML = '';
+            dataContainer.appendChild(page.userBarData.Prof);
+        }
+        else
+        {
+            // Affiche le logo de chargement
+            resetToLoadingImage(dataContainer);
 
-        ajax('GET', '/user/' + value, '', post_triggerProfile, null, null, null);
+            // Récupère l'id utilisateur
+            var id = document.getElementById('selectUser'),
+                value = id.options[id.selectedIndex].value;
+
+            ajax('GET', '/user/' + value, '', post_triggerProfile, null, null, null);
+        }
     }
 }
 
