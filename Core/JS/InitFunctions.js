@@ -324,10 +324,7 @@ function searchForUpdate()
 function post_searchForUpdate(data, isError)
 {
     // On considère qu'il n'y a pas de MAJ
-    if (isError)
-    {
-        return;
-    }
+    if(isError) return;
 
     // Comparaison (MAJ dispo)
     if(A7Settings.NUMERIC_VERSION_INFO < parseInt(data))
