@@ -91,12 +91,10 @@ function triggerPM(close)
 
         // Affiche le logo de chargement
         var dataContainer = document.getElementById('userBarData');
-        dataContainer.innerHTML = '';
-        var img = document.createElement('img');
-        img.src = '/images/loader.gif';
-        dataContainer.appendChild(img);
+        resetToLoadingImage(dataContainer);
         dataContainer.classList.add('pageLoaded');
 
+        // Récupère l'id utilisateur
         var id = document.getElementById('selectUser'),
             value = id.options[id.selectedIndex].value;
 
@@ -153,12 +151,10 @@ function triggerProfile(close)
 
         // Affiche le logo de chargement
         var dataContainer = document.getElementById('userBarData');
-        dataContainer.innerHTML = '';
-        var img = document.createElement('img');
-        img.src = '/images/loader.gif';
-        dataContainer.appendChild(img);
+        resetToLoadingImage(dataContainer);
         dataContainer.classList.add('pageLoaded');
 
+        // Récupère l'id utilisateur
         var id = document.getElementById('selectUser'),
             value = id.options[id.selectedIndex].value;
 
@@ -169,6 +165,8 @@ function triggerProfile(close)
 
 /**
 * @fn post_triggerPM Traite l'AJAX du message privé
+* @param {String} HTMLString Réponse de la requête AJAX
+* @param {Boolean} isError Status de réussite de la requête AJAX
 */
 function post_triggerPM(HTMLString, isError)
 {
@@ -243,7 +241,7 @@ function userBarSendPM(form)
     var textarea = form.getElementsByTagName('textarea')[0];
 
     // Prépare les données
-    var params = 'to='         + inputs[0].value +
+    var params = 'to='         + encodeURIComponent(inputs[0].value) +
                  '&subject='   + encodeURIComponent(inputs[1].value) +
                  '&msgtext='   + encodeURIComponent('<p>' + textarea.value + '</p>'),
         url    = '/msgsend.php',
@@ -261,6 +259,8 @@ function userBarSendPM(form)
 
 /**
 * @fn post_userBarSendPM Traite le retour du l'envoi du message
+* @param {String} HTMLString Réponse de la requête AJAX
+* @param {Boolean} isError Status de réussite de la requête AJAX
 */
 function post_userBarSendPM(HTMLstring, isError)
 {
