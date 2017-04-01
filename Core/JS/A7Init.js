@@ -133,7 +133,7 @@ function init()
     }
 
     // Initie la requête pour savoir si on est en HI
-    requestHICheck();
+    setTimeout(requestHICheck, 750);
 
     // Actualisation des commentaires (ce qui active aussi l'actualisation à intervalles réguliers)
     refreshComments();
