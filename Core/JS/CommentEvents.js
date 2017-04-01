@@ -22,7 +22,7 @@ function refreshComments()
     // Récupération des infos
     var subInfo = page.queryInfos;
 
-    // Construit et lance la requête (oui... semi GET, semi POST)
+    // Construit et lance la requête
     var params = '&fversion=' + subInfo.fversion +
                  '&langto='   + subInfo.lang,
         url = '/translate_comments.php?id=' + subInfo.id,

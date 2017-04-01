@@ -116,10 +116,7 @@ function pre_update(tipo, seqNumber)
         action = 'POST';
 
     // Indique que c'est en envoi
-    textCell.innerHTML = '';
-    var img = document.createElement('img');
-    img.src = '/images/loader.gif';
-    textCell.appendChild(img);
+    resetToLoadingImage(textCell);
 
     // Effectue l'envoi des données
     ajax(action, url, params, post_update, seqNumber, textArea.value, textArea.defaultValue);

@@ -94,7 +94,7 @@ function pre_updatetime(seqNumber)
         action = 'POST';
 
     // Indique que c'est en envoi
-    timeCell.firstElementChild.outerHTML = '<img src="/images/loader.gif">';
+    resetToLoadingImage(timeCell);
 
     // Effectue l'envoi des données
     ajax(action, url, params, post_updateTime, seqNumber, [timeStart.value, timeEnd.value], [timeStart.defaultValue, timeEnd.defaultValue]);

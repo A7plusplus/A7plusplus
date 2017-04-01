@@ -130,6 +130,22 @@ function getRSRatingIndex(counts, duration)
 
 
 /**
+* @fn resetToLoadingImage Réinitialise l'objet HTML en une image de chargement
+* @param {Object} object Objet HTML a réinitialiser
+*/
+function resetToLoadingImage(object)
+{
+    // Supprime le contenu
+    object.innerHTML = '';
+
+    // Créé et ajoute l'image
+    var img = document.createElement('img');
+    img.src = '/images/loader.gif';
+    object.appendChild(img);
+}
+
+
+/**
 * @fn ajax Effectue une requête ajax
 * @param {string} action POST / GET / UPDATE etc
 * @param {string} url Adresse
