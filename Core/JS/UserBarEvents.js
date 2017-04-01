@@ -119,10 +119,17 @@ function triggerReport(close)
         document.getElementById('userBarData').classList.remove('pageLoaded');
     }
     else
-    {console.log('report open')
+    {
         triggerPM(true);
         triggerProfile(true);
         button.classList.add('userBarButtonClicked');
+
+        // Affiche le logo de chargement
+        var dataContainer = document.getElementById('userBarData');
+        resetToLoadingImage(dataContainer);
+        dataContainer.classList.add('pageLoaded');
+
+        ajax('GET', '/badsub.php' + location.search, '', post_triggerReport, null, null, null);
     }
 }
 
@@ -197,7 +204,45 @@ function post_triggerPM(HTMLString, isError)
 
 
 /**
+* @fn post_triggerReport Traite l'AJAX du report
+* @param {String} HTMLString Réponse de la requête AJAX
+* @param {Boolean} isError Status de réussite de la requête AJAX
+*/
+function post_triggerReport(HTMLString, isError)
+{
+    // Créé le DOM virtuel
+    var reportHTML = document.createElement('html');
+    reportHTML.innerHTML = HTMLString;
+
+    // Récupère le formulaire et le nettoye
+    var form = reportHTML.getElementsByTagName('form')[0];
+    var tbody = form.firstElementChild.firstElementChild;
+    for(var i = 0; i < 8; i++)
+    {
+        tbody.firstElementChild.remove();
+    }
+
+    // Récupère l'id utilisateur incriminé
+    var id = document.getElementById('selectUser'),
+        user = id.options[id.selectedIndex].innerText,
+        textarea = form.getElementsByTagName('textarea')[0];
+    textarea.value = '[A7++] Report user: ' + user + '\n';
+
+    // Réécrit la fonction d'envoi
+    form.setAttribute('action', '#');
+    form.setAttribute('onsubmit', 'return userBarSendReport(this)');
+
+    // L'affiche
+    var dataContainer = document.getElementById('userBarData');
+    dataContainer.innerHTML = '';
+    dataContainer.appendChild(form);
+}
+
+
+/**
 * @fn post_triggerProfile Traite l'AJAX du profile
+* @param {String} HTMLString Réponse de la requête AJAX
+* @param {Boolean} isError Status de réussite de la requête AJAX
 */
 function post_triggerProfile(HTMLString, isError)
 {
@@ -267,6 +312,73 @@ function post_userBarSendPM(HTMLstring, isError)
     // On est toujours sur la page
     var form = document.getElementById('userBarData').firstElementChild;
     if(!form || form.onsubmit.toString().substr(36, 19) !== 'userBarSendPM(this)' || !form.classList.contains('messageSent'))
+    {
+        return;
+    }
+
+    if(isError)
+    {
+        form.classList.add('ajaxError');
+        form.title = loc.messageSendError;
+        form.classList.remove('messageSent');
+        return;
+    }
+
+    // Tout va bien
+    var p = document.createElement('p');
+    p.classList.add('messageSentSuccess');
+    p.title = loc.messageSent;
+
+    var parent = form.parentElement;
+    parent.innerHTML = '';
+    parent.appendChild(p);
+}
+
+
+/**
+* @fn userBarSendReport Envoi un rapport
+* @param {Object} form Noeud HTML du formulaire de rapport
+*/
+function userBarSendReport(form)
+{
+    // Déjà en cours d'envoi
+    if(form.classList.contains('messageSent'))
+    {
+        return false;
+    }
+
+    // Récupère les données
+    var textarea = form.getElementsByTagName('textarea')[0],
+        subInfo  = page.queryInfos;
+
+    // Prépare les données
+    var params = 'comment='   + encodeURIComponent(textarea.value) +
+                 '&fversion=' + subInfo.fversion +
+                 '&id='       + subInfo.id +
+                 '&lang='     + subInfo.lang,
+        url    = 'badsub_do.php',
+        action = 'POST';
+
+    // Indique que c'est en envoi
+    var parent = form.classList.add('messageSent');
+
+    // Effectue l'envoi des données
+    ajax(action, url, params, post_userBarSendReport, null, null, null);
+
+    return false;
+}
+
+
+/**
+* @fn post_userBarSendReport Traite le retour du l'envoi du rapport
+* @param {String} HTMLString Réponse de la requête AJAX
+* @param {Boolean} isError Status de réussite de la requête AJAX
+*/
+function post_userBarSendReport(HTMLstring, isError)
+{
+    // On est toujours sur la page
+    var form = document.getElementById('userBarData').firstElementChild;
+    if(!form || form.onsubmit.toString().substr(36, 23) !== 'userBarSendReport(this)' || !form.classList.contains('messageSent'))
     {
         return;
     }
