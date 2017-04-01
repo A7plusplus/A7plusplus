@@ -311,58 +311,61 @@ function updateStateOfTranslation()
     if (spanState === null)
         return;
 
-    // Prépare la requête
-    var xhr = new XMLHttpRequest();
-
     // Mise en forme
     spanState.setAttribute('class', 'stateRefreshing');
 
-    xhr.onreadystatechange = function()
-    {
-        if (xhr.readyState == 4 && xhr.status == 200)
-        {
-            var response = xhr.responseText;
-
-            // Affiche l'avancement
-            spanState.textContent = response;
-
-            // Récupère l'id du setInterval
-            var timeIntervalId = page.stateIntervalId;
-
-            if (response.indexOf('%') === -1)
-            {
-                // Si le setInterval est toujours actif
-                if (timeIntervalId !== null)
-                {
-                    // Arrête d'essayer d'actualiser
-                    clearInterval(timeIntervalId);
-
-                    // Indique qu'il est arrêté
-                    page.stateIntervalId = null;
-                }
-
-                spanState.setAttribute('class', 'stateCompleted');
-            }
-            else
-            {
-                // Si l'intervalle est désactivé, le réactive
-                if (timeIntervalId === null)
-                {
-                    page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
-                }
-
-                spanState.setAttribute('class', 'stateNotCompleted');
-            }
-        }
-    };
-
     // Récupère les informations
-    var subInfo = page.queryInfos;
+    var subInfo = page.queryInfos,
+        url = '/translate_getstate.php?id=' + subInfo.id +
+              '&fversion='                  + subInfo.fversion +
+              '&langto='                    + subInfo.lang;
 
-    // Prépare et envoie la requête
-    xhr.timeout = 30000;
-    xhr.open('GET', 'translate_getstate.php?id=' + subInfo.id + '&fversion=' + subInfo.fversion + '&langto=' + subInfo.lang, true);
-    xhr.send();
+    // Envoie la requête
+    ajax('GET', url, '', post_updateStateOfTranslation, null, null, null);
+}
+
+
+/**
+* @fn post_updateStateOfTranslation Traite l'AJAX de l'état d'avancement
+* @param {String} HTMLString Réponse de la requête AJAX
+* @param {Boolean} isError Status de réussite de la requête AJAX
+*/
+function post_updateStateOfTranslation(HTMLString, isError)
+{
+    // On attend le prochain rapatriement des données
+    if(isError) return;
+
+    // Actualise l'avancement
+    var spanState = document.getElementById('spanState');
+    spanState.textContent = HTMLString;
+
+    // Récupère l'id du setInterval
+    var timeIntervalId = page.stateIntervalId;
+
+    if (HTMLString.indexOf('%') === -1)
+    {
+        // Si le setInterval est toujours actif
+        if (timeIntervalId !== null)
+        {
+            // Arrête d'essayer d'actualiser
+            clearInterval(timeIntervalId);
+
+            // Indique qu'il est arrêté
+            page.stateIntervalId = null;
+        }
+
+        spanState.setAttribute('class', 'stateCompleted');
+    }
+    else
+    {
+        // Si l'intervalle est désactivé, le réactive
+        if (timeIntervalId === null)
+        {
+            page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
+        }
+
+        spanState.setAttribute('class', 'stateNotCompleted');
+    }
 }
 
 
