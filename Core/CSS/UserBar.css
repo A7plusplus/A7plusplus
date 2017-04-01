@@ -1,10 +1,10 @@
 #userBar {
-    top: 20px;
-    left: 20px;
+    top: 10px;
+    left: 10px;
     width: 80px;
-    display: flex;
+    position: fixed;
     min-height: 80px;
-    position: absolute;
+    border-radius: 20px;
     flex-direction: column;
 
     background-color: lawngreen;
@@ -33,6 +33,10 @@
     text-align: center;
 
     background-color: aquamarine;
+}
+
+#userBar > div:first-of-type > span:not(:first-of-type) {
+    cursor: pointer;
 }
 
 /* Page incrustée */
