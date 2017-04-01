@@ -278,11 +278,6 @@ function post_triggerReport(HTMLString, isError)
 
     // Récupère le formulaire et le nettoye
     var form = reportHTML.getElementsByTagName('form')[0];
-    var tbody = form.firstElementChild.firstElementChild;
-    for(var i = 0; i < 8; i++)
-    {
-        tbody.firstElementChild.remove();
-    }
 
     // Récupère l'id utilisateur incriminé
     var id = document.getElementById('selectUser'),
@@ -420,6 +415,19 @@ function userBarSendReport(form)
                  '&lang='     + subInfo.lang,
         url    = 'badsub_do.php',
         action = 'POST';
+
+    // Traite les checkbox
+    var inputs = form.getElementsByTagName('input');
+    for(var i = 0; i < inputs.length; i++)
+    {
+        if(inputs[i].type === 'checkbox')
+        {
+            if(inputs[i].checked)
+            {
+                params += '&' + inputs[i].name + '=true';
+            }
+        }
+    }
 
     // Indique que c'est en envoi
     var parent = form.classList.add('messageSent');
