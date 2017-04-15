@@ -443,6 +443,7 @@ function createUserBarStruct()
     }, false);
 
     useBarContainer.setAttribute('id', 'userBar');
+    useBarContainer.setAttribute('draggable', 'true');
     useBarContainer.addEventListener('click', function()
     {
         triggerUserBar(useBarContainer);

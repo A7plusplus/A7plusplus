@@ -119,7 +119,7 @@ function init()
     listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
-    // Récupère la taille enregistrée, l'état de lock et l'état d'épinglement
+    // Récupère la taille enregistrée, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
     if(localStorage)
     {
         updateCommentHeightFromSaved(listaParent.lastElementChild.previousElementSibling, 'A7ppCommentWindowSize', 180, 0.8);
@@ -130,6 +130,17 @@ function init()
         if(localStorage.getItem('A7ppCommentWindowLockedDown') === "true")
         {
             lockComment();
+        }
+
+        // Barre utilisateur
+        var userBarPos = localStorage.getItem('A7ppUserBarPosition');
+        if(userBarPos)
+        {
+            var data = userBarPos.split(',');
+            var left = data[0],
+                top  = data[1];
+
+            setUserBarSize(parseInt(left, 10), parseInt(top, 10));
         }
     }
 

@@ -28,7 +28,8 @@ function loadUserBarUsers()
     clone.setAttribute('id', 'selectUser');
 
     // Les injecte dans la barre utilisateur
-    var userSpan = document.getElementById('userBar').firstElementChild.firstElementChild;
+    var userBar  = document.getElementById('userBar');
+    var userSpan = userBar.firstElementChild.firstElementChild;
     if(userSpan.lastElementChild.tagName === 'SELECT')
     {
         userSpan.lastElementChild.remove();
@@ -46,6 +47,37 @@ function loadUserBarUsers()
         // Vide le cache
         page.userBarData = {};
     });
+
+    // Ajoute le drag and drop
+    userBar.addEventListener('dragstart', userBarDragStart, false);
+    document.body.addEventListener('dragover', userBarDragOver, false);
+    document.body.addEventListener('drop', userBarDragDrop, false);
+}
+
+
+/**
+* @fn setUserBarSize Déplace la barre utilisateur
+* @param {Integer} left Position X
+* @param {Integer} top Position Y
+*/
+function setUserBarSize(left, top)
+{
+    var userBar  = document.getElementById('userBar');
+
+    // Ne dépasse pas
+    left = left < 0 ? 0 : left + userBar.offsetWidth  > window.innerWidth  ? window.innerWidth  - userBar.offsetWidth  : left;
+    top  = top < 0  ? 0 : top  + userBar.offsetHeight > window.innerHeight ? window.innerHeight - userBar.offsetHeight : top;
+
+
+    // Applique la position
+    userBar.style.left = left + 'px';
+    userBar.style.top = top + 'px';
+
+    // Enregistre
+    if(localStorage)
+    {
+        localStorage.setItem('A7ppUserBarPosition', left + ',' + top);
+    }
 }
 
 
@@ -493,4 +525,50 @@ function triggerUserData()
     {
         userBarData.classList.add('userBarDataMinimized');
     }
+}
+
+
+/**
+* @fn userBarDragStart Récupère et enregistre la position initiale
+* @param {object} event Objet evenement
+*/
+function userBarDragStart(event)
+{
+    var style = window.getComputedStyle(event.target, null);
+    event.dataTransfer.setData('text/plain',
+        (parseInt(style.getPropertyValue('left'), 10) - event.clientX) +
+        ',' +
+        (parseInt(style.getPropertyValue('top'), 10) - event.clientY)
+    );
+}
+
+
+/**
+* @fn userBarDragOver Empêche l'action par défaut
+* @param {object} event Objet evenement
+*/
+function userBarDragOver(event)
+{
+    event.preventDefault();
+    return false;
+}
+
+
+/**
+* @fn userBarDragDrop Déplace la barre utilisateur
+* @param {object} event Objet evenement
+*/
+function userBarDragDrop(event)
+{
+    // Récupère les positions
+    var offset  = event.dataTransfer.getData('text/plain').split(',');
+
+    setUserBarSize(
+        event.clientX + parseInt(offset[0], 10),
+        event.clientY + parseInt(offset[1], 10)
+    );
+
+    // Empêche l'action par défaut
+    event.preventDefault();
+    return false;
 }
