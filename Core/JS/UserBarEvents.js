@@ -120,7 +120,8 @@ function closeUserBarData()
 function triggerPM(close)
 {
     // Récupère le bouton
-    var button = document.getElementById('userBar').firstElementChild.children[1];
+    var userBar = document.getElementById('userBar'),
+        button  = userBar.firstElementChild.children[1];
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
@@ -132,6 +133,7 @@ function triggerPM(close)
             page.userBarData.PM = document.getElementById('userBarData').firstElementChild;
         }
         button.classList.remove('userBarButtonClicked');
+        userBar.classList.remove('userBarDataOpened');
         closeUserBarData();
     }
     else
@@ -139,6 +141,7 @@ function triggerPM(close)
         // Ferme les autres boutons
         triggerReport(true);
         triggerProfile(true);
+        userBar.classList.add('userBarDataOpened');
         button.classList.add('userBarButtonClicked');
 
         var dataContainer = document.getElementById('userBarData');
@@ -172,7 +175,8 @@ function triggerPM(close)
 function triggerReport(close)
 {
     // Récupère le bouton
-    var button = document.getElementById('userBar').firstElementChild.children[2];
+    var userBar = document.getElementById('userBar'),
+        button  = userBar.firstElementChild.children[2];
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
@@ -184,12 +188,14 @@ function triggerReport(close)
             page.userBarData.Report = document.getElementById('userBarData').firstElementChild;
         }
         button.classList.remove('userBarButtonClicked');
+        userBar.classList.remove('userBarDataOpened');
         closeUserBarData();
     }
     else
     {
         triggerPM(true);
         triggerProfile(true);
+        userBar.classList.add('userBarDataOpened');
         button.classList.add('userBarButtonClicked');
 
         var dataContainer = document.getElementById('userBarData');
@@ -219,7 +225,8 @@ function triggerReport(close)
 function triggerProfile(close)
 {
     // Récupère le bouton
-    var button = document.getElementById('userBar').firstElementChild.lastElementChild;
+    var userBar = document.getElementById('userBar'),
+        button  = userBar.firstElementChild.lastElementChild;
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
@@ -231,6 +238,7 @@ function triggerProfile(close)
             page.userBarData.Prof = document.getElementById('userBarData').firstElementChild;
         }
         button.classList.remove('userBarButtonClicked');
+        userBar.classList.remove('userBarDataOpened');
         closeUserBarData();
     }
     else
@@ -238,6 +246,7 @@ function triggerProfile(close)
         // Ferme le reste
         triggerPM(true);
         triggerReport(true);
+        userBar.classList.add('userBarDataOpened');
         button.classList.add('userBarButtonClicked');
 
         var dataContainer = document.getElementById('userBarData');
