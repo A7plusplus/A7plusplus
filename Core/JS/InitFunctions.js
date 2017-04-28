@@ -116,7 +116,7 @@ function linesChanged()
     // Renomme les colonnes ou leur ajoute un titre
     headerRow.children[page.lock    ].firstElementChild.title = loc.sequence;
     headerRow.children[page.lock + 1].firstElementChild.title = loc.version;
-    headerRow.children[page.lock + 4].firstElementChild.textContent += ' & ' + loc.duration + ' + RS Rating';
+    headerRow.children[page.lock + 4].firstElementChild.textContent = loc.duration + ' + RS Rating';
 
     // Récupère le nombre de lignes
     var tableOfLine = headerRow.parentElement;
