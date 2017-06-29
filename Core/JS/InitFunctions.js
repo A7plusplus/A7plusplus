@@ -129,9 +129,7 @@ function linesChanged()
         currentLine = tableOfLine.children[i];
 
         // Création de la cellule pour le nombre de caractères
-        var cellTextCount = document.createElement('div');
         var cell          = document.createElement('td');
-        cell.appendChild(cellTextCount);
         cell.setAttribute('class', 'counter');
 
         // Cellules utiles
@@ -191,7 +189,7 @@ function linesChanged()
         var charPerLine = charCount(textCell.innerHTML.split('<br>'), false);
 
         // Ajoute les compteurs de caractères des différentes lignes
-        updateCharCountCell(cellTextCount, charPerLine);
+        updateCharCountCell(cell, charPerLine);
 
         // Ajoute la cellule des compteurs dans la ligne
         currentLine.insertBefore(cell, textCell);
@@ -241,16 +239,7 @@ function linesChanged()
 function requestHICheck()
 {
     // Récupère les infos
-    var episodeUrl = '',
-        parent = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
-    for(var i = 0; i < parent.childElementCount; i++)
-    {
-        if(parent.children[i].nodeName === 'BIG')
-        {
-            episodeUrl = parent.children[i].firstElementChild.href;
-            break;
-        }
-    }
+    var episodeUrl = document.getElementById('A7Info').previousElementSibling.firstElementChild.href;console.log(episodeUrl);
 
     // Envoie la requête
     ajax('GET', episodeUrl, '', post_requestHICheck, null, null);
