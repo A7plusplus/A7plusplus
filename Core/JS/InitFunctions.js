@@ -213,7 +213,7 @@ function linesChanged()
         var rs      = document.createElement('b');
 
         var charNumText = document.createTextNode(loc.charNumber);
-        var rsText      = document.createTextNode('Reading Speed ' + loc.rSLegend);
+        var rsText      = document.createTextNode('Reading Speed ' + loc.RSLegend + ' ');
 
         charNum.textContent = '(' + loc.charNumberTiny + ') ';
         rs.textContent      = ' (RS) ';
@@ -286,7 +286,7 @@ function post_requestHICheck(episodeHTMLString, isError)
         if (imgs[i].src === 'http://www.addic7ed.com/images/hi.jpg')
         {
             // Ajoute le logo
-            var parentDiv = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
+            var parentDiv = document.getElementById('A7Info').parentElement;
 
             if(parentDiv.lastElementChild.id !== 'hearingImpaired')
             {
