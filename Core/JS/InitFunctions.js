@@ -239,7 +239,7 @@ function linesChanged()
 function requestHICheck()
 {
     // Récupère les infos
-    var episodeUrl = document.getElementById('A7Info').previousElementSibling.firstElementChild.href;console.log(episodeUrl);
+    var episodeUrl = document.getElementById('A7Info').previousElementSibling.firstElementChild.href;
 
     // Envoie la requête
     ajax('GET', episodeUrl, '', post_requestHICheck, null, null);
