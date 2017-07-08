@@ -64,9 +64,27 @@ function setUserBarSize(left, top)
 {
     var userBar  = document.getElementById('userBar');
 
+    // Calcule les proportions
+    var stickyFactor  = window.innerHeight * A7Settings.stickyFactor;
+
     // Ne dépasse pas
-    left = left < 0 ? 0 : left + userBar.offsetWidth  > window.innerWidth  ? window.innerWidth  - userBar.offsetWidth  : left;
-    top  = top < 0  ? 0 : top  + userBar.offsetHeight > window.innerHeight ? window.innerHeight - userBar.offsetHeight : top;
+    left = left < 0 + stickyFactor ? 0 : left + userBar.offsetWidth  + stickyFactor > window.innerWidth  ? window.innerWidth  - userBar.offsetWidth  : left;
+    top  = top  < 0 + stickyFactor ? 0 : top  + userBar.offsetHeight + stickyFactor > window.innerHeight ? window.innerHeight - userBar.offsetHeight : top;
+
+
+    // Ajoute les classes
+    if(left === 0 || top === 0)
+    {
+        userBar.classList.add(left === 0 ? 'userBarLeft' : 'userBarTop');
+    }
+    else if(left === window.innerWidth - userBar.offsetWidth || top === window.innerHeight - userBar.offsetHeight)
+    {
+        userBar.classList.add(left === window.innerWidth - userBar.offsetWidth ? 'userBarRight' : 'userBarBottom');
+    }
+    else
+    {
+        userBar.classList.remove('userBarLeft', 'userBarTop', 'userBarRight', 'userBarBottom');
+    }
 
 
     // Applique la position

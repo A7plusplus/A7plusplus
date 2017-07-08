@@ -38,5 +38,8 @@ var A7Settings = {
          '7' : [31,        'A bit fast',         'bfast'],
          '8' : [35,        'Fast, acceptable',   'afast'],
          '9' : [Infinity,  'TOO FAST',           'tfast']
-    }
+    },
+
+    // Facteur de collage de la userBar (0 - 0.1 => 0 - 10%)
+    stickyFactor : 0.02
 };

@@ -131,3 +131,21 @@
 
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABWElEQVR42u3Wr0sFQRAH8K8IBkEsCqIviNy7u2ITBKNgtQmCxfqKNpvw0Pdj9/AvsBusVsFiMohBo0lsJhEMguiMsscr3j7kYObBfGHawn6Y290bwGKxWCwWyyhlrofZ1OEmO8a6WuSSw3TucZsX+EoLvKvEMpI7ychQjG16bKhGDtRH0sOmOHLmAFMVyN/OOlyLIufbmMw8rqqQVPfccfVIfgXq23UL43kHa+qRWYEzOkefeRe70fVtTBDiUgQ5uAk9J3tVSFp/IY4MRZ/18F9Ih4d6kZS/kKESjxNaNjYskh73xwWPRu23tllgP/IJuUOnjKTzey6CLLvq0IphCfEkigxJ+tj5ufGx7koiQ9IutvmfrBpZdpYGh2GxhHwWQZYXjEYyHs1iyEYfifg0xMMu3fY31ciQxSOsEupVNbIchjtYIdyLamQIHYFlQt6pRlosFotlNPINrYZ+dbbgvtcAAAAASUVORK5CYII=");
 }
+
+/* ============================= Classes Sticky ============================= */
+
+#userBar.userBarLeft {
+
+}
+
+#userBar.userBarTop {
+
+}
+
+#userBar.userBarRight {
+
+}
+
+#userBar.userBarBottom {
+
+}
