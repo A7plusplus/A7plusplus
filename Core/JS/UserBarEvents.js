@@ -73,18 +73,17 @@ function setUserBarSize(left, top)
 
 
     // Ajoute les classes
-    if(left === 0 || top === 0)
-    {
-        userBar.classList.add(left === 0 ? 'userBarLeft' : 'userBarTop');
-    }
-    else if(left === window.innerWidth - userBar.offsetWidth || top === window.innerHeight - userBar.offsetHeight)
-    {
-        userBar.classList.add(left === window.innerWidth - userBar.offsetWidth ? 'userBarRight' : 'userBarBottom');
-    }
-    else
-    {
-        userBar.classList.remove('userBarLeft', 'userBarTop', 'userBarRight', 'userBarBottom');
-    }
+    if(left === 0) userBar.classList.add('userBarLeft');
+    else userBar.classList.remove('userBarLeft');
+
+    if(top === 0) userBar.classList.add('userBarTop');
+    else userBar.classList.remove('userBarTop');
+
+    if(left === window.innerWidth - userBar.offsetWidth) userBar.classList.add('userBarRight');
+    else userBar.classList.remove('userBarRight');
+    
+    if(top === window.innerHeight - userBar.offsetHeight) userBar.classList.add('userBarBottom');
+    else userBar.classList.remove('userBarBottom');
 
 
     // Applique la position
