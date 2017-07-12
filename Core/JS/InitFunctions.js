@@ -15,11 +15,18 @@ function addFunctionToLinks(nameOfFunction)
     // Recherche les liens faisant changer de page, et leur ajoute la recharge des lignes
     var allElements = document.getElementsByTagName('a');
     for (var i = allElements.length; i--;)
+    {
         if (allElements[i].getAttribute('href') === 'noscript.php' && typeof allElements[i].onclick === 'function')
         {
             allElements[i].setAttribute('onclick', allElements[i].getAttribute('onclick').substr(0, allElements[i].getAttribute('onclick').length - 13) + nameOfFunction + '(); return false;');
             allElements[i].setAttribute('href', '#');
         }
+
+        if (allElements[i].getAttribute('href').indexOf('javascript:list(') !== -1)
+        {
+            allElements[i].setAttribute('href', allElements[i].getAttribute('href') + nameOfFunction + '();');
+        }
+    }
 
     // Recherche la checkBox faisant changer de page, et lui ajoute la recharge des lignes
     var checkBoxUpdate = document.getElementsByName('updated');
@@ -83,11 +90,33 @@ function linesChanged()
     addFunctionToLinks('linesChanged');
     changeButtonEvents();
 
+    // Retire l'état d'avancement de base de mode translation
+    if (page.translatePage)
+    {
+        var listaa = document.getElementById('lista');
+
+        while (listaa.firstElementChild.tagName !== 'TABLE')
+            listaa.firstElementChild.remove();
+    }
+
     // Si l'avancement n'est pas encore là
     if (document.getElementById('spanState') === null)
     {
         // Récupère la div parent des éléments à insérer
-        var parentDiv = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
+        var parentDiv = null;
+        if (page.translatePage)
+        {
+            parentDiv = document.getElementsByClassName('titulo')[0];
+
+            // Ajoute un noeud HTML - mise en forme
+            parentDiv.previousElementSibling.remove();
+            addParentHTMLNode(parentDiv.parentElement, parentDiv, 'tituloParent');
+            parentDiv = parentDiv.parentElement;
+        }
+        else
+        {
+            parentDiv = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
+        }
 
         // Crée le span d'avancement et de lock des commentaires
         parentDiv.insertBefore(createCommentLockUtil(), parentDiv.firstElementChild);
@@ -95,12 +124,26 @@ function linesChanged()
 
         // Créé le span contenant les informations de l'extension
         parentDiv.appendChild(createA7Info());
+
+        // Ajoute l'option de ne voir que les séquences non traduites
+        if (page.translatePage)
+        {
+            parentDiv.appendChild(createUntranslatedOption());
+        }
     }
 
     // Actualise directement l'avancement
     updateStateOfTranslation();
 
-    var headerRow = document.getElementById('trseqtop');
+    var headerRow = null;
+    if(page.translatePage)
+    {
+        headerRow = document.getElementById('lista').firstElementChild.firstElementChild.firstElementChild;
+    }
+    else
+    {
+        headerRow = document.getElementById('trseqtop');
+    }
 
     // Création de la colonne compteur
     var counterCol    = document.createElement('td');
@@ -137,17 +180,31 @@ function linesChanged()
         var textCell = currentLine.lastElementChild;
 
 
-        // Si la ligne a un texte modifiable
-        if (currentLine.className === 'originalText')
+        // Retire le texte de base indiquant une séquence non traduite
+        if (page.translatePage && currentLine.className === 'originalText')
         {
+            textCell.firstElementChild.remove();
+        }
+
+        // Si la ligne a un texte modifiable
+        if (currentLine.className === 'originalText' || page.translatePage)
+        {
+            // TODO : enlever
             var seqNumber = parseInt(currentLine.id.substr(5), 10);
 
 
             // Activation et mise en forme de la cellule
             if (timeCell.getAttribute('onclick') !== null)
             {
-                // timeclick(...) => pre_timeclick(...)
-                timeCell.setAttribute('onclick', 'pre_' + timeCell.getAttribute('onclick'));
+                if (!page.translatePage)
+                {
+                    // timeclick(...) => pre_timeclick(...)
+                    timeCell.setAttribute('onclick', 'pre_' + timeCell.getAttribute('onclick'));
+                }
+                else
+                {
+                    timeCell.removeAttribute('onclick');
+                }
             }
 
             timeCell.removeAttribute('onmouseout');
@@ -218,18 +275,32 @@ function linesChanged()
         charNum.textContent = '(' + loc.charNumberTiny + ') ';
         rs.textContent      = ' (RS) ';
 
-        lista.appendChild(charNum);
-        lista.appendChild(charNumText);
-        lista.appendChild(rs);
-        lista.appendChild(rsText);
+        if (page.translatePage)
+        {
+            var multiEdit = lista.children[lista.children.length - 6];
+            lista.insertBefore(charNum, multiEdit);
+            lista.insertBefore(charNumText, multiEdit);
+            lista.insertBefore(rs, multiEdit);
+            lista.insertBefore(rsText, multiEdit);
+        }
+        else
+        {
+            lista.appendChild(charNum);
+            lista.appendChild(charNumText);
+            lista.appendChild(rs);
+            lista.appendChild(rsText);
+        }
 
     // Rend visible le tableau des séquences maintenant que le chargement est terminé
     lista.children[0].style.setProperty('visibility', 'visible');
     lista.children[1].style.setProperty('visibility', 'visible');
     }
 
-    // Charge la liste des utilisateurs dans la userBar
-    loadUserBarUsers();
+    if(!page.translatePage)
+    {
+        // Charge la liste des utilisateurs dans la userBar
+        loadUserBarUsers();
+    }
 }
 
 
@@ -272,11 +343,26 @@ function post_requestHICheck(episodeHTMLString, isError)
     var links = episodeHTML.getElementsByTagName('a');
     for (var i = 0; i < links.length; i++)
     {
-        if (links[i].href === currentUrl)
+        if (page.translatePage)
         {
-            // Récupère les indicateurs
-            imgs = links[i].parentElement.previousElementSibling.getElementsByTagName('img');
-            break;
+            if (links[i].href.indexOf(
+                '/jointranslation.php?id=' + page.queryInfos.id +
+                '&fversion=' + page.queryInfos.fversion +
+                '&lang=' + page.queryInfos.lang) !== -1)
+            {
+                // Récupère les indicateurs
+                imgs = links[i].parentElement.previousElementSibling.getElementsByTagName('img');
+                break;
+            }
+        }
+        else
+        {
+            if (links[i].href === currentUrl)
+            {
+                // Récupère les indicateurs
+                imgs = links[i].parentElement.previousElementSibling.getElementsByTagName('img');
+                break;
+            }
         }
     }
 

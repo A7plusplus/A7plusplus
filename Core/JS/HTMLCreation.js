@@ -291,6 +291,45 @@ function createHIImg()
 
 
 /**
+* @fn createUntranslatedOption Crée un nœud pour l'option "afficher que les séquences non traduites"
+* @return {!Object} Nœud HTML de la structure
+*/
+function createUntranslatedOption()
+{
+    var option = document.createElement('span');
+    var input  = document.createElement('input');
+
+    // Mise en place
+    option.id          = 'A7Untranslated';
+    option.title       = loc.untranlsatedOnly;
+
+    option.addEventListener('click', function(){
+        // On n'envoi pas 50 requêtes
+        if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
+            return;
+        page.tempDisableTranslateCheckbox = true;
+
+        // Change l'état de l'input
+        input.checked = !input.checked;
+        option.title = input.checked ? loc.showAll : loc.untranlsatedOnly;
+
+        // Appel à la fonction de base
+        untraslated();
+        linesChanged();
+    });
+
+    input.id   = 'unt';
+    input.name = 'unt';
+    input.type = 'checkbox';
+    input.checked = false;
+
+    option.appendChild(input);
+
+    return option;
+}
+
+
+/**
 * @fn createA7Info Crée un nœud contenant la structure de l'affichage des info de l'extension
 * @return {!Object} Nœud HTML de la structure
 */
@@ -447,4 +486,38 @@ function createUserBarStruct()
     useBarContainer.appendChild(dataContainer);
 
     return useBarContainer;
+}
+
+                                   // Misc //
+
+/**
+* @fn addParentHTMLNode Ajoute un noeud HTML entre le père et le fils
+* @param {!Object} parentNode Noeud parent
+* @param {!Object} childNode Noeud fils
+* @param {String} className Classe à ajouter au nouveau noeud
+*/
+function addParentHTMLNode(parentNode, childNode, className)
+{
+    // Récupère la position
+    var nextNode = childNode.nextSibling;
+
+    // Créer le nouveau noeud
+    var newParent = document.createElement('div');
+    newParent.appendChild(childNode);
+
+    // Replace
+    if(nextNode === null)
+    {
+        parentNode.appendChild(newParent);
+    }
+    else
+    {
+        parentNode.insertBefore(newParent, nextNode);
+    }
+
+    // Ajoute la classe
+    if(className !== null)
+    {
+        newParent.classList.add(className);
+    }
 }

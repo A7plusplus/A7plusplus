@@ -4,8 +4,11 @@
 */
 
 
-// Si la langue n'est pas anglais
-if(location.search.search(new RegExp('&lang=1$')) === -1)
+// On est en translate
+var translatePage = location.href.search(new RegExp('translate.php')) !== -1;
+
+// Si la langue n'est pas anglais et qu'on est en edit
+if(!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
 {
     // Remplacement des AJAX
     var xhrProto = XMLHttpRequest.prototype,
@@ -86,7 +89,10 @@ function init()
     loc = loc[choosen] ? loc[choosen] : loc.en;
 
     // La page ne contient pas de lignes de traduction
-    if (!document.getElementById('trseqtop'))
+    if (
+        (!document.getElementById('trseqtop') && !translatePage) ||
+        (!document.getElementById('unt') && translatePage)
+    )
     {
         console.log('[A7++] ' + loc.noAvailableLine);
         return;
@@ -94,20 +100,33 @@ function init()
 
     // Récupère les infos de la page
     var pageInfos = {};
-    location.search.substr(1).split('&').forEach(function(item)
+    if(!translatePage)
     {
-        pageInfos[item.split('=')[0]] = item.split('=')[1];
-    });
+        location.search.substr(1).split('&').forEach(function(item)
+        {
+            pageInfos[item.split('=')[0]] = item.split('=')[1];
+        });
+    }
+    else
+    {
+        var raw = mouseclick.toString().match(/translate_ajaxselect\.php\?id=(\d+)&fversion=(\d+)&langto=(\d+)&langfrom=(\d+)&/);
+        pageInfos.id       = raw[1];
+        pageInfos.fversion = raw[2];
+        pageInfos.lang     = raw[3];
+        pageInfos.langfrom = raw[4];
+    }
 
     // Initialise l'objet page
     page = {
+        translatePage: translatePage,
         lock: (document.getElementById('locktop') !== null) ? 1 : 0,
         stateIntervalId: null,
         refreshCommentsTimeoutId: null,
         queryInfos: pageInfos,
         commentNumber: -1,
         tempDisablePopupRemoval: false,
-        userBarData: {}
+        userBarData: {},
+        tempTranslateBackup: []
         };
 
     // Démarre l'actualisation de l'avancement (toutes les minutes)
@@ -116,7 +135,10 @@ function init()
     // Ajoute la structure d'accueil, des commentaires et de la barre utilisateur
     var listaParent = list.parentElement;
 
-    listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
+    if(!page.translatePage)
+    {
+        listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
+    }
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
     // Récupère la taille enregistrée, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
@@ -134,7 +156,7 @@ function init()
 
         // Barre utilisateur
         var userBarPos = localStorage.getItem('A7ppUserBarPosition');
-        if(userBarPos)
+        if(userBarPos && !page.translatePage)
         {
             var data = userBarPos.split(',');
             var left = data[0],

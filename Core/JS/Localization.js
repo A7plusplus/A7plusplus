@@ -48,7 +48,10 @@ var loc =
         ReportTitle       : "Reporter l'utilisateur",
         ProfilTitle       : 'Voir le profil',
         messageSendError  : "Une erreur s'est produite lors de l'envoi du message",
-        messageSent       : 'Message envoyé'
+        messageSent       : 'Message envoyé',
+        seqNotConfirmed   : "Séquence non confirmée (elle n'est donc peut-être pas à jour)",
+        untranlsatedOnly  : "N'afficher que les séquences non traduites",
+        showAll           : 'Afficher toutes les séquences'
 
     },
 
@@ -94,7 +97,10 @@ var loc =
         ReportTitle       : "Report user",
         ProfilTitle       : 'See user profil',
         messageSendError  : 'An error occured while sending the message',
-        messageSent       : 'Message sent'
+        messageSent       : 'Message sent',
+        seqNotConfirmed   : 'Sequence not confirmed (it can be outdated)',
+        untranlsatedOnly  : 'Show only the untranslated sequences',
+        showAll           : 'Show all sequences'
 
     }
 };

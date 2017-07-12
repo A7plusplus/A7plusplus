@@ -11,55 +11,36 @@
 */
 function pre_mouseclick(tipo, seqNumber)
 {
-    // Récupération des éléments utiles
-    var line     = getTextCell(seqNumber).parentElement;
-    var timeCell = line.children[page.lock + 4];
-    var textCell = line.lastElementChild;
-
-
-    // Récupération de l'état des cellules
-    var timeState = getStateOfTimeCell(timeCell);
-
-
-    // On s'occupe de l'état du temps : si le grand indicateur n'est pas là, on le crée
-    if (timeState === 'initial')
+    // Si on est en mode traduction, recherche d'aborde le text
+    if(!page.translatePage)
     {
-        // Ajoute le grand indicateur du RS Rating
-        addBigIndicator(timeCell);
-
-        // Actualise le RS Rating et le compte des caractères
-        updateRsRatingAndCharCount(seqNumber);
+        // Bypass le chargement car inutile
+        post_select(seqNumber, null, false);
     }
+    else
+    {
+        var textCell = getTextCell(seqNumber).parentElement.lastElementChild;
 
+        // Sauvegarde le texte
+        page.tempTranslateBackup[seqNumber] = textCell.innerHTML.replace(/<br>/g, "\n");
 
-    // Enregistre le texte
-    var text = textCell.innerHTML.replace(/<br>/g, "\n");
+        // Affiche le chargement
+        resetToLoadingImage(textCell);
 
-    // Vide la cellule
-    textCell.innerHTML = '';
+        // Récupère es informations de la page
+        var subInfo = page.queryInfos;
 
-    // Crée et ajoute les utilitaires
-    textCell.appendChild(createTextUtils(seqNumber));
+        var params = 'id='         + subInfo.id +
+                     '&fversion='  + subInfo.fversion +
+                     '&langto='    + subInfo.lang +
+                     '&langfrom='  + subInfo.langfrom +
+                     '&seq=' + seqNumber,
+            url = '/translate_ajaxselect.php',
+            action = 'GET';
 
-    // Ajoute le texte
-    textCell.firstElementChild.firstElementChild.defaultValue = text;
-
-
-    // Change la classe de la cellule des tailles
-    line.children[line.childElementCount - 2].setAttribute('class', 'openedCounter');
-
-    // Mise en forme
-    textCell.setAttribute('class', 'textClicked');
-    textCell.setAttribute('disabled', true);
-
-    // Désactivation de onclick
-    textCell.setAttribute('onclick', '');
-
-    // Remet la textArea à la bonne taille
-    updateTextAreaSize(textCell.firstElementChild.firstElementChild);
-
-    // Actualise les compteurs (permet d'afficher l'avertissement en cas de dépassement nombre de lignes / nombre de caractères)
-    updateRsRatingAndCharCount(seqNumber);
+        // Effectue l'envoi des données
+        ajax(action, url + '?' + params, '', post_select, seqNumber, null, null);
+    }
 }
 
 
@@ -107,13 +88,29 @@ function pre_update(tipo, seqNumber)
     var subInfo = page.queryInfos;
 
     // Prépare les données
-    var params = 'id='         + subInfo.id +
+    var params = null,
+        url = null,
+        action = 'POST';
+
+    if(page.translatePage)
+    {
+        params = 'id='         + subInfo.id +
+                 '&fversion='  + subInfo.fversion +
+                 '&langto='    + subInfo.lang +
+                 '&langfrom='  + subInfo.langfrom +
+                 '&seq='       + seqNumber +
+                 '&ttext='     + encodeURIComponent(textArea.value);
+        url = '/translate_ajaxedit.php';
+    }
+    else
+    {
+        params = 'id='         + subInfo.id +
                  '&fversion='  + subInfo.fversion +
                  '&lang='      + subInfo.lang +
                  '&seqnumber=' + seqNumber +
-                 '&ttext='     + encodeURIComponent(textArea.value),
-        url    = '/ajax_editText.php',
-        action = 'POST';
+                 '&ttext='     + encodeURIComponent(textArea.value);
+        url = '/ajax_editText.php';
+    }
 
     // Indique que c'est en envoi
     resetToLoadingImage(textCell);
@@ -142,10 +139,25 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
     if (!isError)
     {
         // Change le texte de la cellule
-        textCell.innerHTML = confirmedText.substr(19, confirmedText.length - 26).replace(/\n/g, '');
+        if(confirmedText.indexOf('<font color="black">') === -1)
+        {
+            // <font color="blue">
+            textCell.innerHTML = confirmedText.substr(19, confirmedText.length - 26).replace(/\n/g, '');
+        }
+        else
+        {
+            textCell.innerHTML = confirmedText.substr(20, confirmedText.length - 27).replace(/\n/g, '');
+        }
 
         // Actualise les compteurs
         updateRsRatingAndCharCount(seqNumber);
+
+        // Marque la séquence comme déjà traduite
+        if(page.translatePage)
+        {
+            textCell.parentElement.classList.remove('originalText');
+            textCell.parentElement.classList.add('quotedText');
+        }
 
         // Activation de onclick après 10 ms pour laisser passer le clic courant
         setTimeout(function(){
@@ -297,10 +309,133 @@ function textCancel(seqNumber)
     // Change la classe de la cellule des tailles
     line.children[line.childElementCount - 2].setAttribute('class', 'counter');
 
+    // Libère la séquence
+    if (page.translatePage)
+    {
+        // Récupère es informations de la page
+        var subInfo = page.queryInfos;
+
+        var params = 'id='         + subInfo.id +
+                     '&fversion='  + subInfo.fversion +
+                     '&langto='      + subInfo.lang +
+                     '&seq=' + seqNumber,
+            url = '/translate_release.php',
+            action = 'GET';
+
+        // Effectue l'envoi des données
+        ajax(action,  url + '?' + params, '', post_release, seqNumber, null, null);
+    }
+
     // Active onclick après 10 ms pour laisser passer le clic courant
     setTimeout(function(){
         textCell.setAttribute('onclick', "pre_mouseclick('o', " + seqNumber + ');');
     }, 10);
+}
+
+
+/**
+* @fn post_release Récupère et place le dernier texte de la séquence
+*/
+function post_select(seqNumber, data, isError, translateMode)
+{
+    // Récupération des éléments utiles
+    var line     = getTextCell(seqNumber).parentElement;
+    var timeCell = line.children[page.lock + 4];
+    var textCell = line.lastElementChild;
+
+
+    // Récupération de l'état des cellules
+    var timeState = getStateOfTimeCell(timeCell);
+
+
+    // On s'occupe de l'état du temps : si le grand indicateur n'est pas là, on le crée
+    if (timeState === 'initial')
+    {
+        // Ajoute le grand indicateur du RS Rating
+        addBigIndicator(timeCell);
+
+        // Actualise le RS Rating et le compte des caractères
+        updateRsRatingAndCharCount(seqNumber);
+    }
+
+
+    // Enregistre le texte ou traite les données recues
+    var text = null;
+    // La reuêtre ajax est revenue
+    if (!isError && data !== null)
+    {
+        var regexMatches = data.match(/onkeypress="translate_userInput[^>]*>((.|\n)*)<\/textarea>/);
+
+        // Le text est trouvé dans la réponse
+        if(regexMatches && regexMatches.length > 2)
+        {
+            if(regexMatches[1] === '</textarea>')
+            {
+                text = '';
+            }
+            else
+            {
+                text = regexMatches[1];
+            }
+        }
+        else
+        {
+            text = page.tempTranslateBackup[seqNumber];
+        }
+    }
+    else if(isError)
+    {
+        text = page.tempTranslateBackup[seqNumber];
+    }
+    // Mode édition
+    else
+    {
+        text = textCell.innerHTML.replace(/<br>/g, "\n");
+    }
+
+
+    // Vide la cellule
+    textCell.innerHTML = '';
+    page.tempTranslateBackup[seqNumber] = null;
+
+    // Crée et ajoute les utilitaires
+    textCell.appendChild(createTextUtils(seqNumber));
+
+    // Ajoute le texte
+    textCell.firstElementChild.firstElementChild.defaultValue = text;
+
+
+    // Change la classe de la cellule des tailles
+    line.children[line.childElementCount - 2].setAttribute('class', 'openedCounter');
+
+    // Mise en forme
+    textCell.setAttribute('class', 'textClicked');
+    textCell.setAttribute('disabled', true);
+
+    // Si une erreur de réception en mode traduction arrive
+    if(isError)
+    {
+        textCell.classList.add('ajaxErrorNotConfirmed');
+        textCell.setAttribute('title', loc.seqNotConfirmed);
+    }
+
+    // Désactivation de onclick
+    textCell.setAttribute('onclick', '');
+
+    // Remet la textArea à la bonne taille
+    updateTextAreaSize(textCell.firstElementChild.firstElementChild);
+
+    // Actualise les compteurs (permet d'afficher l'avertissement en cas de dépassement nombre de lignes / nombre de caractères)
+    updateRsRatingAndCharCount(seqNumber);
+}
+
+
+/**
+* @fn post_release Fonction sans but si ce n'est la reception des données des release
+*/
+function post_release()
+{
+    return;
 }
 
                           // Actions de masse //

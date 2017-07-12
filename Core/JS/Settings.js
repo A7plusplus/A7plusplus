@@ -7,9 +7,9 @@
 // Déclaration de l'objet contenant tous les réglages
 var A7Settings = {
 
-    NUMERIC_VERSION_INFO : 140,
-    MAJOR_VERSION_INFO   : 'A7++ 1.4',
-    MINOR_VERSION_INFO   : '1.4.0 bêta',
+    NUMERIC_VERSION_INFO : 200,
+    MAJOR_VERSION_INFO   : 'A7++ 2.0',
+    MINOR_VERSION_INFO   : '2.0 bêta',
 
     // Longueur en caractères
     maxPerLineOneLineSETTING : 37,

@@ -2,8 +2,8 @@
 	"manifest_version": 2,
 
 	"name": "A7++",
-	"description": "Life-changing tools for translators and proofreaders in Addic7ed's \"view & edit\" mode",
-	"version": "1.4.0",
+	"description": "Life-changing tools for translators and proofreaders working with Addic7ed",
+	"version": "2.0",
     "developer": {
     	"name": "Acc\u00eant, HitOrRun, Retrojex & Mmoi"
     },
@@ -39,6 +39,19 @@
                 "data/CSS/OpenedLines.css",
                 "data/CSS/Comments.css",
                 "data/CSS/UserBar.css",
+                "data/CSS/Misc.css"
+            ],
+            "js": ["data/Launcher.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["http://www.addic7ed.com/translate.php*"],
+            "css": [
+                "data/CSS/Global.css",
+                "data/CSS/OpenedLines.css",
+                "data/CSS/Comments.css",
+                "data/CSS/UserBar.css",
+                "data/CSS/Translate.css",
                 "data/CSS/Misc.css"
             ],
             "js": ["data/Launcher.js"],
