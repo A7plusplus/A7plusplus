@@ -29,8 +29,8 @@ function loadUserBarUsers()
 
     // Les injecte dans la barre utilisateur
     var userBar  = document.getElementById('userBar');
-    var userSpan = userBar.firstElementChild.firstElementChild;
-    if(userSpan.lastElementChild.tagName === 'SELECT')
+    var userSpan = userBar.firstElementChild.children[1];
+    if(userSpan.lastElementChild && userSpan.lastElementChild.tagName === 'SELECT')
     {
         userSpan.lastElementChild.remove();
     }
@@ -56,6 +56,17 @@ function loadUserBarUsers()
 
 
 /**
+* @fn updateUserBarSize Mets à jour la position de la barre utilisateur
+* @param {Object} userBar Noeud HTML de la userBar
+*/
+function updateUserBarSize(userBar)
+{
+    var offsets = userBar.getBoundingClientRect();
+    setUserBarSize(offsets.left, offsets.top);
+}
+
+
+/**
 * @fn setUserBarSize Déplace la barre utilisateur
 * @param {Integer} left Position X
 * @param {Integer} top Position Y
@@ -65,25 +76,28 @@ function setUserBarSize(left, top)
     var userBar  = document.getElementById('userBar');
 
     // Calcule les proportions
-    var stickyFactor  = window.innerHeight * A7Settings.stickyFactor;
+    var stickyFactor  = window.innerHeight * A7Settings.stickyFactor,
+        width  = userBar.offsetWidth  < userBar.children[1].offsetWidth  ? userBar.children[1].offsetWidth  : userBar.offsetWidth,
+        height = userBar.offsetHeight < userBar.children[1].offsetHeight ? userBar.children[1].offsetHeight : userBar.offsetHeight;
 
     // Ne dépasse pas
-    left = left < 0 + stickyFactor ? 0 : left + userBar.offsetWidth  + stickyFactor > window.innerWidth  ? window.innerWidth  - userBar.offsetWidth  : left;
-    top  = top  < 0 + stickyFactor ? 0 : top  + userBar.offsetHeight + stickyFactor > window.innerHeight ? window.innerHeight - userBar.offsetHeight : top;
+    left = left < 0 + stickyFactor ? 0 : left + width  + stickyFactor > document.body.clientWidth  ? document.body.clientWidth  - width  : left;
+    top  = top  < 0 + stickyFactor ? 0 : top  + height + stickyFactor > window.innerHeight         ? window.innerHeight         - height : top;
 
 
     // Ajoute les classes
-    if(left === 0) userBar.classList.add('userBarLeft');
+    if(left === 0)
+    {
+        userBar.classList.add('userBarLeft');
+
+        // recalcule la hauteur
+        height = userBar.offsetHeight < userBar.children[1].offsetHeight ? userBar.children[1].offsetHeight : userBar.offsetHeight;
+        top  = top  < 0 + stickyFactor ? 0 : top  + height + stickyFactor > window.innerHeight         ? window.innerHeight         - height : top;
+    }
     else userBar.classList.remove('userBarLeft');
 
     if(top === 0) userBar.classList.add('userBarTop');
     else userBar.classList.remove('userBarTop');
-
-    if(left === window.innerWidth - userBar.offsetWidth) userBar.classList.add('userBarRight');
-    else userBar.classList.remove('userBarRight');
-    
-    if(top === window.innerHeight - userBar.offsetHeight) userBar.classList.add('userBarBottom');
-    else userBar.classList.remove('userBarBottom');
 
 
     // Applique la position
@@ -116,6 +130,10 @@ function triggerUserBar(bar)
     {
         bar.classList.add('userBarOpened');
     }
+
+    // Replace la barre
+    var offsets = bar.getBoundingClientRect();
+    setUserBarSize(offsets.left, offsets.top + (bar.classList.contains('userBarBottom') ? window.innerHeight : 0));
 }
 
 
@@ -125,7 +143,6 @@ function triggerUserBar(bar)
 function closeUserBarData()
 {
     var userBarData = document.getElementById('userBarData');
-    userBarData.classList.remove('userBarDataMinimized');
     userBarData.classList.remove('pageLoaded');
 }
 
@@ -138,7 +155,7 @@ function triggerPM(close)
 {
     // Récupère le bouton
     var userBar = document.getElementById('userBar'),
-        button  = userBar.firstElementChild.children[1];
+        button  = userBar.firstElementChild.children[2];
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
@@ -147,7 +164,7 @@ function triggerPM(close)
         if(isOpened)
         {
             // Sauvegarde l'état
-            page.userBarData.PM = document.getElementById('userBarData').firstElementChild;
+            page.userBarData.PM = userBar.lastElementChild.firstElementChild;
         }
         button.classList.remove('userBarButtonClicked');
         userBar.classList.remove('userBarDataOpened');
@@ -161,7 +178,7 @@ function triggerPM(close)
         userBar.classList.add('userBarDataOpened');
         button.classList.add('userBarButtonClicked');
 
-        var dataContainer = document.getElementById('userBarData');
+        var dataContainer = userBar.lastElementChild;
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
@@ -169,6 +186,7 @@ function triggerPM(close)
         {
             dataContainer.innerHTML = '';
             dataContainer.appendChild(page.userBarData.PM);
+            updateUserBarSize(userBar);
         }
         else
         {
@@ -186,56 +204,6 @@ function triggerPM(close)
 
 
 /**
-* @fn openReport Ouvre la page de report
-* @param close {boolean} Force la fermeture
-*/
-function triggerReport(close)
-{
-    // Récupère le bouton
-    var userBar = document.getElementById('userBar'),
-        button  = userBar.firstElementChild.children[2];
-
-    // Ouvre ou ferme
-    var isOpened = button.classList.contains('userBarButtonClicked');
-    if(close || isOpened)
-    {
-        if(isOpened)
-        {
-            // Sauvegarde l'état
-            page.userBarData.Report = document.getElementById('userBarData').firstElementChild;
-        }
-        button.classList.remove('userBarButtonClicked');
-        userBar.classList.remove('userBarDataOpened');
-        closeUserBarData();
-    }
-    else
-    {
-        triggerPM(true);
-        triggerProfile(true);
-        userBar.classList.add('userBarDataOpened');
-        button.classList.add('userBarButtonClicked');
-
-        var dataContainer = document.getElementById('userBarData');
-        dataContainer.classList.add('pageLoaded');
-
-        // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.Report)
-        {
-            dataContainer.innerHTML = '';
-            dataContainer.appendChild(page.userBarData.Report);
-        }
-        else
-        {
-            // Affiche le logo de chargement
-            resetToLoadingImage(dataContainer);
-
-            ajax('GET', '/badsub.php' + location.search, '', post_triggerReport, null, null, null);
-        }
-    }
-}
-
-
-/**
 * @fn openProfile Ouvre la page de l'utilisateur
 * @param close {boolean} Force la fermeture
 */
@@ -243,7 +211,7 @@ function triggerProfile(close)
 {
     // Récupère le bouton
     var userBar = document.getElementById('userBar'),
-        button  = userBar.firstElementChild.lastElementChild;
+        button  = userBar.firstElementChild.children[3];
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
@@ -252,8 +220,9 @@ function triggerProfile(close)
         if(isOpened)
         {
             // Sauvegarde l'état
-            page.userBarData.Prof = document.getElementById('userBarData').firstElementChild;
+            page.userBarData.Prof = userBar.lastElementChild.firstElementChild;
         }
+        userBar.lastElementChild.classList.remove('isUserPage');
         button.classList.remove('userBarButtonClicked');
         userBar.classList.remove('userBarDataOpened');
         closeUserBarData();
@@ -266,14 +235,16 @@ function triggerProfile(close)
         userBar.classList.add('userBarDataOpened');
         button.classList.add('userBarButtonClicked');
 
-        var dataContainer = document.getElementById('userBarData');
+        var dataContainer = userBar.lastElementChild;
         dataContainer.classList.add('pageLoaded');
+        dataContainer.classList.add('isUserPage');
 
         // Ne recharge pas s'il n'y a pas besoin
         if(page.userBarData.Prof)
         {
             dataContainer.innerHTML = '';
             dataContainer.appendChild(page.userBarData.Prof);
+            updateUserBarSize(userBar);
         }
         else
         {
@@ -285,6 +256,57 @@ function triggerProfile(close)
                 value = id.options[id.selectedIndex].value;
 
             ajax('GET', '/user/' + value, '', post_triggerProfile, null, null, null);
+        }
+    }
+}
+
+
+/**
+* @fn openReport Ouvre la page de report
+* @param close {boolean} Force la fermeture
+*/
+function triggerReport(close)
+{
+    // Récupère le bouton
+    var userBar = document.getElementById('userBar'),
+        button  = userBar.firstElementChild.lastElementChild;
+
+    // Ouvre ou ferme
+    var isOpened = button.classList.contains('userBarButtonClicked');
+    if(close || isOpened)
+    {
+        if(isOpened)
+        {
+            // Sauvegarde l'état
+            page.userBarData.Report = userBar.lastElementChild.firstElementChild;
+        }
+        button.classList.remove('userBarButtonClicked');
+        userBar.classList.remove('userBarDataOpened');
+        closeUserBarData();
+    }
+    else
+    {
+        triggerPM(true);
+        triggerProfile(true);
+        userBar.classList.add('userBarDataOpened');
+        button.classList.add('userBarButtonClicked');
+
+        var dataContainer = userBar.lastElementChild;
+        dataContainer.classList.add('pageLoaded');
+
+        // Ne recharge pas s'il n'y a pas besoin
+        if(page.userBarData.Report)
+        {
+            dataContainer.innerHTML = '';
+            dataContainer.appendChild(page.userBarData.Report);
+            updateUserBarSize(userBar);
+        }
+        else
+        {
+            // Affiche le logo de chargement
+            resetToLoadingImage(dataContainer);
+
+            ajax('GET', '/badsub.php' + location.search, '', post_triggerReport, null, null, null);
         }
     }
 }
@@ -320,6 +342,7 @@ function post_triggerPM(HTMLString, isError)
     var dataContainer = document.getElementById('userBarData');
     dataContainer.innerHTML = '';
     dataContainer.appendChild(form);
+    updateUserBarSize(document.getElementById('userBar'));
 }
 
 
@@ -351,6 +374,7 @@ function post_triggerReport(HTMLString, isError)
     var dataContainer = document.getElementById('userBarData');
     dataContainer.innerHTML = '';
     dataContainer.appendChild(form);
+    updateUserBarSize(document.getElementById('userBar'));
 }
 
 
@@ -381,6 +405,7 @@ function post_triggerProfile(HTMLString, isError)
     var dataContainer = document.getElementById('userBarData');
     dataContainer.innerHTML = '';
     dataContainer.appendChild(dataTable);
+    updateUserBarSize(document.getElementById('userBar'));
 }
 
 
@@ -533,24 +558,6 @@ function post_userBarSendReport(HTMLstring, isError)
 
     // Vide le cache
     page.userBarData.Report = null;
-}
-
-
-/**
-* @fn minimizeUserData Réduit la fenêtre de données de la barre utilisateur
-*/
-function triggerUserData()
-{
-    var userBarData = document.getElementById('userBarData');
-
-    if(userBarData.classList.contains('userBarDataMinimized'))
-    {
-        userBarData.classList.remove('userBarDataMinimized');
-    }
-    else
-    {
-        userBarData.classList.add('userBarDataMinimized');
-    }
 }
 
 

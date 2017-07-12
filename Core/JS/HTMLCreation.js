@@ -383,28 +383,20 @@ function createUserBarStruct()
 
     var buttonContainer  = document.createElement('div');
     var dataContainer    = document.createElement('div');
-    var minimizeButton   = document.createElement('div');
 
+    var containerBar     = document.createElement('span');
     var containerUser    = document.createElement('span');
     var containerPM      = document.createElement('span');
     var containerReport  = document.createElement('span');
     var containerProfil  = document.createElement('span');
 
-    var PM               = document.createElement('p');
-    var Report           = document.createElement('p');
-    var Profil           = document.createElement('p');
-    var label            = document.createElement('label');
-
 
     // Mise en place des info
+    containerBar.title     = loc.userBar;
     containerUser.title    = loc.SelectUserTitle;
     containerPM.title      = loc.PMTitle;
     containerReport.title  = loc.ReportTitle;
     containerProfil.title  = loc.ProfilTitle;
-    label.innerText        = loc.SelectUser;
-    PM.innerText           = loc.PM;
-    Report.innerText       = loc.Report;
-    Profil.innerText       = loc.Profil;
 
 
     // Ajout des events
@@ -424,7 +416,6 @@ function createUserBarStruct()
         event.stopImmediatePropagation();
     }, false);
 
-    label.setAttribute('for', 'selectUser');
     containerUser.addEventListener('click', function(event)
     {
         event.stopImmediatePropagation();
@@ -436,11 +427,6 @@ function createUserBarStruct()
         event.stopImmediatePropagation();
     }, false);
 
-    minimizeButton.addEventListener('click', function(event)
-    {
-        triggerUserData();
-        event.stopImmediatePropagation();
-    }, false);
 
     useBarContainer.setAttribute('id', 'userBar');
     useBarContainer.setAttribute('draggable', 'true');
@@ -451,19 +437,14 @@ function createUserBarStruct()
 
 
     // Ajout des nœuds
-    containerPM.appendChild(PM);
-    containerReport.appendChild(Report);
-    containerProfil.appendChild(Profil);
-    containerUser.appendChild(label);
-
+    buttonContainer.appendChild(containerBar);
     buttonContainer.appendChild(containerUser);
     buttonContainer.appendChild(containerPM);
-    buttonContainer.appendChild(containerReport);
     buttonContainer.appendChild(containerProfil);
+    buttonContainer.appendChild(containerReport);
 
     useBarContainer.appendChild(buttonContainer);
     useBarContainer.appendChild(dataContainer);
-    useBarContainer.appendChild(minimizeButton);
 
     return useBarContainer;
 }
