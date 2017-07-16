@@ -237,12 +237,12 @@ function triggerProfile(close)
 
         var dataContainer = userBar.lastElementChild;
         dataContainer.classList.add('pageLoaded');
-        dataContainer.classList.add('isUserPage');
 
         // Ne recharge pas s'il n'y a pas besoin
         if(page.userBarData.Prof)
         {
             dataContainer.innerHTML = '';
+            dataContainer.classList.add('isUserPage');
             dataContainer.appendChild(page.userBarData.Prof);
             updateUserBarSize(userBar);
         }
@@ -405,6 +405,7 @@ function post_triggerProfile(HTMLString, isError)
     var dataContainer = document.getElementById('userBarData');
     dataContainer.innerHTML = '';
     dataContainer.appendChild(dataTable);
+    dataContainer.classList.add('isUserPage');
     updateUserBarSize(document.getElementById('userBar'));
 }
 

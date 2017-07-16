@@ -11,19 +11,56 @@
     flex-direction: column;
 }
 
+#userBar.userBarOpened {
+    border-radius: 20px;
+}
+
+#userBar.userBarDataOpened:not(.userBarLeft) > div:first-of-type {
+    border-radius: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#userBar.userBarDataOpened.userBarLeft > div:first-of-type {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#userBar.userBarOpened.userBarTop > div:first-of-type {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Arrondi du bouton */
+#userBar.userBarDataOpened:not(.userBarLeft):not(.userBarTop) > div:first-of-type > span:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+/* Scroll bar */
+::-webkit-scrollbar {
+    width: 13px;
+    height: 13px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    border-radius: 10px;
+}
+
 /* Overte horizon */
 #userBar.userBarOpened:not(.userBarLeft) {
     min-width: 800px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
 }
 
 /* Ouvert verti */
 #userBar.userBarOpened.userBarLeft {
     min-height: 300px;
     flex-direction: row;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
 }
 
 #userBar.userBarOpened.userBarDataOpened > div:first-of-type {
@@ -109,45 +146,79 @@
 }
 
 #userBar.userBarOpened > div:last-of-type {
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-radius: 10px;
 }
 
 /* Page incrustée */
 #userBarData {
     display: none;
     cursor: default;
+    max-width: 800px;
 }
 
-/* Padding pour éviter d'être sous la barre */
+/* Margin pour éviter d'être sous la barre */
 #userBarData.pageLoaded {
     z-index: -1;
-    display: block;
+    display: flex;
     min-width: 800px;
     overflow-y: auto;
-    padding-top: 80px;
-    max-height: 320px;
+    margin-top: 80px;
+    max-height: 33vh;
     text-align: center;
     position: absolute;
+    align-items: baseline;
+    justify-content: center;
     background-color: white;
 }
 
 #userBar.userBarLeft > #userBarData.pageLoaded {
     height: 100%;
-    padding-top: 0;
+    margin-top: 0;
     max-height: 400px;
-    padding-left: 80px;
+    margin-left: 80px;
+    align-items: center;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
-/* Message et Report */
-#userBarData.pageLoaded {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#userBar:not(.userBarLeft) > #userBarData.pageLoaded {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Message */
+#userBar.userBarLeft > #userBarData.pageLoaded > form:not(#step1) {
+    width: 100%;
+    height: 100%;
+}
+
+#userBar.userBarLeft > #userBarData.pageLoaded > form:not(#step1) > table {
+    height: 100%;
+}
+
+#userBar.userBarLeft > #userBarData.pageLoaded > form:not(#step1) > table tr:nth-child(4) {
+    height: 75%;
+}
+
+#userBar.userBarLeft > #userBarData.pageLoaded > form:not(#step1) > table tr:nth-child(4) textarea {
+    height: 80%;
+    width: 80%;
+}
+
+#userBar:not(.userBarLeft) > #userBarData.pageLoaded > form:not(#step1) {
+    width: 100%;
+}
+
+#userBar:not(.userBarLeft) > #userBarData.pageLoaded > form:not(#step1) tbody > tr:nth-child(2) > td:first-child {
+    display: none;
+}
+
+#userBar:not(.userBarLeft) > #userBarData.pageLoaded > form:not(#step1) tbody > tr:nth-child(4) textarea {
+    width: calc(100% - 6px);
 }
 
 /* Utilisateur */
-#userBarData.pageLoaded.isUserPage  {
+#userBarData.pageLoaded.isUserPage {
     display: block;
 }
 
@@ -155,6 +226,20 @@
 #userBarData .tabel90,
 #step1 {
     width: 100%;
+}
+
+#userBar.userBarLeft > #userBarData.pageLoaded > #step1,
+#userBar.userBarLeft > #userBarData.pageLoaded > #step1 > table {
+    height: 100%;
+}
+
+#userBar.userBarLeft > #userBarData.pageLoaded > #step1 > table tr:nth-child(9) {
+    height: 75%;
+}
+
+#userBar.userBarLeft > #userBarData.pageLoaded > #step1 > table tr:nth-child(9) textarea {
+    height: 80%;
+    width: 80%;
 }
 
 /* Nom du destinateire - risque d'être supprimé */
