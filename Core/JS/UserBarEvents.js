@@ -267,7 +267,7 @@ function triggerProfile(close)
 
 
 /**
-* @fn openReport Ouvre la page de report
+* @fn openReport Ouvre la page de signalement
 * @param close {boolean} Force la fermeture
 */
 function triggerReport(close)
@@ -324,7 +324,6 @@ function triggerReport(close)
 */
 function post_triggerPM(HTMLString, isError)
 {
-    // Créé le DOM virtuel
     var dataContainer = document.getElementById('userBarData');
     if(isError)
     {
@@ -332,6 +331,7 @@ function post_triggerPM(HTMLString, isError)
         return;
     }
 
+    // Crée le DOM virtuel
     var PMHTML = document.createElement('html');
     PMHTML.innerHTML = HTMLString;
 
@@ -343,7 +343,7 @@ function post_triggerPM(HTMLString, isError)
     inputs[0].setAttribute('onkeyup', '');
     inputs[1].value = '[' + document.getElementsByTagName('i')[0].innerText + ']';
 
-    // Pas de lien en hat de page
+    // Pas de lien en haut de page
     form.firstElementChild.firstElementChild.firstElementChild.remove();
 
     // Réécrit la fonction d'envoi
@@ -358,13 +358,12 @@ function post_triggerPM(HTMLString, isError)
 
 
 /**
-* @fn post_triggerReport Traite l'AJAX du report
+* @fn post_triggerReport Traite l'AJAX du signalement
 * @param {String} HTMLString Réponse de la requête AJAX
 * @param {Boolean} isError Status de réussite de la requête AJAX
 */
 function post_triggerReport(HTMLString, isError)
 {
-    // Créé le DOM virtuel
     var dataContainer = document.getElementById('userBarData');
     if(isError)
     {
@@ -372,6 +371,7 @@ function post_triggerReport(HTMLString, isError)
         return;
     }
 
+    // Crée le DOM virtuel
     var reportHTML = document.createElement('html');
     reportHTML.innerHTML = HTMLString;
 
@@ -409,7 +409,7 @@ function post_triggerProfile(HTMLString, isError)
         return;
     }
 
-    // Créé le DOM virtuel
+    // Crée le DOM virtuel
     var profHTML = document.createElement('html');
     profHTML.innerHTML = HTMLString;
 
@@ -504,8 +504,8 @@ function post_userBarSendPM(HTMLstring, isError)
 
 
 /**
-* @fn userBarSendReport Envoi un rapport
-* @param {Object} form Noeud HTML du formulaire de rapport
+* @fn userBarSendReport Envoi un signalement
+* @param {Object} form Noeud HTML du formulaire de signalement
 */
 function userBarSendReport(form)
 {

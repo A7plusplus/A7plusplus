@@ -1,6 +1,6 @@
 /**
-* @file Accessor.js
-* @brief Script des fonctions d'acces
+* @file Accessors.js
+* @brief Script des fonctions d'accès
 */
 
 
