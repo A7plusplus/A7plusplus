@@ -187,7 +187,7 @@ function triggerPM(close)
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.PM)
+        if(page.userBarData.PM && page.userBarData.PM.tagName !== 'IMG')
         {
             dataContainer.innerHTML = '';
             dataContainer.appendChild(page.userBarData.PM);
@@ -325,6 +325,13 @@ function triggerReport(close)
 function post_triggerPM(HTMLString, isError)
 {
     // Créé le DOM virtuel
+    var dataContainer = document.getElementById('userBarData');
+    if(isError)
+    {
+        dataContainer.innerHTML = loc.ajaxErrorOccurred;
+        return;
+    }
+
     var PMHTML = document.createElement('html');
     PMHTML.innerHTML = HTMLString;
 
@@ -344,7 +351,6 @@ function post_triggerPM(HTMLString, isError)
     form.setAttribute('onsubmit', 'return userBarSendPM(this)');
 
     // L'affiche
-    var dataContainer = document.getElementById('userBarData');
     dataContainer.innerHTML = '';
     dataContainer.appendChild(form);
     updateUserBarSize(document.getElementById('userBar'));
@@ -359,6 +365,13 @@ function post_triggerPM(HTMLString, isError)
 function post_triggerReport(HTMLString, isError)
 {
     // Créé le DOM virtuel
+    var dataContainer = document.getElementById('userBarData');
+    if(isError)
+    {
+        dataContainer.innerHTML = loc.ajaxErrorOccurred;
+        return;
+    }
+
     var reportHTML = document.createElement('html');
     reportHTML.innerHTML = HTMLString;
 
@@ -376,7 +389,6 @@ function post_triggerReport(HTMLString, isError)
     form.setAttribute('onsubmit', 'return userBarSendReport(this)');
 
     // L'affiche
-    var dataContainer = document.getElementById('userBarData');
     dataContainer.innerHTML = '';
     dataContainer.appendChild(form);
     updateUserBarSize(document.getElementById('userBar'));
@@ -390,6 +402,13 @@ function post_triggerReport(HTMLString, isError)
 */
 function post_triggerProfile(HTMLString, isError)
 {
+    var dataContainer = document.getElementById('userBarData');
+    if(isError)
+    {
+        dataContainer.innerHTML = loc.ajaxErrorOccurred;
+        return;
+    }
+
     // Créé le DOM virtuel
     var profHTML = document.createElement('html');
     profHTML.innerHTML = HTMLString;
@@ -407,7 +426,7 @@ function post_triggerProfile(HTMLString, isError)
         }
     }
 
-    var dataContainer = document.getElementById('userBarData');
+    // L'affiche
     dataContainer.innerHTML = '';
     dataContainer.appendChild(dataTable);
     dataContainer.classList.add('isUserPage');
