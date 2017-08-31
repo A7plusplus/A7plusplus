@@ -449,7 +449,8 @@ function pre_massedit(low, high)
 {
     for (var seqNumber = low; seqNumber <= high; seqNumber++)
     {
-        if (getTextCell(seqNumber) && !document.getElementById('of' + seqNumber))
+        textCell = getTextCell(seqNumber);
+        if (textCell && getStateOfTextCell(textCell) === 'initial')
         {
             pre_mouseclick('o', seqNumber);
         }
@@ -468,9 +469,9 @@ function pre_massupdate(low, high)
 
     for (var seqNumber = low; seqNumber <= high; seqNumber++)
     {
-        textCell = document.getElementById('text' + seqNumber);
+        textCell = getTextCell(seqNumber);
 
-        if (textCell !== null && textCell.childElementCount === 1 && textCell.firstElementChild.tagName === 'SPAN')
+        if (textCell && textCell.childElementCount === 1 && textCell.firstElementChild.tagName === 'SPAN')
         {
             pre_update('o', seqNumber);
         }
