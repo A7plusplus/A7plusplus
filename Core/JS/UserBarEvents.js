@@ -50,8 +50,13 @@ function loadUserBarUsers()
 
     // Ajoute le drag and drop
     userBar.addEventListener('dragstart', userBarDragStart, false);
+    userBar.addEventListener('mousedown', userBarMousedown, false);
     document.body.addEventListener('dragover', userBarDragOver, false);
     document.body.addEventListener('drop', userBarDragDrop, false);
+    document.body.addEventListener('dragstart', function(event) {
+        // Stocke une référence sur l'objet glissable
+        page.draggedNode = event.target;
+    }, false);
 }
 
 
@@ -568,6 +573,13 @@ function post_userBarSendReport(HTMLstring, isError)
 */
 function userBarDragStart(event)
 {
+    page.draggedNode = event.target;
+    
+    // Désactive le glisser-déposer si l'origine n'est pas le haut de la barre
+    var userBarData = document.getElementById("userBarData"),
+            userBar = document.getElementById("userBar");
+    if (!userBar.contains(page.draggedNode) || userBarData.contains(page.draggedNode)) return false;
+
     var style = window.getComputedStyle(event.target, null);
     event.dataTransfer.setData('text/plain',
         (parseInt(style.getPropertyValue('left'), 10) - event.clientX) +
@@ -583,6 +595,11 @@ function userBarDragStart(event)
 */
 function userBarDragOver(event)
 {
+    // Désactive le glisser-déposer si l'origine n'est pas le haut de la barre
+    var userBarData = document.getElementById("userBarData"),
+            userBar = document.getElementById("userBar");
+    if (!userBar.contains(page.draggedNode) || userBarData.contains(page.draggedNode)) return false;
+    
     event.preventDefault();
     return false;
 }
@@ -594,6 +611,12 @@ function userBarDragOver(event)
 */
 function userBarDragDrop(event)
 {
+    // Désactive le glisser-déposer si l'origine n'est pas le haut de la barre
+    var userBarData = document.getElementById("userBarData"),
+            userBar = document.getElementById("userBar");
+    if (!userBar.contains(page.draggedNode) || userBarData.contains(page.draggedNode)) return false;
+    page.draggedNode = null;
+    
     // Récupère les positions
     var offset  = event.dataTransfer.getData('text/plain').split(',');
 
@@ -605,4 +628,17 @@ function userBarDragDrop(event)
     // Empêche l'action par défaut
     event.preventDefault();
     return false;
+}
+
+
+/**
+* @fn userBarMousedown Désactive l'attribut draggable si clic dans la partie basse
+* @param {object} event Objet evenement
+*/
+function userBarMousedown(event)
+{
+    var userBarData = document.getElementById("userBarData"),
+            userBar = document.getElementById("userBar");
+    if (userBarData.contains(event.target)) userBar.setAttribute('draggable', 'false');
+    else userBar.setAttribute('draggable', 'true');
 }

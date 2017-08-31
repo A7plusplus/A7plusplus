@@ -126,7 +126,8 @@ function init()
         commentNumber: -1,
         tempDisablePopupRemoval: false,
         userBarData: {},
-        tempTranslateBackup: []
+        tempTranslateBackup: [],
+        draggedNode: null
         };
 
     // Démarre l'actualisation de l'avancement (toutes les minutes)
