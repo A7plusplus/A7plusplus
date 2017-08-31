@@ -141,10 +141,14 @@ function init()
     }
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
+    // Crée le lock des commentaires
+    listaParent.insertBefore(createCommentLockUtil(), listaParent.lastElementChild);
+
     // Récupère la taille enregistrée, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
     if(localStorage)
     {
-        updateCommentHeightFromSaved(listaParent.lastElementChild.previousElementSibling, 'A7ppCommentWindowSize', 180, 0.8);
+        var commentsSection = document.getElementById('commentsSection');
+        updateCommentHeightFromSaved(commentsSection, 'A7ppCommentWindowSize', 180, 0.8);
         if(localStorage.getItem('A7ppCommentWindowPined') === "true")
         {
             pinComments();

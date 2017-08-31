@@ -118,8 +118,7 @@ function linesChanged()
             parentDiv = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
         }
 
-        // Crée le span d'avancement et de lock des commentaires
-        parentDiv.insertBefore(createCommentLockUtil(), parentDiv.firstElementChild);
+        // Crée le span d'avancement
         parentDiv.insertBefore(createStateUtil(), parentDiv.firstElementChild);
 
         // Créé le span contenant les informations de l'extension
