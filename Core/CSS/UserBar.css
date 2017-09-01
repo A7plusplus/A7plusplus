@@ -187,7 +187,7 @@
 }
 
 #userBar.userBarLeft.userBarTop > #userBarData.pageLoaded {
-    border-top-right-radius: 0px;
+    border-top-right-radius: 0;
 }
 
 #userBar:not(.userBarLeft) > #userBarData.pageLoaded {

@@ -471,7 +471,7 @@ function pre_massupdate(low, high)
     {
         textCell = getTextCell(seqNumber);
 
-        if (textCell && textCell.childElementCount === 1 && textCell.firstElementChild.tagName === 'SPAN')
+        if (textCell && getStateOfTextCell(textCell) === 'clicked')
         {
             pre_update('o', seqNumber);
         }
