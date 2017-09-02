@@ -199,10 +199,9 @@ function triggerPM(close)
             resetToLoadingImage(dataContainer);
 
             // Récupère l'id utilisateur
-            var id = document.getElementById('selectUser'),
-                value = id.options[id.selectedIndex].value;
+            var user = userBarGetCurrentUser();
 
-            ajax('GET', '/msgcreate.php?to=' + value, '', post_triggerPM, null, null, null);
+            ajax('GET', '/msgcreate.php?to=' + user, '', post_triggerPM, user, null, null);
         }
     }
 }
@@ -257,10 +256,9 @@ function triggerProfile(close)
             resetToLoadingImage(dataContainer);
 
             // Récupère l'id utilisateur
-            var id = document.getElementById('selectUser'),
-                value = id.options[id.selectedIndex].value;
+            var user = userBarGetCurrentUser();
 
-            ajax('GET', '/user/' + value, '', post_triggerProfile, null, null, null);
+            ajax('GET', '/user/' + user, '', post_triggerProfile, user, null, null);
         }
     }
 }
@@ -311,7 +309,7 @@ function triggerReport(close)
             // Affiche le logo de chargement
             resetToLoadingImage(dataContainer);
 
-            ajax('GET', '/badsub.php' + location.search, '', post_triggerReport, null, null, null);
+            ajax('GET', '/badsub.php' + location.search, '', post_triggerReport, userBarGetCurrentUser(), null, null);
         }
     }
 }
@@ -319,17 +317,29 @@ function triggerReport(close)
 
 /**
 * @fn post_triggerPM Traite l'AJAX du message privé
+* @param {Integer} userId Id utilisateur
 * @param {String} HTMLString Réponse de la requête AJAX
 * @param {Boolean} isError Status de réussite de la requête AJAX
 */
-function post_triggerPM(HTMLString, isError)
+function post_triggerPM(userId, HTMLString, isError)
 {
-    var dataContainer = document.getElementById('userBarData');
-    if(isError)
+    // L'utilisateur n'est plus le bon
+    if(!userBarIsCurrentUser(userId))
+    {
+        return;
+    }
+
+    // Si on a changé d'onglet
+    var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[2].classList.contains('userBarButtonClicked');
+        dataContainer    = document.getElementById('userBarData');
+
+    // Affichage de l'erreur
+    if(isError && !isBackgroundTask)
     {
         dataContainer.innerHTML = loc.ajaxErrorOccurred;
         return;
     }
+
 
     // Crée le DOM virtuel
     var PMHTML = document.createElement('html');
@@ -350,26 +360,48 @@ function post_triggerPM(HTMLString, isError)
     form.setAttribute('action', '#');
     form.setAttribute('onsubmit', 'return userBarSendPM(this)');
 
-    // L'affiche
-    dataContainer.innerHTML = '';
-    dataContainer.appendChild(form);
-    updateUserBarSize(document.getElementById('userBar'));
+
+    // Sauvegarde ou affiche
+    if(isBackgroundTask)
+    {
+        // Sauvegarde
+        page.userBarData.PM = form;
+    }
+    else
+    {
+        // L'affiche
+        dataContainer.innerHTML = '';
+        dataContainer.appendChild(form);
+        updateUserBarSize(document.getElementById('userBar'));
+    }
 }
 
 
 /**
 * @fn post_triggerReport Traite l'AJAX du signalement
+* @param {Integer} userId Id utilisateur
 * @param {String} HTMLString Réponse de la requête AJAX
 * @param {Boolean} isError Status de réussite de la requête AJAX
 */
-function post_triggerReport(HTMLString, isError)
+function post_triggerReport(userId, HTMLString, isError)
 {
-    var dataContainer = document.getElementById('userBarData');
-    if(isError)
+    // L'utilisateur n'est plus le bon
+    if(!userBarIsCurrentUser(userId))
+    {
+        return;
+    }
+
+    // Si on a changé d'onglet
+    var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[4].classList.contains('userBarButtonClicked');
+        dataContainer    = document.getElementById('userBarData');
+
+    // Affichage de l'erreur
+    if(isError && !isBackgroundTask)
     {
         dataContainer.innerHTML = loc.ajaxErrorOccurred;
         return;
     }
+
 
     // Crée le DOM virtuel
     var reportHTML = document.createElement('html');
@@ -388,26 +420,48 @@ function post_triggerReport(HTMLString, isError)
     form.setAttribute('action', '#');
     form.setAttribute('onsubmit', 'return userBarSendReport(this)');
 
-    // L'affiche
-    dataContainer.innerHTML = '';
-    dataContainer.appendChild(form);
-    updateUserBarSize(document.getElementById('userBar'));
+
+    // Sauvegarde ou affiche
+    if(isBackgroundTask)
+    {
+        // Sauvegarde
+        page.userBarData.Report = form;
+    }
+    else
+    {
+        // L'affiche
+        dataContainer.innerHTML = '';
+        dataContainer.appendChild(form);
+        updateUserBarSize(document.getElementById('userBar'));
+    }
 }
 
 
 /**
 * @fn post_triggerProfile Traite l'AJAX du profile
+* @param {Integer} userId Id utilisateur
 * @param {String} HTMLString Réponse de la requête AJAX
 * @param {Boolean} isError Status de réussite de la requête AJAX
 */
-function post_triggerProfile(HTMLString, isError)
+function post_triggerProfile(userId, HTMLString, isError)
 {
-    var dataContainer = document.getElementById('userBarData');
-    if(isError)
+    // L'utilisateur n'est plus le bon
+    if(!userBarIsCurrentUser(userId))
+    {
+        return;
+    }
+
+    // Si on a changé d'onglet
+    var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[3].classList.contains('userBarButtonClicked');
+        dataContainer    = document.getElementById('userBarData');
+
+    // Affichage de l'erreur
+    if(isError && !isBackgroundTask)
     {
         dataContainer.innerHTML = loc.ajaxErrorOccurred;
         return;
     }
+
 
     // Crée le DOM virtuel
     var profHTML = document.createElement('html');
@@ -426,11 +480,21 @@ function post_triggerProfile(HTMLString, isError)
         }
     }
 
-    // L'affiche
-    dataContainer.innerHTML = '';
-    dataContainer.appendChild(dataTable);
-    dataContainer.classList.add('isUserPage');
-    updateUserBarSize(document.getElementById('userBar'));
+
+    // Sauvegarde ou affiche
+    if(isBackgroundTask)
+    {
+        // Sauvegarde
+        page.userBarData.Prof = dataTable;
+    }
+    else
+    {
+        // L'affiche
+        dataContainer.innerHTML = '';
+        dataContainer.appendChild(dataTable);
+        dataContainer.classList.add('isUserPage');
+        updateUserBarSize(document.getElementById('userBar'));
+    }
 }
 
 
@@ -587,13 +651,38 @@ function post_userBarSendReport(HTMLstring, isError)
 
 
 /**
+* @fn userBarIsCurrentUser Indique si l'utilisateur est actuellement séléctionné
+* @param {Integer} userId ID de l'utilisateur
+*/
+function userBarIsCurrentUser(userId)
+{
+    // Récupère l'id utilisateur actuel
+    var id = document.getElementById('selectUser'),
+        value = id.options[id.selectedIndex].value;
+
+    return value === userId;
+}
+
+
+/**
+* @fn userBarGetCurrentUser Récupère l'ID de l'utilisateur actuellement séléctionné
+*/
+function userBarGetCurrentUser()
+{
+    var id = document.getElementById('selectUser');
+
+    return id.options[id.selectedIndex].value;
+}
+
+
+/**
 * @fn userBarDragStart Récupère et enregistre la position initiale
 * @param {object} event Objet evenement
 */
 function userBarDragStart(event)
 {
     page.draggedNode = event.target;
-    
+
     // Désactive le glisser-déposer si l'origine n'est pas le haut de la barre
     var userBarData = document.getElementById("userBarData"),
             userBar = document.getElementById("userBar");
@@ -618,7 +707,7 @@ function userBarDragOver(event)
     var userBarData = document.getElementById("userBarData"),
             userBar = document.getElementById("userBar");
     if (!userBar.contains(page.draggedNode) || userBarData.contains(page.draggedNode)) return false;
-    
+
     event.preventDefault();
     return false;
 }
@@ -635,7 +724,7 @@ function userBarDragDrop(event)
             userBar = document.getElementById("userBar");
     if (!userBar.contains(page.draggedNode) || userBarData.contains(page.draggedNode)) return false;
     page.draggedNode = null;
-    
+
     // Récupère les positions
     var offset  = event.dataTransfer.getData('text/plain').split(',');
 
