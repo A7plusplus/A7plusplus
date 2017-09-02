@@ -670,7 +670,6 @@ function userBarIsCurrentUser(userId)
 function userBarGetCurrentUser()
 {
     var id = document.getElementById('selectUser');
-
     return id.options[id.selectedIndex].value;
 }
 
