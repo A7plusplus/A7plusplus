@@ -7,7 +7,7 @@
     position: fixed;
     min-height: 80px;
     border-radius: 40px;
-    background-color: #003464;
+    background-color: black;
     flex-direction: column;
 }
 
@@ -29,6 +29,10 @@
 #userBar.userBarOpened.userBarTop > div:first-of-type {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+#userBar.userBarOpened:not(.userBarDataOpened) > div:first-of-type {
+    border-radius: inherit;
 }
 
 /* Arrondi du bouton */
@@ -77,12 +81,14 @@
     display: flex;
     min-height: 80px;
     justify-content: space-around;
+    background:linear-gradient(black, #111, #333, #222, #111);
 }
 
 /* Ouvert verti */
 #userBar.userBarOpened.userBarLeft  > div:first-of-type {
     min-width: 80px;
     flex-direction: column;
+    background:linear-gradient(to right, black, #111, #333, #222, #111);
 }
 
 #userBar > div:first-of-type > span {
@@ -101,11 +107,23 @@
 }
 
 #userBar.userBarOpened > div:first-of-type > span.userBarButtonClicked {
-    background-color: grey;
+    border: unset;
+    background-color: #FFFFFF18;
+    box-sizing: border-box;
+}
+
+#userBar.userBarOpened:not(.userBarLeft) > div:first-of-type > span.userBarButtonClicked {
+    border-bottom: 4px solid #888;
+    border-top: 4px solid transparent;
+}
+
+#userBar.userBarOpened.userBarLeft > div:first-of-type > span.userBarButtonClicked {
+    border-right: 4px solid #888;
+    border-left: 4px solid transparent;
 }
 
 #userBar.userBarOpened > div:first-of-type > span:not(:first-of-type):not(:nth-of-type(2)):hover {
-    background-color: #00725A;
+    background-color: #FFFFFF20;
 }
 
 
@@ -159,6 +177,25 @@
     max-width: 800px;
 }
 
+#userBarData .NewsTitle {
+    white-space: nowrap;
+    padding-right: 6px;
+    padding-left: 6px;
+    text-align: right;
+    width: 0;
+}
+
+#userBarData.isUserPage tr:not(:nth-of-type(1)):not(:nth-of-type(2)) > td:nth-of-type(2),
+#userBarData tr > td:nth-of-type(2) {
+    text-align: left !important;
+    padding-left: 4px;
+}
+
+#userBarData tr > td > *,
+#userBarData .NewsTitle img {
+    vertical-align: middle;
+}
+
 /* Margin pour éviter d'être sous la barre */
 #userBarData.pageLoaded {
     z-index: -1;
@@ -172,8 +209,9 @@
     align-items: baseline;
     justify-content: center;
     background-color: white;
-    border: 2px solid green;
+    border: 2px solid #111;
     box-sizing: border-box;
+    padding: 10px 6px;
 }
 
 #userBar.userBarLeft > #userBarData.pageLoaded {
@@ -187,7 +225,7 @@
 }
 
 #userBar.userBarLeft.userBarTop > #userBarData.pageLoaded {
-    border-top-right-radius: 0;
+    border-top-right-radius: 0px;
 }
 
 #userBar:not(.userBarLeft) > #userBarData.pageLoaded {
@@ -279,6 +317,7 @@
 }
 
 /* ============================= Classes Sticky ============================= */
+
 #userBar.userBarLeft {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
