@@ -2,9 +2,10 @@
 	"manifest_version": 2,
 
 	"name": "A7++",
-	"description": "Life-changing tools for translators and proofreaders working with Addic7ed",
 	"version": "2.0",
+	"description": "__MSG_extensionDescription__",
     "author": "Acc\u00eant, HitOrRun, Retrojex & Mmoi",
+    "homepage_url": "https://github.com/Mmoi-Fr/A7plusplus",
 
     "icons": {
     	"16": "icon16.png",
@@ -55,5 +56,7 @@
             "js": ["data/launcher.js"],
             "run_at": "document_start"
         }
-    ]
+    ],
+
+    "default_locale": "en"
 }
