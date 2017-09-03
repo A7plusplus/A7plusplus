@@ -338,7 +338,7 @@ function post_triggerPM(userId, HTMLString, isError)
     {
         if(!isBackgroundTask)
         {
-            dataContainer.innerHTML = loc.ajaxErrorOccurred;
+            dataContainer.innerText = loc.ajaxErrorOccurred;
         }
         return;
     }
@@ -401,7 +401,7 @@ function post_triggerReport(userId, HTMLString, isError)
     {
         if(!isBackgroundTask)
         {
-            dataContainer.innerHTML = loc.ajaxErrorOccurred;
+            dataContainer.innerText = loc.ajaxErrorOccurred;
         }
         return;
     }
@@ -462,7 +462,7 @@ function post_triggerProfile(userId, HTMLString, isError)
     {
         if(!isBackgroundTask)
         {
-            dataContainer.innerHTML = loc.ajaxErrorOccurred;
+            dataContainer.innerText = loc.ajaxErrorOccurred;
         }
         return;
     }
