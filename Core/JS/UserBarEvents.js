@@ -707,6 +707,14 @@ function userBarDragOver(event)
             userBar = document.getElementById("userBar");
     if (!userBar.contains(page.draggedNode) || userBarData.contains(page.draggedNode)) return false;
 
+    // Récupère les positions
+    var offset  = event.dataTransfer.getData('text/plain').split(',');
+
+    setUserBarSize(
+        event.clientX + parseInt(offset[0], 10),
+        event.clientY + parseInt(offset[1], 10)
+    );
+
     event.preventDefault();
     return false;
 }
