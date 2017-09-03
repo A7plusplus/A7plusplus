@@ -4,9 +4,7 @@
 	"name": "A7++",
 	"description": "Life-changing tools for translators and proofreaders working with Addic7ed",
 	"version": "2.0",
-    "developer": {
-    	"name": "Acc\u00eant, HitOrRun, Retrojex & Mmoi"
-    },
+    "author": "Acc\u00eant, HitOrRun, Retrojex & Mmoi",
 
     "icons": {
     	"16": "icon16.png",
@@ -41,7 +39,7 @@
                 "data/CSS/UserBar.css",
                 "data/CSS/Misc.css"
             ],
-            "js": ["data/Launcher.js"],
+            "js": ["data/launcher.js"],
             "run_at": "document_start"
         },
         {
@@ -54,7 +52,7 @@
                 "data/CSS/Translate.css",
                 "data/CSS/Misc.css"
             ],
-            "js": ["data/Launcher.js"],
+            "js": ["data/launcher.js"],
             "run_at": "document_start"
         }
     ]
