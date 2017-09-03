@@ -243,7 +243,7 @@ function triggerProfile(close)
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.Prof)
+        if(page.userBarData.Prof && page.userBarData.Prof.tagName !== 'IMG')
         {
             dataContainer.innerHTML = '';
             dataContainer.classList.add('isUserPage');
@@ -298,7 +298,7 @@ function triggerReport(close)
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.Report)
+        if(page.userBarData.Report && page.userBarData.Report.tagName !== 'IMG')
         {
             dataContainer.innerHTML = '';
             dataContainer.appendChild(page.userBarData.Report);
@@ -334,12 +334,14 @@ function post_triggerPM(userId, HTMLString, isError)
         dataContainer    = document.getElementById('userBarData');
 
     // Affichage de l'erreur
-    if(isError && !isBackgroundTask)
+    if(isError)
     {
-        dataContainer.innerHTML = loc.ajaxErrorOccurred;
+        if(!isBackgroundTask)
+        {
+            dataContainer.innerHTML = loc.ajaxErrorOccurred;
+        }
         return;
     }
-
 
     // Crée le DOM virtuel
     var PMHTML = document.createElement('html');
@@ -359,7 +361,6 @@ function post_triggerPM(userId, HTMLString, isError)
     // Réécrit la fonction d'envoi
     form.setAttribute('action', '#');
     form.setAttribute('onsubmit', 'return userBarSendPM(this)');
-
 
     // Sauvegarde ou affiche
     if(isBackgroundTask)
@@ -396,12 +397,14 @@ function post_triggerReport(userId, HTMLString, isError)
         dataContainer    = document.getElementById('userBarData');
 
     // Affichage de l'erreur
-    if(isError && !isBackgroundTask)
+    if(isError)
     {
-        dataContainer.innerHTML = loc.ajaxErrorOccurred;
+        if(!isBackgroundTask)
+        {
+            dataContainer.innerHTML = loc.ajaxErrorOccurred;
+        }
         return;
     }
-
 
     // Crée le DOM virtuel
     var reportHTML = document.createElement('html');
@@ -419,7 +422,6 @@ function post_triggerReport(userId, HTMLString, isError)
     // Réécrit la fonction d'envoi
     form.setAttribute('action', '#');
     form.setAttribute('onsubmit', 'return userBarSendReport(this)');
-
 
     // Sauvegarde ou affiche
     if(isBackgroundTask)
@@ -456,12 +458,14 @@ function post_triggerProfile(userId, HTMLString, isError)
         dataContainer    = document.getElementById('userBarData');
 
     // Affichage de l'erreur
-    if(isError && !isBackgroundTask)
+    if(isError)
     {
-        dataContainer.innerHTML = loc.ajaxErrorOccurred;
+        if(!isBackgroundTask)
+        {
+            dataContainer.innerHTML = loc.ajaxErrorOccurred;
+        }
         return;
     }
-
 
     // Crée le DOM virtuel
     var profHTML = document.createElement('html');
@@ -479,7 +483,6 @@ function post_triggerProfile(userId, HTMLString, isError)
             break;
         }
     }
-
 
     // Sauvegarde ou affiche
     if(isBackgroundTask)
