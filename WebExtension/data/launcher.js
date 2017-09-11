@@ -8,27 +8,22 @@ function createScript(fileToLoad)
     return script;
 }
 
-var waitForHead = setInterval(function()
-{
-    if (document.head)
-    {
-        clearInterval(waitForHead);
+// Non conforme aux normes... Mais c'est le seul fix pour le moment
+document.documentElement.appendChild(document.createElement('head'));
 
-        document.head.appendChild(createScript('Settings.js'));
-        document.head.appendChild(createScript('Localization.js'));
+document.head.appendChild(createScript('Settings.js'));
+document.head.appendChild(createScript('Localization.js'));
 
-        document.head.appendChild(createScript('InitFunctions.js'));
-        document.head.appendChild(createScript('UtilsFunctions.js'));
-        document.head.appendChild(createScript('HTMLCreation.js'));
-        document.head.appendChild(createScript('Accessors.js'));
+document.head.appendChild(createScript('InitFunctions.js'));
+document.head.appendChild(createScript('UtilsFunctions.js'));
+document.head.appendChild(createScript('HTMLCreation.js'));
+document.head.appendChild(createScript('Accessors.js'));
 
-        document.head.appendChild(createScript('TextEvents.js'));
-        document.head.appendChild(createScript('TimeEvents.js'));
-        document.head.appendChild(createScript('CommentEvents.js'));
-        document.head.appendChild(createScript('UserBarEvents.js'));
-        document.head.appendChild(createScript('UpdateEvents.js'));
+document.head.appendChild(createScript('TextEvents.js'));
+document.head.appendChild(createScript('TimeEvents.js'));
+document.head.appendChild(createScript('CommentEvents.js'));
+document.head.appendChild(createScript('UserBarEvents.js'));
+document.head.appendChild(createScript('UpdateEvents.js'));
 
-        document.head.appendChild(createScript('Extra.js'));
-        document.head.appendChild(createScript('A7Init.js'));
-    }
-}, 25);
+document.head.appendChild(createScript('Extra.js'));
+document.head.appendChild(createScript('A7Init.js'));
