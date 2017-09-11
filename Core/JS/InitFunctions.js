@@ -186,7 +186,10 @@ function linesChanged()
         }
 
         // Si la ligne a un texte modifiable
-        if (currentLine.className === 'originalText' || page.translatePage)
+        if (
+            currentLine.className === 'originalText' ||
+            (page.translatePage && currentLine.className !== 'lockedText')
+        )
         {
             // TODO : enlever
             var seqNumber = parseInt(currentLine.id.substr(5), 10);
