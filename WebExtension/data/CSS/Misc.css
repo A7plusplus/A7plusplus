@@ -16,7 +16,7 @@
 }
 
 .stateRefreshing {
-    background-image: url(/images/loader.gif);
+    background-image: url('http://www.addic7ed.com/images/loader.gif');
     background-repeat: no-repeat;
     background-size: 24px 24px;
     color: transparent;
