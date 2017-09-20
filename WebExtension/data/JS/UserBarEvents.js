@@ -545,7 +545,7 @@ function post_userBarSendPM(HTMLstring, isError)
 {
     // On est toujours sur la page
     var form = document.getElementById('userBarData').firstElementChild;
-    if(!form || form.onsubmit.toString().substr(36, 19) !== 'userBarSendPM(this)' || !form.classList.contains('messageSent'))
+    if(!form || form.onsubmit.toString().search('userBarSendPM') === -1 || !form.classList.contains('messageSent'))
     {
         return;
     }
@@ -628,7 +628,7 @@ function post_userBarSendReport(HTMLstring, isError)
 {
     // On est toujours sur la page
     var form = document.getElementById('userBarData').firstElementChild;
-    if(!form || form.onsubmit.toString().substr(36, 23) !== 'userBarSendReport(this)' || !form.classList.contains('messageSent'))
+    if(!form || form.onsubmit.toString().search('userBarSendReport') === -1 || !form.classList.contains('messageSent'))
     {
         return;
     }
