@@ -460,6 +460,7 @@ function createUserBarStruct()
         event.stopImmediatePropagation();
     }, false);
 
+    dataContainer.classList.add('hasCustomScroll');
     dataContainer.setAttribute('id', 'userBarData');
     dataContainer.addEventListener('click', function(event)
     {
