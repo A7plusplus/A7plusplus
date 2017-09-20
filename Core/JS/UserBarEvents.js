@@ -166,7 +166,8 @@ function triggerPM(close)
     var isOpened = button.classList.contains('userBarButtonClicked');
     if(close || isOpened)
     {
-        if(isOpened)
+        // Ouvert avec du contenu
+        if(isOpened && userBar.lastElementChild.firstElementChild.tagName !== "P")
         {
             // Sauvegarde l'état
             page.userBarData.PM = userBar.lastElementChild.firstElementChild;
@@ -278,7 +279,8 @@ function triggerReport(close)
     var isOpened = button.classList.contains('userBarButtonClicked');
     if(close || isOpened)
     {
-        if(isOpened)
+        // Ouvert avec du contenu
+        if(isOpened && userBar.lastElementChild.firstElementChild.tagName !== "P")
         {
             // Sauvegarde l'état
             page.userBarData.Report = userBar.lastElementChild.firstElementChild;
