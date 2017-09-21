@@ -396,7 +396,12 @@ function updateCommentTextArea()
 function updateCommentHeightFromSaved(elem, storage, lowLimit, highLimit)
 {
     // Récupère la valeur
-    var savedValue = parseFloat(localStorage.getItem(storage));
+    var savedValue = 0;
+    if(localStorage)
+    {
+        savedValue = parseFloat(localStorage.getItem(storage));
+    }
+    
 
     // La valeur est valide
     if(!isNaN(savedValue) && savedValue * window.innerHeight >= lowLimit && savedValue <= highLimit)
