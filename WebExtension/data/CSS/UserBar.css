@@ -310,7 +310,6 @@
 /* Envoi en cours */
 #userBar.userBarLeft > #userBarData.pageLoaded > form:not(#step1).messageSent,
 #userBar.userBarLeft > #userBarData.pageLoaded > #step1.messageSent {
-    height: 90%;
     height: calc(100% - 28px);
 }
 
