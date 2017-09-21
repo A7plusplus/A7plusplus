@@ -1,23 +1,17 @@
 /* ================================ TextBox ================================ */
 .textClicked textarea {
+    animation-duration: 2s;
     animation-direction: alternate;
-    animation-duration: 1s;
     animation-iteration-count: infinite;
+    animation-timing-function: steps(3, start);
     display: block;
     font-family: monospace;
-    font-size: 13px;
     line-height: 16.9px;
     margin-bottom: 5px;
     margin-left: -1px;
     overflow: hidden;
+    font-size: 13px;
     resize: none;
-}
-
- /* Compatibilité autres navigateurs */
-.textClicked textarea {
-    -webkit-animation-direction: alternate;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-iteration-count: infinite;
 }
 
 textarea[borderglowing="bad"] {
@@ -25,41 +19,17 @@ textarea[borderglowing="bad"] {
     outline: none;
 }
 
- /* Compatibilité autres navigateurs */
-textarea[borderglowing="bad"] {
-    -webkit-animation-name: borderGlowingBad;
-}
-
 textarea[borderglowing="pass"] {
     animation-name: borderGlowingPass;
     outline: none;
 }
 
- /* Compatibilité autres navigateurs */
-textarea[borderglowing="pass"] {
-    -webkit-animation-name: borderGlowingPass;
-}
-
 @keyframes borderGlowingBad {
-    0%   { box-shadow: unset; }
     100% { box-shadow: 0 0 6px 2px red; }
 }
 
- /* Compatibilité autres navigateurs */
-@-webkit-keyframes borderGlowingBad {
-    from {box-shadow: unset;}
-    to   { box-shadow: 0 0 6px 1px red; }
-}
-
 @keyframes borderGlowingPass {
-    0%   { box-shadow: unset; }
     100% { box-shadow: 0 0 6px 2px #ee8800; }
-}
-
- /* Compatibilité autres navigateurs */
-@-webkit-keyframes borderGlowingPass {
-    from { box-shadow: unset; }
-    to   { box-shadow: 0 0 6px 1px #ee8800; }
 }
 
 .textClicked span:not(.ajaxError) {
