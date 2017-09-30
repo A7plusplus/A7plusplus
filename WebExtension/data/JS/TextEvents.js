@@ -22,7 +22,7 @@ function pre_mouseclick(tipo, seqNumber)
         var textCell = getTextCell(seqNumber);
 
         // Sauvegarde le texte
-        page.tempTranslateBackup[seqNumber] = textCell.innerHTML.replace(/<br>/g, "\n");
+        page.tempTranslateBackup[seqNumber] = textCell.innerHTML;
 
         // Affiche le chargement
         resetToLoadingImage(textCell);
@@ -378,17 +378,17 @@ function post_select(seqNumber, data, isError, translateMode)
         }
         else
         {
-            text = page.tempTranslateBackup[seqNumber];
+            text = getTextFromHTML(page.tempTranslateBackup[seqNumber]);
         }
     }
     else if(isError)
     {
-        text = page.tempTranslateBackup[seqNumber];
+        text = getTextFromHTML(page.tempTranslateBackup[seqNumber]);
     }
     // Mode édition
     else
     {
-        text = textCell.innerHTML.replace(/<br>/g, "\n");
+        text = getTextFromHTML(textCell.innerHTML);
     }
 
 
