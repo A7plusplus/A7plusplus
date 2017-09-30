@@ -154,6 +154,7 @@ function getTextFromHTML(HTMLString)
     HTMLString = HTMLString.replace(/<(\/?[ubi])>/g, "&lt;$1&gt;"); // match : <u><b><i>
     HTMLString = HTMLString.replace(/<font color="(#[0-9a-fA-F]{6})">/g, "&lt;font color=\"$1\"&gt;"); // match : <font color="#XXXXXX">
     HTMLString = HTMLString.replace(/<\/font>/g, "&lt;/font&gt;"); // match : </font>
+    HTMLString = HTMLString.replace(/<br>/g, "\n"); // Saut de ligne
 
     // On dé-echape le chaîne
     var element = document.createElement('div');
