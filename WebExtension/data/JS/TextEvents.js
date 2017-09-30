@@ -12,14 +12,14 @@
 function pre_mouseclick(tipo, seqNumber)
 {
     // Si on est en mode traduction, recherche d'aborde le text
-    if(!page.translatePage)
+    if(!page.translatePage || getTextCell(seqNumber).innerHTML.contains('loader.gif'))
     {
-        // Bypass le chargement car inutile
+        // Bypass le chargement car inutile si on est en edit ou qu'il y a erreur d'envoi
         post_select(seqNumber, null, false);
     }
     else
     {
-        var textCell = getTextCell(seqNumber).parentElement.lastElementChild;
+        var textCell = getTextCell(seqNumber);
 
         // Sauvegarde le texte
         page.tempTranslateBackup[seqNumber] = textCell.innerHTML.replace(/<br>/g, "\n");
@@ -166,9 +166,6 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
     }
     else
     {
-        // Change le texte de la cellule
-        textCell.innerHTML = confirmedText.substr(19, confirmedText.length - 26).replace(/\n/g, '');
-
         // Réouvre l'édition
         pre_mouseclick('o', seqNumber);
 
@@ -180,6 +177,7 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
         textArea.value        = confirmedText;
 
         // Mise en forme
+        updateRsRatingAndCharCount(seqNumber);
         textCell.firstElementChild.setAttribute('class', 'ajaxError');
         textCell.firstElementChild.setAttribute('title', loc.ajaxErrorOccurred);
     }
