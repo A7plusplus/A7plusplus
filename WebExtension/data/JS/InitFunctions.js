@@ -392,7 +392,7 @@ function post_requestHICheck(episodeHTMLString, isError)
 */
 function searchForUpdate()
 {
-    ajax('GET', 'https://raw.githubusercontent.com/Mmoi-Fr/A7plusplus/master/VERSION', '', post_searchForUpdate, null, null);
+    ajax('GET', 'https://raw.githubusercontent.com/A7plusplus/A7plusplus/master/VERSION', '', post_searchForUpdate, null, null);
 }
 
 /**
