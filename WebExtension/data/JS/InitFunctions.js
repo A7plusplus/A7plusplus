@@ -315,14 +315,14 @@ function requestHICheck()
     var episodeUrl = document.getElementById('A7Info').previousElementSibling.firstElementChild.href;
 
     // Envoie la requête
-    ajax('GET', episodeUrl, '', post_requestHICheck, null, null);
+    ajax(['GET', 'document'], episodeUrl, '', post_requestHICheck, null, null);
 }
 
 
 /**
 * @fn post_requestHICheck Récupère les données de l'épisode et vérifie l'il est en HI
 */
-function post_requestHICheck(episodeHTMLString, isError)
+function post_requestHICheck(episodeHTMLDocument, isError)
 {
     // Re-envoi la requête en cas d'échec
     if (isError)
@@ -335,14 +335,11 @@ function post_requestHICheck(episodeHTMLString, isError)
 
     // Info et stockage
     var currentUrl = window.location.href,
-        episodeHTML = document.createElement('html'),
         imgs = null;
 
-    // De chaine à objet
-    episodeHTML.innerHTML = episodeHTMLString;
 
     // Repère le lien de l'épisode
-    var links = episodeHTML.getElementsByTagName('a');
+    var links = episodeHTMLDocument.getElementsByTagName('a');
     for (var i = 0; i < links.length; i++)
     {
         if (page.translatePage)

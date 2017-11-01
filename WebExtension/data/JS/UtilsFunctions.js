@@ -165,7 +165,7 @@ function getTextFromHTML(HTMLString)
 
 /**
 * @fn ajax Effectue une requête ajax
-* @param {string} action POST / GET / UPDATE etc
+* @param {string} action POST / GET / UPDATE etc (temporairement: peut recevoir un tableau contenant action et responseType)
 * @param {string} url Adresse
 * @param {string} params Paramètres de la requête
 * @param {function(number, Object, boolean, [Object])} readyFunction Fonction à appeler en cas de succès
@@ -180,6 +180,11 @@ function ajax(action, url, params, readyFunction, seqNumber, backupInfos, second
     var xhr = new XMLHttpRequest();
 
     // L'initialise
+    if (typeof action !== 'string')
+    {
+        xhr.responseType = action[1];
+        action = action[0];
+    }
     xhr.open(action, url, true);
     xhr.timeout = A7Settings.updateTimeout * 1000;
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -192,11 +197,11 @@ function ajax(action, url, params, readyFunction, seqNumber, backupInfos, second
             {
                 if(seqNumber === null)
                 {
-                    readyFunction(xhr.responseText, false);
+                    readyFunction(xhr.response, false);
                 }
                 else
                 {
-                    readyFunction(seqNumber, xhr.responseText, false);
+                    readyFunction(seqNumber, xhr.response, false);
                 }
             }
             else
