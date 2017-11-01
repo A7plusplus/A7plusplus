@@ -113,7 +113,7 @@ function init()
         setTimeout(init, 250);
         return;
     }
-
+    
     // Récupère la langue du site
     var lang = document.getElementById('comboLang'),
         choosen = lang ? lang.options[lang.selectedIndex].value : (navigator.language || navigator.userLanguage || 'en');

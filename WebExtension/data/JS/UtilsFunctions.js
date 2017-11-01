@@ -1,5 +1,5 @@
 /**
-* @file Utils.js
+* @file UtilsFunctions.js
 * @brief Script des fonctions utilitaires
 */
 

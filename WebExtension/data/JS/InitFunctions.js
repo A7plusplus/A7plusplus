@@ -337,8 +337,7 @@ function post_requestHICheck(episodeHTMLDocument, isError)
 
     // Info et stockage
     var currentUrl = window.location.href,
-        imgs = null;
-
+        img = null;
 
     // Repère le lien de l'épisode
     var links = episodeHTMLDocument.getElementsByTagName('a');
@@ -351,8 +350,8 @@ function post_requestHICheck(episodeHTMLDocument, isError)
                 '&fversion=' + page.queryInfos.fversion +
                 '&lang=' + page.queryInfos.lang) !== -1)
             {
-                // Récupère les indicateurs
-                imgs = links[i].parentElement.previousElementSibling.getElementsByTagName('img');
+                // Récupère l'indicateur
+                img = links[i].parentElement.previousElementSibling.children[1];
                 break;
             }
         }
@@ -360,26 +359,22 @@ function post_requestHICheck(episodeHTMLDocument, isError)
         {
             if (links[i].href === currentUrl)
             {
-                // Récupère les indicateurs
-                imgs = links[i].parentElement.previousElementSibling.getElementsByTagName('img');
+                // Récupère l'indicateur
+                img = links[i].parentElement.previousElementSibling.children[1];
                 break;
             }
         }
     }
 
     // Vérifie la présence du hearingImpaired
-    for (i = 0; i < imgs.length; i++)
+    if (img.tagName === 'IMG' && img.src === 'http://www.addic7ed.com/images/hi.jpg')
     {
-        if (imgs[i].src === 'http://www.addic7ed.com/images/hi.jpg')
-        {
-            // Ajoute le logo
-            var parentDiv = document.getElementById('A7Info').parentElement;
+        // Ajoute le logo
+        var parentDiv = document.getElementById('A7Info').parentElement;
 
-            if(parentDiv.lastElementChild.id !== 'hearingImpaired')
-            {
-                parentDiv.appendChild(createHIImg());
-            }
-            break;
+        if (parentDiv.lastElementChild.id !== 'hearingImpaired')
+        {
+            parentDiv.appendChild(createHIImg());
         }
     }
 
