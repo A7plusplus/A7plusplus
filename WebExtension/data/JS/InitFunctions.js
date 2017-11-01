@@ -73,6 +73,20 @@ function changeButtonEvents()
 
 
 /**
+ * @fn removeTitleIndicator Enlève l'indicateur d'avancement existant à droite du titre
+ */
+function removeTitleIndicator()
+{
+    // Récupère le titre
+    var title = document.getElementsByClassName('titulo')[0];
+
+    // Enlève l'indicateur et rend le titre visible
+    title.lastChild.remove();
+    title.parentElement.parentElement.style.setProperty('visibility', 'visible');
+}
+
+
+/**
 * @fn linesChanged Met en cache les lignes et ajoute un évènement sur les liens
 */
 function linesChanged()
@@ -348,7 +362,8 @@ function post_requestHICheck(episodeHTMLDocument, isError)
             if (links[i].href.indexOf(
                 '/jointranslation.php?id=' + page.queryInfos.id +
                 '&fversion=' + page.queryInfos.fversion +
-                '&lang=' + page.queryInfos.lang) !== -1)
+                '&lang=' + page.queryInfos.lang) !== -1
+            )
             {
                 // Récupère l'indicateur
                 img = links[i].parentElement.previousElementSibling.children[1];

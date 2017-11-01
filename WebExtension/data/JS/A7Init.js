@@ -76,26 +76,21 @@ function preInit()
     // Vérification sommaire de l'intégrité de la page
     if (!document.getElementById('lista'))
     {
+        console.log('[A7++] Document Error');
         return;
     }
-    
+
     // Enlève l'indicateur d'avancement existant puis initialise l'extension
     if (translatePage) removeTitleIndicator();
+
+    // Récupère la langue du site
+    var lang = document.getElementById('comboLang'),
+        choosen = lang ? lang.options[lang.selectedIndex].value : (navigator.language || navigator.userLanguage || 'en');
+    // Ne garde que le nescessaire
+    loc = loc[choosen] ? loc[choosen] : loc.en;
+
+    // Lance l'initialisation
     init();
-}
-
-
-/**
- * @fn removeTitleIndicator Enlève l'indicateur d'avancement existant à droite du titre
- */
-function removeTitleIndicator()
-{
-    // Récupère le titre
-    var title = document.getElementsByClassName('titulo')[0];
-    
-    // Enlève l'indicateur et rend le titre visible
-    title.lastChild.remove();
-    title.parentElement.parentElement.style.setProperty('visibility', 'visible');
 }
 
 
@@ -113,12 +108,6 @@ function init()
         setTimeout(init, 250);
         return;
     }
-    
-    // Récupère la langue du site
-    var lang = document.getElementById('comboLang'),
-        choosen = lang ? lang.options[lang.selectedIndex].value : (navigator.language || navigator.userLanguage || 'en');
-    // Ne garde que le nescessaire
-    loc = loc[choosen] ? loc[choosen] : loc.en;
 
     // La page ne contient pas de lignes de traduction
     if (
