@@ -284,7 +284,7 @@ function windowMouseMove(e)
 
     commentsSection.style.height =  height + 'px';
     commentsSection.style.bottom = -height + 'px';
-    document.getElementById('lista').style.marginBottom = height - 10 + 'px';
+    document.getElementById('lista').style.marginBottom = height + 10 + 'px';
 
     // Sauvegarde pour la personnalisation
     if(localStorage)

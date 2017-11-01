@@ -410,7 +410,7 @@ function updateCommentHeightFromSaved(elem, storage, lowLimit, highLimit)
 
         elem.style.height = size + 'px';
         elem.style.bottom = -size + 'px';
-        document.getElementById('lista').style.marginBottom = size - 10 + 'px';
+        document.getElementById('lista').style.marginBottom = size + 10 + 'px';
     }
 }
 

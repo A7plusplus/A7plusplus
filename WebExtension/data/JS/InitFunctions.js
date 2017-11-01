@@ -143,6 +143,7 @@ function linesChanged()
     {
         headerRow = document.getElementById('trseqtop');
     }
+    headerRow.parentElement.setAttribute('id', 'seqsTbody');
 
     // Création de la colonne compteur
     var counterCol    = document.createElement('td');
@@ -294,8 +295,9 @@ function linesChanged()
         }
 
     // Rend visible le tableau des séquences maintenant que le chargement est terminé
-    lista.children[0].style.setProperty('visibility', 'visible');
-    lista.children[1].style.setProperty('visibility', 'visible');
+    var tables = lista.getElementsByTagName('table');
+    tables[0].style.setProperty('visibility', 'visible');
+    tables[1].style.setProperty('visibility', 'visible');
     }
 
     if(!page.translatePage)

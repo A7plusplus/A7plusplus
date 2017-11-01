@@ -1,11 +1,16 @@
 #lista {
     display: block;
-    margin-bottom: calc(60vh - 10px);
+    margin-bottom: calc(60vh + 10px);
 }
 
 /* Cache le tableau pendant le chargement */
 #lista table {
 	visibility:  hidden;
+}
+
+/* Cache le titre pendant l'initialisation */
+.tabel95 >  tbody > tr:nth-of-type(2) {
+    visibility: hidden;
 }
 
 /* ============================== Erreurs AJAX ============================== */
@@ -44,13 +49,6 @@ table[cellpadding="1"] td:not(.textClicked) {
     vertical-align: middle;
 }
 
-/* Petit indicateur -> ligne originalText (au survol) */
-.originalText:hover .timeInitial:after {
-    border-width: 1px 2px;
-    padding: .5px 5px .5px 4px;
-    box-shadow: 0 0 4px 1px #888888;
-}
-
 /* TextBox -> dans une ligne originalText et cliquée  */
 .originalText .textClicked {
     background-color: #ffc4ff;
@@ -68,13 +66,18 @@ table[cellpadding="1"] td:not(.textClicked) {
     box-shadow: 0 0 20px 1px #ff9999 inset, 0 0 2px 1.4px #ff7777;
 }
 
+/* Icône du cadenas -> colonne lock sauf première ligne */
+td[id^=lock]:not(#locktop) img {
+    max-height: 28px;
+}
+
 /* Liens du tableau -> ligne originalText et lockedText */
 .originalText a,
 .lockedText a {
     font-weight: 600;
 }
 
-/* Lien -> colonne séquence dans les lignes originalText et lockedText */
+/* Lien -> colonne auteur dans les lignes originalText et lockedText */
 .originalText a[href^="/user/"],
 .lockedText a[href^="/user/"] {
     font-weight: unset;
@@ -104,6 +107,24 @@ table[cellpadding="1"] td:not(.textClicked) {
     background-color: #ffbbbb;
 }
 
+/* Petit indicateur */
+.timeWithoutIndicator:after {
+    border-radius: 5px;
+    border: 1px solid #222222;
+    box-shadow: 0 0 3px 1px #888888;
+    content: "";
+    margin-left: 8px;
+    padding: .5px 6px .5px 5px;
+    font-size: 10px;
+}
+
+/* Petit indicateur -> ligne originalText (au survol) */
+.originalText:hover .timeInitial:after {
+    border-width: 1px 2px;
+    padding: .5px 5px .5px 4px;
+    box-shadow: 0 0 4px 1px #888888;
+}
+
 /* Petit indicateur -> ligne lockedText */
 .lockedText .lockedTime:after {
     border-color: #000000;
@@ -114,6 +135,17 @@ table[cellpadding="1"] td:not(.textClicked) {
 .lockedText:hover .lockedTime:after {
     border-color: #222222;
     box-shadow: none;
+}
+
+/* Petit indicateur -> ligne quotedText */
+.quotedText .quotedTime:after {
+    border-color: #aaaaaa;
+    box-shadow: none;
+}
+
+/* Petit indicateur -> ligne quotedText (au survol) */
+.quotedText:hover .quotedTime:after {
+    border-color: #222222;
 }
 
 /* Lignes -> quotedText */
@@ -127,48 +159,47 @@ table[cellpadding="1"] td:not(.textClicked) {
     color: #000000;
 }
 
-/* Petit indicateur -> ligne quotedText */
-.quotedText .timeInitial:after {
-    border-color: #aaaaaa;
-    box-shadow: none;
+/* Nom des colonnes -> première ligne du tableau */
+#seqsTbody > tr:first-of-type td {
+    padding: 1em 8px 0;
 }
 
-/* Petit indicateur -> ligne quotedText (au survol) */
-.quotedText:hover .timeInitial:after {
-    border-color: #222222;
+/* Icône du cadenas -> première ligne première colonne du tableau */
+#locktop img {
+    margin-top: -12px;
 }
 
-/* Première ligne du tableau -> nom des colonnes */
-#trseqtop td {
-    padding-bottom: 0;
-    padding-top: 1em;
-}
-
-tr[id^="trseq"] {
+#seqsTbody > tr {
     height: 30px;
 }
 
-tr[id^="trseq"] td {
-    height: 2em;
+#seqsTbody > tr td {
+    min-height: 2em;
 }
 
-tr[id^="trseq"] a {
-    color: #444444;
+#seqsTbody > tr a {
     text-decoration: none;
+}
+
+#seqsTbody > tr:not(.lockedText) a {
+    color: #444444;
 }
 
 tr[id^="trseq"].lockedText a {
     color: #ffffff;
 }
 
-tr[id^="trseq"]:hover a {
+#seqsTbody > tr:hover a {
     color: blue;
     text-decoration: underline;
 }
 
 /* Not 0 for Opera support */
-tr[id^="trseq"]  td:nth-of-type(-n+5){
+#seqsTbody > tr  td:nth-of-type(-n+5){
     width: .1px;
+}
+
+#seqsTbody > tr:not(:first-of-type)  td:nth-of-type(-n+5){
     padding: 0 8px;
 }
 
@@ -177,6 +208,7 @@ tr[id^="trseq"] td[id^="lock"]{
     text-align: center;
 }
 
+/* TimeBox */
 .timeWithoutIndicator,
 .timeWithIndicator {
     padding: 0 6px;
@@ -187,27 +219,27 @@ tr[id^="trseq"] td[id^="lock"]{
     min-width: 15rem;
 }
 
-tr[id^="trseq"] td[bgcolor="white"],
-tr[id^="trseq"] td:last-of-type:not(.textClicked) {
+#seqsTbody > tr td[bgcolor="white"],
+#seqsTbody > tr:not(:first-of-type) td:last-of-type:not(.textClicked) {
     padding-left: 2px;
     padding-bottom: 3px;
 }
 
-tr[id^="trseq"] td.counter {
+#seqsTbody > tr td.counter {
     padding-bottom: 3px;
 }
 
-tr[id^="trseq"] td[bgcolor="white"] {
+#seqsTbody > tr td[bgcolor="white"] {
     padding-right: 8px;
     white-space: nowrap;
     width: 170px;
 }
 
-tr[id^="trseq"] td:last-child {
+#seqsTbody > tr td:last-child {
     white-space: nowrap;
 }
 
-tr[id^="trseq"] td:last-child:after {
+#seqsTbody > tr:not(:first-of-type) td:last-child:after {
     content: " ";
     white-space: pre;
 }

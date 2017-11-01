@@ -80,21 +80,6 @@ textarea[borderglowing="pass"] {
     margin-bottom: .1rem;
 }
 
-.timeWithoutIndicator:after {
-    border-radius: 5px;
-    border: 1px solid #222222;
-    box-shadow: 0 0 3px 1px #888888;
-    content: "";
-    margin-left: 8px;
-    padding: .5px 6px .5px 5px;
-    font-size: 10px;
-}
-
-.quotedTime:after {
-    border-color: #aaaaaa;
-    box-shadow: none;
-}
-
 .timeWithIndicator {
     text-align: center;
 }
@@ -199,7 +184,7 @@ textarea[borderglowing="pass"] {
     width: 30px;
 }
 
-.counter div,
+.counter span,
 .openedCounter span {
     margin-right: 2px;
 }
