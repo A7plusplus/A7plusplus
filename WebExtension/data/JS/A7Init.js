@@ -54,16 +54,48 @@ var page;
 // Si la page est déjà chargée
 if (document.readyState === 'interactive' || document.readyState === 'complete')
 {
-    // Initie l'extension
-    init();
+    // Préinitialise l'extension
+    preInit();
 }
 // Sinon, attend la fin du chargement de la page
 else
 {
     document.addEventListener('DOMContentLoaded', function()
     {
-        init();
+        // Préinitialise l'extension
+        preInit();
     }, false);
+}
+
+
+/**
+ * @fn preInit Préparatifs avant l'initialisation
+ */
+function preInit()
+{
+    // Vérification sommaire de l'intégrité de la page
+    if (!document.getElementById('lista'))
+    {
+        return;
+    }
+    
+    // Enlève l'indicateur d'avancement existant puis initialise l'extension
+    if (translatePage) removeTitleIndicator();
+    init();
+}
+
+
+/**
+ * @fn removeTitleIndicator Enlève l'indicateur d'avancement existant à droite du titre
+ */
+function removeTitleIndicator()
+{
+    // Récupère le titre
+    var title = document.getElementsByClassName('titulo')[0];
+    
+    // Enlève l'indicateur et rend le titre visible
+    title.lastChild.remove();
+    title.parentElement.parentElement.style.setProperty('visibility', 'visible');
 }
 
 
@@ -76,7 +108,7 @@ function init()
     var list = document.getElementById('lista');
 
     // Attend le chargement des séquences
-    if (list === null || list.innerHTML === '<img src="/images/loader.gif">' || list.innerHTML === '&nbsp;')
+    if (list.innerHTML === '<img src="/images/loader.gif">' || list.innerHTML === '&nbsp;')
     {
         setTimeout(init, 250);
         return;

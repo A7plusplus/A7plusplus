@@ -326,8 +326,8 @@ function requestHICheck()
 */
 function post_requestHICheck(episodeHTMLDocument, isError)
 {
-    // Re-envoi la requête en cas d'échec
-    if (isError)
+    // Renvoie la requête : en cas d'échec ou de vérification sommaire du contenu de la page reçue infructueuse
+    if (isError || !episodeHTMLDocument.getElementById('container95m'))
     {
         setTimeout(function(){
             requestHICheck();
