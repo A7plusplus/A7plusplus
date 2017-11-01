@@ -342,21 +342,6 @@ function post_select(seqNumber, data, isError, translateMode)
     var textCell = line.lastElementChild;
 
 
-    // Récupération de l'état des cellules
-    var timeState = getStateOfTimeCell(timeCell);
-
-
-    // On s'occupe de l'état du temps : si le grand indicateur n'est pas là, on le crée
-    if (timeState === 'initial')
-    {
-        // Ajoute le grand indicateur du RS Rating
-        addBigIndicator(timeCell);
-
-        // Actualise le RS Rating et le compte des caractères
-        updateRsRatingAndCharCount(seqNumber);
-    }
-
-
     // Enregistre le texte ou traite les données recues
     var text = null;
     // La reuêtre ajax est revenue
@@ -378,7 +363,19 @@ function post_select(seqNumber, data, isError, translateMode)
         }
         else
         {
-            text = getTextFromHTML(page.tempTranslateBackup[seqNumber]);
+            // Texte non trouvé, on vérifie que la séquence n'est pas occupée
+            var regexUser = data.match(/<a href="\/user\/">.*<\/a>/);
+
+            if(regexUser && regexUser.length == 1)
+            {
+                // Séquence occupée
+                textCell.innerHTML = data;
+                return;
+            }
+            else
+            {
+                text = getTextFromHTML(page.tempTranslateBackup[seqNumber]);
+            }
         }
     }
     else if(isError)
@@ -389,6 +386,21 @@ function post_select(seqNumber, data, isError, translateMode)
     else
     {
         text = getTextFromHTML(textCell.innerHTML);
+    }
+
+
+    // Récupération de l'état des cellules
+    var timeState = getStateOfTimeCell(timeCell);
+
+
+    // On s'occupe de l'état du temps : si le grand indicateur n'est pas là, on le crée
+    if (timeState === 'initial')
+    {
+        // Ajoute le grand indicateur du RS Rating
+        addBigIndicator(timeCell);
+
+        // Actualise le RS Rating et le compte des caractères
+        updateRsRatingAndCharCount(seqNumber);
     }
 
 
