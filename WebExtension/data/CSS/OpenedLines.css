@@ -1,0 +1,301 @@
+/* ================================ TextBox ================================ */
+.textClicked textarea {
+    animation-duration: 2s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(3, start);
+    display: block;
+    font-family: monospace;
+    line-height: 16.9px;
+    margin-bottom: 5px;
+    margin-left: -1px;
+    overflow: hidden;
+    font-size: 13px;
+    resize: none;
+}
+
+textarea[borderglowing="bad"] {
+    animation-name: borderGlowingBad;
+    outline: none;
+}
+
+textarea[borderglowing="pass"] {
+    animation-name: borderGlowingPass;
+    outline: none;
+}
+
+@keyframes borderGlowingBad {
+    100% { box-shadow: 0 0 6px 2px red; }
+}
+
+@keyframes borderGlowingPass {
+    100% { box-shadow: 0 0 6px 2px #ee8800; }
+}
+
+.textClicked span:not(.ajaxError) {
+    padding: 2px 5px 5px 2px;
+}
+
+/* ================================ TimeBox ================================ */
+/* Parent flex */
+.timeClicked > span {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: .5rem 0 .5rem 0;
+}
+
+/* Mets l'indicateur à la fin */
+.timeClicked > span > :nth-child(8) {
+    order: 2;
+    width: calc(80% - 5px);
+    margin-left: calc(10% + 5px);
+}
+
+.timeClicked input {
+    margin-bottom: .1rem;
+    width: calc(50% - 5px);
+}
+
+.timeClicked a7button {
+    margin: 0;
+}
+
+.timeClicked a7button:first-of-type {
+  margin-left: 6px;
+}
+
+.timeClicked t {
+    width: 10%;
+    margin-right: 5px;
+    text-align: right;
+    padding-top: .1rem;
+}
+
+.timeClicked div {
+    width: calc(30% - 6px);
+    text-align: center;
+    padding-top: .1rem;
+    margin-left: 4px;
+    margin-bottom: .1rem;
+}
+
+.timeWithIndicator {
+    text-align: center;
+}
+
+
+.timeWithIndicator > div {
+    margin-top: 5%;
+}
+
+.timeWithIndicator > div > div, .timeWithIndicator > span > div {
+    background-color: rgba(255, 255, 255, .65);
+    border: 1px solid #d3d3d3;
+    box-shadow: 0 0 5px .1px #d3d3d3;
+}
+
+.timeWithIndicator > div > div {
+    margin: auto;
+    margin-top: .3rem;
+    width: 30%;
+}
+
+.timeWithIndicator input {
+    border: 1px solid #d3d3d3;
+    font-family: monospace;
+    font-size: 13px;
+    height: 16px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.timeWithIndicator input:last-of-type {
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.timeWithIndicator > div > input:last-of-type {
+    cursor: pointer;
+}
+
+/* ========================= Indicateurs de couleur ========================= */
+.empty input:last-of-type,
+.empty::after {
+    background-color: #ffffff;
+}
+
+.undef input:last-of-type,
+.undef::after {
+    background-color: #cccccc;
+}
+
+.tslow input:last-of-type,
+.tslow::after {
+    background-color: #9999ff;
+}
+
+.aslow input:last-of-type,
+.aslow::after {
+    background-color: #99ccff;
+}
+
+.bslow input:last-of-type,
+.bslow::after {
+    background-color: #99ffff;
+}
+
+.sgood input:last-of-type,
+.sgood::after {
+    background-color: #99ffcc;
+}
+
+.perfe input:last-of-type,
+.perfe::after {
+    background-color: #99ff99;
+}
+
+.fgood input:last-of-type,
+.fgood::after {
+    background-color: #ccff99;
+}
+
+.bfast input:last-of-type,
+.bfast::after {
+    background-color: #ffff99;
+}
+
+.afast input:last-of-type,
+.afast::after {
+    background-color: #ffcc99;
+}
+
+.tfast input:last-of-type,
+.tfast::after {
+    background-color: #ff9999;
+}
+
+/* ========================= Compteur de caractères ========================= */
+.counter,
+.openedCounter {
+    max-width: 30px;
+    min-width: 30px;
+    text-align: right;
+    width: 30px;
+}
+
+.counter span,
+.openedCounter span {
+    margin-right: 2px;
+}
+
+.openedCounter {
+    border-top: 15px solid #ffc4ff;
+    padding-top: 1px;
+    background-color: #fce8fc;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 16.9px;
+    vertical-align: top !important;
+    border-bottom: 30px solid #ffc4ff;
+}
+
+/* Spans du compteur -> classe green et lignes lockedText (au survol) */
+.ccc_green,
+.lockedText:hover span.ccc_green {
+    color: green;
+}
+
+/* Spans du compteur -> classe orange et lignes lockedText (au survol) */
+.ccc_orange,
+.lockedText:hover span.ccc_orange {
+    color: #ee8800;
+}
+
+/* Spans du compteur -> classe red et lignes lockedText (au survol) */
+.ccc_red,
+.lockedText:hover span.ccc_red {
+    color: red;
+}
+
+/* ================================ Boutons ================================ */
+input[type="button"]:hover,
+input[type="submit"]:hover {
+    color: lime;
+    cursor: pointer;
+}
+
+a7button {
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: inline-block;
+    border-radius: 15px;
+}
+
+a7button:hover {
+    background-color: rgba(255, 255, 255, .5);
+    cursor: pointer;
+}
+
+.textClicked a7button {
+    height: 22px;
+    margin-left: 3px;
+    width: 22px;
+}
+
+.textClicked > span > span > a7button:nth-child(1) {
+    margin-left: 0;
+}
+
+.textClicked separator {
+    background-color: #5d5d5d;
+    display: inline-block;
+    height: 22px;
+    margin-left: 6px;
+    margin-right: 3px;
+    width: 1px;
+}
+
+.timeClicked a7button {
+    height: 20px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+    vertical-align: middle;
+    width: 20px;
+}
+
+/* Gras */
+.textClicked a7button:nth-of-type(1) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABM0lEQVR42mNgGAWjYBSMglEwCoY8iI2N/U8C/grE16KioqYEBwebDGaHouDIyMhOoBGMg96hUJw9IA6Njo5+B8QP0DE02v9jUf/a2NiYle4OBUZnAS61oaGhWjExMUfR9QDTrNmgcijUsZZY9AQMOocCQ08VS4i6DzqHAuUr0NLoHyAtNhCZaRmQTkDHQPFiIF6Hrh6YZucNheJpra+vL9egdigwJL8A02YOMHMxD4kCH+jgNXSpnUhIoxlAejooJNH1REREJA26XA9UowPEv9A8d3zQORQEgKG6F82hPwelQ4EO24aubzBWoZyghgtaiH4YVA4FZhoFYLRvwpIBNw6mZt4rXEUUsDx1GfTlKNCRs4dCgT99sNZMn4DJ4DyocxceHm462jUeBaNgFIyCUTA8AACv4m8A1h8SRQAAAABJRU5ErkJggg==");
+}
+
+/* Italique */
+.textClicked a7button:nth-of-type(2) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABBElEQVR42u2XrQrCYBSGByKIWYyC17AuH4Jh4bNtsD8xGAbDWxCjwYsQLGI1eAtaDV6DFjWJGtQjmA5H695wHvhYffaen+1zHEVRFEVRiiRN0zyO4xM9X79OkiRHGGGSGQiSD3oJDy3ZNhclyTlcC4RhOBJK3oUTJakNE71Za6tQkiRUozI/WZpruDSjKOrxslMrDBFX1EKY+CaUpO/7JZI6M8k9XJpBELSENKeI0z4R1pKBE6Vp37Elf3Fdt4zWnw2h7EvENDNBtI+4llas7J+lX4eSNMZUSOzK0twilt0Tpn2MKDoTPpsduDTp3IX/zwxJ8vDv2vG9luR6SVMURVGUQnkDrhz12etuFXEAAAAASUVORK5CYII=");
+}
+
+/* Enlever les tags */
+.textClicked a7button:nth-of-type(3) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABGklEQVR42u2WPQrCQBCF0woqFjaeJSdIEUgTyC+5gqWlYGPpEbydKVKkUCx1nhhYAruJ+TEE3geL7O7M26ebGWNZhBBCCCENeJ63SZLkGEXRRV3HHOvYn9Sg4zhrGInjuEzT9CWfV3Uf8+96iTjE/9Wg7/vLMAwPYqKAkWrojCqjQB7yJzH4g9FxDYvgQoT3cnCuOfhzvUEQpGoe5tVjocnJoQv93iYhJKI33WHy7N1NBVMVGuJ0GtDHOb2MNhg8u667baODOMSbDA9t9PltO7sueshDPnRotDYeXa4eeaNcfZtikl/oZCom7I9eTGp7MhlGG5KYrPYlM1N7qgwO0p5m1fBn9xdax7bt1S8vJYjnax4hhBBCCFF4A0XDw8hNeryDAAAAAElFTkSuQmCC");
+}
+
+/* Restaurer */
+.textClicked a7button:nth-of-type(4),
+.timeClicked a7button:nth-of-type(1) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABd0lEQVR42mNgGAWjYBSMglEwCkAgJiamA480U2hoqD1QTR8Qn4iOjn4XGxv7H0j/A+IXQLG9QH4NUI0KzR0KshjdsQ4ODixAh2QA5e6A5InBQDPW09TBSBaBHRsREWEFdORVYh2Ihr8DcRpNHQrFu4GO/EOmI/+je5qWDqUajoyMLBgSDgXGzO/w8HD9gXDoK2CUzgTS2cDQCgDSoUDcCHTQITx6DtDTofeBOMLY2JgVTxGnDnTwNmz6gaFqSheHgspQEsrkInT9UVFRE+gW9aTkYmCyaEPTf46uaZRYx4KSCDS5wDLVN6o4FGjQAmIxMBrNyEkCg7b9AHScDlKI/hm0DgXW+cxIIXpnULfKkNL2ksEcotJI5WjQoHUosIgKhjr0Eb6KYjBE+wpowyRmMEe7HNCRv4B486DORMDiaDHQkTeBZa7goHUk0HHuwFx+OygoSGbQOhLkOGBIrgViscGcLnmAIRk2qHP4KBgFo2AUjIJRQBIAANwr7Dv/e3ltAAAAAElFTkSuQmCC");
+}
+
+/* Annuler */
+.textClicked a7button:nth-of-type(5),
+.timeClicked a7button:nth-of-type(2) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABLUlEQVR42u3XMQ6CMBQG4H+oHbyLriY66QGcTbyhC4MxiiB3cnFAjfKixEYptEhtTd6fEKa2X3mlTQEOh8PhcN6zBvoHyNUWcti2jxRymUEk1JczZAqRZZC34n3coDdqgyzaXp99ZJ1jVWT52GJVpNJHt1gqlTqALbYK+epDRp1B6weqx8aQi7ZtnWD3wOSzEpgX1ch/hnzDXqoGLkCnGGLmHWkCKLHekabYpon8dPOvxwaCtMd6RJpjA0A+9kn6eWhdaqE5TSZwZADYGBibIT1iaR+k/VAP0k1A5HSkBoLEvG5J0DFMJ5x3pMn6dYq1QXrDJpADW2SZHcRU17ZzLN2TNMizyZ/cUI3E9VXE6mtUYZ3fm9qWTMU6QapYKtU36+qBlZEzJIfD4XD+O3dpMRQZWPX4rgAAAABJRU5ErkJggg==");
+}
+
+/* Sauver */
+.textClicked a7button:nth-of-type(6),
+.timeClicked a7button:nth-of-type(3) {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABWElEQVR42u3Wr0sFQRAH8K8IBkEsCqIviNy7u2ITBKNgtQmCxfqKNpvw0Pdj9/AvsBusVsFiMohBo0lsJhEMguiMsscr3j7kYObBfGHawn6Y290bwGKxWCwWyyhlrofZ1OEmO8a6WuSSw3TucZsX+EoLvKvEMpI7ychQjG16bKhGDtRH0sOmOHLmAFMVyN/OOlyLIufbmMw8rqqQVPfccfVIfgXq23UL43kHa+qRWYEzOkefeRe70fVtTBDiUgQ5uAk9J3tVSFp/IY4MRZ/18F9Ih4d6kZS/kKESjxNaNjYskh73xwWPRu23tllgP/IJuUOnjKTzey6CLLvq0IphCfEkigxJ+tj5ufGx7koiQ9IutvmfrBpZdpYGh2GxhHwWQZYXjEYyHs1iyEYfifg0xMMu3fY31ciQxSOsEupVNbIchjtYIdyLamQIHYFlQt6pRlosFotlNPINrYZ+dbbgvtcAAAAASUVORK5CYII=");
+}

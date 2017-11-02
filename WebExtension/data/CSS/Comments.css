@@ -1,0 +1,268 @@
+/* ============================== Commentaires ============================== */
+#lockComment {
+    height: 22px;
+    cursor: pointer;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAAACXBIWXMAAAnXAAAJ1wGxbhe3AAABxUlEQVR42u2VPUvDUBSG06RNU1KoCYWE2EVcIi4ODuJHJ+3m6OziH3AQuiqI4A9w7dDBxc3JTZw7qhTUWXQQFwfxoz4n3JS0iaWgmx54OffknPve996bk2hawkzT1HRd78e5XE7iOjgzDOOyUCjsA1sbx5ig5fP5OLQgW8dfg94QXsEx8KSQBQZE9JUUi8V4jFBzA99VBC8sdsekK8aP4AN8ghMwKUIEKVPbk23PMD4VMuJ7xkeomEN9hXiL+ILcO/ET2BaRKTLZqud54g2wyaNn8IbqA2I3eTKQLuJvIe6hrIUPMs+vWq2KQgs1O6KOwgf8mqiWvOxAmQ9a6jjOwXwiN2iWZZV832/K6qICLMXHkZg0AfYUYQesxOefupRyuVwKgqCJIim+iQmHrAJ21S468lqlLkXOECLNtu2S67pN4oiQCSMJucAOtfXMS6nVaqLSgGQKNHi8rLaXKic/jbIGWCB2UhVy8I7jRC+phHJPCplGnS5vxKgaSaxmdMW4kCYI/wn/AmGyp39MCFnIt+B3CGmMLv0cyi9kgJCENHyEeCx+GMm8EKKsS/eEiV9I1G6zFLUpaotnxb7/DnEeskPIAmndL1rh3Vw6AMdtAAAAAElFTkSuQmCC');
+    margin-left: calc(50vw + 100px);
+    position: fixed;
+    width: 20px;
+    bottom: 4px;
+    z-index: 0;
+    left:0;
+}
+
+#commentsSection {
+    transition: bottom .5s ease .4s;
+    border-radius: 15px 15px 0 0;
+    box-sizing: padding-box;
+    background-color: black;
+    min-height: 170px;
+    position: fixed;
+    padding: 0 10px;
+    bottom: -60vh;
+    height: 60%;
+    height: 60vh;
+    left: 5%;
+    left: 5vw;
+    right: 5%;
+    right: 5vw;
+    z-index: 1;
+}
+
+#commentsSection.lockdown, #commentsSection.lockdown > div:nth-child(2) {
+    background-color: #303030;
+}
+
+#commentsSection:hover:not(.lockdown), #commentsSection.comment-pined:not(.lockdown), #commentsSection.resizing:not(.lockdown) {
+    bottom: 0 !important;
+}
+
+#commentsSection > div:nth-of-type(1) {
+    width: 100%;
+    height: 5px;
+    position: relative;
+    cursor: row-resize;
+    margin-top: -2.5px;
+    transition: all .2s ease .1s;
+    z-index: 1;
+}
+
+#commentsSection > div:nth-of-type(1):hover, #commentsSection.resizing  > div:nth-of-type(1) {
+    border-radius: 2.5px;
+    background-color: #555;
+    box-shadow: 0 1px 1px 0 white, 0 -1px 1px 0 white;
+}
+
+#commentsSection > div:nth-of-type(2) {
+    width: 200px;
+    color: white;
+    display: flex;
+    cursor: pointer;
+    font-weight: 900;
+    min-height: 45px;
+    max-height: 45px;
+    margin-top: -45px;
+    padding-top: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: black;
+    border-radius: 15px 15px 0 0;
+    transition-delay: .4s;
+    transition-duration: .5s;
+    transition-timing-function: ease;
+    transition-property: margin-top, padding-top, min-height, max-height;
+}
+
+#commentsSection:hover > div:nth-of-type(2), #commentsSection.comment-pined > div:nth-of-type(2), #commentsSection.resizing > div:nth-of-type(2) {
+    padding-top: 12px;
+    margin-top: -36px;
+    min-height: 36px;
+    max-height: 36px;
+}
+
+#commentsSection > div:nth-of-type(3) {
+    display: flex;
+    min-height: calc(100% - 11px);
+    max-height: calc(100% - 11px);
+    flex-direction: column;
+}
+
+#commentsSection > div:nth-child(3) > center {
+    min-height: 50px;
+}
+
+#commentsSection > div:nth-of-type(2) > p {
+    display: inline-block;
+    position: relative;
+    margin: 0 10px;
+}
+
+#commentsSection > div:nth-of-type(2) > a7button {
+    margin: 0;
+    opacity: 0;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: unset;
+}
+
+#commentsSection > div:nth-of-type(2) > p > span {
+    top: -4px;
+    width: 17px;
+    color: white;
+    right: -16px;
+    height: 12px;
+    position: absolute;
+    font-size: 10px;
+    text-align: center;
+    line-height: 10px;
+    border-radius: 4px;
+    background-color: rgba(255, 0, 0, .8);
+}
+
+#commentsSection > div:nth-of-type(2) > p > span:empty {
+    display: none;
+}
+
+/* Pin normal */
+#commentsSection > div:nth-of-type(2) > a7button:first-of-type {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAADEAAAAxAHPilhMAAABMElEQVQ4y63VvUoDQRSG4W8hahP8ATvFykKxUEQEQey8ASGWNpYWYmNjmoCQG7CwsTVehKKl4A1YiSI2IiaiAUHktfAUUXdmnZ35YGF2Z8/DLJyZFaCIq+6aUyTcAZqp4X7gje80UsFV4JSfqcfCo8AV+dktC08A1/izEwpPA/ce8BN4t/FWHjACZL+eLQJPBSvdtHf7gOGK/mZQ0pmkG0kXktqSDiVV5c6BpCMbf0jquD57CnjkfzkHKiHtNm8bwJdb65LgDbIMdB1oF5iN2dItB7zuqytCtw1pAc89aLNoQb7JmvXmnt0vAG2Da2XhFeAV2Mjp5xdgvww8A9wBq46iJeA4FB4DLoG5gsLJEHgIOLGDJvYHoN5Du2HnhFLBGbAGDKRCAWXAuKQHSShhvgC5moz9+oKS0AAAAABJRU5ErkJggg==');
+}
+
+/* Pin activé */
+#commentsSection.comment-pined:not(.lockdown) > div:nth-of-type(2) > a7button:first-of-type {
+    opacity: .5;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAADEAAAAxAHPilhMAAABrUlEQVQ4y63VO2vUURDG4Wc2EgUDIaJVgoIIKhaKBEs7L0VAEBQtg8nuxgtCELUIioUXLLQR3b+FhSKIjWChkEKCWohIwC8gaC1ELFKoOBYGTcjekuzAac4758e5vDNHZlr2qJhopJWsJNI5lbheT1o++Gh0YxUuqsaVzoBPRY8+L7B2bueXVGNifkpk5tKglViPlxiso15Q5M2lgyuxEZPY2iRrXJG32wePxnYlkxhokPEbP7Eapxff8cnoExEL5sZij5I3TaCEsiLXoNsPjxfveCQ26fIMnzAlzQg19DQ5zx1Fnmn9eJXYhtfY0IaXp/Tb53L+as8VldiNV+htgv2MQUV+bd/HRU5jCLMNMmaFQ/WgrQukyLd43uAKhtXyY6OlzcHlOItjeIKZecoN9/Nps6WlJsVwRLiFCUUeF/bj25w63epN64OrsRcPhGFFXgW1/KDkAL5j59LB5dghPRIOq+XDBdq9fC8clDa3tuH8Bl3Vn2XvctSupg3+hC2tPoH/Pq5ELwqcV+QXK4zSv6YdxnUZ6wT0LzgirDOk2zV3c0anIkcM5Fxpd3L8AQvsMbuy4KKtAAAAAElFTkSuQmCC');
+}
+
+/* Roulette normale */
+#commentsSection > div:nth-of-type(2) > a7button:last-of-type {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAMAAABhEH5lAAAAolBMVEVMaXEAAAAAAAAAAAAAAAAAAAAAAAACAgIAAAD29vYAAAAAAAC1tbUUFBQAAADd3d0AAAC8vLywsLDMzMzu7u6pqanOzs5GRkYAAAAAAABXV1egoKAsLCwAAAD09PQ3NzcfHx8AAAAAAAD4+PiQkJD7+/vBwcHV1dUAAAAAAAAAAABlZWXR0dHg4ODl5eXa2tqGhoZ2dnaAgIAKCgrFxcX///+RxQhpAAAANXRSTlMANAMKHl95mZL5KGfWnoPqddrU4fTQ4qxWRbLNpS34qKE/bvrG/NvmTheNtuTs7+jCvL+b3aigkngAAACySURBVHhehdDFzsMwFIRRB2yHmRnK/MO8/6s1ka2qm6pn+a3mXvKVTnUZ1JJxfgoUi0dUFIX97oEkzr3QNERxMwg+RFKDGEiih2MCMo0/wL9LDyx8JbZH8tdafCkyqXyLlBK+wytpLrA5EGviK6MgC2OGY5OVphEhiNEN4zp9cFs5tALuPbOnJq0rS1xjR8CcObvbxcnlibq92WLR+WeFSBrt0+zq102pvj+FeV5xJB88AQLsE2Pt9J9zAAAAAElFTkSuQmCC');
+    animation-duration: .75s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+/* Roulette en actualisation */
+#commentsSection > div:nth-of-type(2) > a7button[loading="true"]:last-of-type {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAB9ElEQVQ4y6VSMYsTYRB9s/k0GyNywbgkAZt0CVilshMsTH7BwV2hIIqwFieiNnYXFe8QPEOagHdVqhSKsARswtZ29oGAcG620APdrBu/nbHZhCOX3BU++OAr3rw382ZIRLAMlmVdDMPwPQBkMpm7vu//XkoUkaVPKdUEIABEKdVcyZsJVSqV61EUbRPRqFgsPhKR3DGTHIALjuM8E5GSUqpVr9e/ApgLUBRF2wBuigh83/+STqebURStAUAcxy8Gg0EDwAYA1loDwD0AMGYmRDRK3ISZx0EQfNdab2qtN0XkcDKZ/ADwh4gMIjqcdUezEInILJfLd4jIGw6Hn0SEF+Iix3FuAMgXCoWPtVrtLwBQo9FIa623iGgtn8/vdLvdnzgF/X7/EjPfJ6JfQRAcKK312ziObxPRufF4nAPw4DQBZn4KYF1EdDabLRj4Tyil1BaAkYisBUGwe1aBYRg7zHw0G2EeYq/XO++67joR+a1W63NyRGeGOB/Bdd1XIrLHzAe2bd9adE6K3wF46Xne8/kIxzhXRSQGkBGRK51OJ6+1fgIAYRjuVqvVy8xsJustnRBIpVKvk+83EfnAzA9FZAMATNM8sixrz/O8awBKSqnWiUNaRLvdtonocXKdb2zbbi/dwqq0p9PpvmmaJQCIomh/Fe8fWXsgarkiLsYAAAAASUVORK5CYII=');
+    pointer-events: none;
+    background-size: 16px 16px;
+    background-position: center;
+    filter: brightness(200%);
+    animation-name: spinningDotsRefreshingComments;
+    opacity: 1 !important;
+}
+
+/* Compatibilité autres navigateurs */
+#commentsSection > div:nth-of-type(2) > a7button[loading="true"]:last-of-type {
+    -webkit-animation-name: spinningDotsRefreshingComments;
+}
+
+@keyframes spinningDotsRefreshingComments {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Compatibilité autres navigateurs */
+@-webkit-keyframes spinningDotsRefreshingComments {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+#commentsSection:hover > div:nth-of-type(2) > a7button, #commentsSection.comment-pined > div:nth-of-type(2) > a7button, #commentsSection.resizing > div:nth-of-type(2) > a7button {
+    opacity: .72;
+}
+
+#commentsSection > div:nth-of-type(2) > a7button:hover, #commentsSection.comment-pined > div:nth-of-type(2) > a7button:hover {
+    opacity: 1;
+}
+
+#commentsSection table {
+    background-color: white;
+    border-radius: 3px 0 0;
+    overflow-y: auto;
+    display: block;
+    margin-top: 7px;
+    height: 100%;
+    flex: 1;
+}
+
+#commentsSection table tr {
+    border-bottom: 1px solid #DADADA;
+    display: block;
+}
+
+#commentsSection table tr:first-of-type td:first-of-type {
+    margin-top: 15px;
+}
+
+#commentsSection table tr > td {
+    display: block;
+    margin-left: 15px;
+}
+
+#commentsSection table tr > td:nth-of-type(1) {
+    width: auto;
+    margin-top: 6px;
+    padding: 3px 12px;
+    border-radius: 3px;
+    display: inline-block;
+    box-shadow: 0 0 4px .5px #888;
+}
+
+#commentsSection table font[color="#FFD700"] {
+    color: orange;
+}
+
+#commentsSection table tr > td:nth-of-type(2) {
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: 500;
+    padding-left: 8px;
+    margin-bottom: 6px;
+    white-space: pre-wrap;
+    width: calc(100% - 28px);
+}
+
+#commentsSection center {
+    display: flex;
+    margin-top: 5px;
+}
+
+#commentsSection center textarea {
+    flex: 20;
+    resize: none;
+    padding: 3px;
+    font-size: 12px;
+}
+
+#commentsSection center textarea:focus::-moz-placeholder {
+    color: transparent;
+}
+
+/* Compatibilité autres navigateurs */
+#commentsSection center textarea:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+#commentsSection center a7button {
+    flex: 1;
+    opacity: .72;
+    min-width: 54px;
+    background-size: auto;
+    margin: 10px 20px 10px 25px;
+    background-color: rgba(255, 255, 255, .05);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAARCAYAAADQWvz5AAAACXBIWXMAAACdAAAAnQGPcuduAAAA1klEQVQ4y63UvS5EURSG4e9MpppMNSFqOpG4Co07UCm09Aq92gWISFQuY0KjVBE/pUJQiopHc8SEw5nDfpPVvll7rfXtCmdJhkmOkuwnecxfwIFPHrCHRaRLBau+84JjrHQR9XClmTeMsY5+myjY1c4FtjH6TbSMV9NxVwsHTaLgRDeusfnx5EnRBs5xi3s8Tyk8xXyFny5jkGQhyVKSuSSzDTWTZJRkXKyj/8zoBltfZ9R1azsYTm6tX89jLUmvJU2XSQ7rPD41Za3YZRfLWpH0V6X+o3c3xUrXeVFAzwAAAABJRU5ErkJggg==");
+}
+
+#commentsSection center a7button:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, .5);
+}

@@ -1,0 +1,161 @@
+/* ================================ Général ================================ */
+#lista table:first-of-type {
+    width: 100%;
+}
+
+#lista span#comments {
+    display: none;
+}
+
+#container ~ center {
+    display: none;
+}
+
+.tabel95 > tbody > tr:nth-of-type(3) {
+    display: none;
+}
+
+.tituloParent {
+    text-align: center;
+    margin-bottom: 15px;
+    width: calc(100% - 10px);
+}
+
+.tituloParent > .titulo {
+    display: inline-block;
+}
+
+.ajaxErrorNotConfirmed {
+    animation-duration: 2s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-name: borderGlowingBad;
+    display: inline-block;
+    outline: medium none;
+    padding: 0;
+    width: 100%;
+}
+
+#A7Untranslated {
+    float: right;
+    height: 17px;
+    cursor: pointer;
+    margin-right: 10px;
+    padding: 2px 10px 3px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAWBAMAAAAoU0G7AAAAMFBMVEX////Ly8t1dXUCAgKZmZmpqalHR0c6OjoUFBQnJydsbGy1tbVYWFiFhYUAAAAAAADL+1j+AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAIFJREFUeNpjYGBgEGBAACYTJI6yKQNbWTkQFDFwzLIIYOAwBgEzBnZja6CsoICAgCBQb0UAkhZuBtzAAYnNY4vQsiG5kYGzAwR6GITbLBjgHB7jiUhaTgowEAcUkNicRkCHgoAAA6/D5AK4F4QtzRkY2MrL09OBnuM1LkDSch3BBABNARqYKc6RbAAAAABJRU5ErkJggg==');
+    background-size: 100% 100%;
+}
+
+#A7Untranslated > #unt {
+    display: none;
+}
+
+/* ======================== Tableau séquences prises ======================== */
+#lista > table:nth-of-type(2) {
+    white-space: nowrap;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#lista > table:nth-of-type(2) tr:first-of-type td {
+    padding-bottom: 10px;
+}
+
+#lista > table:nth-of-type(2) td * {
+    vertical-align: middle;
+}
+
+#lista > table:nth-of-type(2) td:first-of-type {
+    font-weight: bold;
+    padding: 0 5px;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+#lista > table:nth-of-type(2) td:last-of-type img {
+    height: 32px;
+    margin: 1px 8px 1px 0;
+}
+
+#lista > table:nth-of-type(2) td:last-of-type a {
+    color: #FFFFFF;
+    font-weight: bold;
+    background-color: #566EBF;
+    border: 2px solid #D4D0C8;
+    padding: 1px 5px;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+#lista > table:nth-of-type(2) td:last-of-type a:hover {
+    color: lime;
+}
+
+#lista > table:nth-of-type(2) tr:last-of-type td {
+    padding-top: 18px;
+    text-align: center;
+}
+
+/* =============================== Réécriture =============================== */
+/* Lignes -> quotedText */
+.quotedText {
+    color: unset;
+}
+
+/* TimeBox */
+#lista td.timeInitial {
+    cursor: unset;
+}
+
+/* TimeBox (au survol) */
+#lista td.timeInitial:hover {
+    box-shadow: none;
+}
+
+/* Compteur de caractères -> dans une ligne quotedText et textBox cliquée  */
+tr.quotedText > td.openedCounter {
+    background-color: #f1f1f1;
+    border-top: 15px solid #e5e5e5;
+    border-bottom: 30px solid #e5e5e5;
+}
+
+/* TextBox -> dans une ligne quotedText et cliquée  */
+.quotedText .textClicked {
+    background-color: #e5e5e5;
+    box-shadow: -1.35px 0 0 0 #e5e5e5;
+}
+
+/* Liens du tableau -> ligne quotedText */
+.quotedText a {
+    font-weight: 600;
+}
+
+/* Lien -> colonne auteur dans les lignes quotedText */
+.quotedText a[href^="/user/"] {
+    font-weight: unset;
+}
+
+/* TextBox -> non cliquée et dans une ligne quotedText (au survol) */
+.quotedText .cursorEdit:hover {
+    box-shadow: 0 0 20px 1px #a5a5a5 inset, 0 0 2px 1.4px #858585;
+}
+
+/* Petit indicateur -> ligne originalText (au survol) */
+.quotedText:hover .timeInitial:after {
+    border-width: 1px 2px;
+    padding: .5px 5px .5px 4px;
+    box-shadow: 0 0 4px 1px #888888;
+}
+
+/* TimeBox */
+.timeWithoutIndicator,
+.timeWithIndicator {
+    width: unset;
+    max-width: unset;
+    min-width: unset;
+}
+
+/* Gros indicateur -> timeBox */
+.timeWithIndicator > div > input:last-of-type {
+    cursor: unset;
+}

@@ -1,0 +1,51 @@
+/* =========================== État d'avancement =========================== */
+
+#spanState {
+    float: left;
+    height: 17px;
+    font-size: 13px;
+    padding: 2px 10px 3px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+    box-shadow: 0 0 1px 1px grey, 0 0 1px 1px lightgrey inset;
+}
+
+#spanState:hover {
+    box-shadow: 0 0 1px 1px #777, 0 0 3px 1px #999 inset;
+}
+
+.stateRefreshing {
+    background-image: url('http://www.addic7ed.com/images/loader.gif');
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    color: transparent;
+    background-position: center;
+}
+
+/* ====================== Informations de l'extension ====================== */
+
+div.tabelborder {
+    width: calc(100% - 10px);
+}
+
+#hearingImpaired {
+    float: left;
+    width: 16px;
+    height: 24px;
+    margin-top: -2px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAYCAYAAADzoH0MAAAACXBIWXMAAA50AAAOdAFrJLPWAAACbUlEQVQ4y52TS0iVURSFv3X+Sw8zjcgwgiwFoRxE5SSiupC9wSZRNEm0gVJYitOiP6LohdKdJirU6EpGBNKgvOKgB42iDLInRoVQQVwf5O0/u0EGdsFS1+Qc9l5nsfc6e4ssJNrurYnM1SFVACsmwu+Auz6IrjVVVQxM5uvPJQxTsfwiLmPUAwHwFXgBeKAMWAJkwK58H+w7GYahZ4JIMpkMxufndgFVwFsv1VlkPXKMYnrjzXdIdgtcOVA5L3/V6o3rVnb19vZaDODjcMEZsEpQT2DRRXCtBCzH3GtkclIJaDBwqo28nQI7kFe05SlwXlda7xcFzr0EPpi5Y07+tqFuF8s0nji8fRAg0XG/JPKuFdhgUbRXQewGWEFGFKu5LXVWcFLyB8yCC2D9DdXxfZLsL3MT3XOjhTl9mDnBVYPrwk47wS4g7b0EVuTkmrIfAxw/vucHnhAoj1zwGUh73E4HKgY9kdNG4MGJ6q2vmAI5P3PvgUYD/3OToF9YqQMLwB5izDfZI/6B2tryDNgdM2cGaVBeLHB+QzDihqJoLPOtcNj4Dxqq44ckWUtbagBsSMwCzR09ZfJ6buKmm42AvM4BKLL2GVfQ0pbaD3SCehpr4ttmVEFLe2oRIgGkkR0BiM1EwLxdkrQMdLSxOv7+r22cpnHPMB401MQ3/xm2abcg4+DvwxKTJ3X6HphKAbzZ48nh6QuIXIDhwA3NSsBMAlicHrMZC4RhKiZsLTBSX797fHLuv98YtqfmLYIWM5YDndmrPqVAmEzOyRteektmWw0WAF9ilmnI5k3ZwhqIBIWgCJT0uPX1R3Z8yub9AiGS+Nlr7dzcAAAAAElFTkSuQmCC');
+}
+
+#A7Info {
+    float: right;
+    height: 17px;
+    font-size: 13px;
+    border-radius: 10px;
+    padding: 2px 10px 3px;
+    box-shadow: 0 0 1px 1px grey, 0 0 1px 1px lightgrey inset;
+}
+
+#A7Info.updateAvailable {
+    background-color: yellow;
+}
