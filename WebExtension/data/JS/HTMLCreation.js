@@ -19,6 +19,7 @@ function createTextUtils(seqNumber)
 
     var boldButton        = document.createElement('a7button');
     var italicButton      = document.createElement('a7button');
+    var underlineButton   = document.createElement('a7button');
     var removeTagsButton  = document.createElement('a7button');
     var restoreTextButton = document.createElement('a7button');
     var cancelTextButton  = document.createElement('a7button');
@@ -36,6 +37,9 @@ function createTextUtils(seqNumber)
 
     italicButton.title          = loc.selectedTextTo + ' ' + loc.italic;
     italicButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'i');");
+
+    underlineButton.title       = loc.selectedTextTo + ' ' + loc.underline;
+    underlineButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'u');");
 
     removeTagsButton.title      = loc.removeTags;
     removeTagsButton.setAttribute('onclick', 'removeTagsFromSequence(' + seqNumber + ');');
@@ -55,6 +59,7 @@ function createTextUtils(seqNumber)
     // Création du span
     textButtons.appendChild(boldButton);
     textButtons.appendChild(italicButton);
+    textButtons.appendChild(underlineButton);
     textButtons.appendChild(removeTagsButton);
     textButtons.appendChild(document.createElement('separator'));
     textButtons.appendChild(restoreTextButton);
