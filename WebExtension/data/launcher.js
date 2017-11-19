@@ -45,7 +45,8 @@ window.addEventListener("A7pp_option_request", function()
             var message = null;
 
             // Objet present
-            if(
+            if
+            (
                 typeof item.lang !== 'undefined' &&
                 typeof item.lock !== 'undefined' &&
                 typeof item.updates !== 'undefined'

@@ -89,7 +89,7 @@ function preInit()
         var options = JSON.parse(data.detail);
 
         // Si des options sont présentes, remplace celles par défaut
-        if(data.detail !== null)
+        if(options !== null)
         {
             A7Settings.stateUpdateInterval   = options.updates.state;
             A7Settings.commentUpdateInterval = options.updates.comment;
@@ -97,7 +97,7 @@ function preInit()
         }
 
         // Récupère la langue du site ou celle forcée
-        if(data.detail !== null && options.lang.forced === true)
+        if(options !== null && options.lang.forced === true)
         {
             // Fallback en anglais si la langue n'est pas trouvée
             loc = loc[options.lang.data] ? loc[options.lang.data] : loc.en;
