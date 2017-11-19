@@ -122,6 +122,11 @@ function setData(event)
         function()
         {
             document.getElementById("messages").innerText = chrome.i18n.getMessage('A7pp_optionPageSavedMessage');
+
+            setTimeout(function()
+            {
+                document.getElementById("messages").innerText = '';
+            }, 3000);
         }
     );
 
