@@ -132,6 +132,12 @@ function linesChanged()
             parentDiv = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
         }
 
+        // Si le lock des commentaires est placé en haut, le créé
+        if(A7Settings.lockPosition === "top")
+        {
+            parentDiv.insertBefore(createCommentLockUtil(), parentDiv.firstElementChild);
+        }
+
         // Crée le span d'avancement
         parentDiv.insertBefore(createStateUtil(), parentDiv.firstElementChild);
 

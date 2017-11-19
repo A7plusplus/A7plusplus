@@ -83,14 +83,39 @@ function preInit()
     // Enlève l'indicateur d'avancement existant puis initialise l'extension
     if (translatePage) removeTitleIndicator();
 
-    // Récupère la langue du site
-    var lang = document.getElementById('comboLang'),
-        choosen = lang ? lang.options[lang.selectedIndex].value : (navigator.language || navigator.userLanguage || 'en');
-    // Ne garde que le nescessaire
-    loc = loc[choosen] ? loc[choosen] : loc.en;
+    // Mets à jour les réglages en fonction des options de l'utilisateur
+    window.addEventListener("A7pp_options", function(data)
+    {
+        var options = JSON.parse(data.detail);
 
-    // Lance l'initialisation
-    init();
+        // Si des options sont présentes, remplace celles par défaut
+        if(data.detail !== null)
+        {
+            A7Settings.stateUpdateInterval   = options.updates.state;
+            A7Settings.commentUpdateInterval = options.updates.comment;
+            A7Settings.lockPosition          = options.lock;
+        }
+
+        // Récupère la langue du site ou celle forcée
+        if(data.detail !== null && options.lang.forced === true)
+        {
+            // Fallback en anglais si la langue n'est pas trouvée
+            loc = loc[options.lang.data] ? loc[options.lang.data] : loc.en;
+        }
+        else
+        {
+            var lang = document.getElementById('comboLang'),
+                choosen = lang ? lang.options[lang.selectedIndex].value : (navigator.language || navigator.userLanguage || 'en');
+            // Ne garde que le nescessaire
+            loc = loc[choosen] ? loc[choosen] : loc.en;
+        }
+
+        // Lance l'initialisation
+        init();
+    });
+
+    // Effectue la requête des options
+    window.dispatchEvent(new CustomEvent("A7pp_option_request", {}));
 }
 
 
@@ -163,8 +188,11 @@ function init()
     }
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
-    // Crée le lock des commentaires
-    listaParent.insertBefore(createCommentLockUtil(), listaParent.lastElementChild);
+    // Si le lock des commentaires est placé en bas, le créé
+    if(A7Settings.lockPosition === "bottom")
+    {
+        listaParent.insertBefore(createCommentLockUtil(), listaParent.lastElementChild);
+    }
 
     // Récupère la taille enregistrée, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
     if(localStorage)

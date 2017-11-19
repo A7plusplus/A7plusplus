@@ -256,6 +256,12 @@ function createCommentLockUtil(parentDiv)
     lockSpan.title       = loc.lockComment;
     lockSpan.addEventListener('click', lockComment, false);
 
+    // Ajout de la classe pour modifier la position du cadenas
+    if(A7Settings.lockPosition === "top")
+    {
+        lockSpan.classList.add('lockCommentTop');
+    }
+
     return lockSpan;
 }
 

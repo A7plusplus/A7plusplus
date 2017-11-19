@@ -41,5 +41,8 @@ var A7Settings = {
     },
 
     // Facteur de collage de la userBar (0 - 0.1 => 0 - 10%)
-    stickyFactor : 0.02
+    stickyFactor : 0.02,
+
+    // Position du cadenas (top / bottom)
+    lockPosition: "bottom"
 };
