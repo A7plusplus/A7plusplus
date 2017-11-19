@@ -32,8 +32,19 @@ function populate()
     document.getElementById("title").innerText = chrome.i18n.getMessage('A7pp_optionPageTitle');
 
     // Langue
-    document.getElementById("forcedLangCB").innerText = chrome.i18n.getMessage('A7pp_optionPageForcedLangCheckBoxLabel');
-    document.getElementById("forcedLang").innerText   = chrome.i18n.getMessage('A7pp_optionPageForcedLangLabel');
+    document.getElementById("forcedLangCB").innerText  = chrome.i18n.getMessage('A7pp_optionPageForcedLangCheckBoxLabel');
+    document.getElementById("forcedLang").innerText    = chrome.i18n.getMessage('A7pp_optionPageForcedLangLabel');
+    document.getElementById("availableLang").innerText = chrome.i18n.getMessage('A7pp_optionPageAvailableLangLabel');
+    var ul = document.getElementById("availableLangData");
+    for (var property in loc)
+    {
+        if (loc.hasOwnProperty(property))
+        {
+            var li = document.createElement('li');
+            li.innerText = property;
+            ul.appendChild(li);
+        }
+    }
 
     // Position du cadenas
     document.getElementById("lockPosition").innerText                = chrome.i18n.getMessage('A7pp_optionPageLockPositionLabel');

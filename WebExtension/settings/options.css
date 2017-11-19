@@ -58,10 +58,10 @@ form > div > input, form > div > select {
 }
 
 /* Cacher la langue si non selectionné */
-#forcedLangCBData:not(:checked) + div {
-    display: none;
-}
-
-#forcedLangCBData:not(:checked) + div + label, #forcedLangCBData:not(:checked) + div + label + input {
+#forcedLangCBData:not(:checked) + div,
+#forcedLangCBData:not(:checked) + div + label,
+#forcedLangCBData:not(:checked) + div + label + input,
+#forcedLangCBData:not(:checked) + div + label + input + div + span,
+#forcedLangCBData:not(:checked) + div + label + input + div + span + ul {
     display: none;
 }

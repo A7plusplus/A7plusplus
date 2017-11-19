@@ -14,8 +14,12 @@
         "description": "Checkbox to force a particular lang."
     },
     "A7pp_optionPageForcedLangLabel": {
-        "message": "Code de la langue (ex : fr, en-US) :",
+        "message": "Code de la langue (ex : fr, en) :",
         "description": "Lang code."
+    },
+    "A7pp_optionPageAvailableLangLabel": {
+        "message": "Langues disponibles :",
+        "description": "Available language."
     },
     "A7pp_optionPageLockPositionLabel": {
         "message": "Position du cadenas de verrouillage des commentaires :",

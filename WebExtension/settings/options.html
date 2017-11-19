@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>A7++ Settings</title>
-    <link href="options.css" rel="stylesheet" type="text/css"/>
-  </head>
+    <head>
+        <meta charset="utf-8">
+        <title>A7++ Settings</title>
+        <link href="options.css" rel="stylesheet" type="text/css"/>
+    </head>
 
     <body>
         <div id="messages"></div>
@@ -17,6 +17,9 @@
                 <div class="separator"></div>
                 <label id="forcedLang" for="forcedLangData"></label>
                 <input type="text" id="forcedLangData">
+                <div class="separator"></div>
+                <span id="availableLang"></span>
+                <ul id="availableLangData"></ul>
             </div>
 
             <div>
@@ -43,7 +46,7 @@
             </div>
         </form>
 
-      <script src="options.js"></script>
+        <script src="../data/JS/Localization.js"></script>
+        <script src="options.js"></script>
     </body>
-
 </html>
