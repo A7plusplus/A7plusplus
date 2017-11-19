@@ -53,6 +53,7 @@ function createTextUtils(seqNumber)
 
 
     saveButton.title = loc.save;
+    saveButton.setAttribute('tabIndex', parseInt(seqNumber) + 1);
     saveButton.setAttribute('onclick', "pre_update('o', " + seqNumber + ');');
 
 
