@@ -14,11 +14,11 @@
         "description": "Checkbox to force a particular lang."
     },
     "A7pp_optionPageForcedLangLabel": {
-        "message": "Lang code (ex : fr, en-US) :",
+        "message": "Lang code (ie : fr, en-US):",
         "description": "Lang code."
     },
     "A7pp_optionPageLockPositionLabel": {
-        "message": "Comment Lock Position :",
+        "message": "Comment Lock Position:",
         "description": "Comment lock position."
     },
     "A7pp_optionPageLockPositionOpt1Label": {
@@ -30,11 +30,11 @@
         "description": "Comment lock position, first option."
     },
     "A7pp_optionPagestateUpdateLabel": {
-        "message": "Subtitle State Update Interval (in seconds, default : 2 min) :",
+        "message": "Subtitle State Update Interval (in seconds, default : 2 min):",
         "description": "State update interval (in seconds, default: 2 min)."
     },
     "A7pp_optionPageCommentUpdateLabel": {
-        "message": "Comment Update Interval (in seconds, default : 30 sec) :",
+        "message": "Comment Update Interval (in seconds, default : 30 sec):",
         "description": "Comment update Interval (in seconds, default: 30 sec)."
     },
     "A7pp_optionPageSaveLabel": {
