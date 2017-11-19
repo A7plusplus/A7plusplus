@@ -1,6 +1,48 @@
 {
-  "extensionDescription": {
-    "message": "Outil d'aide aux traducteurs et relecteurs du site Addic7ed.com",
-    "description": "Description of the extension."
-  }
+    "A7pp_extensionDescription": {
+        "message": "Outil d'aide aux traducteurs et relecteurs du site Addic7ed.com",
+        "description": "Description of the extension."
+    },
+
+
+    "A7pp_optionPageTitle": {
+        "message": "Réglages d'A7++",
+        "description": "Settings page title."
+    },
+    "A7pp_optionPageForcedLangCheckBoxLabel": {
+        "message": "Forcer la langue :",
+        "description": "Checkbox to force a particular lang."
+    },
+    "A7pp_optionPageForcedLangLabel": {
+        "message": "Code de la langue (ex : fr, en-US) :",
+        "description": "Lang code."
+    },
+    "A7pp_optionPageLockPositionLabel": {
+        "message": "Position du cadenas de verrouillage des commentaires :",
+        "description": "Comment lock position."
+    },
+    "A7pp_optionPageLockPositionOpt1Label": {
+        "message": "A côté des commentaires",
+        "description": "Comment lock position, first option."
+    },
+    "A7pp_optionPageLockPositionOpt2Label": {
+        "message": "A côté de l'avancement des sous-titres",
+        "description": "Comment lock position, first option."
+    },
+    "A7pp_optionPagestateUpdateLabel": {
+        "message": "Délai de mise à jour de l'avancement des sous-titres (en secondes, defaut : 2 minutes) :",
+        "description": "State update interval (in seconds, default: 2 min)."
+    },
+    "A7pp_optionPageCommentUpdateLabel": {
+        "message": "Délai de mise à jour des commentaires (en secondes, defaut : 30 secondes) :",
+        "description": "Comment update Interval (in seconds, default: 30 sec)."
+    },
+    "A7pp_optionPageSaveLabel": {
+        "message": "Enregistrer",
+        "description": "Save."
+    },
+    "A7pp_optionPageSavedMessage": {
+        "message": "Options enregistrées, rechargez les pages pour que les réglages prennent effet",
+        "description": "Saved options message."
+    }
 }

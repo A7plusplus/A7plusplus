@@ -3,7 +3,7 @@
 
     "name": "A7++",
     "version": "2.1",
-    "description": "__MSG_extensionDescription__",
+    "description": "__MSG_A7pp_extensionDescription__",
     "author": "Acc\u00eant, HitOrRun, Retrojex & Mmoi",
     "homepage_url": "https://github.com/A7plusplus/A7plusplus",
 
@@ -12,6 +12,11 @@
         "48": "icon48.png",
         "64": "icon64.png",
         "128": "icon128.png"
+    },
+
+    "options_ui" : {
+        "page": "settings/options.html",
+        "open_in_tab": true
     },
 
     "web_accessible_resources": [
@@ -56,6 +61,10 @@
             "js": ["data/launcher.js"],
             "run_at": "document_start"
         }
+    ],
+
+    "permissions": [
+        "storage"
     ],
 
     "default_locale": "en"
