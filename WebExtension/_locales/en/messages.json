@@ -1,6 +1,6 @@
 {
     "A7pp_extensionDescription": {
-        "message": "Life-changing tools for translators and proofreaders working with Addic7ed.com",
+        "message": "Life-changing tool for translators and proofreaders on Addic7ed.com",
         "description": "Description of the extension."
     },
 
@@ -10,15 +10,15 @@
         "description": "Settings page title."
     },
     "A7pp_optionPageForcedLangCheckBoxLabel": {
-        "message": "Forced lang :",
+        "message": "Forced lang:",
         "description": "Checkbox to force a particular lang."
     },
-    "A7pp_optionPageAvailableLangLabel": {
-        "message": "Available language:",
-        "description": "Available language."
+    "A7pp_optionPageSelectedLangLabel": {
+        "message": "Selected language:",
+        "description": "Selected language."
     },
     "A7pp_optionPageLockPositionLabel": {
-        "message": "Comment Lock Position:",
+        "message": "Comments lock button position:",
         "description": "Comment lock position."
     },
     "A7pp_optionPageLockPositionOpt1Label": {
@@ -30,11 +30,11 @@
         "description": "Comment lock position, first option."
     },
     "A7pp_optionPagestateUpdateLabel": {
-        "message": "Subtitle State Update Interval (in seconds, default : 2 min):",
+        "message": "Subtitle progress state update interval (in seconds, default: 2 min):",
         "description": "State update interval (in seconds, default: 2 min)."
     },
     "A7pp_optionPageCommentUpdateLabel": {
-        "message": "Comment Update Interval (in seconds, default : 30 sec):",
+        "message": "Comments update interval (in seconds, default: 30 sec):",
         "description": "Comment update Interval (in seconds, default: 30 sec)."
     },
     "A7pp_optionPageSaveLabel": {

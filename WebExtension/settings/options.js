@@ -33,7 +33,7 @@ function populate()
 
     // Langue
     document.getElementById("forcedLangCB").innerText  = chrome.i18n.getMessage('A7pp_optionPageForcedLangCheckBoxLabel');
-    document.getElementById("availableLang").innerText = chrome.i18n.getMessage('A7pp_optionPageAvailableLangLabel');
+    document.getElementById("availableLang").innerText = chrome.i18n.getMessage('A7pp_optionPageSelectedLangLabel');
     var select = document.getElementById("availableLangData");
     for (var property in loc)
     {

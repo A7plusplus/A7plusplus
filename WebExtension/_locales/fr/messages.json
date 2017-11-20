@@ -13,28 +13,28 @@
         "message": "Forcer la langue :",
         "description": "Checkbox to force a particular lang."
     },
-    "A7pp_optionPageAvailableLangLabel": {
-        "message": "Langues disponibles :",
-        "description": "Available language."
+    "A7pp_optionPageSelectedLangLabel": {
+        "message": "Langue choisie :",
+        "description": "Selected language."
     },
     "A7pp_optionPageLockPositionLabel": {
         "message": "Position du cadenas de verrouillage des commentaires :",
         "description": "Comment lock position."
     },
     "A7pp_optionPageLockPositionOpt1Label": {
-        "message": "A côté des commentaires",
+        "message": "À côté des commentaires",
         "description": "Comment lock position, first option."
     },
     "A7pp_optionPageLockPositionOpt2Label": {
-        "message": "A côté de l'avancement des sous-titres",
+        "message": "À côté de l'indicateur d'avancement des sous-titres",
         "description": "Comment lock position, first option."
     },
     "A7pp_optionPagestateUpdateLabel": {
-        "message": "Délai de mise à jour de l'avancement des sous-titres (en secondes, defaut : 2 minutes) :",
+        "message": "Délai de mise à jour de l'avancement des sous-titres (en secondes, par défaut : 2 minutes) :",
         "description": "State update interval (in seconds, default: 2 min)."
     },
     "A7pp_optionPageCommentUpdateLabel": {
-        "message": "Délai de mise à jour des commentaires (en secondes, defaut : 30 secondes) :",
+        "message": "Délai de mise à jour des commentaires (en secondes, par défaut : 30 secondes) :",
         "description": "Comment update Interval (in seconds, default: 30 sec)."
     },
     "A7pp_optionPageSaveLabel": {
