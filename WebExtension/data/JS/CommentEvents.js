@@ -35,15 +35,15 @@ function refreshComments()
 
 /**
 * @fn post_commentRefresh Traite les données reçues par ajax
-* @param {string} Chaine HTML des commentaires
-* @param {boolean} Si une erreur s'est produite
+* @param {string} newCommentsString Chaine HTML des commentaires
+* @param {boolean} isError Si une erreur s'est produite
 */
 function post_commentRefresh(newCommentsString, isError)
 {
     // Récupère les informations utiles
     var commentsSection = document.getElementById('commentsSection');
-    var updateButton   = commentsSection.children[1].lastElementChild;
-    var commentList    = commentsSection.lastElementChild.firstElementChild;
+    var updateButton    = commentsSection.children[1].lastElementChild;
+    var commentList     = commentsSection.lastElementChild.firstElementChild;
 
     // Réactive le bouton (délai pour laisser à l'indicateur le temps de faire au moins un tour)
     setTimeout(function()
@@ -103,11 +103,25 @@ function post_commentRefresh(newCommentsString, isError)
     // Réinitialise la liste des commentaires
     commentList.innerHTML = '';
 
+    // Variable temporaire
+    var temp;
+
     // Re peuple les commentaires du tableau
-    for(var i = 2; i < listOfNewCommLength + 2; i++)
+    for(var i = 2, j = 1; i < listOfNewCommLength + 2; i++, j++)
     {
         // Retire l'image
         listOfNewComments[i].firstElementChild.firstElementChild.remove();
+
+        // Ajoute l'utilisateur à la barre (sur base des nouveaux commentaires)
+        if(j > page.commentNumber)
+        {
+            temp = listOfNewComments[i].firstElementChild.firstElementChild;
+
+            addUserToUserBar(
+                temp.innerText,
+                temp.href.substr(temp.href.lastIndexOf('/') + 1)
+            );
+        }
 
         // Ajoute le commentaire
         commentList.appendChild(listOfNewComments[i]);
@@ -132,8 +146,8 @@ function post_commentRefresh(newCommentsString, isError)
 
 /**
 * @fn post_sendComment Traite les données reçues par ajax
-* @param {string} Chaine HTML des commentaires
-* @param {boolean} Si une erreur s'est produite
+* @param {string} newCommentsString Chaine HTML des commentaires
+* @param {boolean} isError Si une erreur s'est produite
 */
 function post_sendComment(newCommentsString, isError)
 {
@@ -253,7 +267,7 @@ function lockComment()
 
 /**
 * @fn resizeBarMouseDown Initialise le redimensionnement des commentaires
-* @param e Objet d'évènement
+* @param {Object} e Objet d'évènement
 */
 function resizeBarMouseDown(e)
 {
@@ -266,7 +280,7 @@ function resizeBarMouseDown(e)
 
 /**
 * @fn windowMouseMove Ajuste le redimensionnement des commentaires
-* @param e Objet d'évènement
+* @param {Object} e Objet d'évènement
 */
 function windowMouseMove(e)
 {
@@ -297,7 +311,7 @@ function windowMouseMove(e)
 
 /**
 * @fn windowMouseUp Finalise le redimensionnement des commentaires
-* @param e Objet d'évènement
+* @param {Object} e Objet d'évènement
 */
 function windowMouseUp(e)
 {
@@ -309,7 +323,7 @@ function windowMouseUp(e)
 
 /**
 * @fn commentsTableScroll Teste si on est tout en bas du tableau des commentaires
-* @param e Objet d'évènement
+* @param {Object} e Objet d'évènement
 */
 function commentsTableScroll(e)
 {

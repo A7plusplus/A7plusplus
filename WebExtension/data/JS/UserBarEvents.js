@@ -61,6 +61,28 @@ function loadUserBarUsers()
 
 
 /**
+* @fn addUserToUserBar Ajoute un utilisateur à la barre
+* @param {String} name Nom de l'utilisateur
+* @param {Number} id ID de l'utilisateur
+*/
+function addUserToUserBar(name, id)
+{
+    var userSelect = document.getElementById('userBar').firstElementChild.children[1].firstElementChild;
+
+    // Vérifie la présence de l'utilisateur
+    for(var i = 0; i < userSelect.length; i++)
+        if(parseInt(userSelect.options[i].value) === parseInt(id))
+            return;
+
+    // Ajoute l'utilisateur car non présent
+    var option = document.createElement('option');
+    option.value = id;
+    option.innerText = name;
+    userSelect.appendChild(option);
+}
+
+
+/**
 * @fn updateUserBarSize Mets à jour la position de la barre utilisateur
 * @param {Object} userBar Noeud HTML de la userBar
 */
