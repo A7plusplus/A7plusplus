@@ -212,10 +212,6 @@ function linesChanged()
             (page.translatePage && currentLine.className !== 'lockedText')
         )
         {
-            // TODO : enlever
-            var seqNumber = parseInt(currentLine.id.substr(5), 10);
-
-
             // Activation et mise en forme de la cellule
             if (timeCell.getAttribute('onclick') !== null)
             {
@@ -320,7 +316,7 @@ function linesChanged()
     tables[1].style.setProperty('visibility', 'visible');
     }
 
-    if(!page.translatePage)
+    if(!page.translatePage && !A7Settings.disableUserBar)
     {
         // Charge la liste des utilisateurs dans la userBar
         loadUserBarUsers();

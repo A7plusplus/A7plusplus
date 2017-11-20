@@ -113,7 +113,7 @@ function post_commentRefresh(newCommentsString, isError)
         listOfNewComments[i].firstElementChild.firstElementChild.remove();
 
         // Ajoute l'utilisateur à la barre (sur base des nouveaux commentaires)
-        if(j > page.commentNumber)
+        if(!A7Settings.disableUserBar && j > page.commentNumber)
         {
             temp = listOfNewComments[i].firstElementChild.firstElementChild;
 

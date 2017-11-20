@@ -44,5 +44,8 @@ var A7Settings = {
     stickyFactor : 0.02,
 
     // Position du cadenas (top / bottom)
-    lockPosition: "bottom"
+    lockPosition: "bottom",
+
+    // Desactivation de la barre utilisateur
+    disableUserBar: false
 };

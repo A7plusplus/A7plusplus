@@ -55,6 +55,9 @@ function populate()
     document.getElementById("stateUpdate").innerText   = chrome.i18n.getMessage('A7pp_optionPagestateUpdateLabel');
     document.getElementById("commentUpdate").innerText = chrome.i18n.getMessage('A7pp_optionPageCommentUpdateLabel');
 
+    // UserBar
+    document.getElementById("userBarCB").innerText = chrome.i18n.getMessage('A7pp_optionPageDisableUserBarLabel');
+
     // Sauvegarde
     document.getElementById("save").innerText = chrome.i18n.getMessage('A7pp_optionPageSaveLabel');
 }
@@ -68,7 +71,8 @@ function getData()
         [
             'lang',
             'lock',
-            'updates'
+            'updates',
+            'userBar'
         ],
         function(item)
         {
@@ -87,6 +91,9 @@ function getData()
                 // Durées
                 document.getElementById("stateUpdateData").value = item.updates.state;
                 document.getElementById("commentUpdateData").value = item.updates.comment;
+
+                // UserBar
+                document.getElementById("userBarCBData").checked = item.userBar.disable;
             }
             else
             {
@@ -100,6 +107,9 @@ function getData()
                 // Durées
                 document.getElementById("stateUpdateData").value = 120;
                 document.getElementById("commentUpdateData").value = 30;
+
+                // UserBar
+                document.getElementById("userBarCBData").checked = false;
             }
         }
     );
@@ -130,6 +140,9 @@ function setData(event)
             'updates': {
                 'state':    (stateUpdate < 10 ? 10 : stateUpdate),
                 'comment':  (commentUpdate < 5 ? 5 : commentUpdate)
+            },
+            'userBar': {
+                'disable': document.getElementById("userBarCBData").checked
             }
         },
         function()

@@ -37,6 +37,10 @@
         "message": "Délai de mise à jour des commentaires (en secondes, par défaut : 30 secondes) :",
         "description": "Comment update Interval (in seconds, default: 30 sec)."
     },
+    "A7pp_optionPageDisableUserBarLabel": {
+        "message": "Desactiver la barre utilisateur :",
+        "description": "Disable userBar."
+    },
     "A7pp_optionPageSaveLabel": {
         "message": "Enregistrer",
         "description": "Save."

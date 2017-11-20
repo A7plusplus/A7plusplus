@@ -37,6 +37,10 @@
         "message": "Comments update interval (in seconds, default: 30 sec):",
         "description": "Comment update Interval (in seconds, default: 30 sec)."
     },
+    "A7pp_optionPageDisableUserBarLabel": {
+        "message": "Disable userBar:",
+        "description": "Disable userBar."
+    },
     "A7pp_optionPageSaveLabel": {
         "message": "Save",
         "description": "Save."

@@ -38,7 +38,8 @@ window.addEventListener("A7pp_option_request", function()
         [
             'lang',
             'lock',
-            'updates'
+            'updates',
+            'userBar'
         ],
         function(item)
         {
