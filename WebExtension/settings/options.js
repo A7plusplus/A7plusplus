@@ -33,16 +33,16 @@ function populate()
 
     // Langue
     document.getElementById("forcedLangCB").innerText  = chrome.i18n.getMessage('A7pp_optionPageForcedLangCheckBoxLabel');
-    document.getElementById("forcedLang").innerText    = chrome.i18n.getMessage('A7pp_optionPageForcedLangLabel');
     document.getElementById("availableLang").innerText = chrome.i18n.getMessage('A7pp_optionPageAvailableLangLabel');
-    var ul = document.getElementById("availableLangData");
+    var select = document.getElementById("availableLangData");
     for (var property in loc)
     {
         if (loc.hasOwnProperty(property))
         {
-            var li = document.createElement('li');
-            li.innerText = property;
-            ul.appendChild(li);
+            var option = document.createElement('option');
+            option.innerText = property;
+            option.value = property;
+            select.appendChild(option);
         }
     }
 
@@ -77,7 +77,9 @@ function getData()
             {
                 // Langue
                 document.getElementById("forcedLangCBData").checked = item.lang.forced;
-                document.getElementById("forcedLangData").value     = item.lang.data;
+                var availableLang = document.getElementById("availableLangData");
+                availableLang.value  = item.lang.data;
+                if(availableLang.value === '') availableLang.value = 'en';
 
                 // Cadenas
                 document.getElementById("lockPositionData").options[item.lock === "top" ? 1 : 0].selected = 'selected';
@@ -90,7 +92,7 @@ function getData()
             {
                 // Langue
                 document.getElementById("forcedLangCBData").checked = false;
-                document.getElementById("forcedLangData").value     = '';
+                document.getElementById("availableLangData").value  = 'en';
 
                 // Cadenas
                 document.getElementById("lockPositionData").options[0].selected = 'selected';
@@ -122,7 +124,7 @@ function setData(event)
         {
             'lang': {
                 forced: document.getElementById("forcedLangCBData").checked,
-                data:   document.getElementById("forcedLangData").value
+                data:   document.getElementById("availableLangData").value
             },
             'lock':     document.getElementById("lockPositionData").value,
             'updates': {
