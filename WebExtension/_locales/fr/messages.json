@@ -26,8 +26,8 @@
         "description": "Comment lock position, first option."
     },
     "A7pp_optionPageLockPositionOpt2Label": {
-        "message": "À côté de l'indicateur d'avancement des sous-titres",
-        "description": "Comment lock position, first option."
+        "message": "En haut à droite de la table des séquences",
+        "description": "On top right of the sequence table."
     },
     "A7pp_optionPagestateUpdateLabel": {
         "message": "Délai de mise à jour de l'avancement des sous-titres (en secondes, par défaut : 2 minutes) :",

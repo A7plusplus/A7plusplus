@@ -2,7 +2,6 @@
 #lockComment {
     cursor: pointer;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAAACXBIWXMAAAnXAAAJ1wGxbhe3AAABxUlEQVR42u2VPUvDUBSG06RNU1KoCYWE2EVcIi4ODuJHJ+3m6OziH3AQuiqI4A9w7dDBxc3JTZw7qhTUWXQQFwfxoz4n3JS0iaWgmx54OffknPve996bk2hawkzT1HRd78e5XE7iOjgzDOOyUCjsA1sbx5ig5fP5OLQgW8dfg94QXsEx8KSQBQZE9JUUi8V4jFBzA99VBC8sdsekK8aP4AN8ghMwKUIEKVPbk23PMD4VMuJ7xkeomEN9hXiL+ILcO/ET2BaRKTLZqud54g2wyaNn8IbqA2I3eTKQLuJvIe6hrIUPMs+vWq2KQgs1O6KOwgf8mqiWvOxAmQ9a6jjOwXwiN2iWZZV832/K6qICLMXHkZg0AfYUYQesxOefupRyuVwKgqCJIim+iQmHrAJ21S468lqlLkXOECLNtu2S67pN4oiQCSMJucAOtfXMS6nVaqLSgGQKNHi8rLaXKic/jbIGWCB2UhVy8I7jRC+phHJPCplGnS5vxKgaSaxmdMW4kCYI/wn/AmGyp39MCFnIt+B3CGmMLv0cyi9kgJCENHyEeCx+GMm8EKKsS/eEiV9I1G6zFLUpaotnxb7/DnEeskPIAmndL1rh3Vw6AMdtAAAAAElFTkSuQmCC');
-    margin-right: 10px;
 }
 
 /* En bas de l'ecran, à côté des commentaires */
@@ -18,7 +17,7 @@
 
 /* En haut, à côté de l'avancement */
 #lockComment.lockCommentTop {
-    float: left;
+    float: right;
     height: 17px;
     padding: 2px 10px 3px;
 }

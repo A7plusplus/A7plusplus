@@ -26,8 +26,8 @@
         "description": "Comment lock position, first option."
     },
     "A7pp_optionPageLockPositionOpt2Label": {
-        "message": "Next to the subtitle progress state",
-        "description": "Comment lock position, first option."
+        "message": "On top right of the sequence table",
+        "description": "On top right of the sequence table."
     },
     "A7pp_optionPagestateUpdateLabel": {
         "message": "Subtitle progress state update interval (in seconds, default: 2 min):",
