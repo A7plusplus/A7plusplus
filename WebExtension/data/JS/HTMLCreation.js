@@ -508,6 +508,7 @@ function createUserBarStruct()
 
 
     useBarContainer.setAttribute('id', 'userBar');
+    useBarContainer.classList.add('userBarNotReady');
     useBarContainer.setAttribute('draggable', 'true');
     useBarContainer.addEventListener('click', function()
     {

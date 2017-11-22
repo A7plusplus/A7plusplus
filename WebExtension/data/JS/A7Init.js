@@ -189,7 +189,8 @@ function init()
     // Ajoute la structure d'accueil, des commentaires et de la barre utilisateur
     var listaParent = list.parentElement;
 
-    if(!page.translatePage && !A7Settings.disableUserBar)
+    // Ajoute la barre utilisateur si non désactivé
+    if(!A7Settings.disableUserBar)
     {
         listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
     }
@@ -217,7 +218,7 @@ function init()
 
         // Barre utilisateur
         var userBarPos = localStorage.getItem('A7ppUserBarPosition');
-        if(userBarPos && !page.translatePage && !A7Settings.disableUserBar)
+        if(userBarPos && !A7Settings.disableUserBar)
         {
             var data = userBarPos.split(',');
             var left = data[0],

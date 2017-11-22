@@ -313,10 +313,12 @@ function linesChanged()
     tables[1].style.setProperty('visibility', 'visible');
     }
 
-    if(!page.translatePage && !A7Settings.disableUserBar)
+    // Si la barre utilisateur est activée
+    if(!A7Settings.disableUserBar)
     {
         // Charge la liste des utilisateurs dans la userBar
-        loadUserBarUsers();
+        if(page.translatePage) loadUserBarUsersFromTranslate();
+        else                   loadUserBarUsers();
     }
 }
 
@@ -327,7 +329,7 @@ function linesChanged()
 function requestHICheck()
 {
     // Récupère les infos
-    var episodeUrl = document.getElementById('spanState').parentElement.lastElementChild.firstElementChild.href;
+    var episodeUrl = document.getElementById('spanState').parentElement.querySelector('.titulo,big').firstElementChild.href;
 
     // Envoie la requête
     ajax(['GET', 'document'], episodeUrl, '', post_requestHICheck, null, null);

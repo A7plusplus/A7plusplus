@@ -11,6 +11,10 @@
     flex-direction: column;
 }
 
+#userBar.userBarNotReady {
+    display: none;
+}
+
 #userBar.userBarOpened {
     border-radius: 20px;
 }

@@ -5,25 +5,69 @@
 
 
 /**
-* @fn loadUserBarUsers Charge la liste des utilisateurs dans la userBar
+* @fn loadUserBarUsersFromTranslate Charge la liste des utilisateurs
+*     dans la userBar depuis le mode traduction
+* @param {String} data Données retournées par ajax
+* @param {Boolean} isError Si la requête à échouée
 */
-function loadUserBarUsers()
+function loadUserBarUsersFromTranslate(data, isError)
 {
-    // Récupère les utilisateurs
-    var selects = document.getElementsByTagName('select'),
-        requestedSelect;
-    for (var i = 0; i < selects.length; i++)
+    // Envoi la requête ajax si ce n'est pas déjà fait
+    if(typeof data === 'undefined' && typeof isError === 'undefined')
     {
-        if (selects[i].name === 'user')
-        {
-            // Récupère les données
-            requestedSelect = selects[i];
-            break;
-        }
+        // Récupère les informations relatives aux sous-titres
+        var subInfo = page.queryInfos;
+
+        // Construit et lance la requête
+        var url = '/ajax_list.php?id=' + subInfo.id +
+                  '&fversion=' + subInfo.fversion   +
+                  '&lang='     + subInfo.lang       +
+                  '&start=0&updated=false&slang=',
+            action = 'GET';
+
+        // Envoie la requête
+        ajax(action, url, null, loadUserBarUsersFromTranslate, null, null);
     }
+    else
+    {
+        if(isError)
+        {
+            setTimeout(function()
+            {
+                loadUserBarUsersFromTranslate();
+            }, 200);
+
+            return;
+        }
+
+        // Parsing des donnéees
+        var userListHTML = document.createElement('span');
+        userListHTML.innerHTML = data;
+
+        // Cède la main au loader du mode edition
+        loadUserBarUsers(userListHTML.querySelector('select[name="user"]'));
+    }
+}
+
+
+/**
+* @fn loadUserBarUsers Charge la liste des utilisateurs dans la userBar
+* @param {Object} forcedSelectNode Noeud HTML de la selection des utilisateurs (optionnel -> pour le mode traduction)
+*/
+function loadUserBarUsers(forcedSelectNode)
+{
+    var select = null;
+
+    // Récupère les utilisateurs
+    if(typeof forcedSelectNode === 'undefined')
+        // Mode view & edit
+        select = document.querySelector('select[name="user"]');
+    else
+        select = forcedSelectNode;
+
 
     // Clone les utilisateurs
-    var clone = requestedSelect.cloneNode(true);
+    var clone = select.cloneNode(true);
     clone.removeChild(clone.firstElementChild);
     clone.setAttribute('id', 'selectUser');
 
@@ -57,6 +101,9 @@ function loadUserBarUsers()
         // Stocke une référence sur l'objet glissable
         page.draggedNode = event.target;
     }, false);
+
+    // Affiche la barre
+    userBar.classList.remove('userBarNotReady');
 }
 
 
@@ -68,6 +115,17 @@ function loadUserBarUsers()
 function addUserToUserBar(name, id)
 {
     var userSelect = document.getElementById('userBar').firstElementChild.children[1].firstElementChild;
+
+    // Attends, en mode traduction, que la liste des utilisateurs soit chargée
+    if(userSelect === null)
+    {
+        setTimeout(function()
+        {
+            addUserToUserBar(name, id);
+        }, 50);
+
+        return;
+    }
 
     // Vérifie la présence de l'utilisateur
     for(var i = 0; i < userSelect.length; i++)
