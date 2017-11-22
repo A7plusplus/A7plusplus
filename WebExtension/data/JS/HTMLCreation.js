@@ -5,6 +5,27 @@
 
 
 /**
+* @fn createA7button Créé un bouton custom de l'extension
+*/
+function createA7button()
+{
+    var button = document.createElement('a7button');
+
+    // Simule un bouton avec les touches Entrée et Espace
+    button.addEventListener('keypress', function(e)
+    {
+        if(e.key === " " || e.key === "Enter")
+        {
+            e.preventDefault();
+            button.click();
+        }
+    });
+
+    return button;
+}
+
+
+/**
 * @fn createTextUtils Crée un nœud contenant la structure des utilitaires textuels
 * @param {number} seqNumber Numéro de séquence
 * @return {!Object} Nœud HTML contenant les utilitaires
@@ -17,13 +38,13 @@ function createTextUtils(seqNumber)
 
     var textButtons       = document.createElement('span');
 
-    var boldButton        = document.createElement('a7button');
-    var italicButton      = document.createElement('a7button');
-    var underlineButton   = document.createElement('a7button');
-    var removeTagsButton  = document.createElement('a7button');
-    var restoreTextButton = document.createElement('a7button');
-    var cancelTextButton  = document.createElement('a7button');
-    var saveButton        = document.createElement('a7button');
+    var boldButton        = createA7button();
+    var italicButton      = createA7button();
+    var underlineButton   = createA7button();
+    var removeTagsButton  = createA7button();
+    var restoreTextButton = createA7button();
+    var cancelTextButton  = createA7button();
+    var saveButton        = createA7button();
 
 
     // Zone de texte
@@ -95,9 +116,9 @@ function createTimeUtils(seqNumber, timeCodes)
     var fromText                = document.createElement('t');
     var startInput              = document.createElement('input');
 
-    var restoreTimeButton       = document.createElement('a7button');
-    var cancelTimeButton        = document.createElement('a7button');
-    var saveTimeButton          = document.createElement('a7button');
+    var restoreTimeButton       = createA7button();
+    var cancelTimeButton        = createA7button();
+    var saveTimeButton          = createA7button();
 
     var toText                  = document.createElement('t');
     var endInput                = document.createElement('input');
@@ -191,11 +212,11 @@ function createCommentStruct()
     var headerText          = document.createElement('p');
     var headerTextContent   = document.createTextNode(loc.comments);
     var headerTextPopup     = document.createElement('span');
-    var headerRefreshButton = document.createElement('a7button');
-    var headerPinButton     = document.createElement('a7button');
+    var headerRefreshButton = createA7button();
+    var headerPinButton     = createA7button();
 
     var centerTextArea      = document.createElement('textarea');
-    var centerButton        = document.createElement('a7button');
+    var centerButton        = createA7button();
 
 
     // Mise en place
