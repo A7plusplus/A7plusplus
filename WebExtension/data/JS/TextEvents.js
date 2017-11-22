@@ -11,7 +11,7 @@
 */
 function pre_mouseclick(tipo, seqNumber)
 {
-    // Si on est en mode traduction, recherche d'aborde le text
+    // Si on est en mode traduction, recherche d'abord le text
     if(!page.translatePage || getTextCell(seqNumber).innerHTML.contains('loader.gif'))
     {
         // Bypass le chargement car inutile si on est en edit ou qu'il y a erreur d'envoi

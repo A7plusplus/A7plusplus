@@ -33,27 +33,33 @@ function createTextUtils(seqNumber)
 
     // Contrôles
     boldButton.title            = loc.selectedTextTo + ' ' + loc.bold;
+    boldButton.setAttribute('tabIndex', seqNumber);
     boldButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'b');");
 
     italicButton.title          = loc.selectedTextTo + ' ' + loc.italic;
+    italicButton.setAttribute('tabIndex', seqNumber);
     italicButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'i');");
 
     underlineButton.title       = loc.selectedTextTo + ' ' + loc.underline;
+    underlineButton.setAttribute('tabIndex', seqNumber);
     underlineButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'u');");
 
     removeTagsButton.title      = loc.removeTags;
+    removeTagsButton.setAttribute('tabIndex', seqNumber);
     removeTagsButton.setAttribute('onclick', 'removeTagsFromSequence(' + seqNumber + ');');
 
 
     restoreTextButton.title     = loc.restoreText;
+    restoreTextButton.setAttribute('tabIndex', seqNumber);
     restoreTextButton.setAttribute('onclick', 'textRestore(' + seqNumber + ');');
 
     cancelTextButton.title = loc.cancel;
+    cancelTextButton.setAttribute('tabIndex', seqNumber);
     cancelTextButton.setAttribute('onclick', 'textCancel(' + seqNumber + ');');
 
 
     saveButton.title = loc.save;
-    saveButton.setAttribute('tabIndex', parseInt(seqNumber) + 1);
+    saveButton.setAttribute('tabIndex', seqNumber);
     saveButton.setAttribute('onclick', "pre_update('o', " + seqNumber + ');');
 
 
