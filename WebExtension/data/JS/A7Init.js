@@ -175,7 +175,13 @@ function init()
         userBarData: {},
         tempTranslateBackup: [],
         draggedNode: null
-        };
+    };
+
+    // Affiche l'indicateur de version sous le logo du site
+    var tbody = document.body.firstElementChild.lastElementChild.firstElementChild,
+        logoLink = tbody.firstElementChild.firstElementChild.firstElementChild;
+    logoLink.insertBefore(createA7Info(), logoLink.lastElementChild);
+    logoLink.setAttribute('id', 'A7Logo');
 
     // Démarre l'actualisation de l'avancement (toutes les minutes)
     page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);

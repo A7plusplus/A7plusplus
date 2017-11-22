@@ -141,9 +141,6 @@ function linesChanged()
         // Crée le span d'avancement
         parentDiv.insertBefore(createStateUtil(), parentDiv.firstElementChild);
 
-        // Créé le span contenant les informations de l'extension
-        parentDiv.appendChild(createA7Info());
-
         // Ajoute l'option de ne voir que les séquences non traduites
         if (page.translatePage)
         {
@@ -330,7 +327,7 @@ function linesChanged()
 function requestHICheck()
 {
     // Récupère les infos
-    var episodeUrl = document.getElementById('A7Info').previousElementSibling.firstElementChild.href;
+    var episodeUrl = document.getElementById('spanState').parentElement.lastElementChild.firstElementChild.href;
 
     // Envoie la requête
     ajax(['GET', 'document'], episodeUrl, '', post_requestHICheck, null, null);
@@ -387,7 +384,7 @@ function post_requestHICheck(episodeHTMLDocument, isError)
     if (img.tagName === 'IMG' && img.src === 'http://www.addic7ed.com/images/hi.jpg')
     {
         // Ajoute le logo
-        var parentDiv = document.getElementById('A7Info').parentElement;
+        var parentDiv = document.getElementById('spanState').parentElement;
 
         if (parentDiv.lastElementChild.id !== 'hearingImpaired')
         {

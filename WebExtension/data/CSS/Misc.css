@@ -37,12 +37,19 @@ div.tabelborder {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAYCAYAAADzoH0MAAAACXBIWXMAAA50AAAOdAFrJLPWAAACbUlEQVQ4y52TS0iVURSFv3X+Sw8zjcgwgiwFoRxE5SSiupC9wSZRNEm0gVJYitOiP6LohdKdJirU6EpGBNKgvOKgB42iDLInRoVQQVwf5O0/u0EGdsFS1+Qc9l5nsfc6e4ssJNrurYnM1SFVACsmwu+Auz6IrjVVVQxM5uvPJQxTsfwiLmPUAwHwFXgBeKAMWAJkwK58H+w7GYahZ4JIMpkMxufndgFVwFsv1VlkPXKMYnrjzXdIdgtcOVA5L3/V6o3rVnb19vZaDODjcMEZsEpQT2DRRXCtBCzH3GtkclIJaDBwqo28nQI7kFe05SlwXlda7xcFzr0EPpi5Y07+tqFuF8s0nji8fRAg0XG/JPKuFdhgUbRXQewGWEFGFKu5LXVWcFLyB8yCC2D9DdXxfZLsL3MT3XOjhTl9mDnBVYPrwk47wS4g7b0EVuTkmrIfAxw/vucHnhAoj1zwGUh73E4HKgY9kdNG4MGJ6q2vmAI5P3PvgUYD/3OToF9YqQMLwB5izDfZI/6B2tryDNgdM2cGaVBeLHB+QzDihqJoLPOtcNj4Dxqq44ckWUtbagBsSMwCzR09ZfJ6buKmm42AvM4BKLL2GVfQ0pbaD3SCehpr4ttmVEFLe2oRIgGkkR0BiM1EwLxdkrQMdLSxOv7+r22cpnHPMB401MQ3/xm2abcg4+DvwxKTJ3X6HphKAbzZ48nh6QuIXIDhwA3NSsBMAlicHrMZC4RhKiZsLTBSX797fHLuv98YtqfmLYIWM5YDndmrPqVAmEzOyRteektmWw0WAF9ilmnI5k3ZwhqIBIWgCJT0uPX1R3Z8yub9AiGS+Nlr7dzcAAAAAElFTkSuQmCC');
 }
 
+#A7Logo {
+    position: relative;
+}
+
 #A7Info {
-    float: right;
+    bottom: 0;
+    margin: 9px;
     height: 17px;
     font-size: 13px;
+    position: absolute;
     border-radius: 10px;
     padding: 2px 10px 3px;
+    background-color: aliceblue;
     box-shadow: 0 0 1px 1px grey, 0 0 1px 1px lightgrey inset;
 }
 
