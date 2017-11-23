@@ -52,8 +52,8 @@ function populate()
     document.getElementById("lockPositionData").options[1].innerText = chrome.i18n.getMessage('A7pp_optionPageLockPositionOpt2Label');
 
     // Temps entre les mises à jour
-    document.getElementById("stateUpdate").innerText   = chrome.i18n.getMessage('A7pp_optionPagestateUpdateLabel');
-    document.getElementById("commentUpdate").innerText = chrome.i18n.getMessage('A7pp_optionPageCommentUpdateLabel');
+    document.getElementById("stateUpdate").innerText   = chrome.i18n.getMessage('A7pp_optionPagestateUpdateLabel',   A7Settings.stateUpdateInterval.toString());
+    document.getElementById("commentUpdate").innerText = chrome.i18n.getMessage('A7pp_optionPageCommentUpdateLabel', A7Settings.commentUpdateInterval.toString());
 
     // UserBar
     document.getElementById("userBarCB").innerText = chrome.i18n.getMessage('A7pp_optionPageDisableUserBarLabel');
@@ -105,11 +105,11 @@ function getData()
                 document.getElementById("lockPositionData").options[0].selected = 'selected';
 
                 // Durées
-                document.getElementById("stateUpdateData").value = 120;
-                document.getElementById("commentUpdateData").value = 30;
+                document.getElementById("stateUpdateData").value = A7Settings.stateUpdateInterval;
+                document.getElementById("commentUpdateData").value = A7Settings.commentUpdateInterval;
 
                 // UserBar
-                document.getElementById("userBarCBData").checked = false;
+                document.getElementById("userBarCBData").checked = A7Settings.disableUserBar;
             }
         }
     );

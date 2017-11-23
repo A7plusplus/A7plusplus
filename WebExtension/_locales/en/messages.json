@@ -30,12 +30,22 @@
         "description": "On top right of the sequence table."
     },
     "A7pp_optionPagestateUpdateLabel": {
-        "message": "Subtitle progress state update interval (in seconds, default: 2 min):",
-        "description": "State update interval (in seconds, default: 2 min)."
+        "message": "Subtitle progress state update interval (in seconds, default:  $DEFAULT$ sec):",
+        "description": "State update interval (in seconds, default: $DEFAULT$ seconds).",
+        "placeholders": {
+            "default" : {
+                "content" : "$1"
+            }
+        }
     },
     "A7pp_optionPageCommentUpdateLabel": {
-        "message": "Comments update interval (in seconds, default: 30 sec):",
-        "description": "Comment update Interval (in seconds, default: 30 sec)."
+        "message": "Comments update interval (in seconds, default: $DEFAULT$ sec):",
+        "description": "Comment update Interval (in seconds, default: $DEFAULT$ sec).",
+        "placeholders": {
+            "default" : {
+                "content" : "$1"
+            }
+        }
     },
     "A7pp_optionPageDisableUserBarLabel": {
         "message": "Disable userBar:",
