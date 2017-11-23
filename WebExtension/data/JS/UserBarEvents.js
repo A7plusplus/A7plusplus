@@ -74,41 +74,66 @@ function loadUserBarUsers(forcedSelectNode)
         select = forcedSelectNode;
 
 
-    // Clone les utilisateurs
-    var clone = select.cloneNode(true);
-    clone.removeChild(clone.firstElementChild);
-    clone.setAttribute('id', 'selectUser');
-
     // Les injecte dans la barre utilisateur
-    var userBar  = document.getElementById('userBar');
-    var userSpan = userBar.firstElementChild.children[1];
-    if(userSpan.lastElementChild && userSpan.lastElementChild.tagName === 'SELECT')
+    var userBar   = document.getElementById('userBar'),
+        userSpan  = userBar.firstElementChild.children[1],
+        oldSelect = userSpan.lastElementChild;
+
+
+    // Si le selecteur est déjà là, ne recréé par mai ajoute la différence
+    if(oldSelect && oldSelect.tagName === 'SELECT')
     {
-        userSpan.lastElementChild.remove();
+        var alreadyHere = false;
+        for(i = select.length; i > 0; i--)
+        {
+            alreadyHere = false;
+            for(j = oldSelect.length; j > 0; j--)
+            {
+                if(select.options[i].value === oldSelect.options[j].value)
+                {
+                    alreadyHere = true;
+                    break;
+                }
+            }
+
+            if(!alreadyHere)
+            {
+                oldSelect.appendChild(select.options[i]);
+            }
+        }
     }
-    userSpan.appendChild(clone);
-
-    // Ajoute l'event
-    clone.addEventListener('change', function()
+    else
     {
-        // Ferme les fenêtres
-        triggerPM(true);
-        triggerReport(true);
-        triggerProfile(true);
+        // Clone les utilisateurs
+        var clone = select.cloneNode(true);
+        clone.removeChild(clone.firstElementChild);
+        clone.setAttribute('id', 'selectUser');
 
-        // Vide le cache
-        page.userBarData = {};
-    });
+        // Ajoute le selecteur à la userBar
+        userSpan.appendChild(clone);
 
-    // Ajoute le drag and drop
-    userBar.addEventListener('dragstart', userBarDragStart, false);
-    userBar.addEventListener('mousedown', userBarMousedown, false);
-    document.body.addEventListener('dragover', userBarDragOver, false);
-    document.body.addEventListener('drop', userBarDragDrop, false);
-    document.body.addEventListener('dragstart', function(event) {
-        // Stocke une référence sur l'objet glissable
-        page.draggedNode = event.target;
-    }, false);
+        // Ajoute l'event
+        clone.addEventListener('change', function()
+        {
+            // Ferme les fenêtres
+            triggerPM(true);
+            triggerReport(true);
+            triggerProfile(true);
+
+            // Vide le cache
+            page.userBarData = {};
+        });
+
+        // Ajoute le drag and drop
+        userBar.addEventListener('dragstart', userBarDragStart, false);
+        userBar.addEventListener('mousedown', userBarMousedown, false);
+        document.body.addEventListener('dragover', userBarDragOver, false);
+        document.body.addEventListener('drop', userBarDragDrop, false);
+        document.body.addEventListener('dragstart', function(event) {
+            // Stocke une référence sur l'objet glissable
+            page.draggedNode = event.target;
+        }, false);
+    }
 
     // Affiche la barre
     userBar.classList.remove('userBarNotReady');
