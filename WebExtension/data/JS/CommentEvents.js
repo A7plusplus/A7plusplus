@@ -180,6 +180,9 @@ function sendComment()
     // Récupération de la textArea
     var textArea = document.getElementById('commentsSection').lastElementChild.lastElementChild.firstElementChild;
 
+    // Si vide, n'envoi pas
+    if(textArea.value === '') return;
+
     // Desactive la textArea le temps de l'envoi
     textArea.setAttribute('disabled', true);
 
