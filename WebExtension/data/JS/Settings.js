@@ -23,7 +23,7 @@ var A7Settings = {
     // Temps en secondes
     stateUpdateInterval      : 120,
     commentUpdateInterval    : 30,
-    userBarUpdateIntervalMin : 30,
+    userBarUpdateIntervalMin : 150,
     updateTimeout            : 30,
 
     RSR : {

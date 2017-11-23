@@ -138,8 +138,8 @@ function setData(event)
             },
             'lock':     document.getElementById("lockPositionData").value,
             'updates': {
-                'state':    (stateUpdate < 10 ? 10 : stateUpdate),
-                'comment':  (commentUpdate < 5 ? 5 : commentUpdate)
+                'state':    (stateUpdate < 20 ? 20 : stateUpdate),
+                'comment':  (commentUpdate < 15 ? 15 : commentUpdate)
             },
             'userBar': {
                 'disable': document.getElementById("userBarCBData").checked
