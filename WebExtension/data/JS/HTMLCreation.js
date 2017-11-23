@@ -221,7 +221,9 @@ function createCommentStruct()
 
     // Mise en place
     centerButton.addEventListener('click', sendComment, false);
+    centerButton.setAttribute('tabIndex', 4096);
     centerButton.title         = loc.sendComment;
+    centerTextArea.setAttribute('tabIndex', 4096);
     centerTextArea.placeholder = loc.commTextareaHint;
     centerTextArea.oninput     = updateCommentTextArea;
 
