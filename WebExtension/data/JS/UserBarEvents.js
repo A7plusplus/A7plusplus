@@ -22,6 +22,8 @@ function loadUserBarUsersFromTranslate(data, isError)
         // Si le timeout minimum est respecté
         if(page.lastUserBarUpdate < notAfter)
         {
+            page.lastUserBarUpdate = new Date();
+
             // Récupère les informations relatives aux sous-titres
             var subInfo = page.queryInfos;
 
@@ -84,10 +86,10 @@ function loadUserBarUsers(forcedSelectNode)
     if(oldSelect && oldSelect.tagName === 'SELECT')
     {
         var alreadyHere = false;
-        for(i = select.length; i > 0; i--)
+        for(i = select.length - 1; i > 0; i--) // > 0 car options[0] === 0 (TOUT)
         {
             alreadyHere = false;
-            for(j = oldSelect.length; j > 0; j--)
+            for(j = oldSelect.length - 1; j >= 0; j--)
             {
                 if(select.options[i].value === oldSelect.options[j].value)
                 {
