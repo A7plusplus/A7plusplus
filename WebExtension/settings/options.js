@@ -7,7 +7,7 @@
 // Si la page est déjà là
 if (document.readyState === 'interactive' || document.readyState === 'complete')
 {
-    // Créé le contenu de la page
+    // Crée le contenu de la page
     populate();
     getData();
 }
@@ -16,7 +16,7 @@ else
 {
     document.addEventListener('DOMContentLoaded', function()
     {
-        // Créé le contenu de la page
+        // Crée le contenu de la page
         populate();
         getData();
     }, false);
@@ -24,7 +24,7 @@ else
 
 
 /*
-* @fn populate Rempli la page des réglages avec les différentes chaines traduites
+* @fn populate Remplit la page des réglages avec les différentes chaines traduites
 */
 function populate()
 {
@@ -76,7 +76,7 @@ function getData()
         ],
         function(item)
         {
-            // Objet present
+            // Objet présent
             if(typeof item.lang !== 'undefined')
             {
                 // Langue
@@ -138,8 +138,8 @@ function setData(event)
             },
             'lock':     document.getElementById("lockPositionData").value,
             'updates': {
-                'state':    (stateUpdate < 20 ? 20 : stateUpdate),
-                'comment':  (commentUpdate < 15 ? 15 : commentUpdate)
+                'state':    (stateUpdate < 60 ? 60 : stateUpdate),
+                'comment':  (commentUpdate < 20 ? 20 : commentUpdate)
             },
             'userBar': {
                 'disable': document.getElementById("userBarCBData").checked
