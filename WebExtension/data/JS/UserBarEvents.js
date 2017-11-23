@@ -31,11 +31,10 @@ function loadUserBarUsersFromTranslate(data, isError)
             var url = '/ajax_list.php?id=' + subInfo.id +
                       '&fversion=' + subInfo.fversion   +
                       '&lang='     + subInfo.lang       +
-                      '&start=0&updated=false&slang=',
-                action = 'GET';
+                      '&start=0&updated=false&slang=';
 
             // Envoie la requête
-            ajax(action, url, null, loadUserBarUsersFromTranslate, null, null);
+            ajax(['GET', 'document'], url, null, loadUserBarUsersFromTranslate, null, null);
         }
     }
     else
@@ -50,12 +49,8 @@ function loadUserBarUsersFromTranslate(data, isError)
             return;
         }
 
-        // Parsing des donnéees
-        var userListHTML = document.createElement('span');
-        userListHTML.innerHTML = data;
-
         // Cède la main au loader du mode edition
-        loadUserBarUsers(userListHTML.querySelector('select[name="user"]'));
+        loadUserBarUsers(data.body.querySelector('select[name="user"]'));
     }
 }
 
@@ -305,7 +300,7 @@ function triggerPM(close)
         // Ne recharge pas s'il n'y a pas besoin
         if(page.userBarData.PM && page.userBarData.PM.tagName !== 'IMG')
         {
-            dataContainer.innerHTML = '';
+            resetHTMLObject(dataContainer);
             dataContainer.appendChild(page.userBarData.PM);
             updateUserBarSize(userBar);
         }
@@ -317,7 +312,7 @@ function triggerPM(close)
             // Récupère l'id utilisateur
             var user = userBarGetCurrentUser();
 
-            ajax('GET', '/msgcreate.php?to=' + user, '', post_triggerPM, user, null, null);
+            ajax(['GET', 'document'], '/msgcreate.php?to=' + user, '', post_triggerPM, user, null, null);
         }
     }
 }
@@ -361,7 +356,7 @@ function triggerProfile(close)
         // Ne recharge pas s'il n'y a pas besoin
         if(page.userBarData.Prof && page.userBarData.Prof.tagName !== 'IMG')
         {
-            dataContainer.innerHTML = '';
+            resetHTMLObject(dataContainer);
             dataContainer.classList.add('isUserPage');
             dataContainer.appendChild(page.userBarData.Prof);
             updateUserBarSize(userBar);
@@ -374,7 +369,7 @@ function triggerProfile(close)
             // Récupère l'id utilisateur
             var user = userBarGetCurrentUser();
 
-            ajax('GET', '/user/' + user, '', post_triggerProfile, user, null, null);
+            ajax(['GET', 'document'], '/user/' + user, '', post_triggerProfile, user, null, null);
         }
     }
 }
@@ -417,7 +412,7 @@ function triggerReport(close)
         // Ne recharge pas s'il n'y a pas besoin
         if(page.userBarData.Report && page.userBarData.Report.tagName !== 'IMG')
         {
-            dataContainer.innerHTML = '';
+            resetHTMLObject(dataContainer);
             dataContainer.appendChild(page.userBarData.Report);
             updateUserBarSize(userBar);
         }
@@ -426,7 +421,7 @@ function triggerReport(close)
             // Affiche le logo de chargement
             resetToLoadingImage(dataContainer);
 
-            ajax('GET', '/badsub.php' + location.search, '', post_triggerReport, userBarGetCurrentUser(), null, null);
+            ajax(['GET', 'document'], '/badsub.php' + location.search, '', post_triggerReport, userBarGetCurrentUser(), null, null);
         }
     }
 }
@@ -435,10 +430,10 @@ function triggerReport(close)
 /**
 * @fn post_triggerPM Traite l'AJAX du message privé
 * @param {Integer} userId Id utilisateur
-* @param {String} HTMLString Réponse de la requête AJAX
+* @param {String} htmlData Réponse de la requête AJAX
 * @param {Boolean} isError Status de réussite de la requête AJAX
 */
-function post_triggerPM(userId, HTMLString, isError)
+function post_triggerPM(userId, htmlData, isError)
 {
     // L'utilisateur n'est plus le bon
     if(!userBarIsCurrentUser(userId))
@@ -460,12 +455,8 @@ function post_triggerPM(userId, HTMLString, isError)
         return;
     }
 
-    // Crée le DOM virtuel
-    var PMHTML = document.createElement('html');
-    PMHTML.innerHTML = HTMLString;
-
     // Récupère le formulaire
-    var form = PMHTML.getElementsByTagName('form')[0];
+    var form = htmlData.body.getElementsByTagName('form')[0];
 
     // Place le sujet
     var inputs =  form.getElementsByTagName('input');
@@ -488,7 +479,7 @@ function post_triggerPM(userId, HTMLString, isError)
     else
     {
         // L'affiche
-        dataContainer.innerHTML = '';
+        resetHTMLObject(dataContainer);
         dataContainer.appendChild(form);
         updateUserBarSize(document.getElementById('userBar'));
     }
@@ -498,10 +489,10 @@ function post_triggerPM(userId, HTMLString, isError)
 /**
 * @fn post_triggerReport Traite l'AJAX du signalement
 * @param {Integer} userId Id utilisateur
-* @param {String} HTMLString Réponse de la requête AJAX
+* @param {String} htmlData Réponse de la requête AJAX
 * @param {Boolean} isError Status de réussite de la requête AJAX
 */
-function post_triggerReport(userId, HTMLString, isError)
+function post_triggerReport(userId, htmlData, isError)
 {
     // L'utilisateur n'est plus le bon
     if(!userBarIsCurrentUser(userId))
@@ -523,12 +514,8 @@ function post_triggerReport(userId, HTMLString, isError)
         return;
     }
 
-    // Crée le DOM virtuel
-    var reportHTML = document.createElement('html');
-    reportHTML.innerHTML = HTMLString;
-
     // Récupère le formulaire et le nettoye
-    var form = reportHTML.getElementsByTagName('form')[0];
+    var form = htmlData.body.getElementsByTagName('form')[0];
 
     // Récupère l'id utilisateur incriminé
     var id = document.getElementById('selectUser'),
@@ -549,7 +536,7 @@ function post_triggerReport(userId, HTMLString, isError)
     else
     {
         // L'affiche
-        dataContainer.innerHTML = '';
+        resetHTMLObject(dataContainer);
         dataContainer.appendChild(form);
         updateUserBarSize(document.getElementById('userBar'));
     }
@@ -559,10 +546,10 @@ function post_triggerReport(userId, HTMLString, isError)
 /**
 * @fn post_triggerProfile Traite l'AJAX du profile
 * @param {Integer} userId Id utilisateur
-* @param {String} HTMLString Réponse de la requête AJAX
+* @param {String} htmlData Réponse de la requête AJAX
 * @param {Boolean} isError Status de réussite de la requête AJAX
 */
-function post_triggerProfile(userId, HTMLString, isError)
+function post_triggerProfile(userId, htmlData, isError)
 {
     // L'utilisateur n'est plus le bon
     if(!userBarIsCurrentUser(userId))
@@ -584,12 +571,8 @@ function post_triggerProfile(userId, HTMLString, isError)
         return;
     }
 
-    // Crée le DOM virtuel
-    var profHTML = document.createElement('html');
-    profHTML.innerHTML = HTMLString;
-
     // Récupère le tableau des données
-    var tables = profHTML.getElementsByTagName('table'),
+    var tables = htmlData.body.getElementsByTagName('table'),
         dataTable;
     for (var i = 0; i < tables.length; i++)
     {
@@ -610,7 +593,7 @@ function post_triggerProfile(userId, HTMLString, isError)
     else
     {
         // L'affiche
-        dataContainer.innerHTML = '';
+        resetHTMLObject(dataContainer);
         dataContainer.appendChild(dataTable);
         dataContainer.classList.add('isUserPage');
         updateUserBarSize(document.getElementById('userBar'));
@@ -679,7 +662,7 @@ function post_userBarSendPM(HTMLstring, isError)
     p.title = loc.messageSent;
 
     var parent = form.parentElement;
-    parent.innerHTML = '';
+    resetHTMLObject(parent);
     parent.appendChild(p);
 
     // Vide le cache
@@ -762,7 +745,7 @@ function post_userBarSendReport(HTMLstring, isError)
     p.title = loc.messageSent;
 
     var parent = form.parentElement;
-    parent.innerHTML = '';
+    resetHTMLObject(parent);
     parent.appendChild(p);
 
     // Vide le cache

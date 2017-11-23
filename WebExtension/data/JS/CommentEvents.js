@@ -29,16 +29,16 @@ function refreshComments()
         action = 'POST';
 
     // Envoie la requête
-    ajax(action, url, params, post_commentRefresh, null, null);
+    ajax([action, 'document'], url, params, post_commentRefresh, null, null);
 }
 
 
 /**
 * @fn post_commentRefresh Traite les données reçues par ajax
-* @param {string} newCommentsString Chaine HTML des commentaires
+* @param {string} htmlData Objet HTML de la réponse
 * @param {boolean} isError Si une erreur s'est produite
 */
-function post_commentRefresh(newCommentsString, isError)
+function post_commentRefresh(htmlData, isError)
 {
     // Récupère les informations utiles
     var commentsSection = document.getElementById('commentsSection');
@@ -70,8 +70,7 @@ function post_commentRefresh(newCommentsString, isError)
     }
 
     // Parse la string en HTML
-    var newCommentsHTML = document.createElement('span');
-    newCommentsHTML.innerHTML = newCommentsString;
+    var newCommentsHTML = htmlData.body;
 
     // Récupère la liste
     var listOfNewComments   = newCommentsHTML.firstElementChild.firstElementChild.firstElementChild.children;
@@ -101,7 +100,7 @@ function post_commentRefresh(newCommentsString, isError)
     var isUserOnCommentBottom = (commentList.scrollTop + commentList.clientHeight === commentList.scrollHeight);
 
     // Réinitialise la liste des commentaires
-    commentList.innerHTML = '';
+    resetHTMLObject(commentList)
 
     // Variable temporaire
     var temp;
@@ -146,10 +145,10 @@ function post_commentRefresh(newCommentsString, isError)
 
 /**
 * @fn post_sendComment Traite les données reçues par ajax
-* @param {string} newCommentsString Chaine HTML des commentaires
+* @param {string} htmlData Objet HTML des commentaires
 * @param {boolean} isError Si une erreur s'est produite
 */
-function post_sendComment(newCommentsString, isError)
+function post_sendComment(htmlData, isError)
 {
     // Récupère la textArea
     var textArea = document.getElementById('commentsSection').lastElementChild.lastElementChild.firstElementChild;
@@ -165,7 +164,7 @@ function post_sendComment(newCommentsString, isError)
         page.commentNumber += 1;
     }
 
-    post_commentRefresh(newCommentsString, isError);
+    post_commentRefresh(htmlData, isError);
 }
 
 
@@ -195,7 +194,7 @@ function sendComment()
         action = 'POST';
 
     // Envoie la requête
-    ajax(action, url, params, post_sendComment, null, null);
+    ajax([action, 'document'], url, params, post_sendComment, null, null);
 }
 
 

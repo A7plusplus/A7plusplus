@@ -171,7 +171,7 @@ function updateCharCountCell(countCell, counts)
             // Créé les éléments
             var span = document.createElement('span');
             span.textContent = counts[0];
-            countCell.innerHTML = '';
+            resetHTMLObject(countCell);
             countCell.appendChild(span);
 
             if (counts[0] <= A7Settings.maxPerLineOneLineSETTING)
@@ -191,7 +191,7 @@ function updateCharCountCell(countCell, counts)
 
             var color;
             var criticity = 'ok';
-            countCell.innerHTML = '';
+            resetHTMLObject(countCell);
 
             // On vérifie le nombre de lignes
             if (length === 3)
@@ -401,7 +401,7 @@ function updateCommentHeightFromSaved(elem, storage, lowLimit, highLimit)
     {
         savedValue = parseFloat(localStorage.getItem(storage));
     }
-    
+
 
     // La valeur est valide
     if(!isNaN(savedValue) && savedValue * window.innerHeight >= lowLimit && savedValue <= highLimit)

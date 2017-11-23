@@ -333,6 +333,10 @@ function textCancel(seqNumber)
 
 /**
 * @fn post_release Récupère et place le dernier texte de la séquence
+* @param {Integer} seqNumber Numéro de séquence
+* @param {Object} data Donnée issus de la requête (ou null si en mode view & edit)
+* @param {Boolean} isError Si la requête a échouée (ou false en mode view & edit)
+* @param {Object} translateMode Non utilisé
 */
 function post_select(seqNumber, data, isError, translateMode)
 {
@@ -405,7 +409,7 @@ function post_select(seqNumber, data, isError, translateMode)
 
 
     // Vide la cellule
-    textCell.innerHTML = '';
+    resetHTMLObject(textCell);
     page.tempTranslateBackup[seqNumber] = null;
 
     // Crée et ajoute les utilitaires

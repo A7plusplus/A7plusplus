@@ -136,12 +136,22 @@ function getRSRatingIndex(counts, duration)
 function resetToLoadingImage(object)
 {
     // Supprime le contenu
-    object.innerHTML = '';
+    resetHTMLObject(object);
 
     // Créé et ajoute l'image
     var img = document.createElement('img');
     img.src = '/images/loader.gif';
     object.appendChild(img);
+}
+
+
+/**
+* @fn resetHTMLObject Réinitialise l'objet HTML
+* @param {Object} object Objet HTML à réinitialiser
+*/
+function resetHTMLObject(object)
+{
+    object.innerHTML = '';
 }
 
 
