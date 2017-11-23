@@ -21,9 +21,10 @@ var A7Settings = {
     minDurationSETTING       : 1.001,
 
     // Temps en secondes
-    stateUpdateInterval   : 120,
-    commentUpdateInterval : 30,
-    updateTimeout         : 30,
+    stateUpdateInterval      : 120,
+    commentUpdateInterval    : 30,
+    userBarUpdateIntervalMin : 30,
+    updateTimeout            : 30,
 
     RSR : {
         // Reading speed, Rating, Short rating

@@ -173,6 +173,7 @@ function init()
         commentNumber: -1,
         tempDisablePopupRemoval: false,
         userBarData: {},
+        lastUserBarUpdate: new Date('1970'),
         tempTranslateBackup: [],
         draggedNode: null
     };

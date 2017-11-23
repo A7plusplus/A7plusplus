@@ -15,18 +15,26 @@ function loadUserBarUsersFromTranslate(data, isError)
     // Envoi la requête ajax si ce n'est pas déjà fait
     if(typeof data === 'undefined' && typeof isError === 'undefined')
     {
-        // Récupère les informations relatives aux sous-titres
-        var subInfo = page.queryInfos;
+        // Vérification du timeout
+        var notAfter = new Date();
+        notAfter.setSeconds(notAfter.getSeconds() - A7Settings.userBarUpdateIntervalMin);
 
-        // Construit et lance la requête
-        var url = '/ajax_list.php?id=' + subInfo.id +
-                  '&fversion=' + subInfo.fversion   +
-                  '&lang='     + subInfo.lang       +
-                  '&start=0&updated=false&slang=',
-            action = 'GET';
+        // Si le timeout minimum est respecté
+        if(page.lastUserBarUpdate < notAfter)
+        {
+            // Récupère les informations relatives aux sous-titres
+            var subInfo = page.queryInfos;
 
-        // Envoie la requête
-        ajax(action, url, null, loadUserBarUsersFromTranslate, null, null);
+            // Construit et lance la requête
+            var url = '/ajax_list.php?id=' + subInfo.id +
+                      '&fversion=' + subInfo.fversion   +
+                      '&lang='     + subInfo.lang       +
+                      '&start=0&updated=false&slang=',
+                action = 'GET';
+
+            // Envoie la requête
+            ajax(action, url, null, loadUserBarUsersFromTranslate, null, null);
+        }
     }
     else
     {
