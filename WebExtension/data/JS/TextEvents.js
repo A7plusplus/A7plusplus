@@ -60,8 +60,9 @@ function pre_update(tipo, seqNumber)
     // Récupération de l'état des cellules
     var timeState = getStateOfTimeCell(timeCell);
 
-    // Si le texte est inchangé, on ne le sauvegarde pas
-    if (textArea.value === textArea.defaultValue)
+    // Si le texte est inchangé et qu'il ne s'agit pas d'une séquence encore non traduite (donc vide en Join translation),
+    // on ne sauvegarde pas
+    if (textArea.value === textArea.defaultValue && !(page.translatePage && line.className === 'originalText'))
     {
         textCancel(seqNumber);
         return;
