@@ -1,6 +1,62 @@
 {
-  "extensionDescription": {
-    "message": "Life-changing tools for translators and proofreaders working with Addic7ed",
-    "description": "Description of the extension."
-  }
+    "A7pp_extensionDescription": {
+        "message": "Life-changing tool for translators and proofreaders on Addic7ed.com",
+        "description": "Description of the extension."
+    },
+
+
+    "A7pp_optionPageTitle": {
+        "message": "A7++ Settings",
+        "description": "Settings page title."
+    },
+    "A7pp_optionPageForcedLangCheckBoxLabel": {
+        "message": "Forced lang:",
+        "description": "Checkbox to force a specific language."
+    },
+    "A7pp_optionPageSelectedLangLabel": {
+        "message": "Selected language:",
+        "description": "Selected language."
+    },
+    "A7pp_optionPageLockPositionLabel": {
+        "message": "Comments lock button position:",
+        "description": "Comments lock button position."
+    },
+    "A7pp_optionPageLockPositionOpt1Label": {
+        "message": "Next to the comment section",
+        "description": "Comments lock button position, first option."
+    },
+    "A7pp_optionPageLockPositionOpt2Label": {
+        "message": "On top right of the sequence table",
+        "description": "On top right of the sequence table."
+    },
+    "A7pp_optionPagestateUpdateLabel": {
+        "message": "Subtitle progress state update interval (in seconds, default:  $DEFAULT$ sec):",
+        "description": "Subtitle progress state update interval (in seconds, default: $DEFAULT$ seconds).",
+        "placeholders": {
+            "default": {
+                "content": "$1"
+            }
+        }
+    },
+    "A7pp_optionPageCommentUpdateLabel": {
+        "message": "Comments update interval (in seconds, default: $DEFAULT$ sec):",
+        "description": "Comments update interval (in seconds, default: $DEFAULT$ sec).",
+        "placeholders": {
+            "default": {
+                "content": "$1"
+            }
+        }
+    },
+    "A7pp_optionPageDisableUserBarLabel": {
+        "message": "Disable userBar:",
+        "description": "Disable userBar."
+    },
+    "A7pp_optionPageSaveLabel": {
+        "message": "Save",
+        "description": "Save."
+    },
+    "A7pp_optionPageSavedMessage": {
+        "message": "Settings saved, please reload the pages to apply the changes",
+        "description": "Saved settings message."
+    }
 }

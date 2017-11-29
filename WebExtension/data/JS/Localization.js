@@ -6,7 +6,7 @@
 
 var loc =
 {
-    fr : {
+    fr: {
         noAvailableLine   : 'Pas de lignes disponibles',
         loadingLines      : 'Chargement des lignes',
         charNumber        : 'Nombre de caractères',
@@ -19,6 +19,7 @@ var loc =
         selectedTextTo    : 'Passer le texte selectionné en',
         bold              : 'gras',
         italic            : 'italique',
+        underline         : 'souligné',
         removeTags        : 'Enlever les balises',
         restoreText       : "Restaurer le texte d'origine",
         cancel            : 'Annuler',
@@ -38,12 +39,12 @@ var loc =
         commTextareaHint  : 'Écrire un commentaire ici.',
         reloadPageQuestion: 'CHANGEMENT DE LA LANGUE DU SITE :\n\n' +
                             'Pour recharger la page maintenant avec la nouvelle langue, cliquer sur OK.\nSinon cliquer sur Annuler.',
-        lockComment       : 'Verrouiller / déverrouiller la fenêtre de commentaires',
+        lockComment       : 'Verrouiller/déverrouiller la fenêtre de commentaires',
         hearingImpaired   : 'Version malentendants',
         HIStatusLoaded    : 'Vérification de version malentendant effectuée',
         updateAvailable   : 'Une mise à jour est disponible',
-        userBar           : 'Ouvrir / fermer la barre utilisateur',
-        SelectUserTitle   : 'Séléctionnez un utilisateur',
+        userBar           : 'Ouvrir/fermer la barre utilisateur',
+        SelectUserTitle   : 'Séléctionner un utilisateur',
         PMTitle           : 'Écrire un message',
         ReportTitle       : "Signaler l'utilisateur",
         ProfilTitle       : 'Voir le profil',
@@ -55,7 +56,7 @@ var loc =
 
     },
 
-    en : {
+    en: {
         noAvailableLine   : 'No sequences available',
         loadingLines      : 'Loading sequences',
         charNumber        : 'Characters number',
@@ -68,6 +69,7 @@ var loc =
         selectedTextTo    : 'Selected text to',
         bold              : 'bold',
         italic            : 'italic',
+        underline         : 'underlined',
         removeTags        : 'Remove tags',
         restoreText       : 'Restore original text',
         cancel            : 'Cancel',
@@ -87,11 +89,11 @@ var loc =
         commTextareaHint  : 'Write a comment here',
         reloadPageQuestion: 'SITE LANGUAGE CHANGE:\n\n' +
                             'In order to reload the page now with new language, click on OK.\nElse click on Cancel.',
-        lockComment       : 'Lock / Unlock comment section',
+        lockComment       : 'Lock/Unlock comment section',
         hearingImpaired   : 'Hearing Impaired version',
         HIStatusLoaded    : 'HI status loaded',
         updateAvailable   : 'An update is available',
-        userBar           : 'Open / close user bar',
+        userBar           : 'Open/close user bar',
         SelectUserTitle   : 'Select an user',
         PMTitle           : 'Write a message',
         ReportTitle       : "Report user",

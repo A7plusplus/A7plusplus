@@ -4,10 +4,10 @@
 */
 
 
-// On est en translate
+// On est en mode Join translation
 var translatePage = location.href.search(new RegExp('translate.php')) !== -1;
 
-// Si la langue n'est pas anglais et qu'on est en edit
+// Si la langue n'est pas anglais et qu'on est en mode view & edit
 if(!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
 {
     // Remplacement des AJAX
@@ -19,17 +19,17 @@ if(!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
     {
         try
         {
-            // Envoi une exception si l'objet n'est pas ouvert
+            // Envoie une exception si l'objet n'est pas ouvert
             sendOrig.apply(this, arguments);
         }
         catch(err)
         {
-            // Remet en place jes AJAX de base
+            // Remet en place les AJAX de base
             XMLHttpRequest.prototype.send = sendOrig;
             XMLHttpRequest.prototype.open = origOpen;
             XMLHttpRequest.prototype = xhrProto;
 
-            // Demande la page avec complément anglais
+            // Demande la page avec anglais en langue secondaire
             list(0, false, 1);
         }
     };
@@ -83,14 +83,40 @@ function preInit()
     // Enlève l'indicateur d'avancement existant puis initialise l'extension
     if (translatePage) removeTitleIndicator();
 
-    // Récupère la langue du site
-    var lang = document.getElementById('comboLang'),
-        choosen = lang ? lang.options[lang.selectedIndex].value : (navigator.language || navigator.userLanguage || 'en');
-    // Ne garde que le nescessaire
-    loc = loc[choosen] ? loc[choosen] : loc.en;
+    // Met à jour les réglages en fonction des options de l'utilisateur
+    window.addEventListener("A7pp_options", function(data)
+    {
+        var options = JSON.parse(data.detail);
 
-    // Lance l'initialisation
-    init();
+        // Si des options sont présentes, remplace celles par défaut
+        if(options !== null)
+        {
+            A7Settings.stateUpdateInterval   = options.updates.state;
+            A7Settings.commentUpdateInterval = options.updates.comment;
+            A7Settings.lockPosition          = options.lock;
+            A7Settings.disableUserBar        = options.userBar.disable;
+        }
+
+        // Récupère la langue du site ou celle forcée
+        if(options !== null && options.lang.forced === true)
+        {
+            // Fallback en anglais si la langue n'est pas trouvée
+            loc = loc[options.lang.data] ? loc[options.lang.data] : loc.en;
+        }
+        else
+        {
+            var lang = document.getElementById('comboLang'),
+                choosen = lang ? lang.options[lang.selectedIndex].value : (navigator.language || navigator.userLanguage || 'en');
+            // Ne garde que le nescessaire
+            loc = loc[choosen] ? loc[choosen] : loc.en;
+        }
+
+        // Lance l'initialisation
+        init();
+    });
+
+    // Effectue la requête des options
+    window.dispatchEvent(new CustomEvent("A7pp_option_request", {}));
 }
 
 
@@ -147,26 +173,38 @@ function init()
         commentNumber: -1,
         tempDisablePopupRemoval: false,
         userBarData: {},
+        lastUserBarUpdate: new Date('1970'),
         tempTranslateBackup: [],
         draggedNode: null
-        };
+    };
 
-    // Démarre l'actualisation de l'avancement (toutes les minutes)
+    // Affiche l'indicateur de version sous le logo du site
+    var tbody = document.body.firstElementChild.lastElementChild.firstElementChild,
+        logoLink = tbody.firstElementChild.firstElementChild.firstElementChild;
+    logoLink.insertBefore(createA7Info(), logoLink.lastElementChild);
+    logoLink.setAttribute('id', 'A7Logo');
+
+    // Démarre l'actualisation de l'état d'avancement
     page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
 
-    // Ajoute la structure d'accueil, des commentaires et de la barre utilisateur
+    // Ajoute la structure d'accueil des commentaires et de la barre utilisateur
     var listaParent = list.parentElement;
 
-    if(!page.translatePage)
+    // Ajoute la barre utilisateur si non désactivée
+    if(!A7Settings.disableUserBar)
     {
         listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
     }
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
-    // Crée le lock des commentaires
-    listaParent.insertBefore(createCommentLockUtil(), listaParent.lastElementChild);
+    // Si le lock des commentaires est placé en bas, le crée
+    if(A7Settings.lockPosition === "bottom")
+    {
+        listaParent.insertBefore(createCommentLockUtil(), listaParent.lastElementChild);
+    }
 
-    // Récupère la taille enregistrée, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
+    // Récupère les valeurs enregistrées pour :
+    // la taille de la fenêtre de commentaires, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
     if(localStorage)
     {
         var commentsSection = document.getElementById('commentsSection');
@@ -182,7 +220,7 @@ function init()
 
         // Barre utilisateur
         var userBarPos = localStorage.getItem('A7ppUserBarPosition');
-        if(userBarPos && !page.translatePage)
+        if(userBarPos && !A7Settings.disableUserBar)
         {
             var data = userBarPos.split(',');
             var left = data[0],
@@ -192,7 +230,7 @@ function init()
         }
     }
 
-    // Initie la requête pour savoir si on est en HI
+    // Initialise la requête pour savoir si on est en HI
     setTimeout(requestHICheck, 100);
 
     // Actualisation des commentaires (ce qui active aussi l'actualisation à intervalles réguliers)

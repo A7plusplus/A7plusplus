@@ -97,7 +97,7 @@ td[id^=lock]:not(#locktop) img {
     cursor: not-allowed;
 }
 
-/* Case langage secondaire -> lockedText */
+/* Case langue secondaire -> lockedText */
 .lockedText td[bgcolor="white"] {
     background-color: red;
 }

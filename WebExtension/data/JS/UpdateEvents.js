@@ -168,10 +168,10 @@ function updateCharCountCell(countCell, counts)
         // Ligne unique
         case 1:
 
-            // Créé les éléments
+            // Crée les éléments
             var span = document.createElement('span');
             span.textContent = counts[0];
-            countCell.innerHTML = '';
+            resetHTMLObject(countCell);
             countCell.appendChild(span);
 
             if (counts[0] <= A7Settings.maxPerLineOneLineSETTING)
@@ -191,7 +191,7 @@ function updateCharCountCell(countCell, counts)
 
             var color;
             var criticity = 'ok';
-            countCell.innerHTML = '';
+            resetHTMLObject(countCell);
 
             // On vérifie le nombre de lignes
             if (length === 3)
@@ -208,7 +208,7 @@ function updateCharCountCell(countCell, counts)
                 if (i !== 0)
                     countCell.appendChild(document.createElement('br'));
 
-                // On determine la couleur
+                // On détermine la couleur
                 if (counts[i] <= A7Settings.maxPerLineSETTING)
                 {
                     color = 'ccc_green';
@@ -274,7 +274,7 @@ function updateTextAreaSize(textArea)
     // Calcul de la ligne la plus longue
     var longerLineLength = 0;
 
-    // Récupértion de la longueur
+    // Récupération de la longueur
     var length = count.length;
 
     for (var i = 0; i < length; i++)
@@ -328,7 +328,7 @@ function updateStateOfTranslation()
 /**
 * @fn post_updateStateOfTranslation Traite l'AJAX de l'état d'avancement
 * @param {String} HTMLString Réponse de la requête AJAX
-* @param {Boolean} isError Status de réussite de la requête AJAX
+* @param {Boolean} isError Statut de réussite de la requête AJAX
 */
 function post_updateStateOfTranslation(HTMLString, isError)
 {
@@ -370,7 +370,7 @@ function post_updateStateOfTranslation(HTMLString, isError)
 
 
 /**
-* @fn updateCommentTextArea Met à jour la taille du la textarea afin de voir tout le commentaire
+* @fn updateCommentTextArea Met à jour la taille de la textarea afin de voir tout le commentaire
 */
 function updateCommentTextArea()
 {
@@ -387,7 +387,7 @@ function updateCommentTextArea()
 
 
 /**
-* @fn updateCommentHeightFromSaved Met à jour, si possible, la taille de l'élément Elem avec la taille stockée dans Storage
+* @fn updateCommentHeightFromSaved Met à jour, si possible, la taille de l'élément elem avec la taille stockée dans storage
 * @param {Object} elem Objet HTML devant prendre la taille
 * @param {String} storage Nom de la variable contenant la taille (en pourcentage par rapport à window.innerHeight)
 * @param {int} lowLimit Limite basse acceptable (en pixels)
@@ -401,7 +401,7 @@ function updateCommentHeightFromSaved(elem, storage, lowLimit, highLimit)
     {
         savedValue = parseFloat(localStorage.getItem(storage));
     }
-    
+
 
     // La valeur est valide
     if(!isNaN(savedValue) && savedValue * window.innerHeight >= lowLimit && savedValue <= highLimit)
@@ -416,7 +416,7 @@ function updateCommentHeightFromSaved(elem, storage, lowLimit, highLimit)
 
 
 /**
-* @fn removeCommentPopup Retire les popup numériques de la section commentaire
+* @fn removeCommentPopup Retire les popups numériques de la section commentaire
 */
 function removeCommentPopup()
 {

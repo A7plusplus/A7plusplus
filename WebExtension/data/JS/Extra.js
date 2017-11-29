@@ -6,7 +6,7 @@
 
 /**
 * @fn changeAppLang Ajoute la fonction manquante pour permettre le changement de la langue d'affichage du site
-* @detail Fonction absente du mode view and edit
+* @detail Fonction absente du mode view & edit
 */
 function changeAppLang()
 {

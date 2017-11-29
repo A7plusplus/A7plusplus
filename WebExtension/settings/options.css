@@ -1,0 +1,65 @@
+body {
+    margin: 0;
+}
+
+#messages:not(:empty) {
+    background-color: lawngreen;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px;
+}
+
+#title {
+    padding-left: 20px;
+}
+
+form {
+    padding-left: 20px;
+}
+
+form > div {
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+@media screen and (min-width: 960px) and (max-width: 1280px){
+    #title {
+        padding-left: 10%;
+    }
+
+    form > div {
+        width: 80%;
+        margin-left: 10%
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    #title {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    form > div {
+        width: 60%;
+        margin-left: 20%
+    }
+}
+
+form > div > input, form > div > select {
+    float: right;
+}
+
+/* Langues */
+.separator {
+    width: 100%;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+/* Cacher la langue si non coché */
+#forcedLangCBData:not(:checked) + div,
+#forcedLangCBData:not(:checked) + div + span,
+#forcedLangCBData:not(:checked) + div + span + select {
+    display: none;
+}

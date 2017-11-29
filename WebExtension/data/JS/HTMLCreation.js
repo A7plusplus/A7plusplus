@@ -5,6 +5,27 @@
 
 
 /**
+* @fn createA7button Crée un bouton custom de l'extension
+*/
+function createA7button()
+{
+    var button = document.createElement('a7button');
+
+    // Simule un bouton avec les touches Entrée et Espace
+    button.addEventListener('keypress', function(e)
+    {
+        if(e.key === " " || e.key === "Enter")
+        {
+            e.preventDefault();
+            button.click();
+        }
+    });
+
+    return button;
+}
+
+
+/**
 * @fn createTextUtils Crée un nœud contenant la structure des utilitaires textuels
 * @param {number} seqNumber Numéro de séquence
 * @return {!Object} Nœud HTML contenant les utilitaires
@@ -17,12 +38,13 @@ function createTextUtils(seqNumber)
 
     var textButtons       = document.createElement('span');
 
-    var boldButton        = document.createElement('a7button');
-    var italicButton      = document.createElement('a7button');
-    var removeTagsButton  = document.createElement('a7button');
-    var restoreTextButton = document.createElement('a7button');
-    var cancelTextButton  = document.createElement('a7button');
-    var saveButton        = document.createElement('a7button');
+    var boldButton        = createA7button();
+    var italicButton      = createA7button();
+    var underlineButton   = createA7button();
+    var removeTagsButton  = createA7button();
+    var restoreTextButton = createA7button();
+    var cancelTextButton  = createA7button();
+    var saveButton        = createA7button();
 
 
     // Zone de texte
@@ -32,29 +54,40 @@ function createTextUtils(seqNumber)
 
     // Contrôles
     boldButton.title            = loc.selectedTextTo + ' ' + loc.bold;
+    boldButton.setAttribute('tabIndex', seqNumber);
     boldButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'b');");
 
     italicButton.title          = loc.selectedTextTo + ' ' + loc.italic;
+    italicButton.setAttribute('tabIndex', seqNumber);
     italicButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'i');");
 
+    underlineButton.title       = loc.selectedTextTo + ' ' + loc.underline;
+    underlineButton.setAttribute('tabIndex', seqNumber);
+    underlineButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'u');");
+
     removeTagsButton.title      = loc.removeTags;
+    removeTagsButton.setAttribute('tabIndex', seqNumber);
     removeTagsButton.setAttribute('onclick', 'removeTagsFromSequence(' + seqNumber + ');');
 
 
     restoreTextButton.title     = loc.restoreText;
+    restoreTextButton.setAttribute('tabIndex', seqNumber);
     restoreTextButton.setAttribute('onclick', 'textRestore(' + seqNumber + ');');
 
     cancelTextButton.title = loc.cancel;
+    cancelTextButton.setAttribute('tabIndex', seqNumber);
     cancelTextButton.setAttribute('onclick', 'textCancel(' + seqNumber + ');');
 
 
     saveButton.title = loc.save;
+    saveButton.setAttribute('tabIndex', seqNumber);
     saveButton.setAttribute('onclick', "pre_update('o', " + seqNumber + ');');
 
 
     // Création du span
     textButtons.appendChild(boldButton);
     textButtons.appendChild(italicButton);
+    textButtons.appendChild(underlineButton);
     textButtons.appendChild(removeTagsButton);
     textButtons.appendChild(document.createElement('separator'));
     textButtons.appendChild(restoreTextButton);
@@ -83,9 +116,9 @@ function createTimeUtils(seqNumber, timeCodes)
     var fromText                = document.createElement('t');
     var startInput              = document.createElement('input');
 
-    var restoreTimeButton       = document.createElement('a7button');
-    var cancelTimeButton        = document.createElement('a7button');
-    var saveTimeButton          = document.createElement('a7button');
+    var restoreTimeButton       = createA7button();
+    var cancelTimeButton        = createA7button();
+    var saveTimeButton          = createA7button();
 
     var toText                  = document.createElement('t');
     var endInput                = document.createElement('input');
@@ -138,7 +171,7 @@ function createTimeUtils(seqNumber, timeCodes)
 
 
 /**
-* @fn createRsControls Crée un nœud contenant la structure RS Rating
+* @fn createRsIndicators Crée un nœud contenant la structure RS Rating
 * @return {!Object} Nœud HTML structuré
 */
 function createRsIndicators()
@@ -161,7 +194,7 @@ function createRsIndicators()
 
 
 /**
-* @fn createCommentStruct Créer la structure qui accueuillera les commentaires
+* @fn createCommentStruct Crée la structure qui accueillera les commentaires
 * @return {!Object} Nœud HTML de la structure
 */
 function createCommentStruct()
@@ -179,16 +212,18 @@ function createCommentStruct()
     var headerText          = document.createElement('p');
     var headerTextContent   = document.createTextNode(loc.comments);
     var headerTextPopup     = document.createElement('span');
-    var headerRefreshButton = document.createElement('a7button');
-    var headerPinButton     = document.createElement('a7button');
+    var headerRefreshButton = createA7button();
+    var headerPinButton     = createA7button();
 
     var centerTextArea      = document.createElement('textarea');
-    var centerButton        = document.createElement('a7button');
+    var centerButton        = createA7button();
 
 
     // Mise en place
     centerButton.addEventListener('click', sendComment, false);
+    centerButton.setAttribute('tabIndex', 4096);
     centerButton.title         = loc.sendComment;
+    centerTextArea.setAttribute('tabIndex', 4096);
     centerTextArea.placeholder = loc.commTextareaHint;
     centerTextArea.oninput     = updateCommentTextArea;
 
@@ -251,6 +286,12 @@ function createCommentLockUtil(parentDiv)
     lockSpan.title       = loc.lockComment;
     lockSpan.addEventListener('click', lockComment, false);
 
+    // Ajout de la classe pour modifier la position du cadenas
+    if(A7Settings.lockPosition === "top")
+    {
+        lockSpan.classList.add('lockCommentTop');
+    }
+
     return lockSpan;
 }
 
@@ -275,7 +316,7 @@ function createStateUtil(parentDiv)
 
 
 /**
-* @fn createHIImg Crée un nœud contenant la structure de l'image malentendant
+* @fn createHIImg Crée un nœud contenant la structure de l'indicateur de version pour malentendant
 * @return {!Object} Nœud HTML de la structure
 */
 function createHIImg()
@@ -291,7 +332,7 @@ function createHIImg()
 
 
 /**
-* @fn createUntranslatedOption Crée un nœud pour l'option "afficher que les séquences non traduites"
+* @fn createUntranslatedOption Crée un nœud pour l'option "n'afficher que les séquences non traduites"
 * @return {!Object} Nœud HTML de la structure
 */
 function createUntranslatedOption()
@@ -304,7 +345,7 @@ function createUntranslatedOption()
     option.title       = loc.untranlsatedOnly;
 
     option.addEventListener('click', function(){
-        // On n'envoi pas 50 requêtes
+        // On n'envoie pas 50 requêtes
         if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
             return;
         page.tempDisableTranslateCheckbox = true;
@@ -315,6 +356,7 @@ function createUntranslatedOption()
 
         // Appel à la fonction de base
         untraslated();
+
         linesChanged();
     });
 
@@ -369,7 +411,7 @@ function addTimeUtils(timeCell, seqNumber, timeCodes)
 
 /**
 * @fn removeTimeUtils Enlève les utilitaires d'édition
-* @param {!Object} timeCell Cellule sur laquelle les utilitares doivent être retirés
+* @param {!Object} timeCell Cellule sur laquelle les utilitaires doivent être retirés
 */
 function removeTimeUtils(timeCell)
 {
@@ -397,7 +439,7 @@ function addBigIndicator(timeCell)
 
 
 /**
-* @fn removeBigIndicator Enlève le grand indicateur de RS Rating
+* @fn removeBigIndicator Enlève le grand indicateur du RS Rating
 * @param {!Object} timeCell Cellule de temps
 */
 function removeBigIndicator(timeCell)
@@ -412,7 +454,7 @@ function removeBigIndicator(timeCell)
                      // Gestion de la barre utilisateur //
 
 /**
-* @fn createUserBarStruct Créer la structure qui accueuillera les fonctions de l'utilisateur
+* @fn createUserBarStruct Crée la structure qui accueillera les fonctions de l'utilisateur
 * @return {!Object} Nœud HTML de la structure
 */
 function createUserBarStruct()
@@ -430,7 +472,7 @@ function createUserBarStruct()
     var containerProfil  = document.createElement('span');
 
 
-    // Mise en place des info
+    // Mise en place des infos
     containerBar.title     = loc.userBar;
     containerUser.title    = loc.SelectUserTitle;
     containerPM.title      = loc.PMTitle;
@@ -469,6 +511,7 @@ function createUserBarStruct()
 
 
     useBarContainer.setAttribute('id', 'userBar');
+    useBarContainer.classList.add('userBarNotReady');
     useBarContainer.setAttribute('draggable', 'true');
     useBarContainer.addEventListener('click', function()
     {
@@ -492,17 +535,17 @@ function createUserBarStruct()
                                    // Misc //
 
 /**
-* @fn addParentHTMLNode Ajoute un noeud HTML entre le père et le fils
-* @param {!Object} parentNode Noeud parent
-* @param {!Object} childNode Noeud fils
-* @param {String} className Classe à ajouter au nouveau noeud
+* @fn addParentHTMLNode Ajoute un nœud HTML entre le père et le fils
+* @param {!Object} parentNode Nœud parent
+* @param {!Object} childNode Nœud fils
+* @param {String} className Classe à ajouter au nouveau nœud
 */
 function addParentHTMLNode(parentNode, childNode, className)
 {
     // Récupère la position
     var nextNode = childNode.nextSibling;
 
-    // Créer le nouveau noeud
+    // Crée le nouveau nœud
     var newParent = document.createElement('div');
     newParent.appendChild(childNode);
 

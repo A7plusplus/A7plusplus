@@ -36,7 +36,7 @@ function addFunctionToLinks(nameOfFunction)
             checkBoxUpdate[i].setAttribute('onchange', checkBoxUpdate[i].getAttribute('onchange') + nameOfFunction + '();');
         }
 
-    // Recherche la comboBox faisant changer de page, et lui ajoute la recharge des lignes et le changement d'état du langage
+    // Recherche la comboBox faisant changer de page, et lui ajoute la recharge des lignes et le changement d'état de la langue
     var comboBox = document.getElementById('slang');
     if (comboBox && typeof comboBox.onchange === 'function')
     {
@@ -53,7 +53,7 @@ function addFunctionToLinks(nameOfFunction)
 
 
 /**
-* @fn changeButtonEvents Préfixe une fonction aux évènements des bouttons
+* @fn changeButtonEvents Préfixe une fonction aux événements des boutons
 */
 function changeButtonEvents()
 {
@@ -73,7 +73,7 @@ function changeButtonEvents()
 
 
 /**
- * @fn removeTitleIndicator Enlève l'indicateur d'avancement existant à droite du titre
+ * @fn removeTitleIndicator Enlève l'indicateur de l'état d'avancement existant à droite du titre
  */
 function removeTitleIndicator()
 {
@@ -87,7 +87,7 @@ function removeTitleIndicator()
 
 
 /**
-* @fn linesChanged Met en cache les lignes et ajoute un évènement sur les liens
+* @fn linesChanged Met en cache les lignes et ajoute un événement sur les liens
 */
 function linesChanged()
 {
@@ -104,7 +104,7 @@ function linesChanged()
     addFunctionToLinks('linesChanged');
     changeButtonEvents();
 
-    // Retire l'état d'avancement de base de mode translation
+    // Retire l'état d'avancement de base du mode Join translation
     if (page.translatePage)
     {
         var listaa = document.getElementById('lista');
@@ -122,7 +122,7 @@ function linesChanged()
         {
             parentDiv = document.getElementsByClassName('titulo')[0];
 
-            // Ajoute un noeud HTML - mise en forme
+            // Ajoute un nœud HTML - mise en forme
             parentDiv.previousElementSibling.remove();
             addParentHTMLNode(parentDiv.parentElement, parentDiv, 'tituloParent');
             parentDiv = parentDiv.parentElement;
@@ -132,11 +132,14 @@ function linesChanged()
             parentDiv = document.getElementsByClassName('tabel')[0].firstElementChild.children[1].children[1].firstElementChild;
         }
 
+        // Si le lock des commentaires est placé en haut, le crée
+        if(A7Settings.lockPosition === "top")
+        {
+            parentDiv.insertBefore(createCommentLockUtil(), parentDiv.firstElementChild);
+        }
+
         // Crée le span d'avancement
         parentDiv.insertBefore(createStateUtil(), parentDiv.firstElementChild);
-
-        // Créé le span contenant les informations de l'extension
-        parentDiv.appendChild(createA7Info());
 
         // Ajoute l'option de ne voir que les séquences non traduites
         if (page.translatePage)
@@ -167,7 +170,7 @@ function linesChanged()
     counterColDiv.textContent = loc.charNumberTiny;
     counterCol.appendChild(counterColDiv);
 
-    // Ajoute avant la colonne Text la nouvelle colonne
+    // Ajoute la nouvelle colonne avant la colonne Text
     headerRow.insertBefore(counterCol, headerRow.lastElementChild);
 
     // Renomme les colonnes ou leur ajoute un titre
@@ -206,10 +209,6 @@ function linesChanged()
             (page.translatePage && currentLine.className !== 'lockedText')
         )
         {
-            // TODO : enlever
-            var seqNumber = parseInt(currentLine.id.substr(5), 10);
-
-
             // Activation et mise en forme de la cellule
             if (timeCell.getAttribute('onclick') !== null)
             {
@@ -314,21 +313,23 @@ function linesChanged()
     tables[1].style.setProperty('visibility', 'visible');
     }
 
-    if(!page.translatePage)
+    // Si la barre utilisateur est activée
+    if(!A7Settings.disableUserBar)
     {
         // Charge la liste des utilisateurs dans la userBar
-        loadUserBarUsers();
+        if(page.translatePage) loadUserBarUsersFromTranslate();
+        else                   loadUserBarUsers();
     }
 }
 
 
 /**
-* @fn requestHICheck Engage la requête ajax pour la verification de version
+* @fn requestHICheck Engage la requête AJAX pour la vérification de version pour malentendant
 */
 function requestHICheck()
 {
     // Récupère les infos
-    var episodeUrl = document.getElementById('A7Info').previousElementSibling.firstElementChild.href;
+    var episodeUrl = document.getElementById('spanState').parentElement.querySelector('.titulo,big').firstElementChild.href;
 
     // Envoie la requête
     ajax(['GET', 'document'], episodeUrl, '', post_requestHICheck, null, null);
@@ -336,7 +337,7 @@ function requestHICheck()
 
 
 /**
-* @fn post_requestHICheck Récupère les données de l'épisode et vérifie l'il est en HI
+* @fn post_requestHICheck Récupère les données de l'épisode et vérifie s'il est en HI
 */
 function post_requestHICheck(episodeHTMLDocument, isError)
 {
@@ -385,7 +386,7 @@ function post_requestHICheck(episodeHTMLDocument, isError)
     if (img.tagName === 'IMG' && img.src === 'http://www.addic7ed.com/images/hi.jpg')
     {
         // Ajoute le logo
-        var parentDiv = document.getElementById('A7Info').parentElement;
+        var parentDiv = document.getElementById('spanState').parentElement;
 
         if (parentDiv.lastElementChild.id !== 'hearingImpaired')
         {
@@ -397,7 +398,7 @@ function post_requestHICheck(episodeHTMLDocument, isError)
 }
 
 /**
-* @fn searchForUpdate Envoi la requête de vérification de mise à jour
+* @fn searchForUpdate Envoie la requête de vérification de mise à jour
 */
 function searchForUpdate()
 {
@@ -409,13 +410,13 @@ function searchForUpdate()
 */
 function post_searchForUpdate(data, isError)
 {
-    // On considère qu'il n'y a pas de MAJ
+    // On considère qu'il n'y a pas de MÀJ
     if(isError) return;
 
-    // Comparaison (MAJ dispo)
+    // Comparaison (MÀJ dispo)
     if(A7Settings.NUMERIC_VERSION_INFO < parseInt(data))
     {
-        // Mets de la couleur
+        // Met de la couleur
         var A7Info = document.getElementById('A7Info');
         if(A7Info)
         {

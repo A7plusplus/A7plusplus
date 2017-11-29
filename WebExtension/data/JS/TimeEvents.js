@@ -1,6 +1,6 @@
 /**
 * @file TimeEvents.js
-* @brief Script des évenements des zones temporelles
+* @brief Script des événements des zones temporelles
 */
 
 
@@ -80,7 +80,7 @@ function pre_updatetime(seqNumber)
         return;
     }
 
-    // Récupère es informations de la page
+    // Récupère les informations de la page
     var subInfo = page.queryInfos;
 
     // Prépare les données
@@ -102,7 +102,7 @@ function pre_updatetime(seqNumber)
 
 
 /**
-* @fn post_updateTime Place le temps dans sa cellule ou réouvre l'édition
+* @fn post_updateTime Place le temps dans sa cellule ou rouvre l'édition
 * @param {number} seqNumber Numéro de la séquence
 * @param {Array.<string>} confirmedTime Temps confirmé par le serveur ou temps à envoyer en cas d'erreur
 * @param {boolean} isError Si la requête a échoué
@@ -157,7 +157,7 @@ function post_updateTime(seqNumber, confirmedTime, isError, defaultValue)
         // Change le temps de la cellule
         timeCell.setText(confirmedTime[0] + ' --> ' + confirmedTime[1]);
 
-        // Réouvre l'édition
+        // Rouvre l'édition
         pre_timeclick(seqNumber);
 
         // Récupération des entrées
@@ -195,7 +195,7 @@ function timeRestore(seqNumber)
     // On se place sur l'entrée du début
     timeStart.focus();
 
-    // Rafraichissement du RS Rating
+    // Rafraîchissement du RS Rating
     updateRsRatingAndCharCount(seqNumber);
 }
 

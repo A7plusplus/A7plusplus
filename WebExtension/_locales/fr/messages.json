@@ -1,6 +1,62 @@
 {
-  "extensionDescription": {
-    "message": "Outil d'aide aux traducteurs et relecteurs du site Addic7ed",
-    "description": "Description of the extension."
-  }
+    "A7pp_extensionDescription": {
+        "message": "Outil d'aide aux traducteurs et relecteurs du site Addic7ed.com",
+        "description": "Description of the extension."
+    },
+
+
+    "A7pp_optionPageTitle": {
+        "message": "Réglages d'A7++",
+        "description": "Settings page title."
+    },
+    "A7pp_optionPageForcedLangCheckBoxLabel": {
+        "message": "Forcer la langue :",
+        "description": "Checkbox to force a specific language."
+    },
+    "A7pp_optionPageSelectedLangLabel": {
+        "message": "Langue choisie :",
+        "description": "Selected language."
+    },
+    "A7pp_optionPageLockPositionLabel": {
+        "message": "Position du cadenas de verrouillage des commentaires :",
+        "description": "Comments lock button position."
+    },
+    "A7pp_optionPageLockPositionOpt1Label": {
+        "message": "À côté des commentaires",
+        "description": "Comments lock button position, first option."
+    },
+    "A7pp_optionPageLockPositionOpt2Label": {
+        "message": "En haut à droite du tableau des séquences",
+        "description": "On top right of the sequence table."
+    },
+    "A7pp_optionPagestateUpdateLabel": {
+        "message": "Délai de mise à jour de l'état d'avancement des sous-titres (en secondes, par défaut : $DEFAULT$ secondes) :",
+        "description": "Subtitle progress state update interval (in seconds, default: $DEFAULT$ seconds).",
+        "placeholders": {
+            "default": {
+                "content": "$1"
+            }
+        }
+    },
+    "A7pp_optionPageCommentUpdateLabel": {
+        "message": "Délai de mise à jour des commentaires (en secondes, par défaut : $DEFAULT$ secondes) :",
+        "description": "Comments update interval (in seconds, default: $DEFAULT$ sec).",
+        "placeholders": {
+            "default": {
+                "content": "$1"
+            }
+        }
+    },
+    "A7pp_optionPageDisableUserBarLabel": {
+        "message": "Désactiver la barre utilisateur :",
+        "description": "Disable userBar."
+    },
+    "A7pp_optionPageSaveLabel": {
+        "message": "Enregistrer",
+        "description": "Save."
+    },
+    "A7pp_optionPageSavedMessage": {
+        "message": "Options enregistrées, rechargez les pages pour que les réglages prennent effet",
+        "description": "Saved settings message."
+    }
 }

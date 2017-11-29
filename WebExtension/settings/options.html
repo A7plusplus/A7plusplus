@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>A7++ Settings</title>
+        <link href="options.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body>
+        <div id="messages"></div>
+        <h1 id="title"></h1>
+
+        <form>
+            <div>
+                <label id="forcedLangCB" for="forcedLangCBData"></label>
+                <input type="checkbox" id="forcedLangCBData">
+                <div class="separator"></div>
+                <span id="availableLang"></span>
+                <select id="availableLangData"></select>
+            </div>
+
+            <div>
+                <label id="lockPosition" for="lockPositionData"></label>
+                <select id="lockPositionData">
+                    <option value="bottom"></option>
+                    <option value="top"></option>
+                </select>
+            </div>
+
+
+            <div>
+                <label id="stateUpdate" for="stateUpdateData"></label>
+                <input type="number" id="stateUpdateData">
+            </div>
+
+            <div>
+                <label id="commentUpdate" for="commentUpdateData"></label>
+                <input type="number" id="commentUpdateData">
+            </div>
+
+            <div>
+                <label id="userBarCB" for="userBarCBData"></label>
+                <input type="checkbox" id="userBarCBData">
+            </div>
+
+            <div>
+                <button type="submit" id="save"></button>
+            </div>
+        </form>
+
+        <script src="../data/JS/Localization.js"></script>
+        <script src="../data/JS/Settings.js"></script>
+        <script src="options.js"></script>
+    </body>
+</html>
