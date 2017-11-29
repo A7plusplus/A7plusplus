@@ -24,7 +24,7 @@ else
 
 
 /*
-* @fn populate Remplit la page des réglages avec les différentes chaines traduites
+* @fn populate Remplit la page des réglages avec les différentes chaînes traduites
 */
 function populate()
 {

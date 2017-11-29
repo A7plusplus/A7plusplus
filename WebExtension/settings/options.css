@@ -57,7 +57,7 @@ form > div > input, form > div > select {
     margin-bottom: 35px;
 }
 
-/* Cacher la langue si non selectionné */
+/* Cacher la langue si non coché */
 #forcedLangCBData:not(:checked) + div,
 #forcedLangCBData:not(:checked) + div + span,
 #forcedLangCBData:not(:checked) + div + span + select {

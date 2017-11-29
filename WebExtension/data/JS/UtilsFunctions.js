@@ -14,14 +14,14 @@ function getDurationFromTime(tempCodes)
     var start = tempCodes[0].replace(/,/, ':').split(':'),
         end   = tempCodes[1].replace(/,/, ':').split(':');
 
-    // Convertit en entier
+    // Convertit en entiers
     for (var i = start.length; i--;)
     {
         start[i] = parseInt(start[i], 10);
         end[i]   = parseInt(end[i]  , 10);
     }
 
-    // Calcule et renvoie le temmps
+    // Calcule et renvoie la durée
     return (end[0] - start[0]) * 3600 + (end[1] - start[1]) * 60 + (end[2] - start[2]) + ((end[3] - start[3]) / 1000);
 }
 
@@ -30,7 +30,7 @@ function getDurationFromTime(tempCodes)
 * @fn charCount Compte le nombre de caractères dans chaque ligne d'array
 * @param {Array.<string>} array Tableau de string
 * @param {boolean} countTag Vrai s'il faut compter les balises
-* @return {Array.<number>} Un tableau de longeur de chaine de même taille qu'array
+* @return {Array.<number>} Un tableau de longeur de chaîne de même taille qu'array
 */
 function charCount(array, countTag)
 {
@@ -43,12 +43,12 @@ function charCount(array, countTag)
     {
         if(countTag)
         {
-            // On ne compte tout
+            // On compte tout
             lengths.push(array[i].length);
         }
         else
         {
-            // On ne compte ni les balises html, ni les tags de position
+            // On ne compte ni les balises HTML, ni les tags de position
             lengths.push(array[i].replace(/(<[^>]*>|\{[^\}]*\})/g, '').length);
         }
     }
@@ -58,9 +58,9 @@ function charCount(array, countTag)
 
 
 /**
-* @fn removeTrailingSpaces Enlève les espaces avant et après chaque ligne
+* @fn removeTrailingSpaces Enlève les espaces au début et à la fin de chaque ligne
 * @param {Array.<string>} array Tableau de lignes
-* @return {Array.<string>} Un tableau sans espace inutiles
+* @return {Array.<string>} Un tableau sans espaces inutiles
 */
 function removeTrailingSpaces(array)
 {
@@ -82,11 +82,11 @@ function removeTrailingSpaces(array)
 
 
 /**
-* @fn addStringBetween Ajoute une chaine entre les deux bornes
-* @param {string} string Chaine de base
-* @param {string} toBeInserted Chaine à ajouter
+* @fn addStringBetween Ajoute une chaîne entre les deux bornes
+* @param {string} string Chaîne de base
+* @param {string} toBeInserted Chaîne à ajouter
 * @param {number} index Position de l'insertion
-* @return {string} Chaine finale avec insertion
+* @return {string} Chaîne finale avec insertion
 */
 function addStringBetween(string, toBeInserted, index)
 {
@@ -131,14 +131,14 @@ function getRSRatingIndex(counts, duration)
 
 /**
 * @fn resetToLoadingImage Réinitialise l'objet HTML en une image de chargement
-* @param {Object} object Objet HTML a réinitialiser
+* @param {Object} object Objet HTML à réinitialiser
 */
 function resetToLoadingImage(object)
 {
     // Supprime le contenu
     resetHTMLObject(object);
 
-    // Créé et ajoute l'image
+    // Crée et ajoute l'image
     var img = document.createElement('img');
     img.src = '/images/loader.gif';
     object.appendChild(img);
@@ -156,8 +156,8 @@ function resetHTMLObject(object)
 
 
 /**
-* @fn getTextFromHTML Retourne le text (avec les balises) d'un block HTML
-* @param {String} HTMLString Chaine HTML à traiter
+* @fn getTextFromHTML Retourne le texte (avec les balises) d'un bloc HTML
+* @param {String} HTMLString Chaîne HTML à traiter
 */
 function getTextFromHTML(HTMLString)
 {
@@ -166,7 +166,7 @@ function getTextFromHTML(HTMLString)
     HTMLString = HTMLString.replace(/<\/font>/g, "&lt;/font&gt;"); // match : </font>
     HTMLString = HTMLString.replace(/<br>/g, "\n"); // Saut de ligne
 
-    // On dé-echape le chaîne
+    // On dé-échappe la chaîne
     var element = document.createElement('div');
     element.innerHTML = HTMLString;
     return element.innerText;
@@ -174,11 +174,11 @@ function getTextFromHTML(HTMLString)
 
 
 /**
-* @fn ajax Effectue une requête ajax
-* @param {string} action POST / GET / UPDATE etc (temporairement: peut recevoir un tableau contenant action et responseType)
+* @fn ajax Effectue une requête AJAX
+* @param {string} action POST / GET / UPDATE etc. (temporairement: peut recevoir un tableau de string contenant action et responseType)
 * @param {string} url Adresse
 * @param {string} params Paramètres de la requête
-* @param {function(number, Object, boolean, [Object])} readyFunction Fonction à appeler en cas de succès
+* @param {function(number, Object, boolean, [Object])} readyFunction Fonction à appeler en cas de réussite
 * @warning Le premier paramètre n'est pas envoyé si seqNumber est null
 * @param {number} seqNumber Numéro de la séquence ou null
 * @param {Object} backupInfos Informations à envoyer en cas d'erreur

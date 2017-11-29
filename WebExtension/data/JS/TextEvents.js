@@ -1,20 +1,20 @@
 /**
 * @file TextEvents.js
-* @brief Script des évenements des zones de texte
+* @brief Script des événements des zones de texte
 */
 
 
 /**
 * @fn pre_mouseclick Active les différents éléments graphiques liés au clic
-* @param {string} tipo Un 'o', sinon on ignore... (mais pourquoi ?)
+* @param {string} tipo Un "o", sinon on ignore... (mais pourquoi ?)
 * @param {number} seqNumber Numéro de la séquence
 */
 function pre_mouseclick(tipo, seqNumber)
 {
-    // Si on est en mode traduction, recherche d'abord le text
+    // Si on est en mode Join translation, recherche d'abord le text
     if(!page.translatePage || getTextCell(seqNumber).innerHTML.contains('loader.gif'))
     {
-        // Bypass le chargement car inutile si on est en edit ou qu'il y a erreur d'envoi
+        // Bypass le chargement car inutile si on est en view & edit ou qu'il y a erreur d'envoi
         post_select(seqNumber, null, false);
     }
     else
@@ -27,7 +27,7 @@ function pre_mouseclick(tipo, seqNumber)
         // Affiche le chargement
         resetToLoadingImage(textCell);
 
-        // Récupère es informations de la page
+        // Récupère les informations de la page
         var subInfo = page.queryInfos;
 
         var params = 'id='         + subInfo.id +
@@ -46,7 +46,7 @@ function pre_mouseclick(tipo, seqNumber)
 
 /**
 * @fn pre_update Traite le texte avant l'envoi et change la classe de la cellule
-* @param {string} tipo Un 'o', sinon on ignore... (mais pourquoi ?)
+* @param {string} tipo Un "o", sinon on ignore... (mais pourquoi ?)
 * @param {number} seqNumber Numéro de la séquence
 */
 function pre_update(tipo, seqNumber)
@@ -121,7 +121,7 @@ function pre_update(tipo, seqNumber)
 
 
 /**
-* @fn post_update Place le texte dans sa cellule ou réouvre l'édition
+* @fn post_update Place le texte dans sa cellule ou rouvre l'édition
 * @param {number} seqNumber Numéro de la séquence
 * @param {string} confirmedText Texte confirmé par le serveur ou texte à envoyer en cas d'erreur
 * @param {boolean} isError Si la requête a échoué
@@ -166,7 +166,7 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
     }
     else
     {
-        // Réouvre l'édition
+        // Rouvre l'édition
         pre_mouseclick('o', seqNumber);
 
         // Récupération de la textArea
@@ -184,7 +184,7 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
 }
 
 /**
-* @fn addTagToSequence Met la selection de la séquence entre balises de type baliseType
+* @fn addTagToSequence Met la sélection de la séquence entre balises de type tagType
 * @param {number} seqNumber Numéro de la séquence
 * @param {string} tagType Texte de la balise
 */
@@ -203,7 +203,7 @@ function addTagToSequence(seqNumber, tagType)
         textArea.value = '<' + tagType + '>' + textArea.value + '</' + tagType + '>';
     }
 
-    // Si on a une selection
+    // Si on a une sélection
     else
     {
         // On récupère les morceaux
@@ -234,7 +234,7 @@ function removeTagsFromSequence(seqNumber)
     // Récupère la textArea de la séquence
     var textArea = getTextCell(seqNumber).firstElementChild.firstElementChild;
 
-    // Enlève les balises grâce aux regex
+    // Enlève les balises grâce au regex
     textArea.value = textArea.value.replace(/(<[^>]*>|\{[^\}]*\})/g, '');
 
     // Remet à zéro les positions (évite les bugs)
@@ -310,7 +310,7 @@ function textCancel(seqNumber)
     // Libère la séquence
     if (page.translatePage)
     {
-        // Récupère es informations de la page
+        // Récupère les informations de la page
         var subInfo = page.queryInfos;
 
         var params = 'id='         + subInfo.id +
@@ -332,10 +332,10 @@ function textCancel(seqNumber)
 
 
 /**
-* @fn post_release Récupère et place le dernier texte de la séquence
+* @fn post_select Récupère et place le dernier texte de la séquence
 * @param {Integer} seqNumber Numéro de séquence
-* @param {Object} data Donnée issus de la requête (ou null si en mode view & edit)
-* @param {Boolean} isError Si la requête a échouée (ou false en mode view & edit)
+* @param {Object} data Donnée issue de la requête (ou null si en mode view & edit)
+* @param {Boolean} isError Si la requête a échoué (ou false en mode view & edit)
 * @param {Object} translateMode Non utilisé
 */
 function post_select(seqNumber, data, isError, translateMode)
@@ -346,14 +346,14 @@ function post_select(seqNumber, data, isError, translateMode)
     var textCell = line.lastElementChild;
 
 
-    // Enregistre le texte ou traite les données recues
+    // Enregistre le texte ou traite les données reçues
     var text = null;
-    // La reuêtre ajax est revenue
+    // La requêtre AJAX est revenue
     if (!isError && data !== null)
     {
         var regexMatches = data.match(/onkeypress="translate_userInput[^>]*>((.|\n)*)<\/textarea>/);
 
-        // Le text est trouvé dans la réponse
+        // Le texte est trouvé dans la réponse
         if(regexMatches && regexMatches.length > 2)
         {
             if(regexMatches[1] === '</textarea>')
@@ -386,7 +386,7 @@ function post_select(seqNumber, data, isError, translateMode)
     {
         text = getTextFromHTML(page.tempTranslateBackup[seqNumber]);
     }
-    // Mode édition
+    // Mode view & edit
     else
     {
         text = getTextFromHTML(textCell.innerHTML);
@@ -426,7 +426,7 @@ function post_select(seqNumber, data, isError, translateMode)
     textCell.setAttribute('class', 'textClicked');
     textCell.setAttribute('disabled', true);
 
-    // Si une erreur de réception en mode traduction arrive
+    // Si une erreur de réception arrive en mode Join translation
     if(isError)
     {
         textCell.classList.add('ajaxErrorNotConfirmed');
@@ -445,7 +445,7 @@ function post_select(seqNumber, data, isError, translateMode)
 
 
 /**
-* @fn post_release Fonction sans but si ce n'est la reception des données des release
+* @fn post_release Fonction sans but si ce n'est la réception des données des releases
 */
 function post_release()
 {

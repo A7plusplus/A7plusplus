@@ -45,7 +45,7 @@ textarea[borderglowing="pass"] {
     margin: .5rem 0 .5rem 0;
 }
 
-/* Mets l'indicateur à la fin */
+/* Met l'indicateur à la fin */
 .timeClicked > span > :nth-child(8) {
     order: 2;
     width: calc(80% - 5px);

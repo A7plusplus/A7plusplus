@@ -1,18 +1,18 @@
 /**
 * @file UserBarEvents.js
-* @brief Script des fonctions liées à la bar utilisateur
+* @brief Script des fonctions liées à la barre utilisateur
 */
 
 
 /**
 * @fn loadUserBarUsersFromTranslate Charge la liste des utilisateurs
-*     dans la userBar depuis le mode traduction
-* @param {String} data Données retournées par ajax
-* @param {Boolean} isError Si la requête à échouée
+*     dans la userBar depuis le mode Join translation
+* @param {String} data Données retournées par AJAX
+* @param {Boolean} isError Si la requête a échoué
 */
 function loadUserBarUsersFromTranslate(data, isError)
 {
-    // Envoi la requête ajax si ce n'est pas déjà fait
+    // Envoie la requête AJAX si ce n'est pas déjà fait
     if(typeof data === 'undefined' && typeof isError === 'undefined')
     {
         // Vérification du timeout
@@ -49,7 +49,7 @@ function loadUserBarUsersFromTranslate(data, isError)
             return;
         }
 
-        // Cède la main au loader du mode edition
+        // Cède la main au loader du mode view & edit
         loadUserBarUsers(data.body.querySelector('select[name="user"]'));
     }
 }
@@ -57,7 +57,7 @@ function loadUserBarUsersFromTranslate(data, isError)
 
 /**
 * @fn loadUserBarUsers Charge la liste des utilisateurs dans la userBar
-* @param {Object} forcedSelectNode Noeud HTML de la selection des utilisateurs (optionnel -> pour le mode traduction)
+* @param {Object} forcedSelectNode Nœud HTML de la sélection des utilisateurs (optionnel -> pour le mode Join translation)
 */
 function loadUserBarUsers(forcedSelectNode)
 {
@@ -77,7 +77,7 @@ function loadUserBarUsers(forcedSelectNode)
         oldSelect = userSpan.lastElementChild;
 
 
-    // Si le selecteur est déjà là, ne recréé par mai ajoute la différence
+    // Si le sélecteur est déjà là, ne recrée pas mais ajoute la différence
     if(oldSelect && oldSelect.tagName === 'SELECT')
     {
         var alreadyHere = false;
@@ -106,7 +106,7 @@ function loadUserBarUsers(forcedSelectNode)
         clone.removeChild(clone.firstElementChild);
         clone.setAttribute('id', 'selectUser');
 
-        // Ajoute le selecteur à la userBar
+        // Ajoute le sélecteur à la userBar
         userSpan.appendChild(clone);
 
         // Ajoute l'event
@@ -146,7 +146,7 @@ function addUserToUserBar(name, id)
 {
     var userSelect = document.getElementById('userBar').firstElementChild.children[1].firstElementChild;
 
-    // Attends, en mode traduction, que la liste des utilisateurs soit chargée
+    // Attend, en mode traduction, que la liste des utilisateurs soit chargée
     if(userSelect === null)
     {
         setTimeout(function()
@@ -171,8 +171,8 @@ function addUserToUserBar(name, id)
 
 
 /**
-* @fn updateUserBarSize Mets à jour la position de la barre utilisateur
-* @param {Object} userBar Noeud HTML de la userBar
+* @fn updateUserBarSize Met à jour la position de la barre utilisateur
+* @param {Object} userBar Nœud HTML de la userBar
 */
 function updateUserBarSize(userBar)
 {
@@ -205,7 +205,7 @@ function setUserBarSize(left, top)
     {
         userBar.classList.add('userBarLeft');
 
-        // recalcule la hauteur
+        // Recalcule la hauteur
         height = userBar.offsetHeight < userBar.children[1].offsetHeight ? userBar.children[1].offsetHeight : userBar.offsetHeight;
         top  = top  < 0 + stickyFactor ? 0 : top  + height + stickyFactor > window.innerHeight         ? window.innerHeight         - height : top;
     }
@@ -228,7 +228,7 @@ function setUserBarSize(left, top)
 
 
 /**
-* @fn openUserBar Ouvre la barre utilisateur
+* @fn triggerUserBar Ouvre la barre utilisateur
 * @param bar {Object} Objet HTML de la barre
 */
 function triggerUserBar(bar)
@@ -253,7 +253,7 @@ function triggerUserBar(bar)
 
 
 /**
-* @fn closeUserBarData Ferme la barre de données utilisateur
+* @fn closeUserBarData Ferme la fenêtre de données de la barre utilisateur
 */
 function closeUserBarData()
 {
@@ -263,7 +263,7 @@ function closeUserBarData()
 
 
 /**
-* @fn openPM Ouvre les messages privés
+* @fn triggerPM Ouvre les messages privés
 * @param close {boolean} Force la fermeture
 */
 function triggerPM(close)
@@ -309,7 +309,7 @@ function triggerPM(close)
             // Affiche le logo de chargement
             resetToLoadingImage(dataContainer);
 
-            // Récupère l'id utilisateur
+            // Récupère l'ID utilisateur
             var user = userBarGetCurrentUser();
 
             ajax(['GET', 'document'], '/msgcreate.php?to=' + user, '', post_triggerPM, user, null, null);
@@ -319,7 +319,7 @@ function triggerPM(close)
 
 
 /**
-* @fn openProfile Ouvre la page de l'utilisateur
+* @fn triggerProfile Ouvre la page de l'utilisateur
 * @param close {boolean} Force la fermeture
 */
 function triggerProfile(close)
@@ -366,7 +366,7 @@ function triggerProfile(close)
             // Affiche le logo de chargement
             resetToLoadingImage(dataContainer);
 
-            // Récupère l'id utilisateur
+            // Récupère l'ID utilisateur
             var user = userBarGetCurrentUser();
 
             ajax(['GET', 'document'], '/user/' + user, '', post_triggerProfile, user, null, null);
@@ -376,7 +376,7 @@ function triggerProfile(close)
 
 
 /**
-* @fn openReport Ouvre la page de signalement
+* @fn triggerReport Ouvre la page de signalement
 * @param close {boolean} Force la fermeture
 */
 function triggerReport(close)
@@ -429,9 +429,9 @@ function triggerReport(close)
 
 /**
 * @fn post_triggerPM Traite l'AJAX du message privé
-* @param {Integer} userId Id utilisateur
+* @param {Integer} userId ID utilisateur
 * @param {String} htmlData Réponse de la requête AJAX
-* @param {Boolean} isError Status de réussite de la requête AJAX
+* @param {Boolean} isError Statut de réussite de la requête AJAX
 */
 function post_triggerPM(userId, htmlData, isError)
 {
@@ -488,9 +488,9 @@ function post_triggerPM(userId, htmlData, isError)
 
 /**
 * @fn post_triggerReport Traite l'AJAX du signalement
-* @param {Integer} userId Id utilisateur
+* @param {Integer} userId ID utilisateur
 * @param {String} htmlData Réponse de la requête AJAX
-* @param {Boolean} isError Status de réussite de la requête AJAX
+* @param {Boolean} isError Statut de réussite de la requête AJAX
 */
 function post_triggerReport(userId, htmlData, isError)
 {
@@ -514,10 +514,10 @@ function post_triggerReport(userId, htmlData, isError)
         return;
     }
 
-    // Récupère le formulaire et le nettoye
+    // Récupère le formulaire et le nettoie
     var form = htmlData.body.getElementsByTagName('form')[0];
 
-    // Récupère l'id utilisateur incriminé
+    // Récupère l'ID de l'utilisateur incriminé
     var id = document.getElementById('selectUser'),
         user = id.options[id.selectedIndex].innerText,
         textarea = form.getElementsByTagName('textarea')[0];
@@ -544,10 +544,10 @@ function post_triggerReport(userId, htmlData, isError)
 
 
 /**
-* @fn post_triggerProfile Traite l'AJAX du profile
-* @param {Integer} userId Id utilisateur
+* @fn post_triggerProfile Traite l'AJAX du profil
+* @param {Integer} userId ID utilisateur
 * @param {String} htmlData Réponse de la requête AJAX
-* @param {Boolean} isError Status de réussite de la requête AJAX
+* @param {Boolean} isError Statut de réussite de la requête AJAX
 */
 function post_triggerProfile(userId, htmlData, isError)
 {
@@ -603,7 +603,7 @@ function post_triggerProfile(userId, htmlData, isError)
 
 /**
 * @fn userBarSendPM Envoi un message privé
-* @param {Object} form Noeud HTML du formulaire de mesage privé
+* @param {Object} form Nœud HTML du formulaire de mesage privé
 */
 function userBarSendPM(form)
 {
@@ -635,9 +635,9 @@ function userBarSendPM(form)
 
 
 /**
-* @fn post_userBarSendPM Traite le retour du l'envoi du message
+* @fn post_userBarSendPM Traite le retour de l'envoi du message
 * @param {String} HTMLString Réponse de la requête AJAX
-* @param {Boolean} isError Status de réussite de la requête AJAX
+* @param {Boolean} isError Statut de réussite de la requête AJAX
 */
 function post_userBarSendPM(HTMLstring, isError)
 {
@@ -671,8 +671,8 @@ function post_userBarSendPM(HTMLstring, isError)
 
 
 /**
-* @fn userBarSendReport Envoi un signalement
-* @param {Object} form Noeud HTML du formulaire de signalement
+* @fn userBarSendReport Envoie un signalement
+* @param {Object} form Nœud HTML du formulaire de signalement
 */
 function userBarSendReport(form)
 {
@@ -718,9 +718,9 @@ function userBarSendReport(form)
 
 
 /**
-* @fn post_userBarSendReport Traite le retour du l'envoi du rapport
+* @fn post_userBarSendReport Traite le retour du l'envoi du signalement
 * @param {String} HTMLString Réponse de la requête AJAX
-* @param {Boolean} isError Status de réussite de la requête AJAX
+* @param {Boolean} isError Statut de réussite de la requête AJAX
 */
 function post_userBarSendReport(HTMLstring, isError)
 {
@@ -759,7 +759,7 @@ function post_userBarSendReport(HTMLstring, isError)
 */
 function userBarIsCurrentUser(userId)
 {
-    // Récupère l'id utilisateur actuel
+    // Récupère l'ID de l'utilisateur actuel
     var id = document.getElementById('selectUser'),
         value = id.options[id.selectedIndex].value;
 
@@ -779,7 +779,7 @@ function userBarGetCurrentUser()
 
 /**
 * @fn userBarDragStart Récupère et enregistre la position initiale
-* @param {object} event Objet evenement
+* @param {object} event Objet événement
 */
 function userBarDragStart(event)
 {
@@ -801,7 +801,7 @@ function userBarDragStart(event)
 
 /**
 * @fn userBarDragOver Empêche l'action par défaut
-* @param {object} event Objet evenement
+* @param {object} event Objet événement
 */
 function userBarDragOver(event)
 {
@@ -825,7 +825,7 @@ function userBarDragOver(event)
 
 /**
 * @fn userBarDragDrop Déplace la barre utilisateur
-* @param {object} event Objet evenement
+* @param {object} event Objet événement
 */
 function userBarDragDrop(event)
 {
@@ -851,7 +851,7 @@ function userBarDragDrop(event)
 
 /**
 * @fn userBarMousedown Désactive l'attribut draggable si clic dans la partie basse
-* @param {object} event Objet evenement
+* @param {object} event Objet événement
 */
 function userBarMousedown(event)
 {

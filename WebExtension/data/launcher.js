@@ -45,7 +45,7 @@ window.addEventListener("A7pp_option_request", function()
         {
             var message = null;
 
-            // Objet present
+            // Objet présent
             if
             (
                 typeof item.lang !== 'undefined' &&

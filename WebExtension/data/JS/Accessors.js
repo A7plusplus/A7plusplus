@@ -5,9 +5,9 @@
 
 
 /**
-* @fn getTextCell Retourne la cellule de texte de la séquence
+* @fn getTextCell Retourne la cellule du texte de la séquence
 * @param {number} seqNumber Numéro de la séquence
-* @return {!Object} Cellule de texte de la séquence
+* @return {!Object} Cellule du texte de la séquence
 */
 function getTextCell(seqNumber)
 {
@@ -16,9 +16,9 @@ function getTextCell(seqNumber)
 
 
 /**
-* @fn getTimeCell Retourne la cellule de temps de la séquence
+* @fn getTimeCell Retourne la cellule des timings de la séquence
 * @param {number} seqNumber Numéro de la séquence
-* @return {!Object} Cellule de temps de la séquence
+* @return {!Object} Cellule des timings de la séquence
 */
 function getTimeCell(seqNumber)
 {
@@ -27,13 +27,13 @@ function getTimeCell(seqNumber)
 
 
 /**
-* @fn Vérifie l'état de la cellule temps
-* @param {!Object} timeCell cellule du temps
+* @fn getStateOfTimeCell Vérifie l'état de la cellule des timings
+* @param {!Object} timeCell Cellule des timings
 * @return {string} État de la cellule
 */
 function getStateOfTimeCell(timeCell)
 {
-    // On détermine l'état de la cellule du temps
+    // On détermine l'état de la cellule des timings
     if (timeCell.childElementCount === 0)
         return 'initial';
 
@@ -46,13 +46,13 @@ function getStateOfTimeCell(timeCell)
 
 
 /**
-* @fn Vérifie l'état de la cellule texte
-* @param {!Object} textCell cellule du texte
+* @fn getStateOfTextCell Vérifie l'état de la cellule du texte
+* @param {!Object} textCell Cellule du texte
 * @return {string} État de la cellule
 */
 function getStateOfTextCell(textCell)
 {
-    // On determine l'état du texte
+    // On determine l'état de la cellule du texte
     if (!textCell.firstElementChild || textCell.firstElementChild.tagName !== 'SPAN')
         return 'initial';
 

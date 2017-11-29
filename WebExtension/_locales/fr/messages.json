@@ -11,7 +11,7 @@
     },
     "A7pp_optionPageForcedLangCheckBoxLabel": {
         "message": "Forcer la langue :",
-        "description": "Checkbox to force a particular lang."
+        "description": "Checkbox to force a specific language."
     },
     "A7pp_optionPageSelectedLangLabel": {
         "message": "Langue choisie :",
@@ -19,36 +19,36 @@
     },
     "A7pp_optionPageLockPositionLabel": {
         "message": "Position du cadenas de verrouillage des commentaires :",
-        "description": "Comment lock position."
+        "description": "Comments lock button position."
     },
     "A7pp_optionPageLockPositionOpt1Label": {
         "message": "À côté des commentaires",
-        "description": "Comment lock position, first option."
+        "description": "Comments lock button position, first option."
     },
     "A7pp_optionPageLockPositionOpt2Label": {
-        "message": "En haut à droite de la table des séquences",
+        "message": "En haut à droite du tableau des séquences",
         "description": "On top right of the sequence table."
     },
     "A7pp_optionPagestateUpdateLabel": {
-        "message": "Délai de mise à jour de l'avancement des sous-titres (en secondes, par défaut : $DEFAULT$ secondes) :",
-        "description": "State update interval (in seconds, default: $DEFAULT$ seconds).",
+        "message": "Délai de mise à jour de l'état d'avancement des sous-titres (en secondes, par défaut : $DEFAULT$ secondes) :",
+        "description": "Subtitle progress state update interval (in seconds, default: $DEFAULT$ seconds).",
         "placeholders": {
-            "default" : {
-                "content" : "$1"
+            "default": {
+                "content": "$1"
             }
         }
     },
     "A7pp_optionPageCommentUpdateLabel": {
         "message": "Délai de mise à jour des commentaires (en secondes, par défaut : $DEFAULT$ secondes) :",
-        "description": "Comment update Interval (in seconds, default: $DEFAULT$ sec).",
+        "description": "Comments update interval (in seconds, default: $DEFAULT$ sec).",
         "placeholders": {
-            "default" : {
-                "content" : "$1"
+            "default": {
+                "content": "$1"
             }
         }
     },
     "A7pp_optionPageDisableUserBarLabel": {
-        "message": "Desactiver la barre utilisateur :",
+        "message": "Désactiver la barre utilisateur :",
         "description": "Disable userBar."
     },
     "A7pp_optionPageSaveLabel": {
@@ -57,6 +57,6 @@
     },
     "A7pp_optionPageSavedMessage": {
         "message": "Options enregistrées, rechargez les pages pour que les réglages prennent effet",
-        "description": "Saved options message."
+        "description": "Saved settings message."
     }
 }

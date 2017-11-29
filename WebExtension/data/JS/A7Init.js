@@ -4,10 +4,10 @@
 */
 
 
-// On est en translate
+// On est en mode Join translation
 var translatePage = location.href.search(new RegExp('translate.php')) !== -1;
 
-// Si la langue n'est pas anglais et qu'on est en edit
+// Si la langue n'est pas anglais et qu'on est en mode view & edit
 if(!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
 {
     // Remplacement des AJAX
@@ -19,17 +19,17 @@ if(!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
     {
         try
         {
-            // Envoi une exception si l'objet n'est pas ouvert
+            // Envoie une exception si l'objet n'est pas ouvert
             sendOrig.apply(this, arguments);
         }
         catch(err)
         {
-            // Remet en place jes AJAX de base
+            // Remet en place les AJAX de base
             XMLHttpRequest.prototype.send = sendOrig;
             XMLHttpRequest.prototype.open = origOpen;
             XMLHttpRequest.prototype = xhrProto;
 
-            // Demande la page avec complément anglais
+            // Demande la page avec anglais en langue secondaire
             list(0, false, 1);
         }
     };
@@ -83,7 +83,7 @@ function preInit()
     // Enlève l'indicateur d'avancement existant puis initialise l'extension
     if (translatePage) removeTitleIndicator();
 
-    // Mets à jour les réglages en fonction des options de l'utilisateur
+    // Met à jour les réglages en fonction des options de l'utilisateur
     window.addEventListener("A7pp_options", function(data)
     {
         var options = JSON.parse(data.detail);
@@ -184,26 +184,27 @@ function init()
     logoLink.insertBefore(createA7Info(), logoLink.lastElementChild);
     logoLink.setAttribute('id', 'A7Logo');
 
-    // Démarre l'actualisation de l'avancement (toutes les minutes)
+    // Démarre l'actualisation de l'état d'avancement
     page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
 
-    // Ajoute la structure d'accueil, des commentaires et de la barre utilisateur
+    // Ajoute la structure d'accueil des commentaires et de la barre utilisateur
     var listaParent = list.parentElement;
 
-    // Ajoute la barre utilisateur si non désactivé
+    // Ajoute la barre utilisateur si non désactivée
     if(!A7Settings.disableUserBar)
     {
         listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
     }
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
-    // Si le lock des commentaires est placé en bas, le créé
+    // Si le lock des commentaires est placé en bas, le crée
     if(A7Settings.lockPosition === "bottom")
     {
         listaParent.insertBefore(createCommentLockUtil(), listaParent.lastElementChild);
     }
 
-    // Récupère la taille enregistrée, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
+    // Récupère les valeurs enregistrées pour :
+    // la taille de la fenêtre de commentaires, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
     if(localStorage)
     {
         var commentsSection = document.getElementById('commentsSection');
@@ -229,7 +230,7 @@ function init()
         }
     }
 
-    // Initie la requête pour savoir si on est en HI
+    // Initialise la requête pour savoir si on est en HI
     setTimeout(requestHICheck, 100);
 
     // Actualisation des commentaires (ce qui active aussi l'actualisation à intervalles réguliers)

@@ -60,12 +60,12 @@
     border-radius: 10px;
 }
 
-/* Ouvert horizon */
+/* Ouvert horizontal */
 #userBar.userBarOpened:not(.userBarLeft) {
     min-width: 800px;
 }
 
-/* Ouvert verti */
+/* Ouvert vertical */
 #userBar.userBarOpened.userBarLeft {
     min-height: 300px;
     flex-direction: row;
@@ -80,7 +80,7 @@
     display: none;
 }
 
-/* Ouvert horizon */
+/* Ouvert horizontal */
 #userBar.userBarOpened > div:first-of-type {
     display: flex;
     min-height: 80px;
@@ -88,7 +88,7 @@
     background:linear-gradient(black, #111, #333, #222, #111);
 }
 
-/* Ouvert verti */
+/* Ouvert vertical */
 #userBar.userBarOpened.userBarLeft  > div:first-of-type {
     min-width: 80px;
     flex-direction: column;
@@ -147,8 +147,8 @@
 }
 
 
-/* Icones */
-/* Icone générale */
+/* Icônes */
+/* Icône générale */
 #userBar > div:first-of-type > span:first-of-type {
     max-width: 80px;
     display: inherit;
@@ -246,7 +246,7 @@
     border-left: none;
 }
 
-/* Message */
+/* Message privé*/
 #userBar.userBarLeft > #userBarData.pageLoaded > form:not(#step1) {
     width: 100%;
     height: 100%;
@@ -281,7 +281,7 @@
     width: 98%;
 }
 
-/* Utilisateur */
+/* Profil */
 #userBarData.pageLoaded.isUserPage {
     display: block;
 }

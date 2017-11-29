@@ -5,7 +5,7 @@
 
 
 /**
-* @fn createA7button Créé un bouton custom de l'extension
+* @fn createA7button Crée un bouton custom de l'extension
 */
 function createA7button()
 {
@@ -171,7 +171,7 @@ function createTimeUtils(seqNumber, timeCodes)
 
 
 /**
-* @fn createRsControls Crée un nœud contenant la structure RS Rating
+* @fn createRsIndicators Crée un nœud contenant la structure RS Rating
 * @return {!Object} Nœud HTML structuré
 */
 function createRsIndicators()
@@ -194,7 +194,7 @@ function createRsIndicators()
 
 
 /**
-* @fn createCommentStruct Créer la structure qui accueuillera les commentaires
+* @fn createCommentStruct Crée la structure qui accueillera les commentaires
 * @return {!Object} Nœud HTML de la structure
 */
 function createCommentStruct()
@@ -316,7 +316,7 @@ function createStateUtil(parentDiv)
 
 
 /**
-* @fn createHIImg Crée un nœud contenant la structure de l'image malentendant
+* @fn createHIImg Crée un nœud contenant la structure de l'indicateur de version pour malentendant
 * @return {!Object} Nœud HTML de la structure
 */
 function createHIImg()
@@ -332,7 +332,7 @@ function createHIImg()
 
 
 /**
-* @fn createUntranslatedOption Crée un nœud pour l'option "afficher que les séquences non traduites"
+* @fn createUntranslatedOption Crée un nœud pour l'option "n'afficher que les séquences non traduites"
 * @return {!Object} Nœud HTML de la structure
 */
 function createUntranslatedOption()
@@ -345,7 +345,7 @@ function createUntranslatedOption()
     option.title       = loc.untranlsatedOnly;
 
     option.addEventListener('click', function(){
-        // On n'envoi pas 50 requêtes
+        // On n'envoie pas 50 requêtes
         if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
             return;
         page.tempDisableTranslateCheckbox = true;
@@ -356,6 +356,7 @@ function createUntranslatedOption()
 
         // Appel à la fonction de base
         untraslated();
+
         linesChanged();
     });
 
@@ -410,7 +411,7 @@ function addTimeUtils(timeCell, seqNumber, timeCodes)
 
 /**
 * @fn removeTimeUtils Enlève les utilitaires d'édition
-* @param {!Object} timeCell Cellule sur laquelle les utilitares doivent être retirés
+* @param {!Object} timeCell Cellule sur laquelle les utilitaires doivent être retirés
 */
 function removeTimeUtils(timeCell)
 {
@@ -438,7 +439,7 @@ function addBigIndicator(timeCell)
 
 
 /**
-* @fn removeBigIndicator Enlève le grand indicateur de RS Rating
+* @fn removeBigIndicator Enlève le grand indicateur du RS Rating
 * @param {!Object} timeCell Cellule de temps
 */
 function removeBigIndicator(timeCell)
@@ -453,7 +454,7 @@ function removeBigIndicator(timeCell)
                      // Gestion de la barre utilisateur //
 
 /**
-* @fn createUserBarStruct Créer la structure qui accueuillera les fonctions de l'utilisateur
+* @fn createUserBarStruct Crée la structure qui accueillera les fonctions de l'utilisateur
 * @return {!Object} Nœud HTML de la structure
 */
 function createUserBarStruct()
@@ -471,7 +472,7 @@ function createUserBarStruct()
     var containerProfil  = document.createElement('span');
 
 
-    // Mise en place des info
+    // Mise en place des infos
     containerBar.title     = loc.userBar;
     containerUser.title    = loc.SelectUserTitle;
     containerPM.title      = loc.PMTitle;
@@ -534,17 +535,17 @@ function createUserBarStruct()
                                    // Misc //
 
 /**
-* @fn addParentHTMLNode Ajoute un noeud HTML entre le père et le fils
-* @param {!Object} parentNode Noeud parent
-* @param {!Object} childNode Noeud fils
-* @param {String} className Classe à ajouter au nouveau noeud
+* @fn addParentHTMLNode Ajoute un nœud HTML entre le père et le fils
+* @param {!Object} parentNode Nœud parent
+* @param {!Object} childNode Nœud fils
+* @param {String} className Classe à ajouter au nouveau nœud
 */
 function addParentHTMLNode(parentNode, childNode, className)
 {
     // Récupère la position
     var nextNode = childNode.nextSibling;
 
-    // Créer le nouveau noeud
+    // Crée le nouveau nœud
     var newParent = document.createElement('div');
     newParent.appendChild(childNode);
 

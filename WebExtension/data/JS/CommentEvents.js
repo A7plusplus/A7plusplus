@@ -1,6 +1,6 @@
 /**
 * @file CommentEvents.js
-* @brief Script des évenements de la chatbox
+* @brief Script des événements de la chatbox
 */
 
 
@@ -16,7 +16,7 @@ function refreshComments()
     if(updateButton.getAttribute('loading') !== null)
         return;
 
-    // Désactivation du bouton de rafraichissement
+    // Désactivation du bouton de rafraîchissement
     updateButton.setAttribute('loading', true);
 
     // Récupération des infos
@@ -34,7 +34,7 @@ function refreshComments()
 
 
 /**
-* @fn post_commentRefresh Traite les données reçues par ajax
+* @fn post_commentRefresh Traite les données reçues par AJAX
 * @param {string} htmlData Objet HTML de la réponse
 * @param {boolean} isError Si une erreur s'est produite
 */
@@ -51,7 +51,7 @@ function post_commentRefresh(htmlData, isError)
         updateButton.removeAttribute('loading');
     }, 750);
 
-    // Enclenche un compte à rebours pour réactualiser les commentaires dans x secondes
+    // Enclenche un compte à rebours pour réactualiser les commentaires après un temps donné
     page.refreshCommentsTimeoutId = setTimeout(refreshComments, A7Settings.commentUpdateInterval * 1000);
 
     if(isError)
@@ -69,11 +69,11 @@ function post_commentRefresh(htmlData, isError)
         commentList.setAttribute('title', '');
     }
 
-    // Parse la string en HTML
-    var newCommentsHTML = htmlData.body;
+    // Récupère de body de la réponse
+    var responseBody = htmlData.body;
 
     // Récupère la liste
-    var listOfNewComments   = newCommentsHTML.firstElementChild.firstElementChild.firstElementChild.children;
+    var listOfNewComments   = responseBody.firstElementChild.firstElementChild.firstElementChild.children;
     var listOfNewCommLength = (listOfNewComments.length - 5) / 2;
 
     // Si ce n'est pas l'initialisation
@@ -105,7 +105,7 @@ function post_commentRefresh(htmlData, isError)
     // Variable temporaire
     var temp;
 
-    // Re peuple les commentaires du tableau
+    // Repeuple les commentaires du tableau
     for(var i = 2, j = 1; i < listOfNewCommLength + 2; i++, j++)
     {
         // Retire l'image
@@ -144,7 +144,7 @@ function post_commentRefresh(htmlData, isError)
 
 
 /**
-* @fn post_sendComment Traite les données reçues par ajax
+* @fn post_sendComment Traite les données reçues par AJAX
 * @param {string} htmlData Objet HTML des commentaires
 * @param {boolean} isError Si une erreur s'est produite
 */
@@ -169,7 +169,7 @@ function post_sendComment(htmlData, isError)
 
 
 /**
-* @fn sendComment Enoie le commentaire présent en textArea
+* @fn sendComment Envoie le commentaire présent en textArea
 */
 function sendComment()
 {
@@ -179,10 +179,10 @@ function sendComment()
     // Récupération de la textArea
     var textArea = document.getElementById('commentsSection').lastElementChild.lastElementChild.firstElementChild;
 
-    // Si vide, n'envoi pas
+    // Si vide, n'envoie pas
     if(textArea.value === '') return;
 
-    // Desactive la textArea le temps de l'envoi
+    // Désactive la textArea le temps de l'envoi
     textArea.setAttribute('disabled', true);
 
     // Construit et lance la requête
@@ -216,7 +216,7 @@ function goToComments()
 
 
 /**
-* @fn Ajoute ou enlève la classe du pin
+* @fn pinComments Ajoute ou enlève la classe du pin
 */
 function pinComments()
 {
@@ -269,7 +269,7 @@ function lockComment()
 
 /**
 * @fn resizeBarMouseDown Initialise le redimensionnement des commentaires
-* @param {Object} e Objet d'évènement
+* @param {Object} e Objet d'événement
 */
 function resizeBarMouseDown(e)
 {
@@ -282,7 +282,7 @@ function resizeBarMouseDown(e)
 
 /**
 * @fn windowMouseMove Ajuste le redimensionnement des commentaires
-* @param {Object} e Objet d'évènement
+* @param {Object} e Objet d'événement
 */
 function windowMouseMove(e)
 {
@@ -313,7 +313,7 @@ function windowMouseMove(e)
 
 /**
 * @fn windowMouseUp Finalise le redimensionnement des commentaires
-* @param {Object} e Objet d'évènement
+* @param {Object} e Objet d'événement
 */
 function windowMouseUp(e)
 {
@@ -325,7 +325,7 @@ function windowMouseUp(e)
 
 /**
 * @fn commentsTableScroll Teste si on est tout en bas du tableau des commentaires
-* @param {Object} e Objet d'évènement
+* @param {Object} e Objet d'événement
 */
 function commentsTableScroll(e)
 {

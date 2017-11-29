@@ -14,7 +14,7 @@
         "128": "icon128.png"
     },
 
-    "options_ui" : {
+    "options_ui": {
         "page": "settings/options.html",
         "open_in_tab": true
     },

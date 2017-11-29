@@ -11,7 +11,7 @@
     },
     "A7pp_optionPageForcedLangCheckBoxLabel": {
         "message": "Forced lang:",
-        "description": "Checkbox to force a particular lang."
+        "description": "Checkbox to force a specific language."
     },
     "A7pp_optionPageSelectedLangLabel": {
         "message": "Selected language:",
@@ -19,11 +19,11 @@
     },
     "A7pp_optionPageLockPositionLabel": {
         "message": "Comments lock button position:",
-        "description": "Comment lock position."
+        "description": "Comments lock button position."
     },
     "A7pp_optionPageLockPositionOpt1Label": {
         "message": "Next to the comment section",
-        "description": "Comment lock position, first option."
+        "description": "Comments lock button position, first option."
     },
     "A7pp_optionPageLockPositionOpt2Label": {
         "message": "On top right of the sequence table",
@@ -31,19 +31,19 @@
     },
     "A7pp_optionPagestateUpdateLabel": {
         "message": "Subtitle progress state update interval (in seconds, default:  $DEFAULT$ sec):",
-        "description": "State update interval (in seconds, default: $DEFAULT$ seconds).",
+        "description": "Subtitle progress state update interval (in seconds, default: $DEFAULT$ seconds).",
         "placeholders": {
-            "default" : {
-                "content" : "$1"
+            "default": {
+                "content": "$1"
             }
         }
     },
     "A7pp_optionPageCommentUpdateLabel": {
         "message": "Comments update interval (in seconds, default: $DEFAULT$ sec):",
-        "description": "Comment update Interval (in seconds, default: $DEFAULT$ sec).",
+        "description": "Comments update interval (in seconds, default: $DEFAULT$ sec).",
         "placeholders": {
-            "default" : {
-                "content" : "$1"
+            "default": {
+                "content": "$1"
             }
         }
     },
@@ -56,7 +56,7 @@
         "description": "Save."
     },
     "A7pp_optionPageSavedMessage": {
-        "message": "Options saved, please reload the pages to apply the changes",
-        "description": "Saved options message."
+        "message": "Settings saved, please reload the pages to apply the changes",
+        "description": "Saved settings message."
     }
 }
