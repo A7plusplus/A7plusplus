@@ -189,13 +189,33 @@ function linesChanged()
         currentLine = tableOfLine.children[i];
 
         // Création de la cellule pour le nombre de caractères
-        var cell          = document.createElement('td');
+        var cell = document.createElement('td');
         cell.setAttribute('class', 'counter');
 
         // Cellules utiles
         var timeCell = currentLine.children[page.lock + 4];
         var textCell = currentLine.lastElementChild;
 
+        // Ajoute un tabindex à la cellule et permet le clic
+        if (page.translatePage || currentLine.classList.contains('originalText'))
+        {
+            textCell.setAttribute(
+                'tabIndex',
+                parseInt(currentLine.children[page.lock].firstElementChild.firstElementChild.innerHTML)
+            );
+
+            textCell.addEventListener('keypress', function(e)
+            {
+                if (e.srcElement.classList.contains('cursorEdit'))
+                {
+                    if (e.key === " " || e.key === "Enter")
+                    {
+                        e.preventDefault();
+                        e.srcElement.onclick();
+                    }
+                }
+            });
+        }
 
         // Retire le texte de base indiquant une séquence non traduite
         if (page.translatePage && currentLine.className === 'originalText')

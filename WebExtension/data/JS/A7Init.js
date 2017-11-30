@@ -76,7 +76,7 @@ function preInit()
     // Vérification sommaire de l'intégrité de la page
     if (!document.getElementById('lista'))
     {
-        console.log('[A7++] Document Error');
+        console.error('[A7++] Document Error');
         return;
     }
 
@@ -141,7 +141,7 @@ function init()
         (!document.getElementById('unt') && translatePage)
     )
     {
-        console.log('[A7++] ' + loc.noAvailableLine);
+        console.error('[A7++] ' + loc.noAvailableLine);
         return;
     }
 
