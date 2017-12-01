@@ -20,11 +20,13 @@ function addFunctionToLinks(nameOfFunction)
         {
             allElements[i].setAttribute('onclick', allElements[i].getAttribute('onclick').substr(0, allElements[i].getAttribute('onclick').length - 13) + nameOfFunction + '(); return false;');
             allElements[i].setAttribute('href', '#');
+            allElements[i].setAttribute('tabIndex', 32766);
         }
 
         if (allElements[i].getAttribute('href').indexOf('javascript:list(') !== -1)
         {
             allElements[i].setAttribute('href', allElements[i].getAttribute('href') + nameOfFunction + '();');
+            allElements[i].setAttribute('tabIndex', 32766);
         }
     }
 
@@ -182,7 +184,8 @@ function linesChanged()
     var tableOfLine = headerRow.parentElement;
     var lineNumbers = tableOfLine.childElementCount;
 
-    var currentLine;
+    var currentLine,
+        firstEditableLine = null;
 
     for (var i = 1; i < lineNumbers; i++)
     {
@@ -215,6 +218,9 @@ function linesChanged()
                     }
                 }
             });
+
+            // Place le focus sur la première ligne clicable pour la navigation au clavier
+            if(firstEditableLine === null) firstEditableLine = textCell;
         }
 
         // Retire le texte de base indiquant une séquence non traduite
@@ -340,6 +346,9 @@ function linesChanged()
         if(page.translatePage) loadUserBarUsersFromTranslate();
         else                   loadUserBarUsers();
     }
+
+    // Focus sur le première ligne
+    if(firstEditableLine) firstEditableLine.focus();
 }
 
 
