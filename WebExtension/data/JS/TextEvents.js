@@ -417,7 +417,12 @@ function post_select(seqNumber, data, isError, translateMode)
     textCell.appendChild(createTextUtils(seqNumber));
 
     // Ajoute le texte
-    textCell.firstElementChild.firstElementChild.defaultValue = text;
+    var textArea = textCell.firstElementChild.firstElementChild;
+    textArea.defaultValue = text;
+
+    // Prend le focus
+    textArea.focus();
+    textArea.setSelectionRange(textArea.value.length, textArea.value.length);
 
 
     // Change la classe de la cellule des tailles
