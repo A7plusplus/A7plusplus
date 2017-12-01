@@ -160,6 +160,9 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
             textCell.parentElement.classList.add('quotedText');
         }
 
+        // Reprend le focus (nescessaire sur firefox)
+        textCell.focus();
+
         // Activation de onclick après 10 ms pour laisser passer le clic courant
         setTimeout(function(){
             textCell.setAttribute('onclick', "pre_mouseclick('o', " + seqNumber + ');');
@@ -304,6 +307,9 @@ function textCancel(seqNumber)
     // Met en forme
     textCell.className = 'cursorEdit';
     textCell.setAttribute('disabled', false);
+
+    // Reprend le focus (nescessaire sur firefox)
+    textCell.focus();
 
     // Change la classe de la cellule des tailles
     line.children[line.childElementCount - 2].setAttribute('class', 'counter');
