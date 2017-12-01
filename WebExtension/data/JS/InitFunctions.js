@@ -206,12 +206,12 @@ function linesChanged()
 
             textCell.addEventListener('keypress', function(e)
             {
-                if (e.srcElement.classList.contains('cursorEdit'))
+                if (e.target.classList.contains('cursorEdit'))
                 {
                     if (e.key === " " || e.key === "Enter")
                     {
                         e.preventDefault();
-                        e.srcElement.onclick();
+                        e.target.onclick();
                     }
                 }
             });
