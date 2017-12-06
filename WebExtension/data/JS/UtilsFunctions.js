@@ -180,18 +180,20 @@ function getTextFromHTML(HTMLString)
 function moveFocusToNextLine(seqNumber)
 {
     // Récupération des éléments utiles
-    var textCell         = getTextCell(seqNumber);
-    var nextLine         = textCell.parentElement.nextSibling;
+    var textCell = getTextCell(seqNumber);
+    var nextLine = textCell.parentElement.nextSibling;
+    var textCellNextLine, textAreaNextLine;
+
     if(nextLine)
     {
         var nextLineSeqNumber = nextLine.children[page.lock].firstElementChild.firstElementChild.innerHTML;
-        var textCellNextLine  = getTextCell(nextLineSeqNumber);
+        textCellNextLine = getTextCell(nextLineSeqNumber);
     }
 
     // S'il y a une ligne suivante éditable avec cellule de texte ouverte, focus sur la textarea
-    if(nextLine && textCellNextLine && textCellNextLine.className === 'textClicked')
+    if(nextLine && textCellNextLine && textCellNextLine.classList.contains('textClicked'))
     {
-        var textAreaNextLine = getTextCell(seqNumber + 1).firstElementChild.firstElementChild;
+        textAreaNextLine = textCellNextLine.firstElementChild.firstElementChild;
 
         textAreaNextLine.focus();
     }
@@ -200,8 +202,11 @@ function moveFocusToNextLine(seqNumber)
     {
         textCellNextLine.focus();
     }
-    // S'il n'y a pas de ligne suivanteéditable , focus sur la cellule de texte de la ligne actuelle (nécessaire sur Firefox)
-    else textCell.focus();
+    // S'il n'y a pas de ligne suivante éditable , focus sur la cellule de texte de la ligne actuelle (nécessaire sur Firefox)
+    else
+    {
+        textCell.focus();
+    }
 }
 
 
