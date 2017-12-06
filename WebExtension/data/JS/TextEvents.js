@@ -11,6 +11,11 @@
 */
 function pre_mouseclick(tipo, seqNumber)
 {
+    var textCell = getTextCell(seqNumber);
+
+    // Enlève le tabindex à la cellule de texte
+    textCell.removeAttribute('tabIndex');
+
     // Si on est en mode Join translation, recherche d'abord le text
     if(!page.translatePage || getTextCell(seqNumber).innerHTML.contains('loader.gif'))
     {
@@ -19,8 +24,6 @@ function pre_mouseclick(tipo, seqNumber)
     }
     else
     {
-        var textCell = getTextCell(seqNumber);
-
         // Sauvegarde le texte
         page.tempTranslateBackup[seqNumber] = textCell.innerHTML;
 
@@ -59,6 +62,9 @@ function pre_update(tipo, seqNumber)
 
     // Récupération de l'état des cellules
     var timeState = getStateOfTimeCell(timeCell);
+
+    // Remet le tabindex à la cellule de texte
+    textCell.setAttribute('tabIndex', seqNumber);
 
     // Si le texte est inchangé et qu'il ne s'agit pas d'une séquence encore non traduite (donc vide en Join translation),
     // on ne sauvegarde pas
@@ -116,6 +122,9 @@ function pre_update(tipo, seqNumber)
     // Indique que c'est en envoi
     resetToLoadingImage(textCell);
 
+    // Focus à la cellule de texte éditable ou à la textarea de la ligne suivante (si existante)
+    moveFocusToNextLine(seqNumber);
+
     // Effectue l'envoi des données
     ajax(action, url, params, post_update, seqNumber, textArea.value, textArea.defaultValue);
 }
@@ -159,9 +168,6 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
             textCell.parentElement.classList.remove('originalText');
             textCell.parentElement.classList.add('quotedText');
         }
-
-        // Reprend le focus (nescessaire sur firefox)
-        textCell.focus();
 
         // Activation de onclick après 10 ms pour laisser passer le clic courant
         setTimeout(function(){
@@ -308,8 +314,11 @@ function textCancel(seqNumber)
     textCell.className = 'cursorEdit';
     textCell.setAttribute('disabled', false);
 
-    // Reprend le focus (nescessaire sur firefox)
-    textCell.focus();
+    // Remet le tabindex à la cellule de texte
+    textCell.setAttribute('tabIndex', seqNumber);
+
+    // Focus à la cellule de texte éditable ou à la textarea de la ligne suivante (si existante)
+    moveFocusToNextLine(seqNumber);
 
     // Change la classe de la cellule des tailles
     line.children[line.childElementCount - 2].setAttribute('class', 'counter');

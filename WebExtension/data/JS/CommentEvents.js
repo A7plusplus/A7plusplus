@@ -242,7 +242,7 @@ function pinComments()
 
 
 /**
-* @fn pinCommentsTemp Ajoute ou enlève la classe du pin (sans ne bypassant pas le choix utilisateur)
+* @fn pinCommentsTemp Ajoute ou enlève la classe du pin (en ne bypassant pas le choix utilisateur)
 */
 function pinCommentsTemp()
 {

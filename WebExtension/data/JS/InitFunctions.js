@@ -219,7 +219,7 @@ function linesChanged()
                 }
             });
 
-            // Place le focus sur la première ligne clicable pour la navigation au clavier
+            // Place le focus sur la première ligne cliquable pour la navigation au clavier
             if(firstEditableLine === null) firstEditableLine = textCell;
         }
 
@@ -347,7 +347,7 @@ function linesChanged()
         else                   loadUserBarUsers();
     }
 
-    // Focus sur le première ligne
+    // Focus sur la première ligne
     if(firstEditableLine) firstEditableLine.focus();
 }
 
