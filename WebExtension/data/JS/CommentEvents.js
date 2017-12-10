@@ -100,7 +100,7 @@ function post_commentRefresh(htmlData, isError)
     var isUserOnCommentBottom = (commentList.scrollTop + commentList.clientHeight === commentList.scrollHeight);
 
     // Réinitialise la liste des commentaires
-    resetHTMLObject(commentList)
+    resetHTMLObject(commentList);
 
     // Variable temporaire
     var temp;
@@ -237,6 +237,32 @@ function pinComments()
         {
             localStorage.setItem('A7ppCommentWindowPined', true);
         }
+    }
+}
+
+
+/**
+* @fn pinCommentsTemp Ajoute ou enlève la classe du pin (en ne bypassant pas le choix utilisateur)
+*/
+function pinCommentsTemp()
+{
+    var commentsSection = document.getElementById('commentsSection');
+
+    // Si pinné
+    if(commentsSection.className && commentsSection.classList.contains('comment-pined'))
+    {
+        // Si c'est temporaire
+        if(commentsSection.classList.contains('comment-pined-tmp'))
+        {
+            commentsSection.classList.remove('comment-pined-tmp');
+            commentsSection.classList.remove('comment-pined');
+        }
+    }
+    // Non pinné
+    else
+    {
+        commentsSection.classList.add('comment-pined-tmp');
+        commentsSection.classList.add('comment-pined');
     }
 }
 

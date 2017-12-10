@@ -221,11 +221,16 @@ function createCommentStruct()
 
     // Mise en place
     centerButton.addEventListener('click', sendComment, false);
-    centerButton.setAttribute('tabIndex', 4096);
+    centerButton.setAttribute('tabIndex', 32767);
     centerButton.title         = loc.sendComment;
-    centerTextArea.setAttribute('tabIndex', 4096);
+    centerButton.onfocus       = function() { pinCommentsTemp(); };
+    centerButton.onblur        = function() { pinCommentsTemp(); };
+
+    centerTextArea.setAttribute('tabIndex', 32767);
     centerTextArea.placeholder = loc.commTextareaHint;
     centerTextArea.oninput     = updateCommentTextArea;
+    centerTextArea.onfocus     = function() { pinCommentsTemp(); };
+    centerTextArea.onblur      = function() { pinCommentsTemp(); };
 
     headerRefreshButton.addEventListener('click', function()
     {

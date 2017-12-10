@@ -174,6 +174,43 @@ function getTextFromHTML(HTMLString)
 
 
 /**
+* @fn moveFocusToNextLine Donne le focus à la cellule de texte éditable ou à la textarea de la ligne suivante (si existante)
+* @param {number} seqNumber Numéro de la séquence
+*/
+function moveFocusToNextLine(seqNumber)
+{
+    // Récupération des éléments utiles
+    var textCell = getTextCell(seqNumber);
+    var nextLine = textCell.parentElement.nextSibling;
+    var textCellNextLine, textAreaNextLine;
+
+    if(nextLine)
+    {
+        var nextLineSeqNumber = nextLine.children[page.lock].firstElementChild.firstElementChild.innerHTML;
+        textCellNextLine = getTextCell(nextLineSeqNumber);
+    }
+
+    // S'il y a une ligne suivante éditable avec cellule de texte ouverte, focus sur la textarea
+    if(nextLine && textCellNextLine && textCellNextLine.classList.contains('textClicked'))
+    {
+        textAreaNextLine = textCellNextLine.firstElementChild.firstElementChild;
+
+        textAreaNextLine.focus();
+    }
+    // S'il y a une ligne suivante éditable avec cellule de texte non ouverte, focus sur la cellule texte
+    else if(nextLine && textCellNextLine)
+    {
+        textCellNextLine.focus();
+    }
+    // S'il n'y a pas de ligne suivante éditable , focus sur la cellule de texte de la ligne actuelle (nécessaire sur Firefox)
+    else
+    {
+        textCell.focus();
+    }
+}
+
+
+/**
 * @fn ajax Effectue une requête AJAX
 * @param {string} action POST / GET / UPDATE etc. (temporairement: peut recevoir un tableau de string contenant action et responseType)
 * @param {string} url Adresse

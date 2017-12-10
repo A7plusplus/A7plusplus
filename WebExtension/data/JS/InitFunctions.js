@@ -20,11 +20,13 @@ function addFunctionToLinks(nameOfFunction)
         {
             allElements[i].setAttribute('onclick', allElements[i].getAttribute('onclick').substr(0, allElements[i].getAttribute('onclick').length - 13) + nameOfFunction + '(); return false;');
             allElements[i].setAttribute('href', '#');
+            allElements[i].setAttribute('tabIndex', 32766);
         }
 
         if (allElements[i].getAttribute('href').indexOf('javascript:list(') !== -1)
         {
             allElements[i].setAttribute('href', allElements[i].getAttribute('href') + nameOfFunction + '();');
+            allElements[i].setAttribute('tabIndex', 32766);
         }
     }
 
@@ -182,20 +184,44 @@ function linesChanged()
     var tableOfLine = headerRow.parentElement;
     var lineNumbers = tableOfLine.childElementCount;
 
-    var currentLine;
+    var currentLine,
+        firstEditableLine = null;
 
     for (var i = 1; i < lineNumbers; i++)
     {
         currentLine = tableOfLine.children[i];
 
         // Création de la cellule pour le nombre de caractères
-        var cell          = document.createElement('td');
+        var cell = document.createElement('td');
         cell.setAttribute('class', 'counter');
 
         // Cellules utiles
         var timeCell = currentLine.children[page.lock + 4];
         var textCell = currentLine.lastElementChild;
 
+        // Ajoute un tabindex à la cellule et permet le clic
+        if (page.translatePage || currentLine.classList.contains('originalText'))
+        {
+            textCell.setAttribute(
+                'tabIndex',
+                parseInt(currentLine.children[page.lock].firstElementChild.firstElementChild.innerHTML)
+            );
+
+            textCell.addEventListener('keypress', function(e)
+            {
+                if (e.target.classList.contains('cursorEdit'))
+                {
+                    if (e.key === " " || e.key === "Enter")
+                    {
+                        e.preventDefault();
+                        e.target.onclick();
+                    }
+                }
+            });
+
+            // Place le focus sur la première ligne cliquable pour la navigation au clavier
+            if(firstEditableLine === null) firstEditableLine = textCell;
+        }
 
         // Retire le texte de base indiquant une séquence non traduite
         if (page.translatePage && currentLine.className === 'originalText')
@@ -320,6 +346,9 @@ function linesChanged()
         if(page.translatePage) loadUserBarUsersFromTranslate();
         else                   loadUserBarUsers();
     }
+
+    // Focus sur la première ligne
+    if(firstEditableLine) firstEditableLine.focus();
 }
 
 
