@@ -207,7 +207,7 @@ function setUserBarSize(left, top)
 
         // Recalcule la hauteur
         height = userBar.offsetHeight < userBar.children[1].offsetHeight ? userBar.children[1].offsetHeight : userBar.offsetHeight;
-        top  = top  < 0 + stickyFactor ? 0 : top  + height + stickyFactor > window.innerHeight         ? window.innerHeight         - height : top;
+        top  = top  < 0 + stickyFactor ? 0 : top  + height + stickyFactor > window.innerHeight ? window.innerHeight - height : top;
     }
     else userBar.classList.remove('userBarLeft');
 
