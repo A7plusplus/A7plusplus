@@ -232,20 +232,20 @@ function openHelpPage(evt)
 * @param {string}  action POST / GET / UPDATE etc.
 * @param {string}  url Adresse
 *
-* @param {function({boolean} isError, {Object} responseOrBackup, {number=} seqNumber)} readyFunction Fonction à appeler en cas de réussite
-* @warning seqNumber sera null s'il n'est pas reçu dans les paramètres de base
+* @param {function({boolean} isError, {Object} responseOrBackup, {Object=} forwardData)} readyFunction Fonction à appeler en cas de réussite
+* @warning forwardData sera null s'il n'est pas reçu dans les paramètres de base
 *
 * @param {string=} responseType Type de réponse demandée (optionnel)
 * @param {string=} params Paramètres spécifiques de la requête (optionnel)
 *
-* @param {number=} seqNumber Numéro de la séquence (optionnel)
+* @param {Object=} forwardData Objet à passer à la readyFunction, même en cas d'échec (optionnel)
 * @param {Object=} backupInfos Informations à envoyer en cas d'erreur (optionnel)
 */
 function ajax(params)
 {
     // Traitement de l'objet paramètre (et de ses champs optionnels)
     if (typeof params.params === 'undefined') params.params = '';
-    if (typeof params.seqNumber === 'undefined') params.seqNumber = null;
+    if (typeof params.forwardData === 'undefined') params.forwardData = null;
     if (typeof params.backupInfos === 'undefined') params.backupInfos = null;
 
     // Crée la requête
@@ -266,7 +266,7 @@ function ajax(params)
         if (xhr.readyState === 4)
         {
             var isError = xhr.status !== 200;
-            params.readyFunction(isError, isError ? params.backupInfos : xhr.response, params.seqNumber);
+            params.readyFunction(isError, isError ? params.backupInfos : xhr.response, params.forwardData);
         }
     };
 

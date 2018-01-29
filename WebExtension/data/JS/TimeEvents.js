@@ -99,7 +99,7 @@ function pre_updatetime(seqNumber)
         action:               'POST',
         url:                  '/ajax_editTime.php',
         params:               params,
-        seqNumber:            seqNumber,
+        forwardData:          seqNumber,
         backupInfos:          {value: [timeStart.value, timeEnd.value], default: [timeStart.defaultValue, timeEnd.defaultValue]},
         readyFunction:        post_updateTime
     });

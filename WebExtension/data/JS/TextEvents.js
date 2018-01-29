@@ -43,7 +43,7 @@ function pre_mouseclick(tipo, seqNumber)
         ajax({
             action:        'GET',
             url:           '/translate_ajaxselect.php' + '?' + params,
-            seqNumber:     seqNumber,
+            forwardData:   seqNumber,
             readyFunction: post_select
         });
     }
@@ -132,7 +132,7 @@ function pre_update(tipo, seqNumber)
         action:               'POST',
         url:                  url,
         params:               params,
-        seqNumber:            seqNumber,
+        forwardData:          seqNumber,
         backupInfos:          {value: textArea.value, default: textArea.defaultValue},
         readyFunction:        post_update
     });
@@ -346,7 +346,7 @@ function textCancel(seqNumber)
         ajax({
             action:               'GET',
             url:                  '/translate_release.php' + '?' + params,
-            seqNumber:            seqNumber,
+            forwardData:          seqNumber,
             readyFunction:        post_release
         });
     }

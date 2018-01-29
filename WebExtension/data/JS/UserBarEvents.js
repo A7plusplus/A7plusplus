@@ -324,7 +324,7 @@ function triggerPM(close)
                 responseType:         'document',
                 url:                  '/msgcreate.php?to=' + user,
                 readyFunction:        post_triggerPM,
-                seqNumber:            user
+                forwardData:          user
             });
         }
     }
@@ -387,7 +387,7 @@ function triggerProfile(close)
                 responseType:         'document',
                 url:                  '/user/' + user,
                 readyFunction:        post_triggerProfile,
-                seqNumber:            user
+                forwardData:          user
             });
         }
     }
@@ -447,7 +447,7 @@ function triggerReport(close)
                 responseType:         'document',
                 url:                  '/badsub.php' + location.search,
                 readyFunction:        post_triggerReport,
-                seqNumber:            userBarGetCurrentUser()
+                forwardData:          userBarGetCurrentUser()
             });
         }
     }
