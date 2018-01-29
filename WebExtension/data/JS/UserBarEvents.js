@@ -282,7 +282,9 @@ function triggerPM(close)
     if(close || isOpened)
     {
         // Ouvert avec du contenu
-        if(isOpened && userBar.lastElementChild.firstElementChild.tagName !== "P")
+        if (isOpened &&
+            userBar.lastElementChild.firstElementChild &&
+            userBar.lastElementChild.firstElementChild.tagName !== "P")
         {
             // Sauvegarde l'état
             page.userBarData.PM = userBar.lastElementChild.firstElementChild;
@@ -407,7 +409,9 @@ function triggerReport(close)
     if(close || isOpened)
     {
         // Ouvert avec du contenu
-        if(isOpened && userBar.lastElementChild.firstElementChild.tagName !== "P")
+        if (isOpened &&
+            userBar.lastElementChild.firstElementChild &&
+            userBar.lastElementChild.firstElementChild.tagName !== "P")
         {
             // Sauvegarde l'état
             page.userBarData.Report = userBar.lastElementChild.firstElementChild;
