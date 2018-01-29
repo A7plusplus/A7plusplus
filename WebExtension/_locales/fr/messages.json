@@ -48,7 +48,7 @@
         }
     },
     "A7pp_optionPagePopupTimeoutLabel": {
-        "message": "Délai avant disparition de la popup d'ereur (en secondes, par défaut : $DEFAULT$ secondes) :",
+        "message": "Délai avant disparition de la popup d'erreur (en secondes, par défaut : $DEFAULT$ secondes) :",
         "description": "Popup timeout before disapearing (in seconds, default: $DEFAULT$ sec).",
         "placeholders": {
             "default": {
