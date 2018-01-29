@@ -7,7 +7,6 @@
 // Déclaration de l'objet contenant tous les réglages
 var A7Settings = {
 
-    NUMERIC_VERSION_INFO : 220,
     MAJOR_VERSION_INFO   : 'A7++ 2.2',
     MINOR_VERSION_INFO   : '2.2 bêta',
 
