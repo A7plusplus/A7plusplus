@@ -226,27 +226,37 @@ function openHelpPage(evt)
 
 /**
 * @fn ajax Effectue une requête AJAX
-* @param {string} action POST / GET / UPDATE etc. (temporairement: peut recevoir un tableau de string contenant action et responseType)
-* @param {string} url Adresse
-* @param {string} params Paramètres de la requête
-* @param {function(number, Object, boolean, [Object])} readyFunction Fonction à appeler en cas de réussite
-* @warning Le premier paramètre n'est pas envoyé si seqNumber est null
-* @param {number} seqNumber Numéro de la séquence ou null
-* @param {Object} backupInfos Informations à envoyer en cas d'erreur
-* @param {Object=} secondaryBackupInfos Deuxième information à envoyer en cas d'erreur (optionnel)
+* @param {Object} params Paramètres globaux de la requête
+*
+* ====== Dans l'objet params peuvent se trouver : ======
+* @param {string}  action POST / GET / UPDATE etc.
+* @param {string}  url Adresse
+*
+* @param {function(<number> seqNumber, <Object> responseOrBackup, <boolean> sucess)} readyFunction Fonction à appeler en cas de réussite
+* @warning Le premier paramètre n'est pas envoyé si seqNumber n'est pas présent
+*
+* @param {string=} responseType Type de réponse demandée (optionnel)
+* @param {string=} params Paramètres spécifiques de la requête (optionnel)
+*
+* @param {number=} seqNumber Numéro de la séquence (optionnel)
+* @param {Object=} backupInfos Informations à envoyer en cas d'erreur (optionnel)
 */
-function ajax(action, url, params, readyFunction, seqNumber, backupInfos, secondaryBackupInfos)
+function ajax(params)
 {
+    // Traitement de l'objet paramètre (et de ses champs optionnels)
+    if(typeof params.params === 'undefined') params.params = '';
+    if(typeof params.seqNumber === 'undefined') params.seqNumber = null;
+    if(typeof params.backupInfos === 'undefined') params.backupInfos = null;
+
     // Crée la requête
     var xhr = new XMLHttpRequest();
 
     // L'initialise
-    if (typeof action !== 'string')
+    if(typeof params.responseType !== 'undefined')
     {
-        xhr.responseType = action[1];
-        action = action[0];
+        xhr.responseType = params.responseType;
     }
-    xhr.open(action, url, true);
+    xhr.open(params.action, params.url, true);
     xhr.timeout = A7Settings.updateTimeout * 1000;
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
@@ -256,28 +266,29 @@ function ajax(action, url, params, readyFunction, seqNumber, backupInfos, second
         {
             if (xhr.status === 200)
             {
-                if(seqNumber === null)
+                if(params.seqNumber === null)
                 {
-                    readyFunction(xhr.response, false);
+                    params.readyFunction(xhr.response, false);
                 }
                 else
                 {
-                    readyFunction(seqNumber, xhr.response, false);
+                    params.readyFunction(params.seqNumber, xhr.response, false);
                 }
             }
             else
             {
-                if(seqNumber === null)
+                if(params.seqNumber === null)
                 {
-                    readyFunction(backupInfos, true, secondaryBackupInfos);
+                    params.readyFunction(params.backupInfos, true);
                 }
                 else
                 {
-                    readyFunction(seqNumber, backupInfos, true, secondaryBackupInfos);
+                    params.readyFunction(params.seqNumber, params.backupInfos, true);
                 }
             }
         }
     };
 
-    xhr.send(params);
+    // Envoie
+    xhr.send(params.params);
 }

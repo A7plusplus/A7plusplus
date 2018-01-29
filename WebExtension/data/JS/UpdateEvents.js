@@ -321,7 +321,11 @@ function updateStateOfTranslation()
               '&langto='                    + subInfo.lang;
 
     // Envoie la requête
-    ajax('GET', url, '', post_updateStateOfTranslation, null, null, null);
+    ajax({
+        action:               'GET',
+        url:                  url,
+        readyFunction:        post_updateStateOfTranslation
+    });
 }
 
 

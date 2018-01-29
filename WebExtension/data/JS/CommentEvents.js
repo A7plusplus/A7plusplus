@@ -22,14 +22,14 @@ function refreshComments()
     // Récupération des infos
     var subInfo = page.queryInfos;
 
-    // Construit et lance la requête
-    var params = '&fversion=' + subInfo.fversion +
-                 '&langto='   + subInfo.lang,
-        url = '/translate_comments.php?id=' + subInfo.id,
-        action = 'POST';
-
-    // Envoie la requête
-    ajax([action, 'document'], url, params, post_commentRefresh, null, null);
+    // Construit et envoi la requête
+    ajax({
+        action:        'POST',
+        responseType:  'document',
+        url:           '/translate_comments.php?id=' + subInfo.id,
+        params:        '&fversion=' + subInfo.fversion + '&langto=' + subInfo.lang,
+        readyFunction: post_commentRefresh
+    });
 }
 
 
@@ -189,12 +189,16 @@ function sendComment()
     var params = 'id='          + subInfo.id +
                  '&fversion='   + subInfo.fversion +
                  '&langto='     + subInfo.lang +
-                 '&newcomment=' + encodeURIComponent(textArea.value),
-        url = '/translate_comments.php',
-        action = 'POST';
+                 '&newcomment=' + encodeURIComponent(textArea.value);
 
     // Envoie la requête
-    ajax([action, 'document'], url, params, post_sendComment, null, null);
+    ajax({
+        action:        'POST',
+        responseType:  'document',
+        url:           '/translate_comments.php',
+        params:        params,
+        readyFunction: post_sendComment
+    });
 }
 
 

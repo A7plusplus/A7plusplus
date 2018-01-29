@@ -37,12 +37,15 @@ function pre_mouseclick(tipo, seqNumber)
                      '&fversion='  + subInfo.fversion +
                      '&langto='    + subInfo.lang +
                      '&langfrom='  + subInfo.langfrom +
-                     '&seq=' + seqNumber,
-            url = '/translate_ajaxselect.php',
-            action = 'GET';
+                     '&seq=' + seqNumber;
 
         // Effectue l'envoi des données
-        ajax(action, url + '?' + params, '', post_select, seqNumber, null, null);
+        ajax({
+            action:        'GET',
+            url:           '/translate_ajaxselect.php' + '?' + params,
+            seqNumber:     seqNumber,
+            readyFunction: post_select
+        });
     }
 }
 
@@ -96,8 +99,7 @@ function pre_update(tipo, seqNumber)
 
     // Prépare les données
     var params = null,
-        url = null,
-        action = 'POST';
+        url = null;
 
     if(page.translatePage)
     {
@@ -126,18 +128,24 @@ function pre_update(tipo, seqNumber)
     moveFocusToNextLine(seqNumber);
 
     // Effectue l'envoi des données
-    ajax(action, url, params, post_update, seqNumber, textArea.value, textArea.defaultValue);
+    ajax({
+        action:               'POST',
+        url:                  url,
+        params:               params,
+        seqNumber:            seqNumber,
+        backupInfos:          {value: textArea.value, default: textArea.defaultValue},
+        readyFunction:        post_update
+    });
 }
 
 
 /**
 * @fn post_update Place le texte dans sa cellule ou rouvre l'édition
 * @param {number} seqNumber Numéro de la séquence
-* @param {string} confirmedText Texte confirmé par le serveur ou texte à envoyer en cas d'erreur
+* @param {string} confirmedText Texte confirmé par le serveur ou infos de backup (text à envoyer - text original)
 * @param {boolean} isError Si la requête a échoué
-* @param {string} defaultValue Optionnel : valeur par defaut du texte en cas d'erreur
 */
-function post_update(seqNumber, confirmedText, isError, defaultValue)
+function post_update(seqNumber, confirmedText, isError)
 {
     // Récupération de la cellule
     var textCell = getTextCell(seqNumber);
@@ -183,8 +191,8 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
         var textArea = textCell.firstElementChild.firstElementChild;
 
         // Remet les valeurs par défaut
-        textArea.defaultValue = defaultValue;
-        textArea.value        = confirmedText;
+        textArea.defaultValue = confirmedText.default;
+        textArea.value        = confirmedText.value;
 
         // Mise en forme
         updateRsRatingAndCharCount(seqNumber);
@@ -332,12 +340,15 @@ function textCancel(seqNumber)
         var params = 'id='         + subInfo.id +
                      '&fversion='  + subInfo.fversion +
                      '&langto='      + subInfo.lang +
-                     '&seq=' + seqNumber,
-            url = '/translate_release.php',
-            action = 'GET';
+                     '&seq=' + seqNumber;
 
         // Effectue l'envoi des données
-        ajax(action,  url + '?' + params, '', post_release, seqNumber, null, null);
+        ajax({
+            action:               'GET',
+            url:                  '/translate_release.php' + '?' + params,
+            seqNumber:            seqNumber,
+            readyFunction:        post_release
+        });
     }
 
     // Active onclick après 10 ms pour laisser passer le clic courant

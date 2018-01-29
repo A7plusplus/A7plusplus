@@ -34,7 +34,12 @@ function loadUserBarUsersFromTranslate(data, isError)
                       '&start=0&updated=false&slang=';
 
             // Envoie la requête
-            ajax(['GET', 'document'], url, null, loadUserBarUsersFromTranslate, null, null);
+            ajax({
+                action:               'GET',
+                url:                  url,
+                responseType:         'document',
+                readyFunction:        loadUserBarUsersFromTranslate
+            });
         }
     }
     else
@@ -312,7 +317,13 @@ function triggerPM(close)
             // Récupère l'ID utilisateur
             var user = userBarGetCurrentUser();
 
-            ajax(['GET', 'document'], '/msgcreate.php?to=' + user, '', post_triggerPM, user, null, null);
+            ajax({
+                action:               'GET',
+                responseType:         'document',
+                url:                  '/msgcreate.php?to=' + user,
+                readyFunction:        post_triggerPM,
+                seqNumber:            user
+            });
         }
     }
 }
@@ -369,7 +380,13 @@ function triggerProfile(close)
             // Récupère l'ID utilisateur
             var user = userBarGetCurrentUser();
 
-            ajax(['GET', 'document'], '/user/' + user, '', post_triggerProfile, user, null, null);
+            ajax({
+                action:               'GET',
+                responseType:         'document',
+                url:                  '/user/' + user,
+                readyFunction:        post_triggerProfile,
+                seqNumber:            user
+            });
         }
     }
 }
@@ -421,7 +438,13 @@ function triggerReport(close)
             // Affiche le logo de chargement
             resetToLoadingImage(dataContainer);
 
-            ajax(['GET', 'document'], '/badsub.php' + location.search, '', post_triggerReport, userBarGetCurrentUser(), null, null);
+            ajax({
+                action:               'GET',
+                responseType:         'document',
+                url:                  '/badsub.php' + location.search,
+                readyFunction:        post_triggerReport,
+                seqNumber:            userBarGetCurrentUser()
+            });
         }
     }
 }
@@ -620,15 +643,18 @@ function userBarSendPM(form)
     // Prépare les données
     var params = 'to='         + encodeURIComponent(inputs[0].value) +
                  '&subject='   + encodeURIComponent(inputs[1].value) +
-                 '&msgtext='   + encodeURIComponent('<p>' + textarea.value + '</p>'),
-        url    = '/msgsend.php',
-        action = 'POST';
+                 '&msgtext='   + encodeURIComponent('<p>' + textarea.value + '</p>');
 
     // Indique que c'est en envoi
     var parent = form.classList.add('messageSent');
 
     // Effectue l'envoi des données
-    ajax(action, url, params, post_userBarSendPM, null, null, null);
+    ajax({
+        action:               'POST',
+        params:               params,
+        url:                  '/msgsend.php',
+        readyFunction:        post_userBarSendPM
+    });
 
     return false;
 }
@@ -690,9 +716,7 @@ function userBarSendReport(form)
     var params = 'comment='   + encodeURIComponent(textarea.value) +
                  '&fversion=' + subInfo.fversion +
                  '&id='       + subInfo.id +
-                 '&lang='     + subInfo.lang,
-        url    = 'badsub_do.php',
-        action = 'POST';
+                 '&lang='     + subInfo.lang;
 
     // Traite les checkbox
     var inputs = form.getElementsByTagName('input');
@@ -711,7 +735,12 @@ function userBarSendReport(form)
     var parent = form.classList.add('messageSent');
 
     // Effectue l'envoi des données
-    ajax(action, url, params, post_userBarSendReport, null, null, null);
+    ajax({
+        action:               'POST',
+        params:               params,
+        url:                  'badsub_do.php',
+        readyFunction:        post_userBarSendReport
+    });
 
     return false;
 }

@@ -367,7 +367,12 @@ function requestHICheck()
     var episodeUrl = document.getElementById('spanState').parentElement.querySelector('.titulo,big').firstElementChild.href;
 
     // Envoie la requête
-    ajax(['GET', 'document'], episodeUrl, '', post_requestHICheck, null, null);
+    ajax({
+        action:        'GET',
+        responseType:  'document',
+        url:           episodeUrl,
+        readyFunction: post_requestHICheck
+    });
 }
 
 
