@@ -240,7 +240,4 @@ function init()
 
     // Permet le changement de la langue d'affichage du site (bugfix du site)
     changeAppLang();
-
-    // Vérifie les mises à jour
-    searchForUpdate();
 }

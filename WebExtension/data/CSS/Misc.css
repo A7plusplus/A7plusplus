@@ -52,7 +52,3 @@ div.tabelborder {
     background-color: aliceblue;
     box-shadow: 0 0 1px 1px grey, 0 0 1px 1px lightgrey inset;
 }
-
-#A7Info.updateAvailable {
-    background-color: yellow;
-}

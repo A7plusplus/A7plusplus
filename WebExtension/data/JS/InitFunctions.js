@@ -425,38 +425,3 @@ function post_requestHICheck(episodeHTMLDocument, isError)
 
     console.log('[A7++] ' + loc.HIStatusLoaded);
 }
-
-/**
-* @fn searchForUpdate Envoie la requête de vérification de mise à jour
-*/
-function searchForUpdate()
-{
-    ajax('GET', 'https://raw.githubusercontent.com/A7plusplus/A7plusplus/master/VERSION', '', post_searchForUpdate, null, null);
-}
-
-/**
-* @fn post_searchForUpdate Récupère les infos de version
-*/
-function post_searchForUpdate(data, isError)
-{
-    // On considère qu'il n'y a pas de MÀJ
-    if(isError) return;
-
-    // Comparaison (MÀJ dispo)
-    if(A7Settings.NUMERIC_VERSION_INFO < parseInt(data))
-    {
-        // Met de la couleur
-        var A7Info = document.getElementById('A7Info');
-        if(A7Info)
-        {
-            A7Info.classList.add('updateAvailable');
-            A7Info.title = loc.updateAvailable;
-        }
-        else
-        {
-            setTimeout(function(){
-                post_searchForUpdate(data, isError);
-            }, 250);
-        }
-    }
-}
