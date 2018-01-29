@@ -41,7 +41,7 @@ function charCount(array, countTag)
 
     for (var i = 0; i < length; i++)
     {
-        if(countTag)
+        if (countTag)
         {
             // On compte tout
             lengths.push(array[i].length);
@@ -184,21 +184,21 @@ function moveFocusToNextLine(seqNumber)
     var nextLine = textCell.parentElement.nextSibling;
     var textCellNextLine, textAreaNextLine;
 
-    if(nextLine)
+    if (nextLine)
     {
         var nextLineSeqNumber = nextLine.children[page.lock].firstElementChild.firstElementChild.innerHTML;
         textCellNextLine = getTextCell(nextLineSeqNumber);
     }
 
     // S'il y a une ligne suivante éditable avec cellule de texte ouverte, focus sur la textarea
-    if(nextLine && textCellNextLine && textCellNextLine.classList.contains('textClicked'))
+    if (nextLine && textCellNextLine && textCellNextLine.classList.contains('textClicked'))
     {
         textAreaNextLine = textCellNextLine.firstElementChild.firstElementChild;
 
         textAreaNextLine.focus();
     }
     // S'il y a une ligne suivante éditable avec cellule de texte non ouverte, focus sur la cellule texte
-    else if(nextLine && textCellNextLine)
+    else if (nextLine && textCellNextLine)
     {
         textCellNextLine.focus();
     }
@@ -244,15 +244,15 @@ function openHelpPage(evt)
 function ajax(params)
 {
     // Traitement de l'objet paramètre (et de ses champs optionnels)
-    if(typeof params.params === 'undefined') params.params = '';
-    if(typeof params.seqNumber === 'undefined') params.seqNumber = null;
-    if(typeof params.backupInfos === 'undefined') params.backupInfos = null;
+    if (typeof params.params === 'undefined') params.params = '';
+    if (typeof params.seqNumber === 'undefined') params.seqNumber = null;
+    if (typeof params.backupInfos === 'undefined') params.backupInfos = null;
 
     // Crée la requête
     var xhr = new XMLHttpRequest();
 
     // L'initialise
-    if(typeof params.responseType !== 'undefined')
+    if (typeof params.responseType !== 'undefined')
     {
         xhr.responseType = params.responseType;
     }

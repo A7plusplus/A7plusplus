@@ -17,7 +17,7 @@ function pre_mouseclick(tipo, seqNumber)
     textCell.removeAttribute('tabIndex');
 
     // Si on est en mode Join translation, recherche d'abord le text
-    if(!page.translatePage || getTextCell(seqNumber).innerHTML.contains('loader.gif'))
+    if (!page.translatePage || getTextCell(seqNumber).innerHTML.contains('loader.gif'))
     {
         // Bypass le chargement car inutile si on est en view & edit ou qu'il y a erreur d'envoi
         post_select(false, null, seqNumber);
@@ -101,7 +101,7 @@ function pre_update(tipo, seqNumber)
     var params = null,
         url = null;
 
-    if(page.translatePage)
+    if (page.translatePage)
     {
         params = 'id='         + subInfo.id +
                  '&fversion='  + subInfo.fversion +
@@ -157,7 +157,7 @@ function post_update(isError, confirmedText, seqNumber)
     if (!isError)
     {
         // Change le texte de la cellule
-        if(confirmedText.indexOf('<font color="black">') === -1)
+        if (confirmedText.indexOf('<font color="black">') === -1)
         {
             // <font color="blue">
             textCell.innerHTML = confirmedText.substr(19, confirmedText.length - 26).replace(/\n/g, '');
@@ -171,7 +171,7 @@ function post_update(isError, confirmedText, seqNumber)
         updateRsRatingAndCharCount(seqNumber);
 
         // Marque la séquence comme déjà traduite
-        if(page.translatePage)
+        if (page.translatePage)
         {
             textCell.parentElement.classList.remove('originalText');
             textCell.parentElement.classList.add('quotedText');
@@ -381,9 +381,9 @@ function post_select(isError, data, seqNumber, translateMode)
         var regexMatches = data.match(/onkeypress="translate_userInput[^>]*>((.|\n)*)<\/textarea>/);
 
         // Le texte est trouvé dans la réponse
-        if(regexMatches && regexMatches.length > 2)
+        if (regexMatches && regexMatches.length > 2)
         {
-            if(regexMatches[1] === '</textarea>')
+            if (regexMatches[1] === '</textarea>')
             {
                 text = '';
             }
@@ -397,7 +397,7 @@ function post_select(isError, data, seqNumber, translateMode)
             // Texte non trouvé, on vérifie que la séquence n'est pas occupée
             var regexUser = data.match(/<a href="\/user\/">.*<\/a>/);
 
-            if(regexUser && regexUser.length == 1)
+            if (regexUser && regexUser.length == 1)
             {
                 // Séquence occupée
                 textCell.innerHTML = data;
@@ -409,7 +409,7 @@ function post_select(isError, data, seqNumber, translateMode)
             }
         }
     }
-    else if(isError)
+    else if (isError)
     {
         text = getTextFromHTML(page.tempTranslateBackup[seqNumber]);
     }
@@ -459,7 +459,7 @@ function post_select(isError, data, seqNumber, translateMode)
     textCell.setAttribute('disabled', true);
 
     // Si une erreur de réception arrive en mode Join translation
-    if(isError)
+    if (isError)
     {
         textCell.classList.add('ajaxErrorNotConfirmed');
         textCell.setAttribute('title', loc.seqNotConfirmed);

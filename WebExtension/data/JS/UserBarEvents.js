@@ -13,14 +13,14 @@
 function loadUserBarUsersFromTranslate(isError, data)
 {
     // Envoie la requête AJAX si ce n'est pas déjà fait
-    if(typeof data === 'undefined' && typeof isError === 'undefined')
+    if (typeof data === 'undefined' && typeof isError === 'undefined')
     {
         // Vérification du timeout
         var notAfter = new Date();
         notAfter.setSeconds(notAfter.getSeconds() - A7Settings.userBarUpdateIntervalMin);
 
         // Si le timeout minimum est respecté
-        if(page.lastUserBarUpdate < notAfter)
+        if (page.lastUserBarUpdate < notAfter)
         {
             page.lastUserBarUpdate = new Date();
 
@@ -44,7 +44,7 @@ function loadUserBarUsersFromTranslate(isError, data)
     }
     else
     {
-        if(isError)
+        if (isError)
         {
             setTimeout(function()
             {
@@ -69,7 +69,7 @@ function loadUserBarUsers(forcedSelectNode)
     var select = null;
 
     // Récupère les utilisateurs
-    if(typeof forcedSelectNode === 'undefined')
+    if (typeof forcedSelectNode === 'undefined')
         // Mode view & edit
         select = document.querySelector('select[name="user"]');
     else
@@ -83,22 +83,22 @@ function loadUserBarUsers(forcedSelectNode)
 
 
     // Si le sélecteur est déjà là, ne recrée pas mais ajoute la différence
-    if(oldSelect && oldSelect.tagName === 'SELECT')
+    if (oldSelect && oldSelect.tagName === 'SELECT')
     {
         var alreadyHere = false;
-        for(i = select.length - 1; i > 0; i--) // > 0 car options[0] === 0 (TOUT)
+        for (i = select.length - 1; i > 0; i--) // > 0 car options[0] === 0 (TOUT)
         {
             alreadyHere = false;
-            for(j = oldSelect.length - 1; j >= 0; j--)
+            for (j = oldSelect.length - 1; j >= 0; j--)
             {
-                if(select.options[i].value === oldSelect.options[j].value)
+                if (select.options[i].value === oldSelect.options[j].value)
                 {
                     alreadyHere = true;
                     break;
                 }
             }
 
-            if(!alreadyHere)
+            if (!alreadyHere)
             {
                 oldSelect.appendChild(select.options[i]);
             }
@@ -152,7 +152,7 @@ function addUserToUserBar(name, id)
     var userSelect = document.getElementById('userBar').firstElementChild.children[1].firstElementChild;
 
     // Attend, en mode traduction, que la liste des utilisateurs soit chargée
-    if(userSelect === null)
+    if (userSelect === null)
     {
         setTimeout(function()
         {
@@ -163,8 +163,8 @@ function addUserToUserBar(name, id)
     }
 
     // Vérifie la présence de l'utilisateur
-    for(var i = 0; i < userSelect.length; i++)
-        if(parseInt(userSelect.options[i].value) === parseInt(id))
+    for (var i = 0; i < userSelect.length; i++)
+        if (parseInt(userSelect.options[i].value) === parseInt(id))
             return;
 
     // Ajoute l'utilisateur car non présent
@@ -206,7 +206,7 @@ function setUserBarSize(left, top)
 
 
     // Ajoute les classes
-    if(left === 0)
+    if (left === 0)
     {
         userBar.classList.add('userBarLeft');
 
@@ -216,7 +216,7 @@ function setUserBarSize(left, top)
     }
     else userBar.classList.remove('userBarLeft');
 
-    if(top === 0) userBar.classList.add('userBarTop');
+    if (top === 0) userBar.classList.add('userBarTop');
     else userBar.classList.remove('userBarTop');
 
 
@@ -225,7 +225,7 @@ function setUserBarSize(left, top)
     userBar.style.top = top + 'px';
 
     // Enregistre
-    if(localStorage)
+    if (localStorage)
     {
         localStorage.setItem('A7ppUserBarPosition', left + ',' + top);
     }
@@ -239,7 +239,7 @@ function setUserBarSize(left, top)
 function triggerUserBar(bar)
 {
     // Ouvre ou ferme
-    if(bar.classList.contains('userBarOpened'))
+    if (bar.classList.contains('userBarOpened'))
     {
         triggerPM(true);
         triggerReport(true);
@@ -279,7 +279,7 @@ function triggerPM(close)
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
-    if(close || isOpened)
+    if (close || isOpened)
     {
         // Ouvert avec du contenu
         if (isOpened &&
@@ -305,7 +305,7 @@ function triggerPM(close)
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.PM && page.userBarData.PM.tagName !== 'IMG')
+        if (page.userBarData.PM && page.userBarData.PM.tagName !== 'IMG')
         {
             resetHTMLObject(dataContainer);
             dataContainer.appendChild(page.userBarData.PM);
@@ -343,9 +343,9 @@ function triggerProfile(close)
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
-    if(close || isOpened)
+    if (close || isOpened)
     {
-        if(isOpened)
+        if (isOpened)
         {
             // Sauvegarde l'état
             page.userBarData.Prof = userBar.lastElementChild.firstElementChild;
@@ -367,7 +367,7 @@ function triggerProfile(close)
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.Prof && page.userBarData.Prof.tagName !== 'IMG')
+        if (page.userBarData.Prof && page.userBarData.Prof.tagName !== 'IMG')
         {
             resetHTMLObject(dataContainer);
             dataContainer.classList.add('isUserPage');
@@ -406,7 +406,7 @@ function triggerReport(close)
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
-    if(close || isOpened)
+    if (close || isOpened)
     {
         // Ouvert avec du contenu
         if (isOpened &&
@@ -431,7 +431,7 @@ function triggerReport(close)
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.Report && page.userBarData.Report.tagName !== 'IMG')
+        if (page.userBarData.Report && page.userBarData.Report.tagName !== 'IMG')
         {
             resetHTMLObject(dataContainer);
             dataContainer.appendChild(page.userBarData.Report);
@@ -463,7 +463,7 @@ function triggerReport(close)
 function post_triggerPM(isError, htmlData, userId)
 {
     // L'utilisateur n'est plus le bon
-    if(!userBarIsCurrentUser(userId))
+    if (!userBarIsCurrentUser(userId))
     {
         return;
     }
@@ -473,9 +473,9 @@ function post_triggerPM(isError, htmlData, userId)
         dataContainer    =  document.getElementById('userBarData');
 
     // Affichage de l'erreur
-    if(isError)
+    if (isError)
     {
-        if(!isBackgroundTask)
+        if (!isBackgroundTask)
         {
             dataContainer.innerText = loc.ajaxErrorOccurred;
         }
@@ -498,7 +498,7 @@ function post_triggerPM(isError, htmlData, userId)
     form.setAttribute('onsubmit', 'return userBarSendPM(this)');
 
     // Sauvegarde ou affiche
-    if(isBackgroundTask)
+    if (isBackgroundTask)
     {
         // Sauvegarde
         page.userBarData.PM = form;
@@ -522,7 +522,7 @@ function post_triggerPM(isError, htmlData, userId)
 function post_triggerReport(isError, htmlData, userId)
 {
     // L'utilisateur n'est plus le bon
-    if(!userBarIsCurrentUser(userId))
+    if (!userBarIsCurrentUser(userId))
     {
         return;
     }
@@ -532,9 +532,9 @@ function post_triggerReport(isError, htmlData, userId)
         dataContainer    =  document.getElementById('userBarData');
 
     // Affichage de l'erreur
-    if(isError)
+    if (isError)
     {
-        if(!isBackgroundTask)
+        if (!isBackgroundTask)
         {
             dataContainer.innerText = loc.ajaxErrorOccurred;
         }
@@ -555,7 +555,7 @@ function post_triggerReport(isError, htmlData, userId)
     form.setAttribute('onsubmit', 'return userBarSendReport(this)');
 
     // Sauvegarde ou affiche
-    if(isBackgroundTask)
+    if (isBackgroundTask)
     {
         // Sauvegarde
         page.userBarData.Report = form;
@@ -579,7 +579,7 @@ function post_triggerReport(isError, htmlData, userId)
 function post_triggerProfile(isError, htmlData, userId)
 {
     // L'utilisateur n'est plus le bon
-    if(!userBarIsCurrentUser(userId))
+    if (!userBarIsCurrentUser(userId))
     {
         return;
     }
@@ -589,9 +589,9 @@ function post_triggerProfile(isError, htmlData, userId)
         dataContainer    =  document.getElementById('userBarData');
 
     // Affichage de l'erreur
-    if(isError)
+    if (isError)
     {
-        if(!isBackgroundTask)
+        if (!isBackgroundTask)
         {
             dataContainer.innerText = loc.ajaxErrorOccurred;
         }
@@ -612,7 +612,7 @@ function post_triggerProfile(isError, htmlData, userId)
     }
 
     // Sauvegarde ou affiche
-    if(isBackgroundTask)
+    if (isBackgroundTask)
     {
         // Sauvegarde
         page.userBarData.Prof = dataTable;
@@ -635,7 +635,7 @@ function post_triggerProfile(isError, htmlData, userId)
 function userBarSendPM(form)
 {
     // Déjà en cours d'envoi
-    if(form.classList.contains('messageSent'))
+    if (form.classList.contains('messageSent'))
     {
         return false;
     }
@@ -673,12 +673,12 @@ function post_userBarSendPM(isError, HTMLstring)
 {
     // On est toujours sur la page
     var form = document.getElementById('userBarData').firstElementChild;
-    if(!form || form.onsubmit.toString().search('userBarSendPM') === -1 || !form.classList.contains('messageSent'))
+    if (!form || form.onsubmit.toString().search('userBarSendPM') === -1 || !form.classList.contains('messageSent'))
     {
         return;
     }
 
-    if(isError)
+    if (isError)
     {
         form.classList.add('ajaxError');
         form.title = loc.messageSendError;
@@ -707,7 +707,7 @@ function post_userBarSendPM(isError, HTMLstring)
 function userBarSendReport(form)
 {
     // Déjà en cours d'envoi
-    if(form.classList.contains('messageSent'))
+    if (form.classList.contains('messageSent'))
     {
         return false;
     }
@@ -724,11 +724,11 @@ function userBarSendReport(form)
 
     // Traite les checkbox
     var inputs = form.getElementsByTagName('input');
-    for(var i = 0; i < inputs.length; i++)
+    for (var i = 0; i < inputs.length; i++)
     {
-        if(inputs[i].type === 'checkbox')
+        if (inputs[i].type === 'checkbox')
         {
-            if(inputs[i].checked)
+            if (inputs[i].checked)
             {
                 params += '&' + inputs[i].name + '=true';
             }
@@ -759,12 +759,12 @@ function post_userBarSendReport(isError, HTMLstring)
 {
     // On est toujours sur la page
     var form = document.getElementById('userBarData').firstElementChild;
-    if(!form || form.onsubmit.toString().search('userBarSendReport') === -1 || !form.classList.contains('messageSent'))
+    if (!form || form.onsubmit.toString().search('userBarSendReport') === -1 || !form.classList.contains('messageSent'))
     {
         return;
     }
 
-    if(isError)
+    if (isError)
     {
         form.classList.add('ajaxError');
         form.title = loc.messageSendError;

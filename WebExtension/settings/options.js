@@ -77,13 +77,13 @@ function getData()
         function(item)
         {
             // Objet présent
-            if(typeof item.lang !== 'undefined')
+            if (typeof item.lang !== 'undefined')
             {
                 // Langue
                 document.getElementById("forcedLangCBData").checked = item.lang.forced;
                 var availableLang = document.getElementById("availableLangData");
                 availableLang.value  = item.lang.data;
-                if(availableLang.value === '') availableLang.value = 'en';
+                if (availableLang.value === '') availableLang.value = 'en';
 
                 // Cadenas
                 document.getElementById("lockPositionData").options[item.lock === "top" ? 1 : 0].selected = 'selected';

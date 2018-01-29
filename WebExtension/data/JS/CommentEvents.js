@@ -13,7 +13,7 @@ function refreshComments()
     var updateButton = document.getElementById('commentsSection').children[1].lastElementChild;
 
     // Si on est en cours d'actualisation, ne fait rien
-    if(updateButton.getAttribute('loading') !== null)
+    if (updateButton.getAttribute('loading') !== null)
         return;
 
     // Désactivation du bouton de rafraîchissement
@@ -54,7 +54,7 @@ function post_commentRefresh(isError, htmlData)
     // Enclenche un compte à rebours pour réactualiser les commentaires après un temps donné
     page.refreshCommentsTimeoutId = setTimeout(refreshComments, A7Settings.commentUpdateInterval * 1000);
 
-    if(isError)
+    if (isError)
     {
         // Indique une erreur
         commentList.setAttribute('class', 'ajaxError');
@@ -63,7 +63,7 @@ function post_commentRefresh(isError, htmlData)
     }
 
     // S'il y a eu une erreur, l'enlève
-    if(commentList.getAttribute('class') === 'ajaxError')
+    if (commentList.getAttribute('class') === 'ajaxError')
     {
         commentList.setAttribute('class', '');
         commentList.setAttribute('title', '');
@@ -77,10 +77,10 @@ function post_commentRefresh(isError, htmlData)
     var listOfNewCommLength = (listOfNewComments.length - 5) / 2;
 
     // Si ce n'est pas l'initialisation
-    if(page.commentNumber !== -1)
+    if (page.commentNumber !== -1)
     {
         // Et qu'il y a de nouveaux commentaires
-        if((listOfNewCommLength - page.commentNumber) > 0)
+        if ((listOfNewCommLength - page.commentNumber) > 0)
         {
             // Récupère le nombre de commantaires
             var commentCounter = updateButton.previousElementSibling.lastElementChild;
@@ -106,13 +106,13 @@ function post_commentRefresh(isError, htmlData)
     var temp;
 
     // Repeuple les commentaires du tableau
-    for(var i = 2, j = 1; i < listOfNewCommLength + 2; i++, j++)
+    for (var i = 2, j = 1; i < listOfNewCommLength + 2; i++, j++)
     {
         // Retire l'image
         listOfNewComments[i].firstElementChild.firstElementChild.remove();
 
         // Ajoute l'utilisateur à la barre (sur base des nouveaux commentaires)
-        if(!A7Settings.disableUserBar && j > page.commentNumber)
+        if (!A7Settings.disableUserBar && j > page.commentNumber)
         {
             temp = listOfNewComments[i].firstElementChild.firstElementChild;
 
@@ -130,7 +130,7 @@ function post_commentRefresh(isError, htmlData)
     page.commentNumber = listOfNewCommLength;
 
     // Réadapte la vue utilisateur
-    if(isUserOnCommentBottom)
+    if (isUserOnCommentBottom)
     {
         page.tempDisablePopupRemoval = true;
         commentList.scrollTop = commentList.scrollHeight;
@@ -157,7 +157,7 @@ function post_sendComment(isError, htmlData)
     textArea.removeAttribute('disabled');
 
     // Si le commentaire a bien été envoyé
-    if(!isError)
+    if (!isError)
     {
         // Efface le contenu de la textArea
         textArea.value = '';
@@ -180,7 +180,7 @@ function sendComment()
     var textArea = document.getElementById('commentsSection').lastElementChild.lastElementChild.firstElementChild;
 
     // Si vide, n'envoie pas
-    if(textArea.value === '') return;
+    if (textArea.value === '') return;
 
     // Désactive la textArea le temps de l'envoi
     textArea.setAttribute('disabled', true);
@@ -226,10 +226,10 @@ function pinComments()
 {
     var commentsSection = document.getElementById('commentsSection');
 
-    if(commentsSection.className && commentsSection.classList.contains('comment-pined'))
+    if (commentsSection.className && commentsSection.classList.contains('comment-pined'))
     {
         commentsSection.classList.remove('comment-pined');
-        if(localStorage)
+        if (localStorage)
         {
             localStorage.setItem('A7ppCommentWindowPined', false);
         }
@@ -237,7 +237,7 @@ function pinComments()
     else
     {
         commentsSection.classList.add('comment-pined');
-        if(localStorage)
+        if (localStorage)
         {
             localStorage.setItem('A7ppCommentWindowPined', true);
         }
@@ -253,10 +253,10 @@ function pinCommentsTemp()
     var commentsSection = document.getElementById('commentsSection');
 
     // Si pinné
-    if(commentsSection.className && commentsSection.classList.contains('comment-pined'))
+    if (commentsSection.className && commentsSection.classList.contains('comment-pined'))
     {
         // Si c'est temporaire
-        if(commentsSection.classList.contains('comment-pined-tmp'))
+        if (commentsSection.classList.contains('comment-pined-tmp'))
         {
             commentsSection.classList.remove('comment-pined-tmp');
             commentsSection.classList.remove('comment-pined');
@@ -278,10 +278,10 @@ function lockComment()
 {
     var commentsSection = document.getElementById('commentsSection');
 
-    if(commentsSection.className && commentsSection.classList.contains('lockdown'))
+    if (commentsSection.className && commentsSection.classList.contains('lockdown'))
     {
         commentsSection.classList.remove('lockdown');
-        if(localStorage)
+        if (localStorage)
         {
             localStorage.setItem('A7ppCommentWindowLockedDown', false);
         }
@@ -289,7 +289,7 @@ function lockComment()
     else
     {
         commentsSection.classList.add('lockdown');
-        if(localStorage)
+        if (localStorage)
         {
             localStorage.setItem('A7ppCommentWindowLockedDown', true);
         }
@@ -319,11 +319,11 @@ function windowMouseMove(e)
     var height = window.innerHeight - e.clientY,
         commentsSection = document.getElementById('commentsSection');
 
-    if(height < 180)
+    if (height < 180)
     {
         height = 180;
     }
-    else if(height > window.innerHeight / 1.25)
+    else if (height > window.innerHeight / 1.25)
     {
         height = window.innerHeight / 1.25;
     }
@@ -333,7 +333,7 @@ function windowMouseMove(e)
     document.getElementById('lista').style.marginBottom = height + 10 + 'px';
 
     // Sauvegarde pour la personnalisation
-    if(localStorage)
+    if (localStorage)
     {
         localStorage.setItem('A7ppCommentWindowSize', height / window.innerHeight);
     }
@@ -363,7 +363,7 @@ function commentsTableScroll(e)
 
     var table = commentsSection.lastElementChild.firstElementChild;
 
-    if(!page.tempDisablePopupRemoval && table.scrollHeight === table.scrollTop + table.clientHeight)
+    if (!page.tempDisablePopupRemoval && table.scrollHeight === table.scrollTop + table.clientHeight)
     {
         commentsSection.children[1].children[1].lastElementChild.textContent = '';
     }

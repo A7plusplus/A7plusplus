@@ -14,7 +14,7 @@ function createA7button()
     // Simule un bouton avec les touches Entrée et Espace
     button.addEventListener('keypress', function(e)
     {
-        if(e.key === " " || e.key === "Enter")
+        if (e.key === " " || e.key === "Enter")
         {
             e.preventDefault();
             button.click();
@@ -160,7 +160,7 @@ function createTimeUtils(seqNumber, timeCodes)
     editionContainer.appendChild(endInput);
 
     // Ajoute le grand indicateur en lui retirant son conteneur
-    for(var i = bigIndicator.childElementCount; i !== 0; i--)
+    for (var i = bigIndicator.childElementCount; i !== 0; i--)
     {
         editionContainer.appendChild(bigIndicator.children[0]);
     }
@@ -292,7 +292,7 @@ function createCommentLockUtil(parentDiv)
     lockSpan.addEventListener('click', lockComment, false);
 
     // Ajout de la classe pour modifier la position du cadenas
-    if(A7Settings.lockPosition === "top")
+    if (A7Settings.lockPosition === "top")
     {
         lockSpan.classList.add('lockCommentTop');
     }
@@ -558,7 +558,7 @@ function addParentHTMLNode(parentNode, childNode, className)
     newParent.appendChild(childNode);
 
     // Replace
-    if(nextNode === null)
+    if (nextNode === null)
     {
         parentNode.appendChild(newParent);
     }
@@ -568,7 +568,7 @@ function addParentHTMLNode(parentNode, childNode, className)
     }
 
     // Ajoute la classe
-    if(className !== null)
+    if (className !== null)
     {
         newParent.classList.add(className);
     }

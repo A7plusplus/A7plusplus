@@ -135,7 +135,7 @@ function linesChanged()
         }
 
         // Si le lock des commentaires est placé en haut, le crée
-        if(A7Settings.lockPosition === "top")
+        if (A7Settings.lockPosition === "top")
         {
             parentDiv.insertBefore(createCommentLockUtil(), parentDiv.firstElementChild);
         }
@@ -154,7 +154,7 @@ function linesChanged()
     updateStateOfTranslation();
 
     var headerRow = null;
-    if(page.translatePage)
+    if (page.translatePage)
     {
         headerRow = document.getElementById('lista').firstElementChild.firstElementChild.firstElementChild;
     }
@@ -220,7 +220,7 @@ function linesChanged()
             });
 
             // Place le focus sur la première ligne cliquable pour la navigation au clavier
-            if(firstEditableLine === null) firstEditableLine = textCell;
+            if (firstEditableLine === null) firstEditableLine = textCell;
         }
 
         // Retire le texte de base indiquant une séquence non traduite
@@ -340,15 +340,15 @@ function linesChanged()
     }
 
     // Si la barre utilisateur est activée
-    if(!A7Settings.disableUserBar)
+    if (!A7Settings.disableUserBar)
     {
         // Charge la liste des utilisateurs dans la userBar
-        if(page.translatePage) loadUserBarUsersFromTranslate();
+        if (page.translatePage) loadUserBarUsersFromTranslate();
         else                   loadUserBarUsers();
     }
 
     // Focus sur la première ligne
-    if(firstEditableLine) firstEditableLine.focus();
+    if (firstEditableLine) firstEditableLine.focus();
 }
 
 
@@ -358,7 +358,7 @@ function linesChanged()
 function requestHICheck()
 {
     // Créé la variable de maximum de vérifications
-    if(typeof window.A7CurrentHICheck === 'undefined')
+    if (typeof window.A7CurrentHICheck === 'undefined')
     {
         window.A7CurrentHICheck = 0;
     }
@@ -389,7 +389,7 @@ function post_requestHICheck(isError, episodeHTMLDocument)
     // Renvoie la requête : en cas d'échec ou de vérification sommaire du contenu de la page reçue infructueuse
     if (isError || !episodeHTMLDocument.getElementById('container95m'))
     {
-        if(window.A7CurrentHICheck > A7Settings.maxHICheck) return;
+        if (window.A7CurrentHICheck > A7Settings.maxHICheck) return;
 
         setTimeout(function(){
             requestHICheck();

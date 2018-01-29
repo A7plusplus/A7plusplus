@@ -8,7 +8,7 @@
 var translatePage = location.href.search(new RegExp('translate.php')) !== -1;
 
 // Si la langue n'est pas anglais et qu'on est en mode view & edit
-if(!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
+if (!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
 {
     // Remplacement des AJAX
     var xhrProto = XMLHttpRequest.prototype,
@@ -38,7 +38,7 @@ if(!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
     xhrProto.open = function (method, url)
     {
         // Fait échouer la première requête
-        if(url === '/ajax_list.php' + location.search + '&start=0&updated=false&slang=')
+        if (url === '/ajax_list.php' + location.search + '&start=0&updated=false&slang=')
         {
             return;
         }
@@ -89,7 +89,7 @@ function preInit()
         var options = JSON.parse(data.detail);
 
         // Si des options sont présentes, remplace celles par défaut
-        if(options !== null)
+        if (options !== null)
         {
             A7Settings.stateUpdateInterval   = options.updates.state;
             A7Settings.commentUpdateInterval = options.updates.comment;
@@ -98,7 +98,7 @@ function preInit()
         }
 
         // Récupère la langue du site ou celle forcée
-        if(options !== null && options.lang.forced === true)
+        if (options !== null && options.lang.forced === true)
         {
             // Fallback en anglais si la langue n'est pas trouvée
             loc = loc[options.lang.data] ? loc[options.lang.data] : loc.en;
@@ -147,7 +147,7 @@ function init()
 
     // Récupère les infos de la page
     var pageInfos = {};
-    if(!translatePage)
+    if (!translatePage)
     {
         location.search.substr(1).split('&').forEach(function(item)
         {
@@ -191,36 +191,36 @@ function init()
     var listaParent = list.parentElement;
 
     // Ajoute la barre utilisateur si non désactivée
-    if(!A7Settings.disableUserBar)
+    if (!A7Settings.disableUserBar)
     {
         listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
     }
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
     // Si le lock des commentaires est placé en bas, le crée
-    if(A7Settings.lockPosition === "bottom")
+    if (A7Settings.lockPosition === "bottom")
     {
         listaParent.insertBefore(createCommentLockUtil(), listaParent.lastElementChild);
     }
 
     // Récupère les valeurs enregistrées pour :
     // la taille de la fenêtre de commentaires, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
-    if(localStorage)
+    if (localStorage)
     {
         var commentsSection = document.getElementById('commentsSection');
         updateCommentHeightFromSaved(commentsSection, 'A7ppCommentWindowSize', 180, 0.8);
-        if(localStorage.getItem('A7ppCommentWindowPined') === "true")
+        if (localStorage.getItem('A7ppCommentWindowPined') === "true")
         {
             pinComments();
         }
-        if(localStorage.getItem('A7ppCommentWindowLockedDown') === "true")
+        if (localStorage.getItem('A7ppCommentWindowLockedDown') === "true")
         {
             lockComment();
         }
 
         // Barre utilisateur
         var userBarPos = localStorage.getItem('A7ppUserBarPosition');
-        if(userBarPos && !A7Settings.disableUserBar)
+        if (userBarPos && !A7Settings.disableUserBar)
         {
             var data = userBarPos.split(',');
             var left = data[0],

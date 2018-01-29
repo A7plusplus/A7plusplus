@@ -337,7 +337,7 @@ function updateStateOfTranslation()
 function post_updateStateOfTranslation(isError, HTMLString)
 {
     // On attend le prochain rapatriement des données
-    if(isError) return;
+    if (isError) return;
 
     // Actualise l'avancement
     var spanState = document.getElementById('spanState');
@@ -401,14 +401,14 @@ function updateCommentHeightFromSaved(elem, storage, lowLimit, highLimit)
 {
     // Récupère la valeur
     var savedValue = 0;
-    if(localStorage)
+    if (localStorage)
     {
         savedValue = parseFloat(localStorage.getItem(storage));
     }
 
 
     // La valeur est valide
-    if(!isNaN(savedValue) && savedValue * window.innerHeight >= lowLimit && savedValue <= highLimit)
+    if (!isNaN(savedValue) && savedValue * window.innerHeight >= lowLimit && savedValue <= highLimit)
     {
         var size = Math.round(savedValue * window.innerHeight);
 
@@ -426,7 +426,7 @@ function removeCommentPopup()
 {
     var commentSection = document.getElementById('commentsSection');
 
-    if(commentSection)
+    if (commentSection)
     {
         commentSection.children[1].children[1].lastElementChild.textContent = '';
     }
