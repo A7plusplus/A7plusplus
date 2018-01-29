@@ -48,5 +48,8 @@ var A7Settings = {
     lockPosition: "bottom",
 
     // Désactivation de la barre utilisateur
-    disableUserBar: false
+    disableUserBar: false,
+
+    // Nombre maximal de tentative de récupération de l'indicateur HI
+    maxHICheck: 4
 };

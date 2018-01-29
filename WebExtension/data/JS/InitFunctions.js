@@ -357,6 +357,12 @@ function linesChanged()
 */
 function requestHICheck()
 {
+    // Créé la variable de maximum de vérifications
+    if(typeof window.A7CurrentHICheck === 'undefined')
+    {
+        window.A7CurrentHICheck = 0;
+    }
+
     // Récupère les infos
     var episodeUrl = document.getElementById('spanState').parentElement.querySelector('.titulo,big').firstElementChild.href;
 
@@ -370,9 +376,14 @@ function requestHICheck()
 */
 function post_requestHICheck(episodeHTMLDocument, isError)
 {
+    // Variable pour ne pas faire des reqêtes à l'infini
+    window.A7CurrentHICheck++;
+
     // Renvoie la requête : en cas d'échec ou de vérification sommaire du contenu de la page reçue infructueuse
     if (isError || !episodeHTMLDocument.getElementById('container95m'))
     {
+        if(window.A7CurrentHICheck > A7Settings.maxHICheck) return;
+
         setTimeout(function(){
             requestHICheck();
         }, 250);
