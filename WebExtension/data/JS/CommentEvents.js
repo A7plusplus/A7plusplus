@@ -35,10 +35,10 @@ function refreshComments()
 
 /**
 * @fn post_commentRefresh Traite les données reçues par AJAX
-* @param {string} htmlData Objet HTML de la réponse
 * @param {boolean} isError Si une erreur s'est produite
+* @param {string} htmlData Objet HTML de la réponse
 */
-function post_commentRefresh(htmlData, isError)
+function post_commentRefresh(isError, htmlData)
 {
     // Récupère les informations utiles
     var commentsSection = document.getElementById('commentsSection');
@@ -145,10 +145,10 @@ function post_commentRefresh(htmlData, isError)
 
 /**
 * @fn post_sendComment Traite les données reçues par AJAX
-* @param {string} htmlData Objet HTML des commentaires
 * @param {boolean} isError Si une erreur s'est produite
+* @param {string} htmlData Objet HTML des commentaires
 */
-function post_sendComment(htmlData, isError)
+function post_sendComment(isError, htmlData)
 {
     // Récupère la textArea
     var textArea = document.getElementById('commentsSection').lastElementChild.lastElementChild.firstElementChild;
@@ -164,7 +164,7 @@ function post_sendComment(htmlData, isError)
         page.commentNumber += 1;
     }
 
-    post_commentRefresh(htmlData, isError);
+    post_commentRefresh(isError, htmlData);
 }
 
 

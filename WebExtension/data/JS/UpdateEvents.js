@@ -331,10 +331,10 @@ function updateStateOfTranslation()
 
 /**
 * @fn post_updateStateOfTranslation Traite l'AJAX de l'état d'avancement
-* @param {String} HTMLString Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String} HTMLString Réponse de la requête AJAX
 */
-function post_updateStateOfTranslation(HTMLString, isError)
+function post_updateStateOfTranslation(isError, HTMLString)
 {
     // On attend le prochain rapatriement des données
     if(isError) return;

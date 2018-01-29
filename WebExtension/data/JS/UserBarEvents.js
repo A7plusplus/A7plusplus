@@ -7,10 +7,10 @@
 /**
 * @fn loadUserBarUsersFromTranslate Charge la liste des utilisateurs
 *     dans la userBar depuis le mode Join translation
-* @param {String} data Données retournées par AJAX
 * @param {Boolean} isError Si la requête a échoué
+* @param {String} data Données retournées par AJAX
 */
-function loadUserBarUsersFromTranslate(data, isError)
+function loadUserBarUsersFromTranslate(isError, data)
 {
     // Envoie la requête AJAX si ce n'est pas déjà fait
     if(typeof data === 'undefined' && typeof isError === 'undefined')
@@ -456,11 +456,11 @@ function triggerReport(close)
 
 /**
 * @fn post_triggerPM Traite l'AJAX du message privé
-* @param {Integer} userId ID utilisateur
-* @param {String} htmlData Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  htmlData Réponse de la requête AJAX
+* @param {Integer} userId ID utilisateur
 */
-function post_triggerPM(userId, htmlData, isError)
+function post_triggerPM(isError, htmlData, userId)
 {
     // L'utilisateur n'est plus le bon
     if(!userBarIsCurrentUser(userId))
@@ -470,7 +470,7 @@ function post_triggerPM(userId, htmlData, isError)
 
     // Si on a changé d'onglet
     var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[2].classList.contains('userBarButtonClicked');
-        dataContainer    = document.getElementById('userBarData');
+        dataContainer    =  document.getElementById('userBarData');
 
     // Affichage de l'erreur
     if(isError)
@@ -515,11 +515,11 @@ function post_triggerPM(userId, htmlData, isError)
 
 /**
 * @fn post_triggerReport Traite l'AJAX du signalement
-* @param {Integer} userId ID utilisateur
-* @param {String} htmlData Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  htmlData Réponse de la requête AJAX
+* @param {Integer} userId ID utilisateur
 */
-function post_triggerReport(userId, htmlData, isError)
+function post_triggerReport(isError, htmlData, userId)
 {
     // L'utilisateur n'est plus le bon
     if(!userBarIsCurrentUser(userId))
@@ -529,7 +529,7 @@ function post_triggerReport(userId, htmlData, isError)
 
     // Si on a changé d'onglet
     var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[4].classList.contains('userBarButtonClicked');
-        dataContainer    = document.getElementById('userBarData');
+        dataContainer    =  document.getElementById('userBarData');
 
     // Affichage de l'erreur
     if(isError)
@@ -572,11 +572,11 @@ function post_triggerReport(userId, htmlData, isError)
 
 /**
 * @fn post_triggerProfile Traite l'AJAX du profil
-* @param {Integer} userId ID utilisateur
-* @param {String} htmlData Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  htmlData Réponse de la requête AJAX
+* @param {Integer} userId ID utilisateur
 */
-function post_triggerProfile(userId, htmlData, isError)
+function post_triggerProfile(isError, htmlData, userId)
 {
     // L'utilisateur n'est plus le bon
     if(!userBarIsCurrentUser(userId))
@@ -586,7 +586,7 @@ function post_triggerProfile(userId, htmlData, isError)
 
     // Si on a changé d'onglet
     var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[3].classList.contains('userBarButtonClicked');
-        dataContainer    = document.getElementById('userBarData');
+        dataContainer    =  document.getElementById('userBarData');
 
     // Affichage de l'erreur
     if(isError)
@@ -666,10 +666,10 @@ function userBarSendPM(form)
 
 /**
 * @fn post_userBarSendPM Traite le retour de l'envoi du message
-* @param {String} HTMLString Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  HTMLString Réponse de la requête AJAX
 */
-function post_userBarSendPM(HTMLstring, isError)
+function post_userBarSendPM(isError, HTMLstring)
 {
     // On est toujours sur la page
     var form = document.getElementById('userBarData').firstElementChild;
@@ -752,10 +752,10 @@ function userBarSendReport(form)
 
 /**
 * @fn post_userBarSendReport Traite le retour du l'envoi du signalement
-* @param {String} HTMLString Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  HTMLString Réponse de la requête AJAX
 */
-function post_userBarSendReport(HTMLstring, isError)
+function post_userBarSendReport(isError, HTMLstring)
 {
     // On est toujours sur la page
     var form = document.getElementById('userBarData').firstElementChild;

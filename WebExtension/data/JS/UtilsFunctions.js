@@ -232,8 +232,8 @@ function openHelpPage(evt)
 * @param {string}  action POST / GET / UPDATE etc.
 * @param {string}  url Adresse
 *
-* @param {function(<number> seqNumber, <Object> responseOrBackup, <boolean> sucess)} readyFunction Fonction à appeler en cas de réussite
-* @warning Le premier paramètre n'est pas envoyé si seqNumber n'est pas présent
+* @param {function({boolean} isError, {Object} responseOrBackup, {number=} seqNumber)} readyFunction Fonction à appeler en cas de réussite
+* @warning seqNumber sera null s'il n'est pas reçu dans les paramètres de base
 *
 * @param {string=} responseType Type de réponse demandée (optionnel)
 * @param {string=} params Paramètres spécifiques de la requête (optionnel)
@@ -260,32 +260,13 @@ function ajax(params)
     xhr.timeout = A7Settings.updateTimeout * 1000;
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
+    // Gère le retour
     xhr.onreadystatechange = function()
     {
         if (xhr.readyState === 4)
         {
-            if (xhr.status === 200)
-            {
-                if(params.seqNumber === null)
-                {
-                    params.readyFunction(xhr.response, false);
-                }
-                else
-                {
-                    params.readyFunction(params.seqNumber, xhr.response, false);
-                }
-            }
-            else
-            {
-                if(params.seqNumber === null)
-                {
-                    params.readyFunction(params.backupInfos, true);
-                }
-                else
-                {
-                    params.readyFunction(params.seqNumber, params.backupInfos, true);
-                }
-            }
+            var isError = xhr.status !== 200;
+            params.readyFunction(isError, isError ? params.backupInfos : xhr.response, params.seqNumber);
         }
     };
 

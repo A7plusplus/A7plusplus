@@ -20,7 +20,7 @@ function pre_mouseclick(tipo, seqNumber)
     if(!page.translatePage || getTextCell(seqNumber).innerHTML.contains('loader.gif'))
     {
         // Bypass le chargement car inutile si on est en view & edit ou qu'il y a erreur d'envoi
-        post_select(seqNumber, null, false);
+        post_select(false, null, seqNumber);
     }
     else
     {
@@ -141,11 +141,11 @@ function pre_update(tipo, seqNumber)
 
 /**
 * @fn post_update Place le texte dans sa cellule ou rouvre l'édition
-* @param {number} seqNumber Numéro de la séquence
-* @param {string} confirmedText Texte confirmé par le serveur ou infos de backup (text à envoyer - text original)
 * @param {boolean} isError Si la requête a échoué
+* @param {string} confirmedText Texte confirmé par le serveur ou infos de backup (text à envoyer - text original)
+* @param {number} seqNumber Numéro de la séquence
 */
-function post_update(seqNumber, confirmedText, isError)
+function post_update(isError, confirmedText, seqNumber)
 {
     // Récupération de la cellule
     var textCell = getTextCell(seqNumber);
@@ -360,12 +360,12 @@ function textCancel(seqNumber)
 
 /**
 * @fn post_select Récupère et place le dernier texte de la séquence
-* @param {Integer} seqNumber Numéro de séquence
-* @param {Object} data Donnée issue de la requête (ou null si en mode view & edit)
 * @param {Boolean} isError Si la requête a échoué (ou false en mode view & edit)
+* @param {Object}  data Donnée issue de la requête (ou null si en mode view & edit)
+* @param {Integer} seqNumber Numéro de séquence
 * @param {Object} translateMode Non utilisé
 */
-function post_select(seqNumber, data, isError, translateMode)
+function post_select(isError, data, seqNumber, translateMode)
 {
     // Récupération des éléments utiles
     var line     = getTextCell(seqNumber).parentElement;

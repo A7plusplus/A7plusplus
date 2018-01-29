@@ -108,11 +108,11 @@ function pre_updatetime(seqNumber)
 
 /**
 * @fn post_updateTime Place le temps dans sa cellule ou rouvre l'édition
-* @param {number} seqNumber Numéro de la séquence
-* @param {Array.<string>} confirmedTime Temps confirmé par le serveur ou temps à envoyer en cas d'erreur
 * @param {boolean} isError Si la requête a échoué
+* @param {Array.<string>} confirmedTime Temps confirmé par le serveur ou temps à envoyer en cas d'erreur
+* @param {number} seqNumber Numéro de la séquence
 */
-function post_updateTime(seqNumber, confirmedTime, isError)
+function post_updateTime(isError, confirmedTime, seqNumber)
 {
     // Récupération de la cellule
     var timeCell = getTimeCell(seqNumber);

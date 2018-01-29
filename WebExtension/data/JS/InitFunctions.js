@@ -378,8 +378,10 @@ function requestHICheck()
 
 /**
 * @fn post_requestHICheck Récupère les données de l'épisode et vérifie s'il est en HI
+* @param {boolean} isError Si une erreur s'est produite
+* @param {string} htmlData Objet HTML de l'episode
 */
-function post_requestHICheck(episodeHTMLDocument, isError)
+function post_requestHICheck(isError, episodeHTMLDocument)
 {
     // Variable pour ne pas faire des reqêtes à l'infini
     window.A7CurrentHICheck++;
