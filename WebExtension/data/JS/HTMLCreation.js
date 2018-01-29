@@ -387,7 +387,10 @@ function createA7Info()
     // Mise en place
     versionInfo.id          = 'A7Info';
     versionInfo.textContent = A7Settings.MAJOR_VERSION_INFO;
-    versionInfo.title       = A7Settings.MINOR_VERSION_INFO;
+    versionInfo.title       = A7Settings.MINOR_VERSION_INFO + ' ' + loc.clickToShowHelp;
+
+    // Affichage de la page d'aide au clic
+    versionInfo.addEventListener('click', openHelpPage, false);
 
     return versionInfo;
 }

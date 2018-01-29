@@ -211,6 +211,20 @@ function moveFocusToNextLine(seqNumber)
 
 
 /**
+* @fn openHelpPage Ouvre la page d'aide du forum
+* @param evt Evenement de l'eventListener qui appelle la fonction
+*/
+function openHelpPage(evt)
+{
+    // Empêche le clic de changer de page (accueil)
+    evt.preventDefault();
+
+    // Ouvre le post du forum
+    window.open(loc.helpURL, '_blank');
+}
+
+
+/**
 * @fn ajax Effectue une requête AJAX
 * @param {string} action POST / GET / UPDATE etc. (temporairement: peut recevoir un tableau de string contenant action et responseType)
 * @param {string} url Adresse
