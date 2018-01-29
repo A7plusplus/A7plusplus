@@ -195,6 +195,7 @@ function post_update(isError, confirmedText, seqNumber)
         textArea.value        = confirmedText.value;
 
         // Mise en forme
+        displayAjaxError(loc.sequence);
         updateRsRatingAndCharCount(seqNumber);
         textCell.firstElementChild.setAttribute('class', 'ajaxError');
         textCell.firstElementChild.setAttribute('title', loc.ajaxErrorOccurred);

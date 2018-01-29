@@ -25,6 +25,7 @@ var A7Settings = {
     commentUpdateInterval    : 40,
     userBarUpdateIntervalMin : 150,
     updateTimeout            : 30,
+    popupTimeout             : 15,
 
     RSR: {
         // Reading speed, Rating, Short rating

@@ -95,6 +95,9 @@ function preInit()
             A7Settings.commentUpdateInterval = options.updates.comment;
             A7Settings.lockPosition          = options.lock;
             A7Settings.disableUserBar        = options.userBar.disable;
+
+            // Condition nescessaire pour les versions migrées
+            if(options.updates.popup) A7Settings.popupTimeout = options.updates.popup;console.log(A7Settings.popupTimeout)
         }
 
         // Récupère la langue du site ou celle forcée
@@ -183,6 +186,9 @@ function init()
         logoLink = tbody.firstElementChild.firstElementChild.firstElementChild;
     logoLink.insertBefore(createA7Info(), logoLink.lastElementChild);
     logoLink.setAttribute('id', 'A7Logo');
+
+    // Place la popup d'erreur
+    document.body.appendChild(createWarningPopup());
 
     // Démarre l'actualisation de l'état d'avancement
     page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);

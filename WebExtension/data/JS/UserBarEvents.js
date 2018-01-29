@@ -477,6 +477,7 @@ function post_triggerPM(isError, htmlData, userId)
     {
         if (!isBackgroundTask)
         {
+            displayAjaxError(loc.ajaxErrorOnUserBar);
             dataContainer.innerText = loc.ajaxErrorOccurred;
         }
         return;
@@ -536,6 +537,7 @@ function post_triggerReport(isError, htmlData, userId)
     {
         if (!isBackgroundTask)
         {
+            displayAjaxError(loc.ajaxErrorOnUserBar);
             dataContainer.innerText = loc.ajaxErrorOccurred;
         }
         return;
@@ -593,6 +595,7 @@ function post_triggerProfile(isError, htmlData, userId)
     {
         if (!isBackgroundTask)
         {
+            displayAjaxError(loc.ajaxErrorOnUserBar);
             dataContainer.innerText = loc.ajaxErrorOccurred;
         }
         return;
@@ -680,6 +683,8 @@ function post_userBarSendPM(isError, HTMLstring)
 
     if (isError)
     {
+        displayAjaxError(loc.messageSendError);
+
         form.classList.add('ajaxError');
         form.title = loc.messageSendError;
         form.classList.remove('messageSent');
@@ -766,6 +771,8 @@ function post_userBarSendReport(isError, HTMLstring)
 
     if (isError)
     {
+        displayAjaxError(loc.messageSendError);
+        
         form.classList.add('ajaxError');
         form.title = loc.messageSendError;
         form.classList.remove('messageSent');

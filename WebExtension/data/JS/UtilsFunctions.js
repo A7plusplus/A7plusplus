@@ -225,6 +225,40 @@ function openHelpPage(evt)
 
 
 /**
+* @fn displayAjaxError Affiche un petit message en haut de la fenêtre
+* @param {string=} text Message additionnel à afficher
+*/
+function displayAjaxError(text)
+{
+    var popup = document.getElementById('A7Popup');
+
+    // Lui affecte son text
+    popup.firstElementChild.innerText = loc.ajaxErrorOccurred;
+    if(typeof text !== 'undefined')
+    {
+        popup.firstElementChild.innerText += '\n(' + text + ')';
+    }
+
+    // Annule le précedent timeout
+    if (popup.dataset.timeoutId)
+    {
+        clearTimeout(popup.dataset.timeoutId);
+    }
+
+    // Rend visible temporairemnt
+    popup.classList.add('A7PopupVisible');
+    var id = setTimeout(function()
+    {
+        popup.classList.remove('A7PopupVisible');
+        delete popup.dataset.timeoutId;
+    }, A7Settings.popupTimeout * 1000);
+
+    // Place l'ID du timeout pour clear en cas de besoin
+    popup.dataset.timeoutId = id;
+}
+
+
+/**
 * @fn ajax Effectue une requête AJAX
 * @param {Object} params Paramètres globaux de la requête
 *

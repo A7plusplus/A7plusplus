@@ -395,7 +395,7 @@ function createA7Info()
     return versionInfo;
 }
 
-// Gestion graphique des indicateurs du RS Rating //
+              // Gestion graphique des indicateurs du RS Rating //
 
 /**
 * @fn addTimeUtils Ajoute les utilitaires d'édition à la cellule
@@ -541,6 +541,33 @@ function createUserBarStruct()
 }
 
                                    // Misc //
+
+/**
+* @fn createWarningPopup Créé le noeud qui servira de popup d'alerte
+*/
+function createWarningPopup()
+{
+    // Création des éléments
+    var container = document.createElement('div');
+    var textSpan  = document.createElement('span');
+
+    // Mise en place des infos
+    textSpan.title = loc.ajaxErrorOccurred;
+    container.setAttribute('id', 'A7Popup');
+
+    // Ajout des events
+    container.addEventListener('click', function(event)
+    {
+        container.classList.remove('A7PopupVisible');
+        event.stopImmediatePropagation();
+    }, false);
+
+    // Ajout des nœuds
+    container.appendChild(textSpan);
+
+    return container;
+}
+
 
 /**
 * @fn addParentHTMLNode Ajoute un nœud HTML entre le père et le fils

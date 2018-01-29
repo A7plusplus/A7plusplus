@@ -57,6 +57,7 @@ function post_commentRefresh(isError, htmlData)
     if (isError)
     {
         // Indique une erreur
+        displayAjaxError(loc.comments);
         commentList.setAttribute('class', 'ajaxError');
         commentList.setAttribute('title', loc.ajaxErrorOccurred);
         return;

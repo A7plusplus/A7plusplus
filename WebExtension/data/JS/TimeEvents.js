@@ -175,6 +175,7 @@ function post_updateTime(isError, confirmedTime, seqNumber)
         timeEnd.value          = confirmedTime.value[1];
 
         // Mise en forme
+        displayAjaxError(loc.duration);
         timeCell.firstElementChild.setAttribute('class', 'ajaxError');
         timeCell.firstElementChild.setAttribute('title', loc.ajaxErrorOccurred);
     }
