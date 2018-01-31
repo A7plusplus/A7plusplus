@@ -97,7 +97,7 @@ function preInit()
             A7Settings.disableUserBar        = options.userBar.disable;
 
             // Condition nescessaire pour les versions migrées
-            if(options.updates.popup) A7Settings.popupTimeout = options.updates.popup;console.log(A7Settings.popupTimeout)
+            if(options.updates.popup) A7Settings.popupTimeout = options.updates.popup;
         }
 
         // Récupère la langue du site ou celle forcée

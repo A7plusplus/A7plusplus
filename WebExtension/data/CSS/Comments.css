@@ -31,11 +31,8 @@
     position: fixed;
     padding: 0 10px;
     bottom: -60vh;
-    height: 60%;
     height: 60vh;
-    left: 5%;
     left: 5vw;
-    right: 5%;
     right: 5vw;
     z-index: 1;
 }
@@ -171,20 +168,9 @@
     opacity: 1 !important;
 }
 
-/* Compatibilité autres navigateurs */
-#commentsSection > div:nth-of-type(2) > a7button[loading="true"]:last-of-type {
-    -webkit-animation-name: spinningDotsRefreshingComments;
-}
-
 @keyframes spinningDotsRefreshingComments {
     0%   { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
-/* Compatibilité autres navigateurs */
-@-webkit-keyframes spinningDotsRefreshingComments {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
 }
 
 #commentsSection:hover > div:nth-of-type(2) > a7button, #commentsSection.comment-pined > div:nth-of-type(2) > a7button, #commentsSection.resizing > div:nth-of-type(2) > a7button {
