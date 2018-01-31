@@ -1,10 +1,7 @@
 /* ================================ TextBox ================================ */
 .textClicked textarea {
-    animation-duration: 2s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
-    animation-timing-function: steps(3, start);
     display: block;
+    box-shadow: 0 0 0 1px lightgreen;
     font-family: monospace;
     line-height: 16.9px;
     margin-bottom: 5px;
@@ -15,21 +12,13 @@
 }
 
 textarea[borderglowing="bad"] {
-    animation-name: borderGlowingBad;
+    box-shadow: 0 0 6px 2px red;
     outline: none;
 }
 
 textarea[borderglowing="pass"] {
-    animation-name: borderGlowingPass;
+    box-shadow: 0 0 6px 2px #ee8800;
     outline: none;
-}
-
-@keyframes borderGlowingBad {
-    100% { box-shadow: 0 0 6px 2px red; }
-}
-
-@keyframes borderGlowingPass {
-    100% { box-shadow: 0 0 6px 2px #ee8800; }
 }
 
 .textClicked span:not(.ajaxError) {
