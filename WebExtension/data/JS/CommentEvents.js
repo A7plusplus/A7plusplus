@@ -66,8 +66,8 @@ function post_commentRefresh(isError, htmlData)
     // S'il y a eu une erreur, l'enlève
     if (commentList.getAttribute('class') === 'ajaxError')
     {
-        commentList.setAttribute('class', '');
-        commentList.setAttribute('title', '');
+        commentList.removeAttribute('class');
+        commentList.removeAttribute('title');
     }
 
     // Récupère de body de la réponse

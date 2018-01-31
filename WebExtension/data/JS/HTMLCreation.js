@@ -413,7 +413,7 @@ function addTimeUtils(timeCell, seqNumber, timeCodes)
     timeCell.className = timeCell.className.replace(/timeInitial /, 'timeClicked ');
 
     // Désactivation de onclick
-    timeCell.setAttribute('onclick', '');
+    timeCell.removeAttribute('onclick');
 }
 
 

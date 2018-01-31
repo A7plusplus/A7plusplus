@@ -485,7 +485,7 @@ function post_select(isError, data, seqNumber, translateMode)
     }
 
     // Désactivation de onclick
-    textCell.setAttribute('onclick', '');
+    textCell.removeAttribute('onclick');
 
     // Remet la textArea à la bonne taille
     updateTextAreaSize(textCell.firstElementChild.firstElementChild);
