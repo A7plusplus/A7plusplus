@@ -131,7 +131,8 @@ function loadUserBarUsers(forcedSelectNode)
         userBar.addEventListener('mousedown', userBarMousedown, false);
         document.body.addEventListener('dragover', userBarDragOver, false);
         document.body.addEventListener('drop', userBarDragDrop, false);
-        document.body.addEventListener('dragstart', function(event) {
+        document.body.addEventListener('dragstart', function(event)
+        {
             // Stocke une référence sur l'objet glissable
             page.draggedNode = event.target;
         }, false);

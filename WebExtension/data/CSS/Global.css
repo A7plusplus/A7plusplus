@@ -223,11 +223,11 @@ tr[id^="trseq"].lockedText a {
 }
 
 /* Not 0 for Opera support */
-#seqsTbody > tr  td:nth-of-type(-n+5){
+#seqsTbody > tr  td:nth-of-type(-n+5) {
     width: .1px;
 }
 
-#seqsTbody > tr:not(:first-of-type)  td:nth-of-type(-n+5){
+#seqsTbody > tr:not(:first-of-type)  td:nth-of-type(-n+5) {
     padding: 0 8px;
 }
 

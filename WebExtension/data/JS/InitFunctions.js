@@ -396,7 +396,8 @@ function post_requestHICheck(isError, episodeHTMLDocument)
     {
         if (window.A7CurrentHICheck > A7Settings.maxHICheck) return;
 
-        setTimeout(function(){
+        setTimeout(function()
+        {
             requestHICheck();
         }, 250);
         return;

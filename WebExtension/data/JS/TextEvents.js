@@ -178,7 +178,8 @@ function post_update(isError, confirmedText, seqNumber)
         }
 
         // Activation de onclick après 10 ms pour laisser passer le clic courant
-        setTimeout(function(){
+        setTimeout(function()
+        {
             textCell.setAttribute('onclick', "pre_mouseclick('o', " + seqNumber + ');');
         }, 10);
     }
@@ -353,7 +354,8 @@ function textCancel(seqNumber)
     }
 
     // Active onclick après 10 ms pour laisser passer le clic courant
-    setTimeout(function(){
+    setTimeout(function()
+    {
         textCell.setAttribute('onclick', "pre_mouseclick('o', " + seqNumber + ');');
     }, 10);
 }
