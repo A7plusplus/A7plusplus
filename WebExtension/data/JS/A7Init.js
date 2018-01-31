@@ -213,7 +213,7 @@ function init()
     // la taille de la fenêtre de commentaires, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
     if (localStorage)
     {
-        var commentsSection = document.getElementById('commentsSection');
+        var commentsSection = getCommentCell();
         updateCommentHeightFromSaved(commentsSection, 'A7ppCommentWindowSize', 180, 0.8);
         if (localStorage.getItem('A7ppCommentWindowPined') === "true")
         {

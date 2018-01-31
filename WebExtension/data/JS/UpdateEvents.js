@@ -424,7 +424,7 @@ function updateCommentHeightFromSaved(elem, storage, lowLimit, highLimit)
 */
 function removeCommentPopup()
 {
-    var commentSection = document.getElementById('commentsSection');
+    var commentSection = getCommentCell();
 
     if (commentSection)
     {

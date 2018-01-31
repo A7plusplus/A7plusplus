@@ -77,7 +77,7 @@ function loadUserBarUsers(forcedSelectNode)
 
 
     // Les injecte dans la barre utilisateur
-    var userBar   = document.getElementById('userBar'),
+    var userBar   = getUserBar(),
         userSpan  = userBar.firstElementChild.children[1],
         oldSelect = userSpan.lastElementChild;
 
@@ -149,7 +149,7 @@ function loadUserBarUsers(forcedSelectNode)
 */
 function addUserToUserBar(name, id)
 {
-    var userSelect = document.getElementById('userBar').firstElementChild.children[1].firstElementChild;
+    var userSelect = getUserBar().firstElementChild.children[1].firstElementChild;
 
     // Attend, en mode traduction, que la liste des utilisateurs soit chargée
     if (userSelect === null)
@@ -193,7 +193,7 @@ function updateUserBarSize(userBar)
 */
 function setUserBarSize(left, top)
 {
-    var userBar  = document.getElementById('userBar');
+    var userBar  = getUserBar();
 
     // Calcule les proportions
     var stickyFactor  = window.innerHeight * A7Settings.stickyFactor,
@@ -262,7 +262,7 @@ function triggerUserBar(bar)
 */
 function closeUserBarData()
 {
-    var userBarData = document.getElementById('userBarData');
+    var userBarData = getUserBarData();
     userBarData.classList.remove('pageLoaded');
 }
 
@@ -274,7 +274,7 @@ function closeUserBarData()
 function triggerPM(close)
 {
     // Récupère le bouton
-    var userBar = document.getElementById('userBar'),
+    var userBar = getUserBar(),
         button  = userBar.firstElementChild.children[2];
 
     // Ouvre ou ferme
@@ -338,7 +338,7 @@ function triggerPM(close)
 function triggerProfile(close)
 {
     // Récupère le bouton
-    var userBar = document.getElementById('userBar'),
+    var userBar = getUserBar(),
         button  = userBar.firstElementChild.children[3];
 
     // Ouvre ou ferme
@@ -401,7 +401,7 @@ function triggerProfile(close)
 function triggerReport(close)
 {
     // Récupère le bouton
-    var userBar = document.getElementById('userBar'),
+    var userBar = getUserBar(),
         button  = userBar.firstElementChild.lastElementChild;
 
     // Ouvre ou ferme
@@ -469,8 +469,8 @@ function post_triggerPM(isError, htmlData, userId)
     }
 
     // Si on a changé d'onglet
-    var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[2].classList.contains('userBarButtonClicked');
-        dataContainer    =  document.getElementById('userBarData');
+    var isBackgroundTask = !getUserBar().firstElementChild.children[2].classList.contains('userBarButtonClicked');
+        dataContainer    =  getUserBarData();
 
     // Affichage de l'erreur
     if (isError)
@@ -509,7 +509,7 @@ function post_triggerPM(isError, htmlData, userId)
         // L'affiche
         resetHTMLObject(dataContainer);
         dataContainer.appendChild(form);
-        updateUserBarSize(document.getElementById('userBar'));
+        updateUserBarSize(getUserBar());
     }
 }
 
@@ -529,8 +529,8 @@ function post_triggerReport(isError, htmlData, userId)
     }
 
     // Si on a changé d'onglet
-    var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[4].classList.contains('userBarButtonClicked');
-        dataContainer    =  document.getElementById('userBarData');
+    var isBackgroundTask = !getUserBar().firstElementChild.children[4].classList.contains('userBarButtonClicked');
+        dataContainer    =  getUserBarData();
 
     // Affichage de l'erreur
     if (isError)
@@ -547,7 +547,7 @@ function post_triggerReport(isError, htmlData, userId)
     var form = htmlData.body.getElementsByTagName('form')[0];
 
     // Récupère l'ID de l'utilisateur incriminé
-    var id = document.getElementById('selectUser'),
+    var id = getUserBarUsers(),
         user = id.options[id.selectedIndex].innerText,
         textarea = form.getElementsByTagName('textarea')[0];
     textarea.value = '[A7++] Report user: ' + user + '\n';
@@ -567,7 +567,7 @@ function post_triggerReport(isError, htmlData, userId)
         // L'affiche
         resetHTMLObject(dataContainer);
         dataContainer.appendChild(form);
-        updateUserBarSize(document.getElementById('userBar'));
+        updateUserBarSize(getUserBar());
     }
 }
 
@@ -587,8 +587,8 @@ function post_triggerProfile(isError, htmlData, userId)
     }
 
     // Si on a changé d'onglet
-    var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[3].classList.contains('userBarButtonClicked');
-        dataContainer    =  document.getElementById('userBarData');
+    var isBackgroundTask = !getUserBar().firstElementChild.children[3].classList.contains('userBarButtonClicked');
+        dataContainer    =  getUserBarData();
 
     // Affichage de l'erreur
     if (isError)
@@ -626,7 +626,7 @@ function post_triggerProfile(isError, htmlData, userId)
         resetHTMLObject(dataContainer);
         dataContainer.appendChild(dataTable);
         dataContainer.classList.add('isUserPage');
-        updateUserBarSize(document.getElementById('userBar'));
+        updateUserBarSize(getUserBar());
     }
 }
 
@@ -675,7 +675,7 @@ function userBarSendPM(form)
 function post_userBarSendPM(isError, HTMLstring)
 {
     // On est toujours sur la page
-    var form = document.getElementById('userBarData').firstElementChild;
+    var form = getUserBarData().firstElementChild;
     if (!form || form.onsubmit.toString().search('userBarSendPM') === -1 || !form.classList.contains('messageSent'))
     {
         return;
@@ -763,7 +763,7 @@ function userBarSendReport(form)
 function post_userBarSendReport(isError, HTMLstring)
 {
     // On est toujours sur la page
-    var form = document.getElementById('userBarData').firstElementChild;
+    var form = getUserBarData().firstElementChild;
     if (!form || form.onsubmit.toString().search('userBarSendReport') === -1 || !form.classList.contains('messageSent'))
     {
         return;
@@ -772,7 +772,7 @@ function post_userBarSendReport(isError, HTMLstring)
     if (isError)
     {
         displayAjaxError(loc.messageSendError);
-        
+
         form.classList.add('ajaxError');
         form.title = loc.messageSendError;
         form.classList.remove('messageSent');
@@ -800,7 +800,7 @@ function post_userBarSendReport(isError, HTMLstring)
 function userBarIsCurrentUser(userId)
 {
     // Récupère l'ID de l'utilisateur actuel
-    var id = document.getElementById('selectUser'),
+    var id = getUserBarUsers(),
         value = id.options[id.selectedIndex].value;
 
     return value === userId;
@@ -812,7 +812,7 @@ function userBarIsCurrentUser(userId)
 */
 function userBarGetCurrentUser()
 {
-    var id = document.getElementById('selectUser');
+    var id = getUserBarUsers();
     return id.options[id.selectedIndex].value;
 }
 

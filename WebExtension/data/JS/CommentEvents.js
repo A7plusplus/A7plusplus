@@ -10,7 +10,7 @@
 function refreshComments()
 {
     // Récupération du bouton d'actualisation
-    var updateButton = document.getElementById('commentsSection').children[1].lastElementChild;
+    var updateButton = getCommentCell().children[1].lastElementChild;
 
     // Si on est en cours d'actualisation, ne fait rien
     if (updateButton.getAttribute('loading') !== null)
@@ -41,7 +41,7 @@ function refreshComments()
 function post_commentRefresh(isError, htmlData)
 {
     // Récupère les informations utiles
-    var commentsSection = document.getElementById('commentsSection');
+    var commentsSection = getCommentCell();
     var updateButton    = commentsSection.children[1].lastElementChild;
     var commentList     = commentsSection.lastElementChild.firstElementChild;
 
@@ -152,7 +152,7 @@ function post_commentRefresh(isError, htmlData)
 function post_sendComment(isError, htmlData)
 {
     // Récupère la textArea
-    var textArea = document.getElementById('commentsSection').lastElementChild.lastElementChild.firstElementChild;
+    var textArea = getCommentCell().lastElementChild.lastElementChild.firstElementChild;
 
     // Réactive la textArea
     textArea.removeAttribute('disabled');
@@ -178,7 +178,7 @@ function sendComment()
     var subInfo = page.queryInfos;
 
     // Récupération de la textArea
-    var textArea = document.getElementById('commentsSection').lastElementChild.lastElementChild.firstElementChild;
+    var textArea = getCommentCell().lastElementChild.lastElementChild.firstElementChild;
 
     // Si vide, n'envoie pas
     if (textArea.value === '') return;
@@ -209,8 +209,8 @@ function sendComment()
 function goToComments()
 {
     // Récupère la popup et le tableau
-    var popup = document.getElementById('commentsSection').children[1].children[1].lastElementChild,
-        table = document.getElementById('commentsSection').lastElementChild.firstElementChild;
+    var popup = getCommentCell().children[1].children[1].lastElementChild,
+        table = getCommentCell().lastElementChild.firstElementChild;
 
     // Enlève le contenu de la popup
     removeCommentPopup();
@@ -225,7 +225,7 @@ function goToComments()
 */
 function pinComments()
 {
-    var commentsSection = document.getElementById('commentsSection');
+    var commentsSection = getCommentCell();
 
     if (commentsSection.className && commentsSection.classList.contains('comment-pined'))
     {
@@ -251,7 +251,7 @@ function pinComments()
 */
 function pinCommentsTemp()
 {
-    var commentsSection = document.getElementById('commentsSection');
+    var commentsSection = getCommentCell();
 
     // Si pinné
     if (commentsSection.className && commentsSection.classList.contains('comment-pined'))
@@ -277,7 +277,7 @@ function pinCommentsTemp()
 */
 function lockComment()
 {
-    var commentsSection = document.getElementById('commentsSection');
+    var commentsSection = getCommentCell();
 
     if (commentsSection.className && commentsSection.classList.contains('lockdown'))
     {
@@ -307,7 +307,7 @@ function resizeBarMouseDown(e)
     e.preventDefault();
     window.addEventListener('mousemove', windowMouseMove, false);
     window.addEventListener('mouseup', windowMouseUp, false);
-    document.getElementById('commentsSection').classList.add('resizing');
+    getCommentCell().classList.add('resizing');
 }
 
 
@@ -318,7 +318,7 @@ function resizeBarMouseDown(e)
 function windowMouseMove(e)
 {
     var height = window.innerHeight - e.clientY,
-        commentsSection = document.getElementById('commentsSection');
+        commentsSection = getCommentCell();
 
     if (height < 180)
     {
@@ -350,7 +350,7 @@ function windowMouseUp(e)
 {
     window.removeEventListener('mousemove', windowMouseMove, false);
     window.removeEventListener('mouseup', windowMouseUp, false);
-    document.getElementById('commentsSection').classList.remove("resizing");
+    getCommentCell().classList.remove("resizing");
 }
 
 
@@ -360,7 +360,7 @@ function windowMouseUp(e)
 */
 function commentsTableScroll(e)
 {
-    var commentsSection = document.getElementById('commentsSection');
+    var commentsSection = getCommentCell();
 
     var table = commentsSection.lastElementChild.firstElementChild;
 
