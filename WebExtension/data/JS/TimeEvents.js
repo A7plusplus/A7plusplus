@@ -152,7 +152,8 @@ function post_updateTime(isError, confirmedTime, seqNumber)
         updateRsRatingAndCharCount(seqNumber);
 
         // Activation de onclick après 10 ms pour laisser passer le clic courant
-        setTimeout(function(){
+        setTimeout(function()
+        {
             timeCell.setAttribute('onclick', 'pre_timeclick(' + seqNumber + ')');
         }, 10);
     }
@@ -242,7 +243,8 @@ function timeCancel(seqNumber)
     updateRsRatingAndCharCount(seqNumber);
 
     // Activation de onclick après 10 ms pour laisser passer le clic courant
-    setTimeout(function(){
+    setTimeout(function()
+    {
         timeCell.setAttribute('onclick', 'pre_timeclick(' + seqNumber + ')');
     }, 10);
 }
