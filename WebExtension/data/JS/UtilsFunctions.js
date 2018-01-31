@@ -271,6 +271,7 @@ function displayAjaxError(text)
 *
 * @param {string=} responseType Type de réponse demandée (optionnel)
 * @param {string=} params Paramètres spécifiques de la requête (optionnel)
+* @param {number=} timeout Durée en seconde avant timeout (optionnel)
 *
 * @param {Object=} forwardData Objet à passer à la readyFunction, même en cas d'échec (optionnel)
 * @param {Object=} backupInfos Informations à envoyer en cas d'erreur (optionnel)
@@ -278,9 +279,10 @@ function displayAjaxError(text)
 function ajax(params)
 {
     // Traitement de l'objet paramètre (et de ses champs optionnels)
-    if (typeof params.params === 'undefined') params.params = '';
+    if (typeof params.params      === 'undefined') params.params = '';
     if (typeof params.forwardData === 'undefined') params.forwardData = null;
     if (typeof params.backupInfos === 'undefined') params.backupInfos = null;
+    if (typeof params.timeout     === 'undefined') params.timeout = A7Settings.updateTimeout;
 
     // Crée la requête
     var xhr = new XMLHttpRequest();
@@ -290,8 +292,8 @@ function ajax(params)
     {
         xhr.responseType = params.responseType;
     }
+    xhr.timeout = params.timeout * 1000;
     xhr.open(params.action, params.url, true);
-    xhr.timeout = A7Settings.updateTimeout * 1000;
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
     // Gère le retour
