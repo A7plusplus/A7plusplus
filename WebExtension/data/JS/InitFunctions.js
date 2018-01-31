@@ -148,6 +148,11 @@ function linesChanged()
         {
             parentDiv.appendChild(createUntranslatedOption());
         }
+        // Ajoute le bouton pour actualiser la page de sous-titres
+        else
+        {
+            parentDiv.appendChild(createReloadPageOption());
+        }
     }
 
     // Actualise directement l'avancement

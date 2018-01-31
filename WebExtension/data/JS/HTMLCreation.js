@@ -287,8 +287,8 @@ function createCommentLockUtil(parentDiv)
     var lockSpan = document.createElement('span');
 
     // Mise en place
-    lockSpan.id          = 'lockComment';
-    lockSpan.title       = loc.lockComment;
+    lockSpan.id    = 'lockComment';
+    lockSpan.title = loc.lockComment;
     lockSpan.addEventListener('click', lockComment, false);
 
     // Ajout de la classe pour modifier la position du cadenas
@@ -346,14 +346,14 @@ function createUntranslatedOption()
     var input  = document.createElement('input');
 
     // Mise en place
-    option.id          = 'A7Untranslated';
-    option.title       = loc.untranlsatedOnly;
+    option.id    = 'A7Untranslated';
+    option.title = loc.untranlsatedOnly;
 
-    option.addEventListener('click', function(){
+    option.addEventListener('click', function()
+    {
         // On n'envoie pas 50 requêtes
         if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
             return;
-        page.tempDisableTranslateCheckbox = true;
 
         // Change l'état de l'input
         input.checked = !input.checked;
@@ -371,6 +371,44 @@ function createUntranslatedOption()
     input.checked = false;
 
     option.appendChild(input);
+
+    return option;
+}
+
+
+/**
+* @fn createReloadPageOption Crée un nœud pour l'option "recharger les séquences de la page"
+* @return {!Object} Nœud HTML de la structure
+*/
+function createReloadPageOption()
+{
+    var option = document.createElement('span');
+
+    // Mise en place
+    option.id    = 'A7ReloadPage';
+    option.title = loc.reloadPage;
+
+    option.addEventListener('click', function()
+    {
+        // On n'envoie pas 50 requêtes
+        if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
+            return;
+
+        // Récupère le numéro de page (i)
+        var links = document.getElementById('lista').querySelectorAll('a[href="#"]'), i;
+        for (i = 0; i < links.length; i++)
+            // Si on saute un numéro, on est à la page du numéro sauté
+            if (parseInt(links[i].text) !== i + 1) break;
+
+        // Appel à la fonction de base
+        apply_filter(
+            document.getElementById('slang').value,
+            'false',
+            i * 30
+        );
+
+        linesChanged();
+    });
 
     return option;
 }

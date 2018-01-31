@@ -53,6 +53,7 @@ var loc =
         seqNotConfirmed   : "Séquence non confirmée (elle n'est donc peut-être pas à jour)",
         untranlsatedOnly  : "N'afficher que les séquences non traduites",
         showAll           : 'Afficher toutes les séquences',
+        reloadPage        : 'Recharger les séquences de la page courante',
         clickToShowHelp   : "(cliquer pour afficher l'aide)",
         helpURL           : 'http://www.sub-talk.net/topic/4687-/'
 
@@ -105,6 +106,7 @@ var loc =
         seqNotConfirmed   : 'Sequence not confirmed (it can be outdated)',
         untranlsatedOnly  : 'Show only the untranslated sequences',
         showAll           : 'Show all sequences',
+        reloadPage        : 'Reload current page sequences',
         clickToShowHelp   : '(click to show some help)',
         helpURL           : 'http://www.sub-talk.net/topic/5720-/'
 
