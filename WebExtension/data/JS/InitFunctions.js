@@ -401,6 +401,10 @@ function post_requestHICheck(isError, episodeHTMLDocument)
     var currentUrl = window.location.href,
         img = null;
 
+    // Retire le paramètre 'sequence' qui ne sert à rien
+    currentUrl = currentUrl.replace(/&sequence=[0-9]*/, '');
+    currentUrl = currentUrl.replace(/sequence=[0-9]*&?/, ''); // Si en début de liste
+
     // Repère le lien de l'épisode
     var links = episodeHTMLDocument.getElementsByTagName('a');
     for (var i = 0; i < links.length; i++)
