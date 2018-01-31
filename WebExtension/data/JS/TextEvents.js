@@ -396,12 +396,30 @@ function post_select(isError, data, seqNumber, translateMode)
         else
         {
             // Texte non trouvé, on vérifie que la séquence n'est pas occupée
-            var regexUser = data.match(/<a href="\/user\/">.*<\/a>/);
+            var regexUser = data.match(/<a href="\/user\/[0-9]*">.*<\/a>/);
 
             if (regexUser && regexUser.length == 1)
             {
                 // Séquence occupée
                 textCell.innerHTML = data;
+
+                // Si le site ne nous fourni toujours pas l'ID utilisateur - Répare le liens vers le profile
+                if (!data.match(/<a href="\/user\/[0-9]+">.*<\/a>/))
+                {
+                    var username = textCell.firstElementChild.text;
+
+                    // Récupère (dans la section du bas), le vrai lien
+                    var links = document.getElementById('comments').previousElementSibling.getElementsByTagName('a');
+                    for (var i = 0; i < links.length; i++)
+                    {
+                        if (links[i].text === 'accent' && links[i].href.startsWith('http://www.addic7ed.com/user/'))
+                        {
+                            textCell.firstElementChild.href = links[i].href;
+                            break;
+                        }
+                    }
+                }
+
                 return;
             }
             else
