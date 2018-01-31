@@ -488,8 +488,11 @@ function post_triggerPM(isError, htmlData, userId)
 
     // Place le sujet
     var inputs =  form.getElementsByTagName('input');
-    inputs[0].setAttribute('onkeyup', '');
-    inputs[1].value = '[' + document.getElementsByTagName('i')[0].innerText + ']';
+    inputs[0].removeAttribute('onkeyup');
+    if(page.translatePage)
+        inputs[1].value = '[' + document.querySelector('.titulo').firstElementChild.text + ']';
+    else
+        inputs[1].value = '[' + document.getElementsByTagName('i')[0].innerText + ']';
 
     // Pas de lien en haut de page
     form.firstElementChild.firstElementChild.firstElementChild.remove();
