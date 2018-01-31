@@ -417,6 +417,9 @@ function post_select(isError, data, seqNumber, translateMode)
                             textCell.firstElementChild.href = links[i].href;
                             break;
                         }
+
+                        // Si le bon lien n'est pas trouvé, tempis...
+                        textCell.firstElementChild.href = '404.html';
                     }
                 }
 
