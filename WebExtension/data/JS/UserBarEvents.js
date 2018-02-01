@@ -165,7 +165,7 @@ function addUserToUserBar(name, id)
 
     // Vérifie la présence de l'utilisateur
     for (var i = 0; i < userSelect.length; i++)
-        if (parseInt(userSelect.options[i].value) === parseInt(id))
+        if (parseInt(userSelect.options[i].value, 10) === parseInt(id, 10))
             return;
 
     // Ajoute l'utilisateur car non présent

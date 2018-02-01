@@ -209,7 +209,7 @@ function linesChanged()
         {
             textCell.setAttribute(
                 'tabIndex',
-                parseInt(currentLine.children[page.lock].firstElementChild.firstElementChild.innerHTML)
+                parseInt(currentLine.children[page.lock].firstElementChild.firstElementChild.innerHTML, 10)
             );
 
             textCell.addEventListener('keypress', function(e)
@@ -394,7 +394,11 @@ function post_requestHICheck(isError, episodeHTMLDocument)
     // Renvoie la requête : en cas d'échec ou de vérification sommaire du contenu de la page reçue infructueuse
     if (isError || !episodeHTMLDocument.getElementById('container95m'))
     {
-        if (window.A7CurrentHICheck > A7Settings.maxHICheck) return;
+        if (window.A7CurrentHICheck > A7Settings.maxHICheck)
+        {
+            displayAjaxError(loc.ajaxErrorOnHI);
+            return;
+        }
 
         setTimeout(function()
         {

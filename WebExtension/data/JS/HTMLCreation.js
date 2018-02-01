@@ -398,7 +398,7 @@ function createReloadPageOption()
         var links = document.getElementById('lista').querySelectorAll('a[href="#"]'), i;
         for (i = 0; i < links.length; i++)
             // Si on saute un numéro, on est à la page du numéro sauté
-            if (parseInt(links[i].text) !== i + 1) break;
+            if (parseInt(links[i].text, 10) !== i + 1) break;
 
         // Appel à la fonction de base
         apply_filter(

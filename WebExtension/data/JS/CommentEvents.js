@@ -85,7 +85,7 @@ function post_commentRefresh(isError, htmlData)
         {
             // Récupère le nombre de commantaires
             var commentCounter = updateButton.previousElementSibling.lastElementChild;
-            var oldCommentNumber = isNaN(parseInt(commentCounter.textContent)) ? 0 : parseInt(commentCounter.textContent);
+            var oldCommentNumber = isNaN(parseInt(commentCounter.textContent, 10)) ? 0 : parseInt(commentCounter.textContent, 10);
 
             // Affiche le nombre dans le span et cumule le nombre si possible
             commentCounter.textContent = listOfNewCommLength - page.commentNumber + oldCommentNumber;
