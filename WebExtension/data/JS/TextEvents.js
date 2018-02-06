@@ -471,9 +471,12 @@ function post_select(isError, data, seqNumber, translateMode)
     var textArea = textCell.firstElementChild.firstElementChild;
     textArea.defaultValue = text;
 
-    // Prend le focus
-    textArea.focus();
-    textArea.setSelectionRange(textArea.value.length, textArea.value.length);
+    // Prend le focus (si l'utilisateur n'édite pas de séquence actuellement)
+    if(document.activeElement.tagName !== 'TEXTAREA')
+    {
+        textArea.focus();
+        textArea.setSelectionRange(textArea.value.length, textArea.value.length);
+    }
 
 
     // Change la classe de la cellule des tailles
