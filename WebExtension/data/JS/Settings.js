@@ -20,9 +20,9 @@ var A7Settings = {
     minDurationSETTING       : 1.001,
 
     // Temps en secondes
-    stateUpdateInterval      : 180,
-    commentUpdateInterval    : 40,
-    userBarUpdateIntervalMin : 180,
+    stateUpdateInterval      : 240,
+    commentUpdateInterval    : 45,
+    userBarUpdateIntervalMin : 300,
     updateTimeout            : 30,
     popupTimeout             : 15,
 
