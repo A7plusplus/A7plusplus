@@ -651,10 +651,16 @@ function userBarSendPM(form)
     var inputs   = form.getElementsByTagName('input');
     var textarea = form.getElementsByTagName('textarea')[0];
 
+    // Addic7ed n'accepte que des encodages bien étranges...
+    var newText = textarea.value
+                  .replace(/'/g, '&#39;')
+                  .replace(/"/g, '&#34;')
+                  .replace(/\\/g, '&#92;');
+
     // Prépare les données
     var params = 'to='         + encodeURIComponent(inputs[0].value) +
                  '&subject='   + encodeURIComponent(inputs[1].value) +
-                 '&msgtext='   + encodeURIComponent('<p>' + textarea.value + '</p>');
+                 '&msgtext='   + encodeURIComponent(htmlEncode(newText).replace(/\n/g, '\r\n'));
 
     // Indique que c'est en envoi
     var parent = form.classList.add('messageSent');
@@ -725,8 +731,14 @@ function userBarSendReport(form)
     var textarea = form.getElementsByTagName('textarea')[0],
         subInfo  = page.queryInfos;
 
+    // Addic7ed n'accepte que des encodages bien étranges...
+    var newText = textarea.value
+                  .replace(/'/g, '&#39;')
+                  .replace(/"/g, '&#34;')
+                  .replace(/\\/g, '&#92;');
+
     // Prépare les données
-    var params = 'comment='   + encodeURIComponent(textarea.value) +
+    var params = 'comment='   + encodeURIComponent(htmlEncode(newText).replace(/\n/g, '\r\n')) +
                  '&fversion=' + subInfo.fversion +
                  '&id='       + subInfo.id +
                  '&lang='     + subInfo.lang;
