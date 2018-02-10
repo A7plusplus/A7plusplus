@@ -174,39 +174,26 @@ function getTextFromHTML(HTMLString)
 
 
 /**
-* @fn moveFocusToNextLine Donne le focus à la cellule de texte éditable ou à la textarea de la ligne suivante (si existante)
-* @param {number} seqNumber Numéro de la séquence
+* Issu de : https://stackoverflow.com/questions/784586/convert-special-characters-to-html-in-javascript
+* @fn htmlEncode Encode les caractères spéciaux en HTML
+* @param {String} string Chaine destinée à être encodée
+* @return {String} Chaine encodée
 */
-function moveFocusToNextLine(seqNumber)
+function htmlEncode(string)
 {
-    // Récupération des éléments utiles
-    var textCell = getTextCell(seqNumber);
-    var nextLine = textCell.parentElement.nextSibling;
-    var textCellNextLine, textAreaNextLine;
-
-    if (nextLine)
+    var ret_val = '';
+    for (var i = 0; i < string.length; i++)
     {
-        var nextLineSeqNumber = nextLine.children[page.lock].firstElementChild.firstElementChild.innerHTML;
-        textCellNextLine = getTextCell(nextLineSeqNumber);
+        if (string.codePointAt(i) > 127)
+        {
+            ret_val += '&#' + string.codePointAt(i) + ';';
+        }
+        else
+        {
+            ret_val += string.charAt(i);
+        }
     }
-
-    // S'il y a une ligne suivante éditable avec cellule de texte ouverte, focus sur la textarea
-    if (nextLine && textCellNextLine && textCellNextLine.classList.contains('textClicked'))
-    {
-        textAreaNextLine = textCellNextLine.firstElementChild.firstElementChild;
-
-        textAreaNextLine.focus();
-    }
-    // S'il y a une ligne suivante éditable avec cellule de texte non ouverte, focus sur la cellule texte
-    else if (nextLine && textCellNextLine)
-    {
-        textCellNextLine.focus();
-    }
-    // S'il n'y a pas de ligne suivante éditable , focus sur la cellule de texte de la ligne actuelle (nécessaire sur Firefox)
-    else
-    {
-        textCell.focus();
-    }
+    return ret_val;
 }
 
 
