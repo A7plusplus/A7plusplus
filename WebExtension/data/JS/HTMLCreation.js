@@ -394,18 +394,43 @@ function createReloadPageOption()
         if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
             return;
 
-        // Récupère le numéro de page (i)
-        var links = document.getElementById('lista').querySelectorAll('a[href="#"]'), i;
-        for (i = 0; i < links.length; i++)
-            // Si on saute un numéro, on est à la page du numéro sauté
-            if (parseInt(links[i].text, 10) !== i + 1) break;
+        // Vérifie si on affiche toutes les lignes ou uniquement les lignes les plus à jour
+        var updatedCheckbox = document.getElementsByName('updated')[0];
+        var updated         = updatedCheckbox.checked;
+
+        // Récupère le nombre de lignes à partir duquel afficher le sous-titre
+        var i = 0;
+        // Si on affiche uniquement les lignes les plus à jour
+        if (updated)
+        {
+            var firstLine       = document.getElementsByClassName('originalText')[0];
+            var sequenceFromURL = pageUrl.searchParams.get('sequence');
+            if (firstLine)
+            {
+                i = parseInt(firstLine.getAttribute('id').replace('trseq', '')) - 1;
+            }
+            else if (sequenceFromURL)
+            {
+                i = sequenceFromURL - 1;
+            }
+        }
+        // Si on affiche toutes les lignes
+        else
+        {
+            // Récupère le numéro de page
+            var links = document.getElementById('lista').querySelectorAll('a[href="#"]');
+            for (; i < links.length; i++)
+                // Si on saute un numéro, on est à la page du numéro sauté
+                if (parseInt(links[i].text, 10) !== i + 1) break;
+            i = i * 30;
+        }
 
         // Appel à la fonction de base
         var secondaryLanguage = document.getElementById('slang') ? document.getElementById('slang').value : '';
         apply_filter(
             secondaryLanguage,
-            'false',
-            i * 30
+            updated,
+            i
         );
 
         linesChanged();
