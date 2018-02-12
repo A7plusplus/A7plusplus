@@ -408,12 +408,11 @@ function post_requestHICheck(isError, episodeHTMLDocument)
     }
 
     // Info et stockage
-    var currentUrl = window.location.href,
+    var currentUrl = new URL(window.location.href),
         img = null;
 
     // Retire le paramètre 'sequence' qui ne sert à rien
-    currentUrl = currentUrl.replace(/&sequence=[0-9]*/, '');
-    currentUrl = currentUrl.replace(/sequence=[0-9]*&?/, ''); // Si en début de liste
+    currentUrl.searchParams.delete('sequence');
 
     // Repère le lien de l'épisode
     var links = episodeHTMLDocument.getElementsByTagName('a');
@@ -434,7 +433,7 @@ function post_requestHICheck(isError, episodeHTMLDocument)
         }
         else
         {
-            if (links[i].href === currentUrl)
+            if (links[i].href === currentUrl.href)
             {
                 // Récupère l'indicateur
                 img = links[i].parentElement.previousElementSibling.children[1];

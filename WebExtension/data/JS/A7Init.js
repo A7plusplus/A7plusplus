@@ -4,11 +4,14 @@
 */
 
 
+// Url de la page via l'API
+var pageUrl = new URL(location.href);
+
 // On est en mode Join translation
-var translatePage = location.href.search(new RegExp('translate.php')) !== -1;
+var translatePage = (pageUrl.pathname === '/translate.php');
 
 // Si la langue n'est pas anglais et qu'on est en mode view & edit
-if (!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
+if (!translatePage && pageUrl.searchParams.get('lang') !== '1')
 {
     // Remplacement des AJAX
     var xhrProto = XMLHttpRequest.prototype,
@@ -37,9 +40,15 @@ if (!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
     // Empêche l'ouverture de l'objet si c'est la requête de base
     xhrProto.open = function (method, url)
     {
+        // Parse l'url
+        var parsedUrl = new URL(url, pageUrl.origin);
+
         // Fait échouer la première requête
-        var regexString = 'ajax_list\\.php\\' + location.search.split('&sequence')[0] + '&start=\\d+&updated=(?:true|false)&slang=';
-        if (url.test(new RegExp(regexString)))
+        if (parsedUrl.pathname === '/ajax_list.php' &&
+            parsedUrl.searchParams.get('id') === pageUrl.searchParams.get('id') &&
+            parsedUrl.searchParams.get('lang') === pageUrl.searchParams.get('lang') &&
+            parsedUrl.searchParams.get('fversion') === pageUrl.searchParams.get('fversion')
+        )
         {
             return;
         }
@@ -153,10 +162,10 @@ function init()
     var pageInfos = {};
     if (!translatePage)
     {
-        location.search.substr(1).split('&').forEach(function(item)
-        {
-            pageInfos[item.split('=')[0]] = item.split('=')[1];
-        });
+        pageInfos.id       = pageUrl.searchParams.get('id');
+        pageInfos.fversion = pageUrl.searchParams.get('fversion');
+        pageInfos.lang     = pageUrl.searchParams.get('lang');
+        pageInfos.langfrom = pageUrl.searchParams.get('langfrom');
     }
     else
     {
@@ -169,6 +178,7 @@ function init()
 
     // Initialise l'objet page
     page = {
+        pageUrl: pageUrl,
         translatePage: translatePage,
         lock: (document.getElementById('locktop') !== null) ? 1 : 0,
         stateIntervalId: null,
