@@ -33,7 +33,10 @@ if (!translatePage && pageUrl.searchParams.get('lang') !== '1')
             XMLHttpRequest.prototype = xhrProto;
 
             // Demande la page avec anglais en langue secondaire
-            list(0, false, 1);
+            var askedFirstSeq = pageUrl.searchParams.get('sequence') ? pageUrl.searchParams.get('sequence') - 1 : 0;
+            var updated       = pageUrl.searchParams.has('sequence');
+            
+            list(askedFirstSeq, updated, 1);
         }
     };
 
