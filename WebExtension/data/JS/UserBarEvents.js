@@ -446,7 +446,9 @@ function triggerReport(close)
             ajax({
                 action:               'GET',
                 responseType:         'document',
-                url:                  '/badsub.php' + location.search,
+                url:                  '/badsub.php?id='       + page.queryInfos.id +
+                                                 '&fversion=' + page.queryInfos.fversion +
+                                                 '&lang='     + page.queryInfos.lang,
                 readyFunction:        post_triggerReport,
                 forwardData:          userBarGetCurrentUser()
             });
