@@ -401,8 +401,9 @@ function createReloadPageOption()
             if (parseInt(links[i].text, 10) !== i + 1) break;
 
         // Appel à la fonction de base
+        var secondaryLanguage = document.getElementById('slang') ? document.getElementById('slang').value : '';
         apply_filter(
-            document.getElementById('slang').value,
+            secondaryLanguage,
             'false',
             i * 30
         );
