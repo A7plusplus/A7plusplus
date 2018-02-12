@@ -38,7 +38,8 @@ if (!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
     xhrProto.open = function (method, url)
     {
         // Fait échouer la première requête
-        if (url === '/ajax_list.php' + location.search + '&start=0&updated=false&slang=')
+        var regexString = 'ajax_list\\.php\\' + location.search.split('&sequence')[0] + '&start=\\d+&updated=(?:true|false)&slang=';
+        if (url.test(new RegExp(regexString)))
         {
             return;
         }
