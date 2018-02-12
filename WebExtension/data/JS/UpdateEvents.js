@@ -336,8 +336,8 @@ function updateStateOfTranslation()
 */
 function post_updateStateOfTranslation(isError, HTMLString)
 {
-    // On attend le prochain rapatriement des données
-    if (isError) return;
+    // On attend le prochain rapatriement des données en cas d'erreur ou de message d'erreur du serveur
+    if (isError || HTMLString.trim().indexOf('<') !== 1 || HTMLString === '') return;
 
     // Actualise l'avancement
     var spanState = document.getElementById('spanState');
