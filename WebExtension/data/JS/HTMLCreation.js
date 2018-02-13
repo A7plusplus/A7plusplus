@@ -400,19 +400,11 @@ function createReloadPageOption()
 
         // Récupère le nombre de lignes à partir duquel afficher le sous-titre
         var i = 0;
+        var firstLine       = document.getElementsByClassName('originalText')[0];
         // Si on affiche uniquement les lignes les plus à jour
-        if (updated)
+        if (updated && firstLine)
         {
-            var firstLine       = document.getElementsByClassName('originalText')[0];
-            var sequenceFromURL = pageUrl.searchParams.get('sequence');
-            if (firstLine)
-            {
-                i = parseInt(firstLine.getAttribute('id').replace('trseq', '')) - 1;
-            }
-            else if (sequenceFromURL)
-            {
-                i = sequenceFromURL - 1;
-            }
+            i = parseInt(firstLine.getAttribute('id').replace('trseq', '')) - 1;
         }
         // Si on affiche toutes les lignes
         else

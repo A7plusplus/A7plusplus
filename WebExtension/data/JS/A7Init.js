@@ -50,7 +50,8 @@ if (!translatePage && pageUrl.searchParams.get('lang') !== '1')
         if (parsedUrl.pathname === '/ajax_list.php' &&
             parsedUrl.searchParams.get('id') === pageUrl.searchParams.get('id') &&
             parsedUrl.searchParams.get('lang') === pageUrl.searchParams.get('lang') &&
-            parsedUrl.searchParams.get('fversion') === pageUrl.searchParams.get('fversion')
+            parsedUrl.searchParams.get('fversion') === pageUrl.searchParams.get('fversion') &&
+            parsedUrl.searchParams.get('slang') === ''
         )
         {
             return;
