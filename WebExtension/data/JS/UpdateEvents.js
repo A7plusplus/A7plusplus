@@ -31,14 +31,12 @@ function updateRsRatingAndCharCount(seqNumber)
 
             // S'il est en édition
             lineCount = charCount(textCell.firstElementChild.firstElementChild.value.split('\n'), false);
-
             break;
 
         default:
 
             // S'il n'est ni ouvert, ni enregistré
             lineCount = charCount(textCell.innerHTML.split('<br>'), false);
-
             break;
     }
 
@@ -60,8 +58,8 @@ function updateRsRatingAndCharCount(seqNumber)
             var selectionEnd   = focus.selectionEnd;
 
             // Remplace les points par des virgules dans les champs de temps
-            startTime.value = startTime.value.replace(/\./, ',');
-            endTime.value   =   endTime.value.replace(/\./, ',');
+            startTime.value = startTime.value.replace('.', ',');
+            endTime.value   =   endTime.value.replace('.', ',');
 
             // Remet la position
             focus.selectionStart = selectionStart;
@@ -77,14 +75,12 @@ function updateRsRatingAndCharCount(seqNumber)
             // Si l'édition de temps n'est pas ouverte mais la cellule oui
             // Retire la légende de l'indicateur
             unitedTime = timeCell.getText().substr(0, timeCell.getText().length - timeCell.firstElementChild.getText().length).split(' --> ');
-
             break;
 
         default:
 
             // Si c'est fermé
             unitedTime = timeCell.getText().split(' --> ');
-
             break;
     }
 
@@ -139,7 +135,18 @@ function updateRsRatingAndCharCount(seqNumber)
 */
 function updateTimeCellClass(timeCell, rsIndex, duration)
 {
-    timeCell.className = timeCell.className.substr(0, timeCell.className.length - 5) + A7Settings.RSR[rsIndex][2];
+    // Une mise à jour est à faire
+    if (!timeCell.classList.contains(A7Settings.RSR[rsIndex][2]))
+    {
+        // Retire la vielle classe
+        Object.keys(A7Settings.RSR).forEach(function(item)
+        {
+            timeCell.classList.remove(A7Settings.RSR[item][2]);
+        });
+
+        // Applique la nouvelle
+        timeCell.classList.add(A7Settings.RSR[rsIndex][2]);
+    }
 
     timeCell.title = loc.duration + ' : ' + duration.toFixed(3) + " s\nRS Rating : " + A7Settings.RSR[rsIndex][1];
 }

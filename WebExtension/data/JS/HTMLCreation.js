@@ -128,21 +128,21 @@ function createTimeUtils(seqNumber, timeCodes)
 
     fromText.textContent = loc.from;
 
-    startInput.defaultValue     = timeCodes[0];
+    startInput.defaultValue = timeCodes[0];
     startInput.setAttribute('oninput', 'updateRsRatingAndCharCount(' + seqNumber + ');');
 
-    restoreTimeButton.title     = loc.restoreTime;
+    restoreTimeButton.title = loc.restoreTime;
     restoreTimeButton.setAttribute('onclick', 'timeRestore(' + seqNumber + ');');
 
-    cancelTimeButton.title      = loc.cancel;
+    cancelTimeButton.title = loc.cancel;
     cancelTimeButton.setAttribute('onclick', 'timeCancel(' + seqNumber + ');');
 
-    saveTimeButton.title        = loc.save;
+    saveTimeButton.title = loc.save;
     saveTimeButton.setAttribute('onclick', 'pre_updatetime(' + seqNumber + ');');
 
     toText.textContent = loc.to;
 
-    endInput.defaultValue       = timeCodes[1];
+    endInput.defaultValue = timeCodes[1];
     endInput.setAttribute('oninput', 'updateRsRatingAndCharCount(' + seqNumber + ');');
 
 
@@ -400,8 +400,10 @@ function createReloadPageOption()
 
         // Récupère le nombre de lignes à partir duquel afficher le sous-titre
         var i = 0;
-        var firstLine       = document.getElementsByClassName('originalText')[0];
+        var firstLine = document.getElementsByClassName('originalText')[0];
+
         // Si on affiche uniquement les lignes les plus à jour
+        // et que des séquences sont diponibles
         if (updated && firstLine)
         {
             i = parseInt(firstLine.getAttribute('id').replace('trseq', '')) - 1;
@@ -465,8 +467,11 @@ function addTimeUtils(timeCell, seqNumber, timeCodes)
     timeCell.insertBefore(createTimeUtils(seqNumber, timeCodes), timeCell.firstElementChild);
 
     // Change le style pour afficher le grand indicateur
-    timeCell.className = timeCell.className.replace(/timeWithoutIndicator /, 'timeWithIndicator ');
-    timeCell.className = timeCell.className.replace(/timeInitial /, 'timeClicked ');
+    timeCell.classList.remove('timeWithoutIndicator');
+    timeCell.classList.remove('timeInitial');
+
+    timeCell.classList.add('timeWithIndicator');
+    timeCell.classList.add('timeClicked');
 
     // Désactivation de onclick
     timeCell.removeAttribute('onclick');
@@ -483,8 +488,11 @@ function removeTimeUtils(timeCell)
     timeCell.firstElementChild.remove();
 
     // On remet le style du petit indicateur
-    timeCell.className = timeCell.className.replace(/timeWithIndicator /, 'timeWithoutIndicator ');
-    timeCell.className = timeCell.className.replace(/timeClicked /, 'timeInitial ');
+    timeCell.classList.remove('timeWithIndicator');
+    timeCell.classList.remove('timeClicked');
+
+    timeCell.classList.add('timeWithoutIndicator');
+    timeCell.classList.add('timeInitial');
 }
 
 
@@ -498,7 +506,8 @@ function addBigIndicator(timeCell)
     timeCell.appendChild(createRsIndicators());
 
     // Change le style pour afficher le grand indicateur
-    timeCell.className = timeCell.className.replace(/timeWithoutIndicator /, 'timeWithIndicator ');
+    timeCell.classList.remove('timeWithoutIndicator');
+    timeCell.classList.add('timeWithIndicator');
 }
 
 
@@ -512,7 +521,8 @@ function removeBigIndicator(timeCell)
     timeCell.lastElementChild.remove();
 
     // On remet le style du petit indicateur
-    timeCell.className = timeCell.className.replace(/timeWithIndicator /, 'timeWithoutIndicator ');
+    timeCell.classList.remove('timeWithIndicator');
+    timeCell.classList.add('timeWithoutIndicator');
 }
 
                      // Gestion de la barre utilisateur //
