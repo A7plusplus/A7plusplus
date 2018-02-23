@@ -4,11 +4,14 @@
 */
 
 
+// Url de la page via l'API
+var pageUrl = new URL(location.href);
+
 // On est en mode Join translation
-var translatePage = location.href.search(new RegExp('translate.php')) !== -1;
+var translatePage = (pageUrl.pathname === '/translate.php');
 
 // Si la langue n'est pas anglais et qu'on est en mode view & edit
-if(!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
+if (!translatePage && pageUrl.searchParams.get('lang') !== '1')
 {
     // Remplacement des AJAX
     var xhrProto = XMLHttpRequest.prototype,
@@ -30,15 +33,26 @@ if(!translatePage && location.search.search(new RegExp('&lang=1$')) === -1)
             XMLHttpRequest.prototype = xhrProto;
 
             // Demande la page avec anglais en langue secondaire
-            list(0, false, 1);
+            var askedFirstSeq = pageUrl.searchParams.get('sequence') ? pageUrl.searchParams.get('sequence') - 1 : 0;
+            var updated       = pageUrl.searchParams.has('sequence');
+            
+            list(askedFirstSeq, updated, 1);
         }
     };
 
     // Empêche l'ouverture de l'objet si c'est la requête de base
     xhrProto.open = function (method, url)
     {
+        // Parse l'url
+        var parsedUrl = new URL(url, pageUrl.origin);
+
         // Fait échouer la première requête
-        if(url === '/ajax_list.php' + location.search + '&start=0&updated=false&slang=')
+        if (parsedUrl.pathname === '/ajax_list.php' &&
+            parsedUrl.searchParams.get('id') === pageUrl.searchParams.get('id') &&
+            parsedUrl.searchParams.get('lang') === pageUrl.searchParams.get('lang') &&
+            parsedUrl.searchParams.get('fversion') === pageUrl.searchParams.get('fversion') &&
+            parsedUrl.searchParams.get('slang') === ''
+        )
         {
             return;
         }
@@ -89,16 +103,19 @@ function preInit()
         var options = JSON.parse(data.detail);
 
         // Si des options sont présentes, remplace celles par défaut
-        if(options !== null)
+        if (options !== null)
         {
             A7Settings.stateUpdateInterval   = options.updates.state;
             A7Settings.commentUpdateInterval = options.updates.comment;
             A7Settings.lockPosition          = options.lock;
             A7Settings.disableUserBar        = options.userBar.disable;
+
+            // Condition nescessaire pour les versions migrées
+            if(options.updates.popup) A7Settings.popupTimeout = options.updates.popup;
         }
 
         // Récupère la langue du site ou celle forcée
-        if(options !== null && options.lang.forced === true)
+        if (options !== null && options.lang.forced === true)
         {
             // Fallback en anglais si la langue n'est pas trouvée
             loc = loc[options.lang.data] ? loc[options.lang.data] : loc.en;
@@ -147,12 +164,12 @@ function init()
 
     // Récupère les infos de la page
     var pageInfos = {};
-    if(!translatePage)
+    if (!translatePage)
     {
-        location.search.substr(1).split('&').forEach(function(item)
-        {
-            pageInfos[item.split('=')[0]] = item.split('=')[1];
-        });
+        pageInfos.id       = pageUrl.searchParams.get('id');
+        pageInfos.fversion = pageUrl.searchParams.get('fversion');
+        pageInfos.lang     = pageUrl.searchParams.get('lang');
+        pageInfos.langfrom = pageUrl.searchParams.get('langfrom');
     }
     else
     {
@@ -165,6 +182,7 @@ function init()
 
     // Initialise l'objet page
     page = {
+        pageUrl: pageUrl,
         translatePage: translatePage,
         lock: (document.getElementById('locktop') !== null) ? 1 : 0,
         stateIntervalId: null,
@@ -184,6 +202,9 @@ function init()
     logoLink.insertBefore(createA7Info(), logoLink.lastElementChild);
     logoLink.setAttribute('id', 'A7Logo');
 
+    // Place la popup d'erreur
+    document.body.appendChild(createWarningPopup());
+
     // Démarre l'actualisation de l'état d'avancement
     page.stateIntervalId = setInterval(updateStateOfTranslation, A7Settings.stateUpdateInterval * 1000);
 
@@ -191,36 +212,36 @@ function init()
     var listaParent = list.parentElement;
 
     // Ajoute la barre utilisateur si non désactivée
-    if(!A7Settings.disableUserBar)
+    if (!A7Settings.disableUserBar)
     {
         listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
     }
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
     // Si le lock des commentaires est placé en bas, le crée
-    if(A7Settings.lockPosition === "bottom")
+    if (A7Settings.lockPosition === "bottom")
     {
         listaParent.insertBefore(createCommentLockUtil(), listaParent.lastElementChild);
     }
 
     // Récupère les valeurs enregistrées pour :
     // la taille de la fenêtre de commentaires, l'état de lock, l'état d'épinglement et la position de la barre utilisateur
-    if(localStorage)
+    if (localStorage)
     {
-        var commentsSection = document.getElementById('commentsSection');
+        var commentsSection = getCommentCell();
         updateCommentHeightFromSaved(commentsSection, 'A7ppCommentWindowSize', 180, 0.8);
-        if(localStorage.getItem('A7ppCommentWindowPined') === "true")
+        if (localStorage.getItem('A7ppCommentWindowPined') === "true")
         {
             pinComments();
         }
-        if(localStorage.getItem('A7ppCommentWindowLockedDown') === "true")
+        if (localStorage.getItem('A7ppCommentWindowLockedDown') === "true")
         {
             lockComment();
         }
 
         // Barre utilisateur
         var userBarPos = localStorage.getItem('A7ppUserBarPosition');
-        if(userBarPos && !A7Settings.disableUserBar)
+        if (userBarPos && !A7Settings.disableUserBar)
         {
             var data = userBarPos.split(',');
             var left = data[0],
@@ -240,7 +261,4 @@ function init()
 
     // Permet le changement de la langue d'affichage du site (bugfix du site)
     changeAppLang();
-
-    // Vérifie les mises à jour
-    searchForUpdate();
 }

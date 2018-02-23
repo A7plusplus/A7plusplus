@@ -17,7 +17,7 @@ function changeAppLang()
     {
         var lang = event.target.value;
         fetch('/changeapplang.php?applang=' + lang, {credentials: 'include'});
-        if(confirm(loc.reloadPageQuestion))
+        if (confirm(loc.reloadPageQuestion))
         {
             location.reload();
         }

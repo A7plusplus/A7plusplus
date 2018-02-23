@@ -59,3 +59,43 @@ function getStateOfTextCell(textCell)
     else
         return 'clicked';
 }
+
+
+/**
+* @fn getUserBar Retourne la cellule de la barre utilisateur
+* @return {!Object} Cellule de la barre utilisateur
+*/
+function getUserBar()
+{
+    return document.getElementById('userBar');
+}
+
+
+/**
+* @fn getUserBarUsers Retourne la cellule contenant la liste des utilisateurs de la barre utilisateur
+* @return {!Object} Cellule contenant la liste des utilisateurs de la barre utilisateur
+*/
+function getUserBarUsers()
+{
+    return document.getElementById('selectUser');
+}
+
+
+/**
+* @fn getUserBarData Retourne la cellule de donnée de la barre utilisateur
+* @return {!Object} Cellule de donnée de la barre utilisateur
+*/
+function getUserBarData()
+{
+    return getUserBar().lastElementChild;
+}
+
+
+/**
+* @fn getCommentCell Retourne la cellule des commentaires
+* @return {!Object} Cellule de la cellule des commentaires
+*/
+function getCommentCell()
+{
+    return document.getElementById('commentsSection');
+}

@@ -89,26 +89,30 @@ function pre_updatetime(seqNumber)
                  '&lang='      + subInfo.lang +
                  '&seqnumber=' + seqNumber +
                  '&stime='     + encodeURIComponent(timeStart.value) +
-                 '&etime='     + encodeURIComponent(timeEnd.value),
-        url    = '/ajax_editTime.php',
-        action = 'POST';
+                 '&etime='     + encodeURIComponent(timeEnd.value);
 
     // Indique que c'est en envoi
     resetToLoadingImage(timeCell);
 
     // Effectue l'envoi des données
-    ajax(action, url, params, post_updateTime, seqNumber, [timeStart.value, timeEnd.value], [timeStart.defaultValue, timeEnd.defaultValue]);
+    ajax({
+        action:               'POST',
+        url:                  '/ajax_editTime.php',
+        params:               params,
+        forwardData:          seqNumber,
+        backupInfos:          {value: [timeStart.value, timeEnd.value], default: [timeStart.defaultValue, timeEnd.defaultValue]},
+        readyFunction:        post_updateTime
+    });
 }
 
 
 /**
 * @fn post_updateTime Place le temps dans sa cellule ou rouvre l'édition
-* @param {number} seqNumber Numéro de la séquence
-* @param {Array.<string>} confirmedTime Temps confirmé par le serveur ou temps à envoyer en cas d'erreur
 * @param {boolean} isError Si la requête a échoué
-* @param {Array.<string>} defaultValue Optionnel : valeur par defaut du temps en cas d'erreur
+* @param {Array.<string>} confirmedTime Temps confirmé par le serveur ou temps à envoyer en cas d'erreur
+* @param {number} seqNumber Numéro de la séquence
 */
-function post_updateTime(seqNumber, confirmedTime, isError, defaultValue)
+function post_updateTime(isError, confirmedTime, seqNumber)
 {
     // Récupération de la cellule
     var timeCell = getTimeCell(seqNumber);
@@ -148,7 +152,8 @@ function post_updateTime(seqNumber, confirmedTime, isError, defaultValue)
         updateRsRatingAndCharCount(seqNumber);
 
         // Activation de onclick après 10 ms pour laisser passer le clic courant
-        setTimeout(function(){
+        setTimeout(function()
+        {
             timeCell.setAttribute('onclick', 'pre_timeclick(' + seqNumber + ')');
         }, 10);
     }
@@ -165,12 +170,13 @@ function post_updateTime(seqNumber, confirmedTime, isError, defaultValue)
         var timeEnd   = timeCell.firstElementChild.children[6];
 
         // Remet les valeurs par défaut
-        timeStart.defaultValue = defaultValue[0];
-        timeEnd.defaultValue   = defaultValue[1];
-        timeStart.value        = confirmedTime[0];
-        timeEnd.value          = confirmedTime[1];
+        timeStart.defaultValue = confirmedTime.default[0];
+        timeEnd.defaultValue   = confirmedTime.default[1];
+        timeStart.value        = confirmedTime.value[0];
+        timeEnd.value          = confirmedTime.value[1];
 
         // Mise en forme
+        displayAjaxError(loc.duration);
         timeCell.firstElementChild.setAttribute('class', 'ajaxError');
         timeCell.firstElementChild.setAttribute('title', loc.ajaxErrorOccurred);
     }
@@ -237,7 +243,8 @@ function timeCancel(seqNumber)
     updateRsRatingAndCharCount(seqNumber);
 
     // Activation de onclick après 10 ms pour laisser passer le clic courant
-    setTimeout(function(){
+    setTimeout(function()
+    {
         timeCell.setAttribute('onclick', 'pre_timeclick(' + seqNumber + ')');
     }, 10);
 }

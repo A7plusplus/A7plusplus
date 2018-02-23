@@ -47,6 +47,15 @@
             }
         }
     },
+    "A7pp_optionPagePopupTimeoutLabel": {
+        "message": "Error popup timeout before disapearing (in seconds, default: $DEFAULT$ sec):",
+        "description": "Popup timeout before disapearing (in seconds, default: $DEFAULT$ sec).",
+        "placeholders": {
+            "default": {
+                "content": "$1"
+            }
+        }
+    },
     "A7pp_optionPageDisableUserBarLabel": {
         "message": "Disable userBar:",
         "description": "Disable userBar."

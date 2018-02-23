@@ -7,9 +7,8 @@
 // Déclaration de l'objet contenant tous les réglages
 var A7Settings = {
 
-    NUMERIC_VERSION_INFO : 211,
-    MAJOR_VERSION_INFO   : 'A7++ 2.1.1',
-    MINOR_VERSION_INFO   : '2.1.1 stable',
+    MAJOR_VERSION_INFO   : 'A7++ 2.2',
+    MINOR_VERSION_INFO   : '2.2 stable',
 
     // Longueur en caractères
     maxPerLineOneLineSETTING : 37,
@@ -21,10 +20,11 @@ var A7Settings = {
     minDurationSETTING       : 1.001,
 
     // Temps en secondes
-    stateUpdateInterval      : 180,
-    commentUpdateInterval    : 40,
-    userBarUpdateIntervalMin : 150,
+    stateUpdateInterval      : 240,
+    commentUpdateInterval    : 45,
+    userBarUpdateIntervalMin : 300,
     updateTimeout            : 30,
+    popupTimeout             : 15,
 
     RSR: {
         // Reading speed, Rating, Short rating
@@ -48,5 +48,8 @@ var A7Settings = {
     lockPosition: "bottom",
 
     // Désactivation de la barre utilisateur
-    disableUserBar: false
+    disableUserBar: false,
+
+    // Nombre maximal de tentative de récupération de l'indicateur HI
+    maxHICheck: 4
 };

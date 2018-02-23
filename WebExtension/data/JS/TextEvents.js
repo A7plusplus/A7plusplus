@@ -17,10 +17,10 @@ function pre_mouseclick(tipo, seqNumber)
     textCell.removeAttribute('tabIndex');
 
     // Si on est en mode Join translation, recherche d'abord le text
-    if(!page.translatePage || getTextCell(seqNumber).innerHTML.contains('loader.gif'))
+    if (!page.translatePage || getTextCell(seqNumber).innerHTML.contains('loader.gif'))
     {
         // Bypass le chargement car inutile si on est en view & edit ou qu'il y a erreur d'envoi
-        post_select(seqNumber, null, false);
+        post_select(false, null, seqNumber);
     }
     else
     {
@@ -37,12 +37,15 @@ function pre_mouseclick(tipo, seqNumber)
                      '&fversion='  + subInfo.fversion +
                      '&langto='    + subInfo.lang +
                      '&langfrom='  + subInfo.langfrom +
-                     '&seq=' + seqNumber,
-            url = '/translate_ajaxselect.php',
-            action = 'GET';
+                     '&seq=' + seqNumber;
 
         // Effectue l'envoi des données
-        ajax(action, url + '?' + params, '', post_select, seqNumber, null, null);
+        ajax({
+            action:        'GET',
+            url:           '/translate_ajaxselect.php' + '?' + params,
+            forwardData:   seqNumber,
+            readyFunction: post_select
+        });
     }
 }
 
@@ -96,10 +99,9 @@ function pre_update(tipo, seqNumber)
 
     // Prépare les données
     var params = null,
-        url = null,
-        action = 'POST';
+        url = null;
 
-    if(page.translatePage)
+    if (page.translatePage)
     {
         params = 'id='         + subInfo.id +
                  '&fversion='  + subInfo.fversion +
@@ -126,18 +128,24 @@ function pre_update(tipo, seqNumber)
     moveFocusToNextLine(seqNumber);
 
     // Effectue l'envoi des données
-    ajax(action, url, params, post_update, seqNumber, textArea.value, textArea.defaultValue);
+    ajax({
+        action:               'POST',
+        url:                  url,
+        params:               params,
+        forwardData:          seqNumber,
+        backupInfos:          {value: textArea.value, default: textArea.defaultValue},
+        readyFunction:        post_update
+    });
 }
 
 
 /**
 * @fn post_update Place le texte dans sa cellule ou rouvre l'édition
-* @param {number} seqNumber Numéro de la séquence
-* @param {string} confirmedText Texte confirmé par le serveur ou texte à envoyer en cas d'erreur
 * @param {boolean} isError Si la requête a échoué
-* @param {string} defaultValue Optionnel : valeur par defaut du texte en cas d'erreur
+* @param {string} confirmedText Texte confirmé par le serveur ou infos de backup (text à envoyer - text original)
+* @param {number} seqNumber Numéro de la séquence
 */
-function post_update(seqNumber, confirmedText, isError, defaultValue)
+function post_update(isError, confirmedText, seqNumber)
 {
     // Récupération de la cellule
     var textCell = getTextCell(seqNumber);
@@ -149,7 +157,7 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
     if (!isError)
     {
         // Change le texte de la cellule
-        if(confirmedText.indexOf('<font color="black">') === -1)
+        if (confirmedText.indexOf('<font color="black">') === -1)
         {
             // <font color="blue">
             textCell.innerHTML = confirmedText.substr(19, confirmedText.length - 26).replace(/\n/g, '');
@@ -163,14 +171,15 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
         updateRsRatingAndCharCount(seqNumber);
 
         // Marque la séquence comme déjà traduite
-        if(page.translatePage)
+        if (page.translatePage)
         {
             textCell.parentElement.classList.remove('originalText');
             textCell.parentElement.classList.add('quotedText');
         }
 
         // Activation de onclick après 10 ms pour laisser passer le clic courant
-        setTimeout(function(){
+        setTimeout(function()
+        {
             textCell.setAttribute('onclick', "pre_mouseclick('o', " + seqNumber + ');');
         }, 10);
     }
@@ -183,10 +192,11 @@ function post_update(seqNumber, confirmedText, isError, defaultValue)
         var textArea = textCell.firstElementChild.firstElementChild;
 
         // Remet les valeurs par défaut
-        textArea.defaultValue = defaultValue;
-        textArea.value        = confirmedText;
+        textArea.defaultValue = confirmedText.default;
+        textArea.value        = confirmedText.value;
 
         // Mise en forme
+        displayAjaxError(loc.sequence);
         updateRsRatingAndCharCount(seqNumber);
         textCell.firstElementChild.setAttribute('class', 'ajaxError');
         textCell.firstElementChild.setAttribute('title', loc.ajaxErrorOccurred);
@@ -332,16 +342,20 @@ function textCancel(seqNumber)
         var params = 'id='         + subInfo.id +
                      '&fversion='  + subInfo.fversion +
                      '&langto='      + subInfo.lang +
-                     '&seq=' + seqNumber,
-            url = '/translate_release.php',
-            action = 'GET';
+                     '&seq=' + seqNumber;
 
         // Effectue l'envoi des données
-        ajax(action,  url + '?' + params, '', post_release, seqNumber, null, null);
+        ajax({
+            action:               'GET',
+            url:                  '/translate_release.php' + '?' + params,
+            forwardData:          seqNumber,
+            readyFunction:        post_release
+        });
     }
 
     // Active onclick après 10 ms pour laisser passer le clic courant
-    setTimeout(function(){
+    setTimeout(function()
+    {
         textCell.setAttribute('onclick', "pre_mouseclick('o', " + seqNumber + ');');
     }, 10);
 }
@@ -349,12 +363,12 @@ function textCancel(seqNumber)
 
 /**
 * @fn post_select Récupère et place le dernier texte de la séquence
-* @param {Integer} seqNumber Numéro de séquence
-* @param {Object} data Donnée issue de la requête (ou null si en mode view & edit)
 * @param {Boolean} isError Si la requête a échoué (ou false en mode view & edit)
+* @param {Object}  data Donnée issue de la requête (ou null si en mode view & edit)
+* @param {Integer} seqNumber Numéro de séquence
 * @param {Object} translateMode Non utilisé
 */
-function post_select(seqNumber, data, isError, translateMode)
+function post_select(isError, data, seqNumber, translateMode)
 {
     // Récupération des éléments utiles
     var line     = getTextCell(seqNumber).parentElement;
@@ -370,9 +384,9 @@ function post_select(seqNumber, data, isError, translateMode)
         var regexMatches = data.match(/onkeypress="translate_userInput[^>]*>((.|\n)*)<\/textarea>/);
 
         // Le texte est trouvé dans la réponse
-        if(regexMatches && regexMatches.length > 2)
+        if (regexMatches && regexMatches.length > 2)
         {
-            if(regexMatches[1] === '</textarea>')
+            if (regexMatches[1] === '</textarea>')
             {
                 text = '';
             }
@@ -384,12 +398,34 @@ function post_select(seqNumber, data, isError, translateMode)
         else
         {
             // Texte non trouvé, on vérifie que la séquence n'est pas occupée
-            var regexUser = data.match(/<a href="\/user\/">.*<\/a>/);
+            var regexUser = data.match(/<a href="\/user\/[0-9]*">.*<\/a>/);
 
-            if(regexUser && regexUser.length == 1)
+            if (regexUser && regexUser.length == 1)
             {
                 // Séquence occupée
                 textCell.innerHTML = data;
+
+                // Si le site ne nous fourni toujours pas l'ID utilisateur - Répare le liens vers le profile
+                if (!data.match(/<a href="\/user\/[0-9]+">.*<\/a>/))
+                {
+                    var username = textCell.firstElementChild.text;
+
+                    // Récupère (dans la section du bas), le vrai lien
+                    var links = document.getElementById('comments').previousElementSibling.getElementsByTagName('a');
+                    for (var i = 0; i < links.length; i++)
+                    {
+                        if (links[i].text === username && links[i].href.startsWith('http://www.addic7ed.com/user/'))
+                        {
+                            textCell.firstElementChild.href = links[i].href;
+                            break;
+                        }
+
+                        // Si le bon lien n'est pas trouvé, tempis...
+                        textCell.firstElementChild.remove();
+                        textCell.innerText = username + ' ' + textCell.innerText;
+                    }
+                }
+
                 return;
             }
             else
@@ -398,7 +434,7 @@ function post_select(seqNumber, data, isError, translateMode)
             }
         }
     }
-    else if(isError)
+    else if (isError)
     {
         text = getTextFromHTML(page.tempTranslateBackup[seqNumber]);
     }
@@ -435,9 +471,12 @@ function post_select(seqNumber, data, isError, translateMode)
     var textArea = textCell.firstElementChild.firstElementChild;
     textArea.defaultValue = text;
 
-    // Prend le focus
-    textArea.focus();
-    textArea.setSelectionRange(textArea.value.length, textArea.value.length);
+    // Prend le focus (si l'utilisateur n'édite pas de séquence actuellement)
+    if(document.activeElement.tagName !== 'TEXTAREA')
+    {
+        textArea.focus();
+        textArea.setSelectionRange(textArea.value.length, textArea.value.length);
+    }
 
 
     // Change la classe de la cellule des tailles
@@ -448,14 +487,14 @@ function post_select(seqNumber, data, isError, translateMode)
     textCell.setAttribute('disabled', true);
 
     // Si une erreur de réception arrive en mode Join translation
-    if(isError)
+    if (isError)
     {
         textCell.classList.add('ajaxErrorNotConfirmed');
         textCell.setAttribute('title', loc.seqNotConfirmed);
     }
 
     // Désactivation de onclick
-    textCell.setAttribute('onclick', '');
+    textCell.removeAttribute('onclick');
 
     // Remet la textArea à la bonne taille
     updateTextAreaSize(textCell.firstElementChild.firstElementChild);
@@ -471,6 +510,43 @@ function post_select(seqNumber, data, isError, translateMode)
 function post_release()
 {
     return;
+}
+
+
+/**
+* @fn moveFocusToNextLine Donne le focus à la cellule de texte éditable ou à la textarea de la ligne suivante (si existante)
+* @param {number} seqNumber Numéro de la séquence
+*/
+function moveFocusToNextLine(seqNumber)
+{
+    // Récupération des éléments utiles
+    var textCell = getTextCell(seqNumber);
+    var nextLine = textCell.parentElement.nextSibling;
+    var textCellNextLine, textAreaNextLine;
+
+    if (nextLine)
+    {
+        var nextLineSeqNumber = nextLine.children[page.lock].firstElementChild.firstElementChild.innerHTML;
+        textCellNextLine = getTextCell(nextLineSeqNumber);
+    }
+
+    // S'il y a une ligne suivante éditable avec cellule de texte ouverte, focus sur la textarea
+    if (nextLine && textCellNextLine && textCellNextLine.classList.contains('textClicked'))
+    {
+        textAreaNextLine = textCellNextLine.firstElementChild.firstElementChild;
+
+        textAreaNextLine.focus();
+    }
+    // S'il y a une ligne suivante éditable avec cellule de texte non ouverte, focus sur la cellule texte
+    else if (nextLine && textCellNextLine)
+    {
+        textCellNextLine.focus();
+    }
+    // S'il n'y a pas de ligne suivante éditable , focus sur la cellule de texte de la ligne actuelle (nécessaire sur Firefox)
+    else
+    {
+        textCell.focus();
+    }
 }
 
                           // Actions de masse //

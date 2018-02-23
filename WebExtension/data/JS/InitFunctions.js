@@ -135,7 +135,7 @@ function linesChanged()
         }
 
         // Si le lock des commentaires est placé en haut, le crée
-        if(A7Settings.lockPosition === "top")
+        if (A7Settings.lockPosition === "top")
         {
             parentDiv.insertBefore(createCommentLockUtil(), parentDiv.firstElementChild);
         }
@@ -148,13 +148,18 @@ function linesChanged()
         {
             parentDiv.appendChild(createUntranslatedOption());
         }
+        // Ajoute le bouton pour actualiser la page de sous-titres
+        else
+        {
+            parentDiv.appendChild(createReloadPageOption());
+        }
     }
 
     // Actualise directement l'avancement
     updateStateOfTranslation();
 
     var headerRow = null;
-    if(page.translatePage)
+    if (page.translatePage)
     {
         headerRow = document.getElementById('lista').firstElementChild.firstElementChild.firstElementChild;
     }
@@ -204,7 +209,7 @@ function linesChanged()
         {
             textCell.setAttribute(
                 'tabIndex',
-                parseInt(currentLine.children[page.lock].firstElementChild.firstElementChild.innerHTML)
+                parseInt(currentLine.children[page.lock].firstElementChild.firstElementChild.innerHTML, 10)
             );
 
             textCell.addEventListener('keypress', function(e)
@@ -220,7 +225,7 @@ function linesChanged()
             });
 
             // Place le focus sur la première ligne cliquable pour la navigation au clavier
-            if(firstEditableLine === null) firstEditableLine = textCell;
+            if (firstEditableLine === null) firstEditableLine = textCell;
         }
 
         // Retire le texte de base indiquant une séquence non traduite
@@ -340,15 +345,15 @@ function linesChanged()
     }
 
     // Si la barre utilisateur est activée
-    if(!A7Settings.disableUserBar)
+    if (!A7Settings.disableUserBar)
     {
         // Charge la liste des utilisateurs dans la userBar
-        if(page.translatePage) loadUserBarUsersFromTranslate();
+        if (page.translatePage) loadUserBarUsersFromTranslate();
         else                   loadUserBarUsers();
     }
 
     // Focus sur la première ligne
-    if(firstEditableLine) firstEditableLine.focus();
+    if (firstEditableLine) firstEditableLine.focus();
 }
 
 
@@ -357,31 +362,57 @@ function linesChanged()
 */
 function requestHICheck()
 {
+    // Créé la variable de maximum de vérifications
+    if (typeof window.A7CurrentHICheck === 'undefined')
+    {
+        window.A7CurrentHICheck = 0;
+    }
+
     // Récupère les infos
     var episodeUrl = document.getElementById('spanState').parentElement.querySelector('.titulo,big').firstElementChild.href;
 
     // Envoie la requête
-    ajax(['GET', 'document'], episodeUrl, '', post_requestHICheck, null, null);
+    ajax({
+        action:        'GET',
+        responseType:  'document',
+        url:           episodeUrl,
+        readyFunction: post_requestHICheck
+    });
 }
 
 
 /**
 * @fn post_requestHICheck Récupère les données de l'épisode et vérifie s'il est en HI
+* @param {boolean} isError Si une erreur s'est produite
+* @param {string} htmlData Objet HTML de l'episode
 */
-function post_requestHICheck(episodeHTMLDocument, isError)
+function post_requestHICheck(isError, episodeHTMLDocument)
 {
+    // Variable pour ne pas faire des reqêtes à l'infini
+    window.A7CurrentHICheck++;
+
     // Renvoie la requête : en cas d'échec ou de vérification sommaire du contenu de la page reçue infructueuse
     if (isError || !episodeHTMLDocument.getElementById('container95m'))
     {
-        setTimeout(function(){
+        if (window.A7CurrentHICheck > A7Settings.maxHICheck)
+        {
+            displayAjaxError(loc.ajaxErrorOnHI);
+            return;
+        }
+
+        setTimeout(function()
+        {
             requestHICheck();
         }, 250);
         return;
     }
 
     // Info et stockage
-    var currentUrl = window.location.href,
+    var currentUrl = new URL(window.location.href),
         img = null;
+
+    // Retire le paramètre 'sequence' qui ne sert à rien
+    currentUrl.searchParams.delete('sequence');
 
     // Repère le lien de l'épisode
     var links = episodeHTMLDocument.getElementsByTagName('a');
@@ -402,7 +433,7 @@ function post_requestHICheck(episodeHTMLDocument, isError)
         }
         else
         {
-            if (links[i].href === currentUrl)
+            if (links[i].href === currentUrl.href)
             {
                 // Récupère l'indicateur
                 img = links[i].parentElement.previousElementSibling.children[1];
@@ -424,39 +455,4 @@ function post_requestHICheck(episodeHTMLDocument, isError)
     }
 
     console.log('[A7++] ' + loc.HIStatusLoaded);
-}
-
-/**
-* @fn searchForUpdate Envoie la requête de vérification de mise à jour
-*/
-function searchForUpdate()
-{
-    ajax('GET', 'https://raw.githubusercontent.com/A7plusplus/A7plusplus/master/VERSION', '', post_searchForUpdate, null, null);
-}
-
-/**
-* @fn post_searchForUpdate Récupère les infos de version
-*/
-function post_searchForUpdate(data, isError)
-{
-    // On considère qu'il n'y a pas de MÀJ
-    if(isError) return;
-
-    // Comparaison (MÀJ dispo)
-    if(A7Settings.NUMERIC_VERSION_INFO < parseInt(data))
-    {
-        // Met de la couleur
-        var A7Info = document.getElementById('A7Info');
-        if(A7Info)
-        {
-            A7Info.classList.add('updateAvailable');
-            A7Info.title = loc.updateAvailable;
-        }
-        else
-        {
-            setTimeout(function(){
-                post_searchForUpdate(data, isError);
-            }, 250);
-        }
-    }
 }

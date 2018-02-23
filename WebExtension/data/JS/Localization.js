@@ -30,7 +30,7 @@ var loc =
         from              : 'De : ',
         to                : 'À : ',
         RSLegend          : '(Vitesse de lecture)',
-        ajaxErrorOccurred : "Une erreur lors de l'envoi ou de la réception des données s'est produite. Veuillez réessayer.",
+        ajaxErrorOccurred : "Une erreur de communication s'est produite. Veuillez réessayer.",
         comments          : 'Commentaires',
         refreshComment    : 'Actualiser les commentaires',
         pinComment        : 'Verrouiller la fenêtre de commentaires',
@@ -42,7 +42,6 @@ var loc =
         lockComment       : 'Verrouiller/déverrouiller la fenêtre de commentaires',
         hearingImpaired   : 'Version malentendants',
         HIStatusLoaded    : 'Vérification de version malentendant effectuée',
-        updateAvailable   : 'Une mise à jour est disponible',
         userBar           : 'Ouvrir/fermer la barre utilisateur',
         SelectUserTitle   : 'Séléctionner un utilisateur',
         PMTitle           : 'Écrire un message',
@@ -50,9 +49,14 @@ var loc =
         ProfilTitle       : 'Voir le profil',
         messageSendError  : "Une erreur s'est produite lors de l'envoi du message",
         messageSent       : 'Message envoyé',
+        ajaxErrorOnUserBar: 'Erreur de données de la barre utilisateur',
+        ajaxErrorOnHI     : 'Impossible de récupérer le statut malentendant',
         seqNotConfirmed   : "Séquence non confirmée (elle n'est donc peut-être pas à jour)",
         untranlsatedOnly  : "N'afficher que les séquences non traduites",
-        showAll           : 'Afficher toutes les séquences'
+        showAll           : 'Afficher toutes les séquences',
+        reloadPage        : 'Recharger les séquences de la page courante',
+        clickToShowHelp   : "(cliquer pour afficher l'aide)",
+        helpURL           : 'http://www.sub-talk.net/topic/4687-/'
 
     },
 
@@ -80,7 +84,7 @@ var loc =
         from              : 'From: ',
         to                : 'To: ',
         RSLegend          : '(Reading speed)',
-        ajaxErrorOccurred : 'Server error, please try again.',
+        ajaxErrorOccurred : 'Communication error, please try again.',
         comments          : 'Comments',
         refreshComment    : 'Refresh comments',
         pinComment        : 'Pin chatbox',
@@ -92,7 +96,6 @@ var loc =
         lockComment       : 'Lock/Unlock comment section',
         hearingImpaired   : 'Hearing Impaired version',
         HIStatusLoaded    : 'HI status loaded',
-        updateAvailable   : 'An update is available',
         userBar           : 'Open/close user bar',
         SelectUserTitle   : 'Select an user',
         PMTitle           : 'Write a message',
@@ -100,9 +103,14 @@ var loc =
         ProfilTitle       : 'See user profile',
         messageSendError  : 'An error occured while sending the message',
         messageSent       : 'Message sent',
+        ajaxErrorOnUserBar: 'UserBar data error',
+        ajaxErrorOnHI     : 'Unable to get HI status',
         seqNotConfirmed   : 'Sequence not confirmed (it can be outdated)',
         untranlsatedOnly  : 'Show only the untranslated sequences',
-        showAll           : 'Show all sequences'
+        showAll           : 'Show all sequences',
+        reloadPage        : 'Reload current page sequences',
+        clickToShowHelp   : '(click to show some help)',
+        helpURL           : 'http://www.sub-talk.net/topic/5720-/'
 
     }
 };

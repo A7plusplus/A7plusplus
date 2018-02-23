@@ -54,6 +54,7 @@ function populate()
     // Temps entre les mises à jour
     document.getElementById("stateUpdate").innerText   = chrome.i18n.getMessage('A7pp_optionPagestateUpdateLabel',   A7Settings.stateUpdateInterval.toString());
     document.getElementById("commentUpdate").innerText = chrome.i18n.getMessage('A7pp_optionPageCommentUpdateLabel', A7Settings.commentUpdateInterval.toString());
+    document.getElementById("popupTimeout").innerText  = chrome.i18n.getMessage('A7pp_optionPagePopupTimeoutLabel',  A7Settings.popupTimeout.toString());
 
     // UserBar
     document.getElementById("userBarCB").innerText = chrome.i18n.getMessage('A7pp_optionPageDisableUserBarLabel');
@@ -77,20 +78,21 @@ function getData()
         function(item)
         {
             // Objet présent
-            if(typeof item.lang !== 'undefined')
+            if (typeof item.lang !== 'undefined')
             {
                 // Langue
                 document.getElementById("forcedLangCBData").checked = item.lang.forced;
                 var availableLang = document.getElementById("availableLangData");
                 availableLang.value  = item.lang.data;
-                if(availableLang.value === '') availableLang.value = 'en';
+                if (availableLang.value === '') availableLang.value = 'en';
 
                 // Cadenas
                 document.getElementById("lockPositionData").options[item.lock === "top" ? 1 : 0].selected = 'selected';
 
                 // Durées
-                document.getElementById("stateUpdateData").value = item.updates.state;
+                document.getElementById("stateUpdateData").value   = item.updates.state;
                 document.getElementById("commentUpdateData").value = item.updates.comment;
+                document.getElementById("popupTimeoutData").value  = item.updates.popup || A7Settings.popupTimeout;
 
                 // UserBar
                 document.getElementById("userBarCBData").checked = item.userBar.disable;
@@ -105,8 +107,9 @@ function getData()
                 document.getElementById("lockPositionData").options[0].selected = 'selected';
 
                 // Durées
-                document.getElementById("stateUpdateData").value = A7Settings.stateUpdateInterval;
+                document.getElementById("stateUpdateData").value   = A7Settings.stateUpdateInterval;
                 document.getElementById("commentUpdateData").value = A7Settings.commentUpdateInterval;
+                document.getElementById("popupTimeoutData").value  = A7Settings.popupTimeout;
 
                 // UserBar
                 document.getElementById("userBarCBData").checked = A7Settings.disableUserBar;
@@ -129,6 +132,7 @@ function setData(event)
     // Pour les futures vérifications
     var stateUpdate   = document.getElementById("stateUpdateData").value,
         commentUpdate = document.getElementById("commentUpdateData").value;
+        popupTimeout  = document.getElementById("popupTimeoutData").value;
 
     chrome.storage.local.set(
         {
@@ -139,7 +143,8 @@ function setData(event)
             'lock':     document.getElementById("lockPositionData").value,
             'updates': {
                 'state':    (stateUpdate < 60 ? 60 : stateUpdate),
-                'comment':  (commentUpdate < 20 ? 20 : commentUpdate)
+                'comment':  (commentUpdate < 20 ? 20 : commentUpdate),
+                'popup':    (popupTimeout < 1 ? 1 : popupTimeout)
             },
             'userBar': {
                 'disable': document.getElementById("userBarCBData").checked

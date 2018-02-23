@@ -7,20 +7,20 @@
 /**
 * @fn loadUserBarUsersFromTranslate Charge la liste des utilisateurs
 *     dans la userBar depuis le mode Join translation
-* @param {String} data Données retournées par AJAX
 * @param {Boolean} isError Si la requête a échoué
+* @param {String} data Données retournées par AJAX
 */
-function loadUserBarUsersFromTranslate(data, isError)
+function loadUserBarUsersFromTranslate(isError, data)
 {
     // Envoie la requête AJAX si ce n'est pas déjà fait
-    if(typeof data === 'undefined' && typeof isError === 'undefined')
+    if (typeof data === 'undefined' && typeof isError === 'undefined')
     {
         // Vérification du timeout
         var notAfter = new Date();
         notAfter.setSeconds(notAfter.getSeconds() - A7Settings.userBarUpdateIntervalMin);
 
         // Si le timeout minimum est respecté
-        if(page.lastUserBarUpdate < notAfter)
+        if (page.lastUserBarUpdate < notAfter)
         {
             page.lastUserBarUpdate = new Date();
 
@@ -34,12 +34,17 @@ function loadUserBarUsersFromTranslate(data, isError)
                       '&start=0&updated=false&slang=';
 
             // Envoie la requête
-            ajax(['GET', 'document'], url, null, loadUserBarUsersFromTranslate, null, null);
+            ajax({
+                action:               'GET',
+                url:                  url,
+                responseType:         'document',
+                readyFunction:        loadUserBarUsersFromTranslate
+            });
         }
     }
     else
     {
-        if(isError)
+        if (isError)
         {
             setTimeout(function()
             {
@@ -64,7 +69,7 @@ function loadUserBarUsers(forcedSelectNode)
     var select = null;
 
     // Récupère les utilisateurs
-    if(typeof forcedSelectNode === 'undefined')
+    if (typeof forcedSelectNode === 'undefined')
         // Mode view & edit
         select = document.querySelector('select[name="user"]');
     else
@@ -72,28 +77,28 @@ function loadUserBarUsers(forcedSelectNode)
 
 
     // Les injecte dans la barre utilisateur
-    var userBar   = document.getElementById('userBar'),
+    var userBar   = getUserBar(),
         userSpan  = userBar.firstElementChild.children[1],
         oldSelect = userSpan.lastElementChild;
 
 
     // Si le sélecteur est déjà là, ne recrée pas mais ajoute la différence
-    if(oldSelect && oldSelect.tagName === 'SELECT')
+    if (oldSelect && oldSelect.tagName === 'SELECT')
     {
         var alreadyHere = false;
-        for(i = select.length - 1; i > 0; i--) // > 0 car options[0] === 0 (TOUT)
+        for (i = select.length - 1; i > 0; i--) // > 0 car options[0] === 0 (TOUT)
         {
             alreadyHere = false;
-            for(j = oldSelect.length - 1; j >= 0; j--)
+            for (j = oldSelect.length - 1; j >= 0; j--)
             {
-                if(select.options[i].value === oldSelect.options[j].value)
+                if (select.options[i].value === oldSelect.options[j].value)
                 {
                     alreadyHere = true;
                     break;
                 }
             }
 
-            if(!alreadyHere)
+            if (!alreadyHere)
             {
                 oldSelect.appendChild(select.options[i]);
             }
@@ -126,7 +131,8 @@ function loadUserBarUsers(forcedSelectNode)
         userBar.addEventListener('mousedown', userBarMousedown, false);
         document.body.addEventListener('dragover', userBarDragOver, false);
         document.body.addEventListener('drop', userBarDragDrop, false);
-        document.body.addEventListener('dragstart', function(event) {
+        document.body.addEventListener('dragstart', function(event)
+        {
             // Stocke une référence sur l'objet glissable
             page.draggedNode = event.target;
         }, false);
@@ -144,10 +150,10 @@ function loadUserBarUsers(forcedSelectNode)
 */
 function addUserToUserBar(name, id)
 {
-    var userSelect = document.getElementById('userBar').firstElementChild.children[1].firstElementChild;
+    var userSelect = getUserBar().firstElementChild.children[1].firstElementChild;
 
     // Attend, en mode traduction, que la liste des utilisateurs soit chargée
-    if(userSelect === null)
+    if (userSelect === null)
     {
         setTimeout(function()
         {
@@ -158,8 +164,8 @@ function addUserToUserBar(name, id)
     }
 
     // Vérifie la présence de l'utilisateur
-    for(var i = 0; i < userSelect.length; i++)
-        if(parseInt(userSelect.options[i].value) === parseInt(id))
+    for (var i = 0; i < userSelect.length; i++)
+        if (parseInt(userSelect.options[i].value, 10) === parseInt(id, 10))
             return;
 
     // Ajoute l'utilisateur car non présent
@@ -188,7 +194,7 @@ function updateUserBarSize(userBar)
 */
 function setUserBarSize(left, top)
 {
-    var userBar  = document.getElementById('userBar');
+    var userBar  = getUserBar();
 
     // Calcule les proportions
     var stickyFactor  = window.innerHeight * A7Settings.stickyFactor,
@@ -201,17 +207,17 @@ function setUserBarSize(left, top)
 
 
     // Ajoute les classes
-    if(left === 0)
+    if (left === 0)
     {
         userBar.classList.add('userBarLeft');
 
         // Recalcule la hauteur
         height = userBar.offsetHeight < userBar.children[1].offsetHeight ? userBar.children[1].offsetHeight : userBar.offsetHeight;
-        top  = top  < 0 + stickyFactor ? 0 : top  + height + stickyFactor > window.innerHeight         ? window.innerHeight         - height : top;
+        top  = top  < 0 + stickyFactor ? 0 : top  + height + stickyFactor > window.innerHeight ? window.innerHeight - height : top;
     }
     else userBar.classList.remove('userBarLeft');
 
-    if(top === 0) userBar.classList.add('userBarTop');
+    if (top === 0) userBar.classList.add('userBarTop');
     else userBar.classList.remove('userBarTop');
 
 
@@ -220,7 +226,7 @@ function setUserBarSize(left, top)
     userBar.style.top = top + 'px';
 
     // Enregistre
-    if(localStorage)
+    if (localStorage)
     {
         localStorage.setItem('A7ppUserBarPosition', left + ',' + top);
     }
@@ -234,7 +240,7 @@ function setUserBarSize(left, top)
 function triggerUserBar(bar)
 {
     // Ouvre ou ferme
-    if(bar.classList.contains('userBarOpened'))
+    if (bar.classList.contains('userBarOpened'))
     {
         triggerPM(true);
         triggerReport(true);
@@ -257,7 +263,7 @@ function triggerUserBar(bar)
 */
 function closeUserBarData()
 {
-    var userBarData = document.getElementById('userBarData');
+    var userBarData = getUserBarData();
     userBarData.classList.remove('pageLoaded');
 }
 
@@ -269,15 +275,17 @@ function closeUserBarData()
 function triggerPM(close)
 {
     // Récupère le bouton
-    var userBar = document.getElementById('userBar'),
+    var userBar = getUserBar(),
         button  = userBar.firstElementChild.children[2];
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
-    if(close || isOpened)
+    if (close || isOpened)
     {
         // Ouvert avec du contenu
-        if(isOpened && userBar.lastElementChild.firstElementChild.tagName !== "P")
+        if (isOpened &&
+            userBar.lastElementChild.firstElementChild &&
+            userBar.lastElementChild.firstElementChild.tagName !== "P")
         {
             // Sauvegarde l'état
             page.userBarData.PM = userBar.lastElementChild.firstElementChild;
@@ -298,7 +306,7 @@ function triggerPM(close)
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.PM && page.userBarData.PM.tagName !== 'IMG')
+        if (page.userBarData.PM && page.userBarData.PM.tagName !== 'IMG')
         {
             resetHTMLObject(dataContainer);
             dataContainer.appendChild(page.userBarData.PM);
@@ -312,7 +320,13 @@ function triggerPM(close)
             // Récupère l'ID utilisateur
             var user = userBarGetCurrentUser();
 
-            ajax(['GET', 'document'], '/msgcreate.php?to=' + user, '', post_triggerPM, user, null, null);
+            ajax({
+                action:               'GET',
+                responseType:         'document',
+                url:                  '/msgcreate.php?to=' + user,
+                readyFunction:        post_triggerPM,
+                forwardData:          user
+            });
         }
     }
 }
@@ -325,14 +339,14 @@ function triggerPM(close)
 function triggerProfile(close)
 {
     // Récupère le bouton
-    var userBar = document.getElementById('userBar'),
+    var userBar = getUserBar(),
         button  = userBar.firstElementChild.children[3];
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
-    if(close || isOpened)
+    if (close || isOpened)
     {
-        if(isOpened)
+        if (isOpened)
         {
             // Sauvegarde l'état
             page.userBarData.Prof = userBar.lastElementChild.firstElementChild;
@@ -354,7 +368,7 @@ function triggerProfile(close)
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.Prof && page.userBarData.Prof.tagName !== 'IMG')
+        if (page.userBarData.Prof && page.userBarData.Prof.tagName !== 'IMG')
         {
             resetHTMLObject(dataContainer);
             dataContainer.classList.add('isUserPage');
@@ -369,7 +383,13 @@ function triggerProfile(close)
             // Récupère l'ID utilisateur
             var user = userBarGetCurrentUser();
 
-            ajax(['GET', 'document'], '/user/' + user, '', post_triggerProfile, user, null, null);
+            ajax({
+                action:               'GET',
+                responseType:         'document',
+                url:                  '/user/' + user,
+                readyFunction:        post_triggerProfile,
+                forwardData:          user
+            });
         }
     }
 }
@@ -382,15 +402,17 @@ function triggerProfile(close)
 function triggerReport(close)
 {
     // Récupère le bouton
-    var userBar = document.getElementById('userBar'),
+    var userBar = getUserBar(),
         button  = userBar.firstElementChild.lastElementChild;
 
     // Ouvre ou ferme
     var isOpened = button.classList.contains('userBarButtonClicked');
-    if(close || isOpened)
+    if (close || isOpened)
     {
         // Ouvert avec du contenu
-        if(isOpened && userBar.lastElementChild.firstElementChild.tagName !== "P")
+        if (isOpened &&
+            userBar.lastElementChild.firstElementChild &&
+            userBar.lastElementChild.firstElementChild.tagName !== "P")
         {
             // Sauvegarde l'état
             page.userBarData.Report = userBar.lastElementChild.firstElementChild;
@@ -410,7 +432,7 @@ function triggerReport(close)
         dataContainer.classList.add('pageLoaded');
 
         // Ne recharge pas s'il n'y a pas besoin
-        if(page.userBarData.Report && page.userBarData.Report.tagName !== 'IMG')
+        if (page.userBarData.Report && page.userBarData.Report.tagName !== 'IMG')
         {
             resetHTMLObject(dataContainer);
             dataContainer.appendChild(page.userBarData.Report);
@@ -421,7 +443,15 @@ function triggerReport(close)
             // Affiche le logo de chargement
             resetToLoadingImage(dataContainer);
 
-            ajax(['GET', 'document'], '/badsub.php' + location.search, '', post_triggerReport, userBarGetCurrentUser(), null, null);
+            ajax({
+                action:               'GET',
+                responseType:         'document',
+                url:                  '/badsub.php?id='       + page.queryInfos.id +
+                                                 '&fversion=' + page.queryInfos.fversion +
+                                                 '&lang='     + page.queryInfos.lang,
+                readyFunction:        post_triggerReport,
+                forwardData:          userBarGetCurrentUser()
+            });
         }
     }
 }
@@ -429,27 +459,28 @@ function triggerReport(close)
 
 /**
 * @fn post_triggerPM Traite l'AJAX du message privé
-* @param {Integer} userId ID utilisateur
-* @param {String} htmlData Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  htmlData Réponse de la requête AJAX
+* @param {Integer} userId ID utilisateur
 */
-function post_triggerPM(userId, htmlData, isError)
+function post_triggerPM(isError, htmlData, userId)
 {
     // L'utilisateur n'est plus le bon
-    if(!userBarIsCurrentUser(userId))
+    if (!userBarIsCurrentUser(userId))
     {
         return;
     }
 
     // Si on a changé d'onglet
-    var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[2].classList.contains('userBarButtonClicked');
-        dataContainer    = document.getElementById('userBarData');
+    var isBackgroundTask = !getUserBar().firstElementChild.children[2].classList.contains('userBarButtonClicked');
+        dataContainer    =  getUserBarData();
 
     // Affichage de l'erreur
-    if(isError)
+    if (isError)
     {
-        if(!isBackgroundTask)
+        if (!isBackgroundTask)
         {
+            displayAjaxError(loc.ajaxErrorOnUserBar);
             dataContainer.innerText = loc.ajaxErrorOccurred;
         }
         return;
@@ -460,8 +491,11 @@ function post_triggerPM(userId, htmlData, isError)
 
     // Place le sujet
     var inputs =  form.getElementsByTagName('input');
-    inputs[0].setAttribute('onkeyup', '');
-    inputs[1].value = '[' + document.getElementsByTagName('i')[0].innerText + ']';
+    inputs[0].removeAttribute('onkeyup');
+    if(page.translatePage)
+        inputs[1].value = '[' + document.querySelector('.titulo').firstElementChild.text + ']';
+    else
+        inputs[1].value = '[' + document.getElementsByTagName('i')[0].innerText + ']';
 
     // Pas de lien en haut de page
     form.firstElementChild.firstElementChild.firstElementChild.remove();
@@ -471,7 +505,7 @@ function post_triggerPM(userId, htmlData, isError)
     form.setAttribute('onsubmit', 'return userBarSendPM(this)');
 
     // Sauvegarde ou affiche
-    if(isBackgroundTask)
+    if (isBackgroundTask)
     {
         // Sauvegarde
         page.userBarData.PM = form;
@@ -481,34 +515,35 @@ function post_triggerPM(userId, htmlData, isError)
         // L'affiche
         resetHTMLObject(dataContainer);
         dataContainer.appendChild(form);
-        updateUserBarSize(document.getElementById('userBar'));
+        updateUserBarSize(getUserBar());
     }
 }
 
 
 /**
 * @fn post_triggerReport Traite l'AJAX du signalement
-* @param {Integer} userId ID utilisateur
-* @param {String} htmlData Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  htmlData Réponse de la requête AJAX
+* @param {Integer} userId ID utilisateur
 */
-function post_triggerReport(userId, htmlData, isError)
+function post_triggerReport(isError, htmlData, userId)
 {
     // L'utilisateur n'est plus le bon
-    if(!userBarIsCurrentUser(userId))
+    if (!userBarIsCurrentUser(userId))
     {
         return;
     }
 
     // Si on a changé d'onglet
-    var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[4].classList.contains('userBarButtonClicked');
-        dataContainer    = document.getElementById('userBarData');
+    var isBackgroundTask = !getUserBar().firstElementChild.children[4].classList.contains('userBarButtonClicked');
+        dataContainer    =  getUserBarData();
 
     // Affichage de l'erreur
-    if(isError)
+    if (isError)
     {
-        if(!isBackgroundTask)
+        if (!isBackgroundTask)
         {
+            displayAjaxError(loc.ajaxErrorOnUserBar);
             dataContainer.innerText = loc.ajaxErrorOccurred;
         }
         return;
@@ -518,7 +553,7 @@ function post_triggerReport(userId, htmlData, isError)
     var form = htmlData.body.getElementsByTagName('form')[0];
 
     // Récupère l'ID de l'utilisateur incriminé
-    var id = document.getElementById('selectUser'),
+    var id = getUserBarUsers(),
         user = id.options[id.selectedIndex].innerText,
         textarea = form.getElementsByTagName('textarea')[0];
     textarea.value = '[A7++] Report user: ' + user + '\n';
@@ -528,7 +563,7 @@ function post_triggerReport(userId, htmlData, isError)
     form.setAttribute('onsubmit', 'return userBarSendReport(this)');
 
     // Sauvegarde ou affiche
-    if(isBackgroundTask)
+    if (isBackgroundTask)
     {
         // Sauvegarde
         page.userBarData.Report = form;
@@ -538,34 +573,35 @@ function post_triggerReport(userId, htmlData, isError)
         // L'affiche
         resetHTMLObject(dataContainer);
         dataContainer.appendChild(form);
-        updateUserBarSize(document.getElementById('userBar'));
+        updateUserBarSize(getUserBar());
     }
 }
 
 
 /**
 * @fn post_triggerProfile Traite l'AJAX du profil
-* @param {Integer} userId ID utilisateur
-* @param {String} htmlData Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  htmlData Réponse de la requête AJAX
+* @param {Integer} userId ID utilisateur
 */
-function post_triggerProfile(userId, htmlData, isError)
+function post_triggerProfile(isError, htmlData, userId)
 {
     // L'utilisateur n'est plus le bon
-    if(!userBarIsCurrentUser(userId))
+    if (!userBarIsCurrentUser(userId))
     {
         return;
     }
 
     // Si on a changé d'onglet
-    var isBackgroundTask = !document.getElementById('userBar').firstElementChild.children[3].classList.contains('userBarButtonClicked');
-        dataContainer    = document.getElementById('userBarData');
+    var isBackgroundTask = !getUserBar().firstElementChild.children[3].classList.contains('userBarButtonClicked');
+        dataContainer    =  getUserBarData();
 
     // Affichage de l'erreur
-    if(isError)
+    if (isError)
     {
-        if(!isBackgroundTask)
+        if (!isBackgroundTask)
         {
+            displayAjaxError(loc.ajaxErrorOnUserBar);
             dataContainer.innerText = loc.ajaxErrorOccurred;
         }
         return;
@@ -585,7 +621,7 @@ function post_triggerProfile(userId, htmlData, isError)
     }
 
     // Sauvegarde ou affiche
-    if(isBackgroundTask)
+    if (isBackgroundTask)
     {
         // Sauvegarde
         page.userBarData.Prof = dataTable;
@@ -596,7 +632,7 @@ function post_triggerProfile(userId, htmlData, isError)
         resetHTMLObject(dataContainer);
         dataContainer.appendChild(dataTable);
         dataContainer.classList.add('isUserPage');
-        updateUserBarSize(document.getElementById('userBar'));
+        updateUserBarSize(getUserBar());
     }
 }
 
@@ -608,7 +644,7 @@ function post_triggerProfile(userId, htmlData, isError)
 function userBarSendPM(form)
 {
     // Déjà en cours d'envoi
-    if(form.classList.contains('messageSent'))
+    if (form.classList.contains('messageSent'))
     {
         return false;
     }
@@ -617,18 +653,27 @@ function userBarSendPM(form)
     var inputs   = form.getElementsByTagName('input');
     var textarea = form.getElementsByTagName('textarea')[0];
 
+    // Addic7ed n'accepte que des encodages bien étranges...
+    var newText = textarea.value
+                  .replace(/'/g, '&#39;')
+                  .replace(/"/g, '&#34;')
+                  .replace(/\\/g, '&#92;');
+
     // Prépare les données
     var params = 'to='         + encodeURIComponent(inputs[0].value) +
                  '&subject='   + encodeURIComponent(inputs[1].value) +
-                 '&msgtext='   + encodeURIComponent('<p>' + textarea.value + '</p>'),
-        url    = '/msgsend.php',
-        action = 'POST';
+                 '&msgtext='   + encodeURIComponent(htmlEncode(newText).replace(/\n/g, '\r\n'));
 
     // Indique que c'est en envoi
     var parent = form.classList.add('messageSent');
 
     // Effectue l'envoi des données
-    ajax(action, url, params, post_userBarSendPM, null, null, null);
+    ajax({
+        action:               'POST',
+        params:               params,
+        url:                  '/msgsend.php',
+        readyFunction:        post_userBarSendPM
+    });
 
     return false;
 }
@@ -636,20 +681,22 @@ function userBarSendPM(form)
 
 /**
 * @fn post_userBarSendPM Traite le retour de l'envoi du message
-* @param {String} HTMLString Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  HTMLString Réponse de la requête AJAX
 */
-function post_userBarSendPM(HTMLstring, isError)
+function post_userBarSendPM(isError, HTMLstring)
 {
     // On est toujours sur la page
-    var form = document.getElementById('userBarData').firstElementChild;
-    if(!form || form.onsubmit.toString().search('userBarSendPM') === -1 || !form.classList.contains('messageSent'))
+    var form = getUserBarData().firstElementChild;
+    if (!form || form.onsubmit.toString().search('userBarSendPM') === -1 || !form.classList.contains('messageSent'))
     {
         return;
     }
 
-    if(isError)
+    if (isError)
     {
+        displayAjaxError(loc.messageSendError);
+
         form.classList.add('ajaxError');
         form.title = loc.messageSendError;
         form.classList.remove('messageSent');
@@ -677,7 +724,7 @@ function post_userBarSendPM(HTMLstring, isError)
 function userBarSendReport(form)
 {
     // Déjà en cours d'envoi
-    if(form.classList.contains('messageSent'))
+    if (form.classList.contains('messageSent'))
     {
         return false;
     }
@@ -686,21 +733,25 @@ function userBarSendReport(form)
     var textarea = form.getElementsByTagName('textarea')[0],
         subInfo  = page.queryInfos;
 
+    // Addic7ed n'accepte que des encodages bien étranges...
+    var newText = textarea.value
+                  .replace(/'/g, '&#39;')
+                  .replace(/"/g, '&#34;')
+                  .replace(/\\/g, '&#92;');
+
     // Prépare les données
-    var params = 'comment='   + encodeURIComponent(textarea.value) +
+    var params = 'comment='   + encodeURIComponent(htmlEncode(newText).replace(/\n/g, '\r\n')) +
                  '&fversion=' + subInfo.fversion +
                  '&id='       + subInfo.id +
-                 '&lang='     + subInfo.lang,
-        url    = 'badsub_do.php',
-        action = 'POST';
+                 '&lang='     + subInfo.lang;
 
     // Traite les checkbox
     var inputs = form.getElementsByTagName('input');
-    for(var i = 0; i < inputs.length; i++)
+    for (var i = 0; i < inputs.length; i++)
     {
-        if(inputs[i].type === 'checkbox')
+        if (inputs[i].type === 'checkbox')
         {
-            if(inputs[i].checked)
+            if (inputs[i].checked)
             {
                 params += '&' + inputs[i].name + '=true';
             }
@@ -711,7 +762,12 @@ function userBarSendReport(form)
     var parent = form.classList.add('messageSent');
 
     // Effectue l'envoi des données
-    ajax(action, url, params, post_userBarSendReport, null, null, null);
+    ajax({
+        action:               'POST',
+        params:               params,
+        url:                  'badsub_do.php',
+        readyFunction:        post_userBarSendReport
+    });
 
     return false;
 }
@@ -719,20 +775,22 @@ function userBarSendReport(form)
 
 /**
 * @fn post_userBarSendReport Traite le retour du l'envoi du signalement
-* @param {String} HTMLString Réponse de la requête AJAX
 * @param {Boolean} isError Statut de réussite de la requête AJAX
+* @param {String}  HTMLString Réponse de la requête AJAX
 */
-function post_userBarSendReport(HTMLstring, isError)
+function post_userBarSendReport(isError, HTMLstring)
 {
     // On est toujours sur la page
-    var form = document.getElementById('userBarData').firstElementChild;
-    if(!form || form.onsubmit.toString().search('userBarSendReport') === -1 || !form.classList.contains('messageSent'))
+    var form = getUserBarData().firstElementChild;
+    if (!form || form.onsubmit.toString().search('userBarSendReport') === -1 || !form.classList.contains('messageSent'))
     {
         return;
     }
 
-    if(isError)
+    if (isError)
     {
+        displayAjaxError(loc.messageSendError);
+
         form.classList.add('ajaxError');
         form.title = loc.messageSendError;
         form.classList.remove('messageSent');
@@ -760,7 +818,7 @@ function post_userBarSendReport(HTMLstring, isError)
 function userBarIsCurrentUser(userId)
 {
     // Récupère l'ID de l'utilisateur actuel
-    var id = document.getElementById('selectUser'),
+    var id = getUserBarUsers(),
         value = id.options[id.selectedIndex].value;
 
     return value === userId;
@@ -772,7 +830,7 @@ function userBarIsCurrentUser(userId)
 */
 function userBarGetCurrentUser()
 {
-    var id = document.getElementById('selectUser');
+    var id = getUserBarUsers();
     return id.options[id.selectedIndex].value;
 }
 

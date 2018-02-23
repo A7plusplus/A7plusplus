@@ -14,7 +14,7 @@ function createA7button()
     // Simule un bouton avec les touches Entrée et Espace
     button.addEventListener('keypress', function(e)
     {
-        if(e.key === " " || e.key === "Enter")
+        if (e.key === " " || e.key === "Enter")
         {
             e.preventDefault();
             button.click();
@@ -128,21 +128,21 @@ function createTimeUtils(seqNumber, timeCodes)
 
     fromText.textContent = loc.from;
 
-    startInput.defaultValue     = timeCodes[0];
+    startInput.defaultValue = timeCodes[0];
     startInput.setAttribute('oninput', 'updateRsRatingAndCharCount(' + seqNumber + ');');
 
-    restoreTimeButton.title     = loc.restoreTime;
+    restoreTimeButton.title = loc.restoreTime;
     restoreTimeButton.setAttribute('onclick', 'timeRestore(' + seqNumber + ');');
 
-    cancelTimeButton.title      = loc.cancel;
+    cancelTimeButton.title = loc.cancel;
     cancelTimeButton.setAttribute('onclick', 'timeCancel(' + seqNumber + ');');
 
-    saveTimeButton.title        = loc.save;
+    saveTimeButton.title = loc.save;
     saveTimeButton.setAttribute('onclick', 'pre_updatetime(' + seqNumber + ');');
 
     toText.textContent = loc.to;
 
-    endInput.defaultValue       = timeCodes[1];
+    endInput.defaultValue = timeCodes[1];
     endInput.setAttribute('oninput', 'updateRsRatingAndCharCount(' + seqNumber + ');');
 
 
@@ -160,7 +160,7 @@ function createTimeUtils(seqNumber, timeCodes)
     editionContainer.appendChild(endInput);
 
     // Ajoute le grand indicateur en lui retirant son conteneur
-    for(var i = bigIndicator.childElementCount; i !== 0; i--)
+    for (var i = bigIndicator.childElementCount; i !== 0; i--)
     {
         editionContainer.appendChild(bigIndicator.children[0]);
     }
@@ -287,12 +287,12 @@ function createCommentLockUtil(parentDiv)
     var lockSpan = document.createElement('span');
 
     // Mise en place
-    lockSpan.id          = 'lockComment';
-    lockSpan.title       = loc.lockComment;
+    lockSpan.id    = 'lockComment';
+    lockSpan.title = loc.lockComment;
     lockSpan.addEventListener('click', lockComment, false);
 
     // Ajout de la classe pour modifier la position du cadenas
-    if(A7Settings.lockPosition === "top")
+    if (A7Settings.lockPosition === "top")
     {
         lockSpan.classList.add('lockCommentTop');
     }
@@ -346,14 +346,14 @@ function createUntranslatedOption()
     var input  = document.createElement('input');
 
     // Mise en place
-    option.id          = 'A7Untranslated';
-    option.title       = loc.untranlsatedOnly;
+    option.id    = 'A7Untranslated';
+    option.title = loc.untranlsatedOnly;
 
-    option.addEventListener('click', function(){
+    option.addEventListener('click', function()
+    {
         // On n'envoie pas 50 requêtes
         if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
             return;
-        page.tempDisableTranslateCheckbox = true;
 
         // Change l'état de l'input
         input.checked = !input.checked;
@@ -377,6 +377,64 @@ function createUntranslatedOption()
 
 
 /**
+* @fn createReloadPageOption Crée un nœud pour l'option "recharger les séquences de la page"
+* @return {!Object} Nœud HTML de la structure
+*/
+function createReloadPageOption()
+{
+    var option = document.createElement('span');
+
+    // Mise en place
+    option.id    = 'A7ReloadPage';
+    option.title = loc.reloadPage;
+
+    option.addEventListener('click', function()
+    {
+        // On n'envoie pas 50 requêtes
+        if (document.getElementById('lista').innerHTML === '<img src="/images/loader.gif">')
+            return;
+
+        // Vérifie si on affiche toutes les lignes ou uniquement les lignes les plus à jour
+        var updatedCheckbox = document.getElementsByName('updated')[0];
+        var updated         = updatedCheckbox.checked;
+
+        // Récupère le nombre de lignes à partir duquel afficher le sous-titre
+        var i = 0;
+        var firstLine = document.getElementsByClassName('originalText')[0];
+
+        // Si on affiche uniquement les lignes les plus à jour
+        // et que des séquences sont diponibles
+        if (updated && firstLine)
+        {
+            i = parseInt(firstLine.getAttribute('id').replace('trseq', '')) - 1;
+        }
+        // Si on affiche toutes les lignes
+        else
+        {
+            // Récupère le numéro de page
+            var links = document.getElementById('lista').querySelectorAll('a[href="#"]');
+            for (; i < links.length; i++)
+                // Si on saute un numéro, on est à la page du numéro sauté
+                if (parseInt(links[i].text, 10) !== i + 1) break;
+            i = i * 30;
+        }
+
+        // Appel à la fonction de base
+        var secondaryLanguage = document.getElementById('slang') ? document.getElementById('slang').value : '';
+        apply_filter(
+            secondaryLanguage,
+            updated,
+            i
+        );
+
+        linesChanged();
+    });
+
+    return option;
+}
+
+
+/**
 * @fn createA7Info Crée un nœud contenant la structure de l'affichage des info de l'extension
 * @return {!Object} Nœud HTML de la structure
 */
@@ -387,12 +445,15 @@ function createA7Info()
     // Mise en place
     versionInfo.id          = 'A7Info';
     versionInfo.textContent = A7Settings.MAJOR_VERSION_INFO;
-    versionInfo.title       = A7Settings.MINOR_VERSION_INFO;
+    versionInfo.title       = A7Settings.MINOR_VERSION_INFO + ' ' + loc.clickToShowHelp;
+
+    // Affichage de la page d'aide au clic
+    versionInfo.addEventListener('click', openHelpPage, false);
 
     return versionInfo;
 }
 
-// Gestion graphique des indicateurs du RS Rating //
+              // Gestion graphique des indicateurs du RS Rating //
 
 /**
 * @fn addTimeUtils Ajoute les utilitaires d'édition à la cellule
@@ -406,11 +467,14 @@ function addTimeUtils(timeCell, seqNumber, timeCodes)
     timeCell.insertBefore(createTimeUtils(seqNumber, timeCodes), timeCell.firstElementChild);
 
     // Change le style pour afficher le grand indicateur
-    timeCell.className = timeCell.className.replace(/timeWithoutIndicator /, 'timeWithIndicator ');
-    timeCell.className = timeCell.className.replace(/timeInitial /, 'timeClicked ');
+    timeCell.classList.remove('timeWithoutIndicator');
+    timeCell.classList.remove('timeInitial');
+
+    timeCell.classList.add('timeWithIndicator');
+    timeCell.classList.add('timeClicked');
 
     // Désactivation de onclick
-    timeCell.setAttribute('onclick', '');
+    timeCell.removeAttribute('onclick');
 }
 
 
@@ -424,8 +488,11 @@ function removeTimeUtils(timeCell)
     timeCell.firstElementChild.remove();
 
     // On remet le style du petit indicateur
-    timeCell.className = timeCell.className.replace(/timeWithIndicator /, 'timeWithoutIndicator ');
-    timeCell.className = timeCell.className.replace(/timeClicked /, 'timeInitial ');
+    timeCell.classList.remove('timeWithIndicator');
+    timeCell.classList.remove('timeClicked');
+
+    timeCell.classList.add('timeWithoutIndicator');
+    timeCell.classList.add('timeInitial');
 }
 
 
@@ -439,7 +506,8 @@ function addBigIndicator(timeCell)
     timeCell.appendChild(createRsIndicators());
 
     // Change le style pour afficher le grand indicateur
-    timeCell.className = timeCell.className.replace(/timeWithoutIndicator /, 'timeWithIndicator ');
+    timeCell.classList.remove('timeWithoutIndicator');
+    timeCell.classList.add('timeWithIndicator');
 }
 
 
@@ -453,7 +521,8 @@ function removeBigIndicator(timeCell)
     timeCell.lastElementChild.remove();
 
     // On remet le style du petit indicateur
-    timeCell.className = timeCell.className.replace(/timeWithIndicator /, 'timeWithoutIndicator ');
+    timeCell.classList.remove('timeWithIndicator');
+    timeCell.classList.add('timeWithoutIndicator');
 }
 
                      // Gestion de la barre utilisateur //
@@ -540,6 +609,33 @@ function createUserBarStruct()
                                    // Misc //
 
 /**
+* @fn createWarningPopup Créé le noeud qui servira de popup d'alerte
+*/
+function createWarningPopup()
+{
+    // Création des éléments
+    var container = document.createElement('div');
+    var textSpan  = document.createElement('span');
+
+    // Mise en place des infos
+    textSpan.title = loc.ajaxErrorOccurred;
+    container.setAttribute('id', 'A7Popup');
+
+    // Ajout des events
+    container.addEventListener('click', function(event)
+    {
+        container.classList.remove('A7PopupVisible');
+        event.stopImmediatePropagation();
+    }, false);
+
+    // Ajout des nœuds
+    container.appendChild(textSpan);
+
+    return container;
+}
+
+
+/**
 * @fn addParentHTMLNode Ajoute un nœud HTML entre le père et le fils
 * @param {!Object} parentNode Nœud parent
 * @param {!Object} childNode Nœud fils
@@ -555,7 +651,7 @@ function addParentHTMLNode(parentNode, childNode, className)
     newParent.appendChild(childNode);
 
     // Replace
-    if(nextNode === null)
+    if (nextNode === null)
     {
         parentNode.appendChild(newParent);
     }
@@ -565,7 +661,7 @@ function addParentHTMLNode(parentNode, childNode, className)
     }
 
     // Ajoute la classe
-    if(className !== null)
+    if (className !== null)
     {
         newParent.classList.add(className);
     }

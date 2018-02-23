@@ -41,7 +41,7 @@ function charCount(array, countTag)
 
     for (var i = 0; i < length; i++)
     {
-        if(countTag)
+        if (countTag)
         {
             // On compte tout
             lengths.push(array[i].length);
@@ -174,96 +174,125 @@ function getTextFromHTML(HTMLString)
 
 
 /**
-* @fn moveFocusToNextLine Donne le focus à la cellule de texte éditable ou à la textarea de la ligne suivante (si existante)
-* @param {number} seqNumber Numéro de la séquence
+* Issu de : https://stackoverflow.com/questions/784586/convert-special-characters-to-html-in-javascript
+* @fn htmlEncode Encode les caractères spéciaux en HTML
+* @param {String} string Chaine destinée à être encodée
+* @return {String} Chaine encodée
 */
-function moveFocusToNextLine(seqNumber)
+function htmlEncode(string)
 {
-    // Récupération des éléments utiles
-    var textCell = getTextCell(seqNumber);
-    var nextLine = textCell.parentElement.nextSibling;
-    var textCellNextLine, textAreaNextLine;
+    var ret_val = '';
+    for (var i = 0; i < string.length; i++)
+    {
+        if (string.codePointAt(i) > 127)
+        {
+            ret_val += '&#' + string.codePointAt(i) + ';';
+        }
+        else
+        {
+            ret_val += string.charAt(i);
+        }
+    }
+    return ret_val;
+}
 
-    if(nextLine)
+
+/**
+* @fn openHelpPage Ouvre la page d'aide du forum
+* @param evt Evenement de l'eventListener qui appelle la fonction
+*/
+function openHelpPage(evt)
+{
+    // Empêche le clic de changer de page (accueil)
+    evt.preventDefault();
+
+    // Ouvre le post du forum
+    window.open(loc.helpURL, '_blank');
+}
+
+
+/**
+* @fn displayAjaxError Affiche un petit message en haut de la fenêtre
+* @param {string=} text Message additionnel à afficher
+*/
+function displayAjaxError(text)
+{
+    var popup = document.getElementById('A7Popup');
+
+    // Lui affecte son text
+    popup.firstElementChild.innerText = loc.ajaxErrorOccurred;
+    if(typeof text !== 'undefined')
     {
-        var nextLineSeqNumber = nextLine.children[page.lock].firstElementChild.firstElementChild.innerHTML;
-        textCellNextLine = getTextCell(nextLineSeqNumber);
+        popup.firstElementChild.innerText += '\n(' + text + ')';
     }
 
-    // S'il y a une ligne suivante éditable avec cellule de texte ouverte, focus sur la textarea
-    if(nextLine && textCellNextLine && textCellNextLine.classList.contains('textClicked'))
+    // Annule le précedent timeout
+    if (popup.dataset.timeoutId)
     {
-        textAreaNextLine = textCellNextLine.firstElementChild.firstElementChild;
+        clearTimeout(popup.dataset.timeoutId);
+    }
 
-        textAreaNextLine.focus();
-    }
-    // S'il y a une ligne suivante éditable avec cellule de texte non ouverte, focus sur la cellule texte
-    else if(nextLine && textCellNextLine)
+    // Rend visible temporairemnt
+    popup.classList.add('A7PopupVisible');
+    var id = setTimeout(function()
     {
-        textCellNextLine.focus();
-    }
-    // S'il n'y a pas de ligne suivante éditable , focus sur la cellule de texte de la ligne actuelle (nécessaire sur Firefox)
-    else
-    {
-        textCell.focus();
-    }
+        popup.classList.remove('A7PopupVisible');
+        delete popup.dataset.timeoutId;
+    }, A7Settings.popupTimeout * 1000);
+
+    // Place l'ID du timeout pour clear en cas de besoin
+    popup.dataset.timeoutId = id;
 }
 
 
 /**
 * @fn ajax Effectue une requête AJAX
-* @param {string} action POST / GET / UPDATE etc. (temporairement: peut recevoir un tableau de string contenant action et responseType)
-* @param {string} url Adresse
-* @param {string} params Paramètres de la requête
-* @param {function(number, Object, boolean, [Object])} readyFunction Fonction à appeler en cas de réussite
-* @warning Le premier paramètre n'est pas envoyé si seqNumber est null
-* @param {number} seqNumber Numéro de la séquence ou null
-* @param {Object} backupInfos Informations à envoyer en cas d'erreur
-* @param {Object=} secondaryBackupInfos Deuxième information à envoyer en cas d'erreur (optionnel)
+* @param {Object} params Paramètres globaux de la requête
+*
+* ====== Dans l'objet params peuvent se trouver : ======
+* @param {string}  action POST / GET / UPDATE etc.
+* @param {string}  url Adresse
+*
+* @param {function({boolean} isError, {Object} responseOrBackup, {Object=} forwardData)} readyFunction Fonction à appeler en cas de réussite
+* @warning forwardData sera null s'il n'est pas reçu dans les paramètres de base
+*
+* @param {string=} responseType Type de réponse demandée (optionnel)
+* @param {string=} params Paramètres spécifiques de la requête (optionnel)
+* @param {number=} timeout Durée en seconde avant timeout (optionnel)
+*
+* @param {Object=} forwardData Objet à passer à la readyFunction, même en cas d'échec (optionnel)
+* @param {Object=} backupInfos Informations à envoyer en cas d'erreur (optionnel)
 */
-function ajax(action, url, params, readyFunction, seqNumber, backupInfos, secondaryBackupInfos)
+function ajax(params)
 {
+    // Traitement de l'objet paramètre (et de ses champs optionnels)
+    if (typeof params.params      === 'undefined') params.params = '';
+    if (typeof params.forwardData === 'undefined') params.forwardData = null;
+    if (typeof params.backupInfos === 'undefined') params.backupInfos = null;
+    if (typeof params.timeout     === 'undefined') params.timeout = A7Settings.updateTimeout;
+
     // Crée la requête
     var xhr = new XMLHttpRequest();
 
     // L'initialise
-    if (typeof action !== 'string')
+    if (typeof params.responseType !== 'undefined')
     {
-        xhr.responseType = action[1];
-        action = action[0];
+        xhr.responseType = params.responseType;
     }
-    xhr.open(action, url, true);
-    xhr.timeout = A7Settings.updateTimeout * 1000;
+    xhr.timeout = params.timeout * 1000;
+    xhr.open(params.action, params.url, true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
+    // Gère le retour
     xhr.onreadystatechange = function()
     {
         if (xhr.readyState === 4)
         {
-            if (xhr.status === 200)
-            {
-                if(seqNumber === null)
-                {
-                    readyFunction(xhr.response, false);
-                }
-                else
-                {
-                    readyFunction(seqNumber, xhr.response, false);
-                }
-            }
-            else
-            {
-                if(seqNumber === null)
-                {
-                    readyFunction(backupInfos, true, secondaryBackupInfos);
-                }
-                else
-                {
-                    readyFunction(seqNumber, backupInfos, true, secondaryBackupInfos);
-                }
-            }
+            var isError = xhr.status !== 200;
+            params.readyFunction(isError, isError ? params.backupInfos : xhr.response, params.forwardData);
         }
     };
 
-    xhr.send(params);
+    // Envoie
+    xhr.send(params.params);
 }
