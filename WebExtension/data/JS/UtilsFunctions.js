@@ -122,7 +122,7 @@ function getRSRatingIndex(counts, duration)
     rsr = totalChars * 1000 / (ms - 500);
 
     for (i = 0; i < 10; i++)
-        if (rsr > A7Settings.RSR[i-1][0] && rsr <= A7Settings.RSR[i][0])
+        if (rsr > A7Settings.RSR[i-1].ratio && rsr <= A7Settings.RSR[i].ratio)
             return i;
 
     return 0;

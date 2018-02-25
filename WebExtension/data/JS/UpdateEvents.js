@@ -106,7 +106,7 @@ function updateRsRatingAndCharCount(seqNumber)
         var bigIndicator = timeCell.lastElementChild;
 
         // Actualise son texte
-        bigIndicator.children[bigIndicator.childElementCount - 2].value = A7Settings.RSR[index][1];
+        bigIndicator.children[bigIndicator.childElementCount - 2].value = A7Settings.RSR[index].description;
 
         // Met l'indicateur de temps en couleur et affiche sa valeur
         updateBigIndicatorLegend(timeCell, duration);
@@ -136,19 +136,19 @@ function updateRsRatingAndCharCount(seqNumber)
 function updateTimeCellClass(timeCell, rsIndex, duration)
 {
     // Une mise à jour est à faire
-    if (!timeCell.classList.contains(A7Settings.RSR[rsIndex][2]))
+    if (!timeCell.classList.contains(A7Settings.RSR[rsIndex].class))
     {
         // Retire la vielle classe
         Object.keys(A7Settings.RSR).forEach(function(item)
         {
-            timeCell.classList.remove(A7Settings.RSR[item][2]);
+            timeCell.classList.remove(A7Settings.RSR[item].class);
         });
 
         // Applique la nouvelle
-        timeCell.classList.add(A7Settings.RSR[rsIndex][2]);
+        timeCell.classList.add(A7Settings.RSR[rsIndex].class);
     }
 
-    timeCell.title = loc.duration + ' : ' + duration.toFixed(3) + " s\nRS Rating : " + A7Settings.RSR[rsIndex][1];
+    timeCell.title = loc.duration + ' : ' + duration.toFixed(3) + " s\nRS Rating : " + A7Settings.RSR[rsIndex].description;
 }
 
 

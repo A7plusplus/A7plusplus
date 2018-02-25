@@ -28,17 +28,17 @@ var A7Settings = {
 
     RSR: {
         // Reading speed, Rating, Short rating
-        '-1': [-Infinity, '* EMPTY SEQUENCE *', 'empty'],
-         '0': [ 0,        '* UNDEFINED *',      'undef'],
-         '1': [ 5,        'TOO SLOW',           'tslow'],
-         '2': [10,        'Slow, acceptable',   'aslow'],
-         '3': [13,        'A bit slow',         'bslow'],
-         '4': [15,        'Good',               'sgood'],
-         '5': [23,        'Perfect',            'perfe'],
-         '6': [27,        'Good',               'fgood'],
-         '7': [31,        'A bit fast',         'bfast'],
-         '8': [35,        'Fast, acceptable',   'afast'],
-         '9': [Infinity,  'TOO FAST',           'tfast']
+        '-1': {ratio: -Infinity, description: '* EMPTY SEQUENCE *', class: 'empty'},
+         '0': {ratio:  0,        description: '* UNDEFINED *',      class: 'undef'},
+         '1': {ratio:  5,        description: 'TOO SLOW',           class: 'tslow'},
+         '2': {ratio: 10,        description: 'Slow, acceptable',   class: 'aslow'},
+         '3': {ratio: 13,        description: 'A bit slow',         class: 'bslow'},
+         '4': {ratio: 15,        description: 'Good',               class: 'sgood'},
+         '5': {ratio: 23,        description: 'Perfect',            class: 'perfe'},
+         '6': {ratio: 27,        description: 'Good',               class: 'fgood'},
+         '7': {ratio: 31,        description: 'A bit fast',         class: 'bfast'},
+         '8': {ratio: 35,        description: 'Fast, acceptable',   class: 'afast'},
+         '9': {ratio: Infinity,  description: 'TOO FAST',           class: 'tfast'}
     },
 
     // Facteur de collage de la userBar (0 - 0.1 => 0 - 10%)
