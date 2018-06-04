@@ -25,6 +25,7 @@ var A7Settings = {
     userBarUpdateIntervalMin : 300,
     updateTimeout            : 30,
     popupTimeout             : 15,
+    videoDelay               : 1.25,
 
     RSR: {
         // Reading speed, Rating, Short rating

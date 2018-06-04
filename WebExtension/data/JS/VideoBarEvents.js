@@ -135,6 +135,17 @@ function videoBarPause()
 
 
 /**
+* @fn videoBarSetTime Mets la vidéo à un timing
+* @param {Integer} time Temps en secondes depuis le début de la vidéo
+*/
+function videoBarSetTime(time)
+{
+    var video = document.getElementById("videoBar").lastElementChild.firstElementChild;
+    video.currentTime = time - A7Settings.videoDelay;
+}
+
+
+/**
 * @fn videoBarDragStart Récupère et enregistre la position initiale
 * @param {object} event Objet événement
 */

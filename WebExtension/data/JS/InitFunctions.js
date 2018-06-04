@@ -204,6 +204,12 @@ function linesChanged()
         var timeCell = currentLine.children[page.lock + 4];
         var textCell = currentLine.lastElementChild;
 
+        // Déplace la vidéo, si activé
+        if (i == 1 && !A7Settings.disableVideoBar)
+        {
+            videoBarSetTime(getTimeFromTimeCell(timeCell));
+        }
+
         // Ajoute un tabindex à la cellule et permet le clic
         if (page.translatePage || currentLine.classList.contains('originalText'))
         {

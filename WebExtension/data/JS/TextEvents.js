@@ -448,6 +448,12 @@ function post_select(isError, data, seqNumber, translateMode)
     // Récupération de l'état des cellules
     var timeState = getStateOfTimeCell(timeCell);
 
+    // Décale la vidéo, si activé
+    if (!A7Settings.disableVideoBar)
+    {
+        videoBarSetTime(getTimeFromTimeCell(timeCell));
+    }
+
 
     // On s'occupe de l'état du temps : si le grand indicateur n'est pas là, on le crée
     if (timeState === 'initial')
