@@ -218,16 +218,3 @@ function videoBarDragDrop(event)
     event.preventDefault();
     return false;
 }
-
-
-/**
-* @fn userBarMousedown Désactive l'attribut draggable si clic dans la partie basse
-* @param {object} event Objet événement
-*/
-/*function userBarMousedown(event)
-{
-    var userBarData = document.getElementById("userBarData"),
-            userBar = document.getElementById("userBar");
-    if (userBarData.contains(event.target)) userBar.setAttribute('draggable', 'false');
-    else userBar.setAttribute('draggable', 'true');
-}*/

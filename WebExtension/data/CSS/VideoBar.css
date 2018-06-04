@@ -1,6 +1,6 @@
 #videoBar {
-    top: 10px;
-    left: 10px;
+    top: 100px;
+    left: 100px;
     width: 80px;
     display: flex;
     cursor: pointer;
@@ -102,6 +102,7 @@
     display: flex;
     min-width: 800px;
     overflow-y: auto;
+    max-height: 450px;
     justify-content: center;
     background-color: white;
     border: 2px solid #111;
@@ -111,6 +112,10 @@
 /* Erreur de format vidéo */
 #videoBar.videoBarOpened.unsupportedFormat > div:last-of-type {
     background-color: #FFFF99;
+}
+
+#videoBar.videoBarOpened > div:last-of-type > video {
+    width: 100%;
 }
 
 /* ============================= Classes Sticky ============================= */
