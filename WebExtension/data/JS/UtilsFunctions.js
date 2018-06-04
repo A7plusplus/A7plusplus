@@ -214,16 +214,27 @@ function openHelpPage(evt)
 /**
 * @fn displayAjaxError Affiche un petit message en haut de la fenêtre
 * @param {string=} text Message additionnel à afficher
+* @param {Object} params Options à appliquer (textOnly, ici)
 */
-function displayAjaxError(text)
+function displayAjaxError(text, params)
 {
     var popup = document.getElementById('A7Popup');
 
+    // Traitement des paramètres
+    if (typeof params.textOnly === 'undefined') params.textOnly = false;
+
     // Lui affecte son text
-    popup.firstElementChild.innerText = loc.ajaxErrorOccurred;
-    if(typeof text !== 'undefined')
+    if (params.textOnly)
     {
-        popup.firstElementChild.innerText += '\n(' + text + ')';
+        popup.firstElementChild.innerText = text;
+    }
+    else
+    {
+        popup.firstElementChild.innerText = loc.ajaxErrorOccurred;
+        if (typeof text !== 'undefined')
+        {
+            popup.firstElementChild.innerText += '\n(' + text + ')';
+        }
     }
 
     // Annule le précedent timeout
