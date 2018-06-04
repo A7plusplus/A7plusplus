@@ -24,6 +24,7 @@ document.head.appendChild(createScript('Accessors.js'));
 document.head.appendChild(createScript('TextEvents.js'));
 document.head.appendChild(createScript('TimeEvents.js'));
 document.head.appendChild(createScript('UserBarEvents.js'));
+document.head.appendChild(createScript('VideoBarEvents.js'));
 document.head.appendChild(createScript('CommentEvents.js'));
 document.head.appendChild(createScript('UpdateEvents.js'));
 
@@ -39,7 +40,8 @@ window.addEventListener("A7pp_option_request", function()
             'lang',
             'lock',
             'updates',
-            'userBar'
+            'userBar',
+            'videoBar'
         ],
         function(item)
         {

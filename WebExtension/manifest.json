@@ -32,6 +32,7 @@
         "data/JS/TimeEvents.js",
         "data/JS/UpdateEvents.js",
         "data/JS/UserBarEvents.js",
+        "data/JS/VideoBarEvents.js",
         "data/JS/UtilsFunctions.js"
     ],
 
@@ -43,6 +44,7 @@
                 "data/CSS/OpenedLines.css",
                 "data/CSS/Comments.css",
                 "data/CSS/UserBar.css",
+                "data/CSS/VideoBar.css",
                 "data/CSS/Misc.css"
             ],
             "js": ["data/launcher.js"],
@@ -55,6 +57,7 @@
                 "data/CSS/OpenedLines.css",
                 "data/CSS/Comments.css",
                 "data/CSS/UserBar.css",
+                "data/CSS/VideoBar.css",
                 "data/CSS/Translate.css",
                 "data/CSS/Misc.css"
             ],

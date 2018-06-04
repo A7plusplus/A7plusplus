@@ -606,6 +606,81 @@ function createUserBarStruct()
     return useBarContainer;
 }
 
+                                  // Video //
+
+/**
+* @fn createUserBarStruct Crée la structure qui accueillera la vidéo
+* @return {!Object} Nœud HTML de la structure
+*/
+function createVideoStruct()
+{
+    // Création des éléments
+    var videoBar          = document.createElement('div');
+
+    var videoContainer    = document.createElement('div');
+    var fileContainer     = document.createElement('div');
+
+    var videoBarButton    = document.createElement('span');
+    var labelFileButton   = document.createElement('label');
+    var fileButtonWrapper = document.createElement('div');
+    var fileButton        = document.createElement('input');
+
+    var video             = document.createElement('video');
+
+
+    // Mise en place des infos
+    videoBar.title              = loc.videoBar;
+    labelFileButton.textContent = loc.chooseVideo;
+    fileButton.type             = "file";
+    fileButton.accept           = "video/*";
+
+    // Ajout des events
+    fileButton.setAttribute('id', 'A7VideoInput');
+    labelFileButton.setAttribute('for', 'A7VideoInput');
+
+    videoBar.setAttribute('id', 'videoBar');
+    videoBar.setAttribute('draggable', 'true');
+    videoBar.addEventListener('click', function()
+    {
+        triggerVideoBar(videoBar);
+    }, false);
+
+
+    // Ajout des events
+    labelFileButton.addEventListener('click', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
+    fileButtonWrapper.addEventListener('click', function(event)
+    {
+        fileButton.click();
+        event.stopImmediatePropagation();
+    }, false);
+    videoContainer.addEventListener('click', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
+    fileButton.addEventListener('change', function(event)
+    {
+        videoBarPlay(this.files[0]);
+    }, false);
+
+
+    // Ajout des nœuds
+    fileButtonWrapper.appendChild(fileButton);
+
+    fileContainer.appendChild(videoBarButton);
+    fileContainer.appendChild(labelFileButton);
+    fileContainer.appendChild(fileButtonWrapper);
+
+    videoContainer.appendChild(video);
+
+    videoBar.appendChild(fileContainer);
+    videoBar.appendChild(videoContainer);
+
+    return videoBar;
+}
+
                                    // Misc //
 
 /**

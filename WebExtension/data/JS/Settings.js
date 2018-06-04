@@ -47,8 +47,9 @@ var A7Settings = {
     // Position du cadenas (top/bottom)
     lockPosition: "bottom",
 
-    // Désactivation de la barre utilisateur
-    disableUserBar: false,
+    // Désactivation de la barre utilisateur / de vidéo
+    disableUserBar:  false,
+    disableVideoBar: false,
 
     // Nombre maximal de tentative de récupération de l'indicateur HI
     maxHICheck: 4

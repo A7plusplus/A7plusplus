@@ -59,6 +59,9 @@ function populate()
     // UserBar
     document.getElementById("userBarCB").innerText = chrome.i18n.getMessage('A7pp_optionPageDisableUserBarLabel');
 
+    // VideoBar
+    document.getElementById("videoBarCB").innerText = chrome.i18n.getMessage('A7pp_optionPageDisableVideoBarLabel');
+
     // Sauvegarde
     document.getElementById("save").innerText = chrome.i18n.getMessage('A7pp_optionPageSaveLabel');
 }
@@ -73,7 +76,8 @@ function getData()
             'lang',
             'lock',
             'updates',
-            'userBar'
+            'userBar',
+            'videoBar'
         ],
         function(item)
         {
@@ -96,6 +100,9 @@ function getData()
 
                 // UserBar
                 document.getElementById("userBarCBData").checked = item.userBar.disable;
+
+                // VideoBar
+                document.getElementById("videoBarCBData").checked = item.videoBar.disable;
             }
             else
             {
@@ -113,6 +120,9 @@ function getData()
 
                 // UserBar
                 document.getElementById("userBarCBData").checked = A7Settings.disableUserBar;
+
+                // VideoBar
+                document.getElementById("videoBarCBData").checked = A7Settings.disableVideoBar;
             }
         }
     );
@@ -148,6 +158,9 @@ function setData(event)
             },
             'userBar': {
                 'disable': document.getElementById("userBarCBData").checked
+            },
+            'videoBar': {
+                'disable': document.getElementById("videoBarCBData").checked
             }
         },
         function()

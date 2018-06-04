@@ -35,7 +35,7 @@ if (!translatePage && pageUrl.searchParams.get('lang') !== '1')
             // Demande la page avec anglais en langue secondaire
             var askedFirstSeq = pageUrl.searchParams.get('sequence') ? pageUrl.searchParams.get('sequence') - 1 : 0;
             var updated       = pageUrl.searchParams.has('sequence');
-            
+
             list(askedFirstSeq, updated, 1);
         }
     };
@@ -110,8 +110,9 @@ function preInit()
             A7Settings.lockPosition          = options.lock;
             A7Settings.disableUserBar        = options.userBar.disable;
 
-            // Condition nescessaire pour les versions migrées
-            if(options.updates.popup) A7Settings.popupTimeout = options.updates.popup;
+            // Conditions nescessaires pour les versions migrées
+            if(options.updates.popup)   A7Settings.popupTimeout    = options.updates.popup;
+            if(options.videoBar.disable) A7Settings.disableVideoBar = options.videoBar.disable;
         }
 
         // Récupère la langue du site ou celle forcée
@@ -216,6 +217,12 @@ function init()
     {
         listaParent.insertBefore(createUserBarStruct(), listaParent.lastElementChild);
     }
+    // Ajoute la barre vidéo si non désactivée
+    if (!A7Settings.disableVideoBar)
+    {
+        listaParent.insertBefore(createVideoStruct(), listaParent.lastElementChild);
+        videoBarInit();
+    }
     listaParent.insertBefore(createCommentStruct(), listaParent.lastElementChild);
 
     // Si le lock des commentaires est placé en bas, le crée
@@ -239,15 +246,28 @@ function init()
             lockComment();
         }
 
+        var data, left, top;
+
         // Barre utilisateur
         var userBarPos = localStorage.getItem('A7ppUserBarPosition');
         if (userBarPos && !A7Settings.disableUserBar)
         {
-            var data = userBarPos.split(',');
-            var left = data[0],
-                top  = data[1];
+            data = userBarPos.split(',');
+            left = data[0];
+            top  = data[1];
 
             setUserBarSize(parseInt(left, 10), parseInt(top, 10));
+        }
+
+        // Barre vidéo
+        var videoBarPos = localStorage.getItem('A7ppVideoBarPosition');
+        if (videoBarPos && !A7Settings.disableVideoBar)
+        {
+            data = videoBarPos.split(',');
+            left = data[0];
+            top  = data[1];
+
+            setVideoBarSize(parseInt(left, 10), parseInt(top, 10));
         }
     }
 

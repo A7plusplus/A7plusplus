@@ -60,6 +60,10 @@
         "message": "Disable userBar:",
         "description": "Disable userBar."
     },
+    "A7pp_optionPageDisableVideoBarLabel": {
+        "message": "Disable videoBar:",
+        "description": "Disable videoBar."
+    },
     "A7pp_optionPageSaveLabel": {
         "message": "Save",
         "description": "Save."
