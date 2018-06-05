@@ -105,6 +105,7 @@ function videoBarPlay(file)
     var isPlayable = videoNode.canPlayType(file.type);
     if (isPlayable === '')
     {
+        videoBar.classList.remove('videoLoaded');
         videoBar.classList.add('unsupportedFormat');
         videoBar.lastElementChild.title = loc.unsupportedFormat;
 
@@ -120,6 +121,7 @@ function videoBarPlay(file)
         videoNode.src  = fileURL;
         videoNode.type = file.type;
         videoNode.setAttribute('controls', true);
+        videoBar.classList.add('videoLoaded');
     }
 }
 
@@ -131,6 +133,16 @@ function videoBarPause()
 {
     var video = document.getElementById("videoBar").lastElementChild.firstElementChild;
     video.pause();
+}
+
+
+/**
+* @fn videoBarGetTime Indique le timing de la vidée
+* @return {Integer} Temps en secondes depuis le début de la vidéo
+*/
+function videoBarGetTime()
+{
+    return document.getElementById("videoBar").lastElementChild.firstElementChild.currentTime;
 }
 
 

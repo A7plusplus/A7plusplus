@@ -57,6 +57,7 @@ var loc =
         reloadPage        : 'Recharger les séquences de la page courante',
         clickToShowHelp   : "(cliquer pour afficher l'aide)",
         videoBar          : 'Barre vidéo',
+        backInVideo       : 'Retourer en arrière',
         chooseVideo       : 'Choisir une vidéo :',
         unsupportedFormat : 'Format vidéo non supporté par le navigateur',
         helpURL           : 'http://www.sub-talk.net/topic/4687-/'
@@ -114,6 +115,7 @@ var loc =
         reloadPage        : 'Reload current page sequences',
         clickToShowHelp   : '(click to show some help)',
         videoBar          : 'Video Bar',
+        backInVideo       : 'Back in video',
         chooseVideo       : 'Video selection:',
         unsupportedFormat : "The browser doesn't support that video format",
         helpURL           : 'http://www.sub-talk.net/topic/5720-/'

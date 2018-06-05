@@ -621,6 +621,7 @@ function createVideoStruct()
     var fileContainer     = document.createElement('div');
 
     var videoBarButton    = document.createElement('span');
+    var backButton        = document.createElement('span');
     var labelFileButton   = document.createElement('label');
     var fileButtonWrapper = document.createElement('div');
     var fileButton        = document.createElement('input');
@@ -630,6 +631,7 @@ function createVideoStruct()
 
     // Mise en place des infos
     videoBar.title              = loc.videoBar;
+    backButton.title            = loc.backInVideo + ' (' + (2 * A7Settings.videoDelay).toFixed(1) + 's)';
     labelFileButton.textContent = loc.chooseVideo;
     fileButton.type             = "file";
     fileButton.accept           = "video/*";
@@ -647,6 +649,15 @@ function createVideoStruct()
 
 
     // Ajout des events
+    backButton.addEventListener('click', function(event)
+    {
+        /*
+        * SetTime retire 1x de delay.
+        * On ajoute un second pour avoir plus de recul
+        */
+        videoBarSetTime(videoBarGetTime() - A7Settings.videoDelay);
+        event.stopImmediatePropagation();
+    }, false);
     labelFileButton.addEventListener('click', function(event)
     {
         event.stopImmediatePropagation();
@@ -670,6 +681,7 @@ function createVideoStruct()
     fileButtonWrapper.appendChild(fileButton);
 
     fileContainer.appendChild(videoBarButton);
+    fileContainer.appendChild(backButton);
     fileContainer.appendChild(labelFileButton);
     fileContainer.appendChild(fileButtonWrapper);
 
