@@ -221,6 +221,7 @@ function displayAjaxError(text, params)
     var popup = document.getElementById('A7Popup');
 
     // Traitement des paramètres
+    if (typeof params === 'undefined' | params === null) params = {};
     if (typeof params.textOnly === 'undefined') params.textOnly = false;
 
     // Lui affecte son text

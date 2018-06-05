@@ -671,6 +671,11 @@ function createVideoStruct()
     {
         event.stopImmediatePropagation();
     }, false);
+    video.addEventListener('loadedmetadata', function(event)
+    {
+        // Application du ratio (1 => pour les border)
+        videoContainer.style.height = videoBar.offsetWidth / (video.videoWidth / video.videoHeight) + 1 + 'px';
+    }, false);
     fileButton.addEventListener('change', function(event)
     {
         videoBarPlay(this.files[0]);
