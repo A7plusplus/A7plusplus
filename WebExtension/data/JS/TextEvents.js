@@ -348,8 +348,7 @@ function textCancel(seqNumber)
         ajax({
             action:               'GET',
             url:                  '/translate_release.php' + '?' + params,
-            forwardData:          seqNumber,
-            readyFunction:        post_release
+            forwardData:          seqNumber
         });
     }
 
@@ -507,15 +506,6 @@ function post_select(isError, data, seqNumber, translateMode)
 
     // Actualise les compteurs (permet d'afficher l'avertissement en cas de dépassement nombre de lignes / nombre de caractères)
     updateRsRatingAndCharCount(seqNumber);
-}
-
-
-/**
-* @fn post_release Fonction sans but si ce n'est la réception des données des releases
-*/
-function post_release()
-{
-    return;
 }
 
 

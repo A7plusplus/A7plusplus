@@ -295,13 +295,20 @@ function ajax(params)
     xhr.open(params.action, params.url, true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
+    // Auth
+    if (params.user !== null && params.passwd !== null)
+        xhr.setRequestHeader("Authorization", "Basic " + btoa(params.user + ":" + params.passwd));
+
     // Gère le retour
     xhr.onreadystatechange = function()
     {
         if (xhr.readyState === 4)
         {
             var isError = xhr.status !== 200;
-            params.readyFunction(isError, isError ? params.backupInfos : xhr.response, params.forwardData);
+            if (typeof params.readyFunction !== 'undefined')
+            {
+                params.readyFunction(isError, isError ? params.backupInfos : xhr.response, params.forwardData);
+            }
         }
     };
 
