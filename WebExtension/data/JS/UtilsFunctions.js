@@ -274,6 +274,9 @@ function displayAjaxError(text, params)
 *
 * @param {Object=} forwardData Objet à passer à la readyFunction, même en cas d'échec (optionnel)
 * @param {Object=} backupInfos Informations à envoyer en cas d'erreur (optionnel)
+
+* @param {string=} user   Nom d'utilisateur pour l'authentification Basic (optionnel)
+* @param {string=} passwd Mot de passe de l'utilisateur pour l'authentification Basic (optionnel)
 */
 function ajax(params)
 {
@@ -282,6 +285,8 @@ function ajax(params)
     if (typeof params.forwardData === 'undefined') params.forwardData = null;
     if (typeof params.backupInfos === 'undefined') params.backupInfos = null;
     if (typeof params.timeout     === 'undefined') params.timeout = A7Settings.updateTimeout;
+    if (typeof params.user        === 'undefined') params.user    = null;
+    if (typeof params.passwd      === 'undefined') params.passwd  = null;
 
     // Crée la requête
     var xhr = new XMLHttpRequest();
