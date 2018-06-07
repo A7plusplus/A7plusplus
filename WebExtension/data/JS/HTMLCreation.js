@@ -697,7 +697,7 @@ function createVideoStruct()
     {
         // Retourne dans la vidéo de A7Settings.videoDelay secondes
         // (plus A7Settings.videoDelay ajoutés par videoBarSetTime)
-        videoBarSetTime(-(2 * A7Settings.videoDelay));
+        videoBarSetTime(-A7Settings.videoDelay);
         event.stopImmediatePropagation();
     }, false);
     labelFileButton.addEventListener('click', function(event)

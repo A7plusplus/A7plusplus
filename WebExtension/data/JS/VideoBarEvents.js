@@ -186,7 +186,17 @@ function videoBarSetTime(time)
     if (A7Settings.useVLC)
     {
         // En relatif on force à arrondir à l'entier inférieur
-        if (time < 0) time--;
+        if (time < 0)
+        {
+            // Temps relatif
+            time--;
+        }
+        else
+        {
+            // Temps absolu
+            time -= A7Settings.videoDelay;
+            if (time < 0) time = 0;
+        }
 
         ajax({
             action:        'GET',
@@ -201,7 +211,7 @@ function videoBarSetTime(time)
         if (time < 0)
         {
             // Temps relatif
-            video.currentTime -= time;
+            video.currentTime += time;
         }
         else
         {
