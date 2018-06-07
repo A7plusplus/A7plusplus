@@ -68,33 +68,54 @@ function createTextUtils(seqNumber)
 
     boldButton.title            = loc.selectedTextTo + ' ' + loc.bold;
     boldButton.setAttribute('tabIndex', seqNumber);
-    boldButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'b');");
+    boldButton.addEventListener('click', function()
+    {
+        addTagToSequence(seqNumber, 'b');
+    });
 
     italicButton.title          = loc.selectedTextTo + ' ' + loc.italic;
     italicButton.setAttribute('tabIndex', seqNumber);
-    italicButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'i');");
+    italicButton.addEventListener('click', function()
+    {
+        addTagToSequence(seqNumber, 'i');
+    });
 
     underlineButton.title       = loc.selectedTextTo + ' ' + loc.underline;
     underlineButton.setAttribute('tabIndex', seqNumber);
-    underlineButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'u');");
+    underlineButton.addEventListener('click', function()
+    {
+        addTagToSequence(seqNumber, 'u');
+    });
 
     removeTagsButton.title      = loc.removeTags;
     removeTagsButton.setAttribute('tabIndex', seqNumber);
-    removeTagsButton.setAttribute('onclick', 'removeTagsFromSequence(' + seqNumber + ');');
+    removeTagsButton.addEventListener('click', function()
+    {
+        removeTagsFromSequence(seqNumber);
+    });
 
 
     restoreTextButton.title     = loc.restoreText;
     restoreTextButton.setAttribute('tabIndex', seqNumber);
-    restoreTextButton.setAttribute('onclick', 'textRestore(' + seqNumber + ');');
+    restoreTextButton.addEventListener('click', function()
+    {
+        textRestore(seqNumber);
+    });
 
     cancelTextButton.title = loc.cancel;
     cancelTextButton.setAttribute('tabIndex', seqNumber);
-    cancelTextButton.setAttribute('onclick', 'textCancel(' + seqNumber + ');');
+    cancelTextButton.addEventListener('click', function()
+    {
+        textCancel(seqNumber);
+    });
 
 
     saveButton.title = loc.save;
     saveButton.setAttribute('tabIndex', seqNumber);
-    saveButton.setAttribute('onclick', "pre_update('o', " + seqNumber + ');');
+    saveButton.addEventListener('click', function()
+    {
+        pre_update('o', seqNumber);
+    });
 
 
     // Création du span
