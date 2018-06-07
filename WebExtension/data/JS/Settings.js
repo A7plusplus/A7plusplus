@@ -25,7 +25,7 @@ var A7Settings = {
     userBarUpdateIntervalMin : 300,
     updateTimeout            : 30,
     popupTimeout             : 15,
-    videoDelay               : 1.25,
+    videoDelay               : 1.75,
 
     RSR: {
         // Reading speed, Rating, Short rating
@@ -51,6 +51,10 @@ var A7Settings = {
     // Désactivation de la barre utilisateur / de vidéo
     disableUserBar:  false,
     disableVideoBar: false,
+
+    // Barre vidéo
+    useVLC: false,
+    VLCaddress: 'http://localhost:8080',
 
     // Nombre maximal de tentative de récupération de l'indicateur HI
     maxHICheck: 4

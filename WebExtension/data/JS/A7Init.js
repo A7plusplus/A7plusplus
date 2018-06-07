@@ -113,8 +113,15 @@ function preInit()
             // Conditions nescessaires pour les versions migrées
             if(options.updates.popup)
                 A7Settings.popupTimeout = options.updates.popup;
-            if(options.videoBar && options.videoBar.disable)
+
+            if(options.videoBar)
                 A7Settings.disableVideoBar = options.videoBar.disable;
+
+            if(options.vlc)
+            {
+                A7Settings.useVLC     = options.vlc.enabled;
+                A7Settings.VLCaddress = options.vlc.address;
+            }
         }
 
         // Récupère la langue du site ou celle forcée

@@ -44,10 +44,41 @@
     min-width: 800px;
 }
 
+/* Ouvert horizontal - Mode VLC */
+#videoBar.useVLC {
+    min-width: 160px;
+}
+
+#videoBar.useVLC > div:first-of-type {
+    display: inherit;
+}
+
+/* Gestions des radius en mode VLC */
+#videoBar.useVLC:not(.videoBarTop):not(.videoBarLeft) > div:first-of-type > span:first-of-type {
+    border-top-left-radius: 40px;
+}
+
+#videoBar.useVLC:not(.videoBarLeft) > div:first-of-type > span:first-of-type {
+    border-bottom-left-radius: 40px;
+}
+
+#videoBar.useVLC:not(.videoBarTop) > div:first-of-type > span:last-of-type {
+    border-top-right-radius: 40px;
+}
+
+#videoBar.useVLC > div:first-of-type > span:last-of-type {
+    border-bottom-right-radius: 40px;
+}
+
 /* Boutons quand la barre est fermée*/
 #videoBar:not(.videoBarOpened) > div:first-of-type > :not(span),
 #videoBar:not(.videoBarOpened) > div:first-of-type > span:not(:first-of-type) {
     display: none;
+}
+
+/* Mode VLC - affiche le retour direct */
+#videoBar:not(.videoBarOpened).useVLC > div:first-of-type > span:nth-child(2) {
+    display: inherit;
 }
 
 /* Ouvert horizontal */
@@ -85,11 +116,19 @@
 }
 
 /* Icônes */
-/* Icône générale */
-#videoBar > div:first-of-type > span:first-of-type {
+/* Icône générale (play) */
+#videoBar > div:first-of-type > span:first-of-type,
+#videoBar.useVLC.videoBarPlay > div:first-of-type > span:first-of-type {
     max-width: 80px;
     display: inherit;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQAQMAAAC032DuAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAHZJREFUeNrd0bENwCAMBEAjCjqoI6GIESgpMhRlSkZjFEbICFEK/EH6CXB1zWNsi2xYoSmPrswPWMATdKDVXJYB3mAEA2ib0gylVPACPeia0nTlbP0xgZkysdjvMUcbF/bJmVoH8nT4yhalqWWpkR5gsGMF2bNeYFoYxOsBcdMAAAAASUVORK5CYII=);
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQAQMAAAC032DuAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAHZJREFUeNrd0bENwCAMBEAjCjqoI6GIESgpMhRlSkZjFEbICFEK/EH6CXB1zWNsi2xYoSmPrswPWMATdKDVXJYB3mAEA2ib0gylVPACPeia0nTlbP0xgZkysdjvMUcbF/bJmVoH8nT4yhalqWWpkR5gsGMF2bNeYFoYxOsBcdMAAAAASUVORK5CYII=');
+}
+
+/* Icone pause */
+#videoBar.useVLC:not(.videoBarPlay) > div:first-of-type > span:first-of-type {
+    max-width: 80px;
+    display: inherit;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQAQMAAAC032DuAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAB9JREFUeNpjYBjegImBQQHKZGNgMBhlDmYmUmQNVwAANk4ISRLgH+YAAAAASUVORK5CYII=');
 }
 
 /* Icône retour */
@@ -103,7 +142,8 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABd0lEQVR42mNgGAWjYBSMglEwCkAgJiamA480U2hoqD1QTR8Qn4iOjn4XGxv7H0j/A+IXQLG9QH4NUI0KzR0KshjdsQ4ODixAh2QA5e6A5InBQDPW09TBSBaBHRsREWEFdORVYh2Ihr8DcRpNHQrFu4GO/EOmI/+je5qWDqUajoyMLBgSDgXGzO/w8HD9gXDoK2CUzgTS2cDQCgDSoUDcCHTQITx6DtDTofeBOMLY2JgVTxGnDnTwNmz6gaFqSheHgspQEsrkInT9UVFRE+gW9aTkYmCyaEPTf46uaZRYx4KSCDS5wDLVN6o4FGjQAmIxMBrNyEkCg7b9AHScDlKI/hm0DgXW+cxIIXpnULfKkNL2ksEcotJI5WjQoHUosIgKhjr0Eb6KYjBE+wpowyRmMEe7HNCRv4B486DORMDiaDHQkTeBZa7goHUk0HHuwFx+OygoSGbQOhLkOGBIrgViscGcLnmAIRk2qHP4KBgFo2AUjIJRQBIAANwr7Dv/e3ltAAAAAElFTkSuQmCC');
 }
 
-#videoBar > div:first-of-type > span:last-of-type:hover {
+#videoBar > div:first-of-type > span:last-of-type:hover,
+#videoBar.useVLC > div:first-of-type > span:hover {
     background-color: #FFFFFF20;
 }
 

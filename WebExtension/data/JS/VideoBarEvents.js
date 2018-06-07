@@ -76,24 +76,41 @@ function setVideoBarSize(left, top)
 
 /**
 * @fn triggerVideoBar Ouvre ou ferme la barre vidéo
-* @param bar {Object} Objet HTML de la barre
+* @param {Object} bar Objet HTML de la barre
 */
 function triggerVideoBar(bar)
 {
-    // Ouvre ou ferme
-    if (bar.classList.contains('videoBarOpened'))
+    if (A7Settings.useVLC)
     {
-        videoBarPause();
-        bar.classList.remove('videoBarOpened');
+        // Ouvre ou ferme
+        if (bar.classList.contains('videoBarPlay'))
+        {
+            videoBarResume();
+            bar.classList.remove('videoBarPlay');
+        }
+        else
+        {
+            videoBarPause();
+            bar.classList.add('videoBarPlay');
+        }
     }
     else
     {
-        bar.classList.add('videoBarOpened');
-    }
+        // Ouvre ou ferme
+        if (bar.classList.contains('videoBarOpened'))
+        {
+            videoBarPause();
+            bar.classList.remove('videoBarOpened');
+        }
+        else
+        {
+            bar.classList.add('videoBarOpened');
+        }
 
-    // Replace la barre
-    var offsets = bar.getBoundingClientRect();
-    setVideoBarSize(offsets.left, offsets.top);
+        // Replace la barre
+        var offsets = bar.getBoundingClientRect();
+        setVideoBarSize(offsets.left, offsets.top);
+    }
 }
 
 function videoBarPlay(file)
@@ -131,29 +148,67 @@ function videoBarPlay(file)
 */
 function videoBarPause()
 {
-    var video = document.getElementById("videoBar").lastElementChild.firstElementChild;
-    video.pause();
+    if (A7Settings.useVLC)
+    {
+        ajax({
+            action:        'GET',
+            responseType:  'document',
+            url:           A7Settings.VLCaddress + '/requests/status.xml?command=pl_forcepause',
+        });
+    }
+    else
+    {
+        var video = document.getElementById("videoBar").lastElementChild.firstElementChild;
+        video.pause();
+    }
 }
 
 
 /**
-* @fn videoBarGetTime Indique le timing de la vidée
-* @return {Integer} Temps en secondes depuis le début de la vidéo
+* @fn videoBarResume Reprend la vidéo
 */
-function videoBarGetTime()
+function videoBarResume()
 {
-    return document.getElementById("videoBar").lastElementChild.firstElementChild.currentTime;
+    ajax({
+        action:        'GET',
+        responseType:  'document',
+        url:           A7Settings.VLCaddress + '/requests/status.xml?command=pl_play',
+    });
 }
 
 
 /**
 * @fn videoBarSetTime Mets la vidéo à un timing
-* @param {Integer} time Temps en secondes depuis le début de la vidéo
+* @param {Integer} time Temps en secondes depuis le début de la vidéo (<0 : relatif au temps actuel)
 */
 function videoBarSetTime(time)
 {
-    var video = document.getElementById("videoBar").lastElementChild.firstElementChild;
-    video.currentTime = time - A7Settings.videoDelay;
+    if (A7Settings.useVLC)
+    {
+        // En relatif on force à arrondir à l'entier inférieur
+        if (time < 0) time--;
+
+        ajax({
+            action:        'GET',
+            responseType:  'document',
+            url:           A7Settings.VLCaddress + '/requests/status.xml?command=seek&val=' + parseInt(time, 10) + 's',
+        });
+    }
+    else
+    {
+        var video = document.getElementById("videoBar").lastElementChild.firstElementChild;
+
+        if (time < 0)
+        {
+            // Temps relatif
+            video.currentTime -= time;
+        }
+        else
+        {
+            // Temps absolu
+            video.currentTime = time - A7Settings.videoDelay;
+        }
+    }
 }
 
 

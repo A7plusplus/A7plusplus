@@ -630,11 +630,19 @@ function createVideoStruct()
 
 
     // Mise en place des infos
-    videoBar.title              = loc.videoBar;
+    if (A7Settings.useVLC) videoBar.title = loc.playPause;
+    else                   videoBar.title = loc.videoBar;
+
     backButton.title            = loc.backInVideo + ' (' + (2 * A7Settings.videoDelay).toFixed(1) + 's)';
     labelFileButton.textContent = loc.chooseVideo;
     fileButton.type             = "file";
     fileButton.accept           = "video/*";
+
+    if (A7Settings.useVLC)
+    {
+        videoBar.classList.add('useVLC');
+        videoBar.classList.add('videoBarPlay');
+    }
 
     // Ajout des events
     fileButton.setAttribute('id', 'A7VideoInput');
@@ -651,11 +659,9 @@ function createVideoStruct()
     // Ajout des events
     backButton.addEventListener('click', function(event)
     {
-        /*
-        * SetTime retire 1x de delay.
-        * On ajoute un second pour avoir plus de recul
-        */
-        videoBarSetTime(videoBarGetTime() - A7Settings.videoDelay);
+        // Retourne dans la vidéo de A7Settings.videoDelay secondes
+        // (plus A7Settings.videoDelay ajoutés par videoBarSetTime)
+        videoBarSetTime(-(2 * A7Settings.videoDelay));
         event.stopImmediatePropagation();
     }, false);
     labelFileButton.addEventListener('click', function(event)

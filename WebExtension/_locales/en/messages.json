@@ -64,6 +64,14 @@
         "message": "Disable videoBar:",
         "description": "Disable videoBar."
     },
+    "A7pp_optionPageUseVLCLabel": {
+        "message": "Use VLC instead of default videoBar (need setup):",
+        "description": "Use VLC instead of default videoBar."
+    },
+    "A7pp_optionPageVLCAddressLabel": {
+        "message": "VLC HTTP API address:",
+        "description": "VLC HTTP API address."
+    },
     "A7pp_optionPageSaveLabel": {
         "message": "Save",
         "description": "Save."

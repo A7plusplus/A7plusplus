@@ -63,3 +63,10 @@ form > div > input, form > div > select {
 #forcedLangCBData:not(:checked) + div + span + select {
     display: none;
 }
+
+/* Cacher l'adresse VLC si non coché */
+#useVLCCBData:not(:checked) + div,
+#useVLCCBData:not(:checked) + div + span,
+#useVLCCBData:not(:checked) + div + span + input {
+    display: none;
+}

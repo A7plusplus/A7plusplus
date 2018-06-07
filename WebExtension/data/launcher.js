@@ -41,7 +41,8 @@ window.addEventListener("A7pp_option_request", function()
             'lock',
             'updates',
             'userBar',
-            'videoBar'
+            'videoBar',
+            'vlc'
         ],
         function(item)
         {

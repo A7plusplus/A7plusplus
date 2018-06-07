@@ -62,6 +62,10 @@ function populate()
     // VideoBar
     document.getElementById("videoBarCB").innerText = chrome.i18n.getMessage('A7pp_optionPageDisableVideoBarLabel');
 
+    // VLC
+    document.getElementById("useVLCCB").innerText = chrome.i18n.getMessage('A7pp_optionPageUseVLCLabel');
+    document.getElementById("VLCaddress").innerText = chrome.i18n.getMessage('A7pp_optionPageVLCAddressLabel');
+
     // Sauvegarde
     document.getElementById("save").innerText = chrome.i18n.getMessage('A7pp_optionPageSaveLabel');
 }
@@ -77,7 +81,8 @@ function getData()
             'lock',
             'updates',
             'userBar',
-            'videoBar'
+            'videoBar',
+            'vlc'
         ],
         function(item)
         {
@@ -99,10 +104,12 @@ function getData()
                 document.getElementById("popupTimeoutData").value  = item.updates.popup || A7Settings.popupTimeout;
 
                 // UserBar
-                document.getElementById("userBarCBData").checked = item.userBar.disable;
+                document.getElementById("userBarCBData").checked = item.userBar ? item.userBar.disable : A7Settings.disableUserBar;
 
                 // VideoBar
-                document.getElementById("videoBarCBData").checked = item.videoBar.disable;
+                document.getElementById("videoBarCBData").checked = item.videoBar ? item.videoBar.disable : A7Settings.disableVideoBar;
+                document.getElementById("useVLCCBData").checked   = item.vlc ? item.vlc.enabled : A7Settings.useVLC;
+                document.getElementById("VLCaddressData").value   = item.vlc ? item.vlc.address : A7Settings.VLCaddress;
             }
             else
             {
@@ -123,6 +130,8 @@ function getData()
 
                 // VideoBar
                 document.getElementById("videoBarCBData").checked = A7Settings.disableVideoBar;
+                document.getElementById("useVLCCBData").checked   = A7Settings.useVLC;
+                document.getElementById("VLCaddressData").value   = A7Settings.VLCaddress;
             }
         }
     );
@@ -161,6 +170,10 @@ function setData(event)
             },
             'videoBar': {
                 'disable': document.getElementById("videoBarCBData").checked
+            },
+            'vlc': {
+                'enabled': document.getElementById("useVLCCBData").checked,
+                'address': document.getElementById("VLCaddressData").value
             }
         },
         function()

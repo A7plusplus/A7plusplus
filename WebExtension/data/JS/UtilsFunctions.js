@@ -274,7 +274,7 @@ function displayAjaxError(text, params)
 *
 * @param {Object=} forwardData Objet à passer à la readyFunction, même en cas d'échec (optionnel)
 * @param {Object=} backupInfos Informations à envoyer en cas d'erreur (optionnel)
-
+*
 * @param {string=} user   Nom d'utilisateur pour l'authentification Basic (optionnel)
 * @param {string=} passwd Mot de passe de l'utilisateur pour l'authentification Basic (optionnel)
 */
