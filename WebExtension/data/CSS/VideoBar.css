@@ -115,6 +115,12 @@
     justify-content: center;
 }
 
+/* Icône dans l'édition */
+body:not(.videoBarEnabled) a7button.videoBarButton,
+body:not(.videoBarEnabled) a7button.videoBarButton + separator {
+    display: none;
+}
+
 /* Icônes */
 /* Icône générale (play) */
 #videoBar > div:first-of-type > span:first-of-type,

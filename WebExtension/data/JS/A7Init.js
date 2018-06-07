@@ -229,6 +229,7 @@ function init()
     // Ajoute la barre vidéo si non désactivée
     if (!A7Settings.disableVideoBar)
     {
+        document.body.classList.add('videoBarEnabled');
         listaParent.insertBefore(createVideoStruct(), listaParent.lastElementChild);
         videoBarInit();
     }

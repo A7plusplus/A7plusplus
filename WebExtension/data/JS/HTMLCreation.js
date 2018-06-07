@@ -38,6 +38,9 @@ function createTextUtils(seqNumber)
 
     var textButtons       = document.createElement('span');
 
+    var videoSeparator    = document.createElement('separator');
+
+    var videoButton       = createA7button();
     var boldButton        = createA7button();
     var italicButton      = createA7button();
     var underlineButton   = createA7button();
@@ -53,6 +56,16 @@ function createTextUtils(seqNumber)
     textArea.setAttribute('oninput', 'updateRsRatingAndCharCount(' + seqNumber + ');');
 
     // Contrôles
+    videoButton.title            = loc.getToVideoLoc;
+    videoButton.setAttribute('tabIndex', seqNumber);
+    videoButton.classList.add('videoBarButton');
+    videoButton.addEventListener('click', function()
+    {
+        videoBarSetTime(getTimeFromTimeCell(getTimeCell(seqNumber)));
+    });
+
+    videoSeparator.classList.add('videoBarButton');
+
     boldButton.title            = loc.selectedTextTo + ' ' + loc.bold;
     boldButton.setAttribute('tabIndex', seqNumber);
     boldButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'b');");
@@ -85,6 +98,8 @@ function createTextUtils(seqNumber)
 
 
     // Création du span
+    textButtons.appendChild(videoButton);
+    textButtons.appendChild(videoSeparator);
     textButtons.appendChild(boldButton);
     textButtons.appendChild(italicButton);
     textButtons.appendChild(underlineButton);
