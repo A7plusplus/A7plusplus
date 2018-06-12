@@ -126,3 +126,12 @@ function getCommentCell()
 {
     return document.getElementById('commentsSection');
 }
+
+/**
+* @fn getVideoBar Retourne la cellule de la barre vidéo
+* @return {!Object} Cellule de la barre vidéo
+*/
+function getVideoBar()
+{
+    return document.getElementById('videoBar');
+}

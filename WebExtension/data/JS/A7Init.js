@@ -270,14 +270,24 @@ function init()
         }
 
         // Barre vidéo
-        var videoBarPos = localStorage.getItem('A7ppVideoBarPosition');
+        var videoBarPos  = localStorage.getItem('A7ppVideoBarPosition');
         if (videoBarPos && !A7Settings.disableVideoBar)
         {
             data = videoBarPos.split(',');
             left = data[0];
             top  = data[1];
 
-            setVideoBarSize(parseInt(left, 10), parseInt(top, 10));
+            setVideoBarPosition(parseInt(left, 10), parseInt(top, 10));
+        }
+
+        var videoBarSize = localStorage.getItem('A7ppVideoBarSize');
+        if (videoBarSize && !A7Settings.disableVideoBar)
+        {
+            data = JSON.parse(videoBarSize);
+
+            var videoBar = getVideoBar();
+            videoBar.dataset.height = data.height;
+            videoBar.dataset.width  = data.width;
         }
     }
 

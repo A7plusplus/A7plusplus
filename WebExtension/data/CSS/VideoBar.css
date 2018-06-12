@@ -19,12 +19,12 @@
     border-radius: inherit;
 }
 
-#videoBar.videoBarDataOpened:not(.videoBarLeft) > div:first-of-type {
+#videoBar.videoLoaded:not(.videoBarLeft) > div:first-of-type {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-#videoBar.videoBarDataOpened.videoBarLeft > div:first-of-type {
+#videoBar.videoLoaded.videoBarLeft > div:first-of-type {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -35,13 +35,13 @@
 }
 
 /* Arrondi du bouton */
-#videoBar.videoBarDataOpened:not(.videoBarLeft):not(.videoBarTop) > div:first-of-type > span:last-of-type {
+#videoBar.videoLoaded:not(.videoBarLeft):not(.videoBarTop) > div:first-of-type > span:last-of-type {
     border-top-right-radius: 10px;
 }
 
 /* Ouvert horizontal */
 #videoBar.videoBarOpened {
-    min-width: 800px;
+    width: 600px;
 }
 
 /* Ouvert horizontal - Mode VLC */
@@ -160,8 +160,7 @@ body:not(.videoBarEnabled) a7button.videoBarButton + separator {
 
 #videoBar > div:last-of-type {
     display: none;
-    cursor: default;
-    max-width: 800px;
+    cursor: n-resize;
     border-radius: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -169,21 +168,20 @@ body:not(.videoBarEnabled) a7button.videoBarButton + separator {
 
 #videoBar.videoBarOpened > div:last-of-type {
     display: flex;
-    min-width: 800px;
     overflow-y: auto;
+    box-sizing: border-box;
     justify-content: center;
     background-color: white;
-    border: 1px solid #111;
-    box-sizing: border-box;
-}
-
-/* Erreur de format vidéo */
-#videoBar.videoBarOpened.unsupportedFormat > div:last-of-type {
-    background-color: #FFFF99;
+    border-bottom: 1px solid #111;
 }
 
 #videoBar.videoBarOpened > div:last-of-type > video {
     width: 100%;
+    margin-top: 0;
+    margin-bottom: 3px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 /* ============================= Classes Sticky ============================= */

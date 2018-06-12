@@ -713,10 +713,22 @@ function createVideoStruct()
     {
         event.stopImmediatePropagation();
     }, false);
+    videoContainer.addEventListener('mousedown', videoBarMouseDown, false);
+    video.addEventListener('mousedown', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
     video.addEventListener('loadedmetadata', function(event)
     {
-        // Application du ratio (1 => pour les border)
-        videoContainer.style.height = videoBar.offsetWidth / (video.videoWidth / video.videoHeight) + 1 + 'px';
+        var videoRatio = video.videoWidth / video.videoHeight;
+        videoContainer.dataset.ratio = videoRatio;
+        
+        // Application du ratio
+        setVideoBarSize(videoBar.offsetWidth / videoRatio, videoBar.offsetWidth);
+
+        // Replace le tout dans la fenêtre
+        updateVideoBarSize(getVideoBar());
+    }, false);
     fileButton.addEventListener('click', function(event)
     {
         event.stopImmediatePropagation();

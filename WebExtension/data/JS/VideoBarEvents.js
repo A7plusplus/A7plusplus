@@ -9,7 +9,7 @@
 */
 function videoBarInit()
 {
-    var videoBar = document.getElementById("videoBar");
+    var videoBar = getVideoBar();
 
     // Ajoute le drag and drop
     videoBar.addEventListener('dragstart', videoBarDragStart, false);
@@ -31,23 +31,21 @@ function videoBarInit()
 function updateVideoBarSize(videoBar)
 {
     var offsets = videoBar.getBoundingClientRect();
-    setVideoBarSize(offsets.left, offsets.top);
+    setVideoBarPosition(offsets.left, offsets.top);
 }
 
 
 /**
-* @fn setVideoBarSize Déplace la barre vidéo
+* @fn setVideoBarPosition Déplace la barre vidéo
 * @param {Integer} left Position X
 * @param {Integer} top Position Y
 */
-function setVideoBarSize(left, top)
+function setVideoBarPosition(left, top)
 {
-    var videoBar = document.getElementById("videoBar");
-
-    // Calcule les proportions
-    var stickyFactor  = window.innerHeight * A7Settings.stickyFactor,
-        width  = videoBar.offsetWidth  < videoBar.children[1].offsetWidth  ? videoBar.children[1].offsetWidth  : videoBar.offsetWidth,
-        height = videoBar.offsetHeight < videoBar.children[1].offsetHeight ? videoBar.children[1].offsetHeight : videoBar.offsetHeight;
+    var videoBar     = getVideoBar(),
+        stickyFactor = window.innerHeight * A7Settings.stickyFactor,
+        height       = videoBar.offsetHeight,
+        width        = videoBar.offsetWidth;
 
     // Ne dépasse pas
     left = left < 0 + stickyFactor ? 0 : left + width  + stickyFactor > document.body.clientWidth  ? document.body.clientWidth  - width  : left;
@@ -70,6 +68,59 @@ function setVideoBarSize(left, top)
     if (localStorage)
     {
         localStorage.setItem('A7ppVideoBarPosition', left + ',' + top);
+    }
+}
+
+
+/**
+* @fn setVideoBarSize Applique une taille à la barre vidéo
+* @param {Integer} height Hauteur
+* @param {Integer} width Largeur
+* @warning Doit être appelé avec updateVideoBarSize afin de ne pas dépasser le bord de la fenêtre
+*/
+function setVideoBarSize(height, width)
+{
+    var videoBar     = getVideoBar(),
+        videoBarData = videoBar.lastElementChild,
+        videoRatio   = videoBarData.dataset.ratio ? videoBarData.dataset.ratio : 1.777777,
+        ignoreWidth  = false;
+
+    // Vérification de la hauteur
+    if (height < 180)
+    {
+        height = 180;
+        width  = height * videoRatio;
+
+        ignoreWidth = true;
+    }
+    else if (height > window.innerHeight / 1.25)
+    {
+        height = window.innerHeight / 1.25;
+        width  = height * videoRatio;
+
+        ignoreWidth = true;
+    }
+
+    // Vérification de la largeur
+    if (!ignoreWidth && width > window.innerWidth / 1.25)
+    {
+        width  = window.innerWidth / 1.25;
+        height = width / videoRatio;
+    }
+
+    //  (80 => barre de selection de vidéo, 4 => pour les border)
+    videoBar.style.height = height + 84 + 'px';
+    videoBar.style.width  = width  + 'px';
+
+    // Sauvegarde pour la personnalisation
+    if (localStorage)
+    {
+        localStorage.setItem('A7ppVideoBarSize', JSON.stringify(
+            {
+                heigth: videoBar.style.height,
+                width:  videoBar.style.width
+            }
+        ));
     }
 }
 
@@ -101,21 +152,28 @@ function triggerVideoBar(bar)
         {
             videoBarPause();
             bar.classList.remove('videoBarOpened');
+
+            bar.dataset.height = bar.style.height;
+            bar.dataset.width  = bar.style.width;
+            bar.style.height   = null;
+            bar.style.width    = null;
         }
         else
         {
             bar.classList.add('videoBarOpened');
+
+            bar.style.height = bar.dataset.height;
+            bar.style.width  = bar.dataset.width;
         }
 
         // Replace la barre
-        var offsets = bar.getBoundingClientRect();
-        setVideoBarSize(offsets.left, offsets.top);
+        updateVideoBarSize(bar);
     }
 }
 
 function videoBarPlay(file)
 {
-    var videoBar  = document.getElementById("videoBar"),
+    var videoBar  = getVideoBar(),
         videoNode = videoBar.lastElementChild.firstElementChild;
 
     // Vérification de la jouabilité
@@ -123,15 +181,13 @@ function videoBarPlay(file)
     if (isPlayable === '')
     {
         videoBar.classList.remove('videoLoaded');
-        videoBar.classList.add('unsupportedFormat');
-        videoBar.lastElementChild.title = loc.unsupportedFormat;
+        videoBar.title = loc.unsupportedFormat;
 
         displayAjaxError(loc.unsupportedFormat, {textOnly: true});
     }
     else
     {
-        videoBar.classList.remove('unsupportedFormat');
-        videoBar.lastElementChild.title = '';
+        videoBar.title = loc.videoBar;
 
         // C'est (à priori) jouable
         var fileURL = URL.createObjectURL(file);
@@ -158,7 +214,7 @@ function videoBarPause()
     }
     else
     {
-        var video = document.getElementById("videoBar").lastElementChild.firstElementChild;
+        var video = getVideoBar().lastElementChild.firstElementChild;
         video.pause();
     }
 }
@@ -206,7 +262,7 @@ function videoBarSetTime(time)
     }
     else
     {
-        var video = document.getElementById("videoBar").lastElementChild.firstElementChild;
+        var video = getVideoBar().lastElementChild.firstElementChild;
 
         if (time < 0)
         {
@@ -231,7 +287,7 @@ function videoBarDragStart(event)
     page.draggedNode = event.target;
 
     // Désactive le glisser-déposer si l'origine n'est pas le haut de la barre
-    var videoBar     = document.getElementById("videoBar"),
+    var videoBar     = getVideoBar(),
         videoBarData = videoBar.lastElementChild;
 
     if (!videoBar.contains(page.draggedNode) || videoBarData.contains(page.draggedNode)) return false;
@@ -252,7 +308,7 @@ function videoBarDragStart(event)
 function videoBarDragOver(event)
 {
     // Désactive le glisser-déposer si l'origine n'est pas le haut de la barre
-    var videoBar     = document.getElementById("videoBar"),
+    var videoBar     = getVideoBar(),
         videoBarData = videoBar.lastElementChild;
 
     if (!videoBar.contains(page.draggedNode) || videoBarData.contains(page.draggedNode)) return false;
@@ -260,7 +316,7 @@ function videoBarDragOver(event)
     // Récupère les positions
     var offset  = event.dataTransfer.getData('text/plain').split(',');
 
-    setVideoBarSize(
+    setVideoBarPosition(
         event.clientX + parseInt(offset[0], 10),
         event.clientY + parseInt(offset[1], 10)
     );
@@ -277,7 +333,7 @@ function videoBarDragOver(event)
 function videoBarDragDrop(event)
 {
     // Désactive le glisser-déposer si l'origine n'est pas le haut de la barre
-    var videoBar     = document.getElementById("videoBar"),
+    var videoBar     = getVideoBar(),
         videoBarData = videoBar.lastElementChild;
 
     if (!videoBar.contains(page.draggedNode) || videoBarData.contains(page.draggedNode)) return false;
@@ -286,7 +342,7 @@ function videoBarDragDrop(event)
     // Récupère les positions
     var offset  = event.dataTransfer.getData('text/plain').split(',');
 
-    setVideoBarSize(
+    setVideoBarPosition(
         event.clientX + parseInt(offset[0], 10),
         event.clientY + parseInt(offset[1], 10)
     );
@@ -294,4 +350,47 @@ function videoBarDragDrop(event)
     // Empêche l'action par défaut
     event.preventDefault();
     return false;
+}
+
+
+/**
+* @fn videoBarMouseDown Initialise le redimensionnement de la vidéo
+* @param {Object} e Objet d'événement
+*/
+function videoBarMouseDown(e)
+{
+    e.preventDefault();
+    window.addEventListener('mousemove', videoBarMouseMove, false);
+    window.addEventListener('mouseup',   videoBarMouseUp,   false);
+}
+
+
+/**
+* @fn videoBarMouseMove Ajuste le redimensionnement de la vidéo
+* @param {Object} event Objet d'événement
+*/
+function videoBarMouseMove(event)
+{
+    var videoBar     = getVideoBar(),
+        videoBarData = videoBar.lastElementChild;
+
+    // Récupère la taille
+    var style  = window.getComputedStyle(videoBar, null),
+        height = event.clientY - parseInt(style.getPropertyValue('top'), 10) - 80;
+
+    setVideoBarSize(height, videoBarData.dataset.ratio * height);
+}
+
+
+/**
+* @fn videoBarMouseUp Finalise le redimensionnement de la vidéo
+* @param {Object} e Objet d'événement
+*/
+function videoBarMouseUp(e)
+{
+    // Replace le tout dans la fenêtre
+    updateVideoBarSize(getVideoBar());
+
+    window.removeEventListener('mousemove', videoBarMouseMove, false);
+    window.removeEventListener('mouseup',   videoBarMouseUp,   false);
 }
