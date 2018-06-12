@@ -717,6 +717,9 @@ function createVideoStruct()
     {
         // Application du ratio (1 => pour les border)
         videoContainer.style.height = videoBar.offsetWidth / (video.videoWidth / video.videoHeight) + 1 + 'px';
+    fileButton.addEventListener('click', function(event)
+    {
+        event.stopImmediatePropagation();
     }, false);
     fileButton.addEventListener('change', function(event)
     {
