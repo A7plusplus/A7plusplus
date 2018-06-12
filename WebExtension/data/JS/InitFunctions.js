@@ -158,8 +158,8 @@ function linesChanged()
     // Actualise directement l'avancement
     updateStateOfTranslation();
 
-    // Vérifie si la langue secondaire est bien présente
-    var slangMissing = document.getElementById('slang') === null;
+    // Vérifie si la langue secondaire est bien présente (en mode edition)
+    var slangMissing = (!page.translatePage) && document.getElementById('slang') === null;
 
     var headerRow = null;
     if (page.translatePage)
