@@ -64,13 +64,17 @@
         "message": "Désactiver la barre vidéo :",
         "description": "Disable videoBar."
     },
-    "A7pp_optionPageUseVLCLabel": {
-        "message": "Utiliser VLC à la place du lecteur par défaut (nescessite une mise en place) :",
-        "description": "Use VLC instead of default videoBar."
+    "A7pp_optionPageuseExtSoftLabel": {
+        "message": "Utiliser un logiciel tiers à la place du lecteur par défaut (nescessite une mise en place) :",
+        "description": "Use an external software instead of default videoBar."
     },
-    "A7pp_optionPageVLCAddressLabel": {
-        "message": "Adresse de l'API HTTP de VLC :",
-        "description": "VLC HTTP API address."
+    "A7pp_optionPageVideoSoftwareLabel": {
+        "message": "Logiciel vidéo à utiliser :",
+        "description": "Video software to use."
+    },
+    "A7pp_optionPageAPIAddressLabel": {
+        "message": "Adresse de l'API HTTP du logiciel choisi :",
+        "description": "Software HTTP API address."
     },
     "A7pp_optionPageSaveLabel": {
         "message": "Enregistrer",

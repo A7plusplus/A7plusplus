@@ -131,7 +131,7 @@ function setVideoBarSize(height, width)
 */
 function triggerVideoBar(bar)
 {
-    if (A7Settings.useVLC)
+    if (A7Settings.useExtSoft)
     {
         // Ouvre ou ferme
         if (bar.classList.contains('videoBarPlay'))
@@ -204,13 +204,31 @@ function videoBarPlay(file)
 */
 function videoBarPause()
 {
-    if (A7Settings.useVLC)
+    if (A7Settings.useExtSoft)
     {
-        ajax({
-            action:        'GET',
-            responseType:  'document',
-            url:           A7Settings.VLCaddress + '/requests/status.xml?command=pl_forcepause',
-        });
+        switch (A7Settings.extSoft)
+        {
+            case 'VLC':
+                ajax({
+                    action:        'GET',
+                    responseType:  'document',
+                    url:           A7Settings.extSoftAddress + '/requests/status.xml?command=pl_forcepause'
+                });
+                break;
+
+            case 'MPC-HC':
+                ajax({
+                    action:        'POST',
+                    responseType:  'document',
+                    url:           A7Settings.extSoftAddress + '/command.html',
+                    params:        'wm_command=888'
+                });
+                break;
+
+            default:
+                // Impossible sans bidouiller, donc pas de warning utilisateur
+                break;
+        }
     }
     else
     {
@@ -225,11 +243,29 @@ function videoBarPause()
 */
 function videoBarResume()
 {
-    ajax({
-        action:        'GET',
-        responseType:  'document',
-        url:           A7Settings.VLCaddress + '/requests/status.xml?command=pl_play',
-    });
+    switch (A7Settings.extSoft)
+    {
+        case 'VLC':
+            ajax({
+                action:        'GET',
+                responseType:  'document',
+                url:           A7Settings.extSoftAddress + '/requests/status.xml?command=pl_play'
+            });
+            break;
+
+        case 'MPC-HC':
+            ajax({
+                action:        'POST',
+                responseType:  'document',
+                url:           A7Settings.extSoftAddress + '/command.html',
+                params:        'wm_command=887'
+            });
+            break;
+
+        default:
+            // Impossible sans bidouiller, donc pas de warning utilisateur
+            break;
+    }
 }
 
 
@@ -239,7 +275,7 @@ function videoBarResume()
 */
 function videoBarSetTime(time)
 {
-    if (A7Settings.useVLC)
+    if (A7Settings.useExtSoft)
     {
         // En relatif on force à arrondir à l'entier inférieur
         if (time < 0)
@@ -254,11 +290,46 @@ function videoBarSetTime(time)
             if (time < 0) time = 0;
         }
 
-        ajax({
-            action:        'GET',
-            responseType:  'document',
-            url:           A7Settings.VLCaddress + '/requests/status.xml?command=seek&val=' + parseInt(time, 10) + 's',
-        });
+        switch (A7Settings.extSoft)
+        {
+            case 'VLC':
+                ajax({
+                    action:        'GET',
+                    responseType:  'document',
+                    url:           A7Settings.extSoftAddress + '/requests/status.xml?command=seek&val=' + parseInt(time, 10) + 's'
+                });
+                break;
+
+            case 'MPC-HC':
+                // Commande MPC (car on n'a pas de seek relatif avec MPC-HC)
+                var command;
+
+                if (time < 0)
+                {
+                    // 901 => arrière 5s, 899 => arrière 1s
+                    command = time <= -2.5 ? 901 : 899;
+                }
+                else
+                {
+                    // Calcul le temps en format humain pour MPC
+                    var date = new Date(null);
+                    date.setSeconds(time);
+
+                    command = '-1&position=' + date.toISOString().substr(11, 8);
+                }
+
+                ajax({
+                    action:        'POST',
+                    responseType:  'document',
+                    url:           A7Settings.extSoftAddress + '/command.html',
+                    params:        'wm_command=' + command
+                });
+                break;
+
+            default:
+                // Impossible sans bidouiller, donc pas de warning utilisateur
+                break;
+        }
     }
     else
     {

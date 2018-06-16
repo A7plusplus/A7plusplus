@@ -53,8 +53,9 @@ var A7Settings = {
     disableVideoBar: false,
 
     // Barre vidéo
-    useVLC: false,
-    VLCaddress: 'http://localhost:8080',
+    useExtSoft: false,
+    extSoft:    'VLC',
+    extSoftAddress: 'http://localhost:8080',
 
     // Nombre maximal de tentative de récupération de l'indicateur HI
     maxHICheck: 4

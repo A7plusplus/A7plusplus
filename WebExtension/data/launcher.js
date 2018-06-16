@@ -42,7 +42,7 @@ window.addEventListener("A7pp_option_request", function()
             'updates',
             'userBar',
             'videoBar',
-            'vlc'
+            'extVideo'
         ],
         function(item)
         {

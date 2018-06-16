@@ -62,9 +62,10 @@ function populate()
     // VideoBar
     document.getElementById("videoBarCB").innerText = chrome.i18n.getMessage('A7pp_optionPageDisableVideoBarLabel');
 
-    // VLC
-    document.getElementById("useVLCCB").innerText = chrome.i18n.getMessage('A7pp_optionPageUseVLCLabel');
-    document.getElementById("VLCaddress").innerText = chrome.i18n.getMessage('A7pp_optionPageVLCAddressLabel');
+    // Lecteur vidéo
+    document.getElementById("useExtSoftCB").innerText = chrome.i18n.getMessage('A7pp_optionPageuseExtSoftLabel');
+    document.getElementById("extSoft").innerText      = chrome.i18n.getMessage('A7pp_optionPageVideoSoftwareLabel');
+    document.getElementById("APIaddress").innerText   = chrome.i18n.getMessage('A7pp_optionPageAPIAddressLabel');
 
     // Sauvegarde
     document.getElementById("save").innerText = chrome.i18n.getMessage('A7pp_optionPageSaveLabel');
@@ -82,7 +83,7 @@ function getData()
             'updates',
             'userBar',
             'videoBar',
-            'vlc'
+            'extVideo'
         ],
         function(item)
         {
@@ -107,9 +108,25 @@ function getData()
                 document.getElementById("userBarCBData").checked = item.userBar ? item.userBar.disable : A7Settings.disableUserBar;
 
                 // VideoBar
-                document.getElementById("videoBarCBData").checked = item.videoBar ? item.videoBar.disable : A7Settings.disableVideoBar;
-                document.getElementById("useVLCCBData").checked   = item.vlc ? item.vlc.enabled : A7Settings.useVLC;
-                document.getElementById("VLCaddressData").value   = item.vlc ? item.vlc.address : A7Settings.VLCaddress;
+                document.getElementById("videoBarCBData").checked   = item.videoBar ? item.videoBar.disable : A7Settings.disableVideoBar;
+                document.getElementById("useExtSoftCBData").checked = item.extVideo ? item.extVideo.enabled : A7Settings.useExtSoft;
+                document.getElementById("APIaddressData").value     = item.extVideo ? item.extVideo.address : A7Settings.extSoftAddress;
+
+                // Choix du soft
+                var select = document.getElementById("extSoftData");
+                // Choix par défaut
+                select.options[0].selected = 'selected';
+                if (item.extVideo)
+                {
+                    for (var i = select.length - 1; i >= 0; i--)
+                    {
+                        if (select.options[i].value === item.extVideo.software)
+                        {
+                            select.options[i].selected = 'selected';
+                            break;
+                        }
+                    }
+                }
             }
             else
             {
@@ -129,9 +146,10 @@ function getData()
                 document.getElementById("userBarCBData").checked = A7Settings.disableUserBar;
 
                 // VideoBar
-                document.getElementById("videoBarCBData").checked = A7Settings.disableVideoBar;
-                document.getElementById("useVLCCBData").checked   = A7Settings.useVLC;
-                document.getElementById("VLCaddressData").value   = A7Settings.VLCaddress;
+                document.getElementById("videoBarCBData").checked   = A7Settings.disableVideoBar;
+                document.getElementById("useExtSoftCBData").checked = A7Settings.useExtSoft;
+                document.getElementById("APIaddressData").value     = A7Settings.extSoftAddress;
+                document.getElementById("extSoftData").options[0].selected = 'selected';
             }
         }
     );
@@ -171,9 +189,10 @@ function setData(event)
             'videoBar': {
                 'disable': document.getElementById("videoBarCBData").checked
             },
-            'vlc': {
-                'enabled': document.getElementById("useVLCCBData").checked,
-                'address': document.getElementById("VLCaddressData").value
+            'extVideo': {
+                'enabled':  document.getElementById("useExtSoftCBData").checked,
+                'software': document.getElementById("extSoftData").value,
+                'address':  document.getElementById("APIaddressData").value
             }
         },
         function()

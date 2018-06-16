@@ -666,19 +666,22 @@ function createVideoStruct()
 
 
     // Mise en place des infos
-    if (A7Settings.useVLC) videoBar.title = loc.playPause;
-    else                   videoBar.title = loc.videoBar;
+    if (A7Settings.useExtSoft) videoBar.title = loc.playPause;
+    else                       videoBar.title = loc.videoBar;
 
     var backwardTime = A7Settings.videoDelay;
+    
+    if (A7Settings.useExtSoft && A7Settings.extSoft === 'MPC-HC')
+        backwardTime = A7Settings.videoDelay >= 2.5 ? 5 : 1;
 
     backButton.title = loc.backInVideo + ' (' + (backwardTime).toFixed(1) + 's)';
     labelFileButton.textContent = loc.chooseVideo;
     fileButton.type             = "file";
     fileButton.accept           = "video/*";
 
-    if (A7Settings.useVLC)
+    if (A7Settings.useExtSoft)
     {
-        videoBar.classList.add('useVLC');
+        videoBar.classList.add('useExtSoft');
         videoBar.classList.add('videoBarPlay');
     }
 
@@ -723,7 +726,7 @@ function createVideoStruct()
     {
         var videoRatio = video.videoWidth / video.videoHeight;
         videoContainer.dataset.ratio = videoRatio;
-        
+
         // Application du ratio
         setVideoBarSize(videoBar.offsetWidth / videoRatio, videoBar.offsetWidth);
 

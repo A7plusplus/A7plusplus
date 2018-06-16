@@ -117,10 +117,11 @@ function preInit()
             if(options.videoBar)
                 A7Settings.disableVideoBar = options.videoBar.disable;
 
-            if(options.vlc)
+            if(options.extVideo)
             {
-                A7Settings.useVLC     = options.vlc.enabled;
-                A7Settings.VLCaddress = options.vlc.address;
+                A7Settings.useExtSoft     = options.extVideo.enabled;
+                A7Settings.extSoft        = options.extVideo.software;
+                A7Settings.extSoftAddress = options.extVideo.address;
             }
         }
 

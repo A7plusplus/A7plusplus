@@ -64,9 +64,12 @@ form > div > input, form > div > select {
     display: none;
 }
 
-/* Cacher l'adresse VLC si non coché */
-#useVLCCBData:not(:checked) + div,
-#useVLCCBData:not(:checked) + div + span,
-#useVLCCBData:not(:checked) + div + span + input {
+/* Cacher l'adresse de l'API si non coché */
+#useExtSoftCBData:not(:checked) + div,
+#useExtSoftCBData:not(:checked) + div + label,
+#useExtSoftCBData:not(:checked) + div + label + select,
+#useExtSoftCBData:not(:checked) + div + label + select + div,
+#useExtSoftCBData:not(:checked) + div + label + select + div + span,
+#useExtSoftCBData:not(:checked) + div + label + select + div + span + input {
     display: none;
 }

@@ -44,29 +44,29 @@
     width: 600px;
 }
 
-/* Ouvert horizontal - Mode VLC */
-#videoBar.useVLC {
+/* Ouvert horizontal - Mode logiciel tiers */
+#videoBar.useExtSoft {
     min-width: 160px;
 }
 
-#videoBar.useVLC > div:first-of-type {
+#videoBar.useExtSoft > div:first-of-type {
     display: inherit;
 }
 
-/* Gestions des radius en mode VLC */
-#videoBar.useVLC:not(.videoBarTop):not(.videoBarLeft) > div:first-of-type > span:first-of-type {
+/* Gestions des radius en mode logiciel tiers */
+#videoBar.useExtSoft:not(.videoBarTop):not(.videoBarLeft) > div:first-of-type > span:first-of-type {
     border-top-left-radius: 40px;
 }
 
-#videoBar.useVLC:not(.videoBarLeft) > div:first-of-type > span:first-of-type {
+#videoBar.useExtSoft:not(.videoBarLeft) > div:first-of-type > span:first-of-type {
     border-bottom-left-radius: 40px;
 }
 
-#videoBar.useVLC:not(.videoBarTop) > div:first-of-type > span:last-of-type {
+#videoBar.useExtSoft:not(.videoBarTop) > div:first-of-type > span:last-of-type {
     border-top-right-radius: 40px;
 }
 
-#videoBar.useVLC > div:first-of-type > span:last-of-type {
+#videoBar.useExtSoft > div:first-of-type > span:last-of-type {
     border-bottom-right-radius: 40px;
 }
 
@@ -76,8 +76,8 @@
     display: none;
 }
 
-/* Mode VLC - affiche le retour direct */
-#videoBar:not(.videoBarOpened).useVLC > div:first-of-type > span:nth-child(2) {
+/* Mode logiciel tiers - affiche le retour direct */
+#videoBar:not(.videoBarOpened).useExtSoft > div:first-of-type > span:nth-child(2) {
     display: inherit;
 }
 
@@ -124,14 +124,14 @@ body:not(.videoBarEnabled) a7button.videoBarButton + separator {
 /* Icônes */
 /* Icône générale (play) */
 #videoBar > div:first-of-type > span:first-of-type,
-#videoBar.useVLC.videoBarPlay > div:first-of-type > span:first-of-type {
+#videoBar.useExtSoft.videoBarPlay > div:first-of-type > span:first-of-type {
     max-width: 80px;
     display: inherit;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQAQMAAAC032DuAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAHZJREFUeNrd0bENwCAMBEAjCjqoI6GIESgpMhRlSkZjFEbICFEK/EH6CXB1zWNsi2xYoSmPrswPWMATdKDVXJYB3mAEA2ib0gylVPACPeia0nTlbP0xgZkysdjvMUcbF/bJmVoH8nT4yhalqWWpkR5gsGMF2bNeYFoYxOsBcdMAAAAASUVORK5CYII=');
 }
 
 /* Icone pause */
-#videoBar.useVLC:not(.videoBarPlay) > div:first-of-type > span:first-of-type {
+#videoBar.useExtSoft:not(.videoBarPlay) > div:first-of-type > span:first-of-type {
     max-width: 80px;
     display: inherit;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQAQMAAAC032DuAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAB9JREFUeNpjYBjegImBQQHKZGNgMBhlDmYmUmQNVwAANk4ISRLgH+YAAAAASUVORK5CYII=');
@@ -149,7 +149,7 @@ body:not(.videoBarEnabled) a7button.videoBarButton + separator {
 }
 
 #videoBar > div:first-of-type > span:last-of-type:hover,
-#videoBar.useVLC > div:first-of-type > span:hover {
+#videoBar.useExtSoft > div:first-of-type > span:hover {
     background-color: #FFFFFF20;
 }
 
