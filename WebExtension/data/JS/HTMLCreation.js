@@ -669,7 +669,9 @@ function createVideoStruct()
     if (A7Settings.useVLC) videoBar.title = loc.playPause;
     else                   videoBar.title = loc.videoBar;
 
-    backButton.title            = loc.backInVideo + ' (' + (2 * A7Settings.videoDelay).toFixed(1) + 's)';
+    var backwardTime = A7Settings.videoDelay;
+
+    backButton.title = loc.backInVideo + ' (' + (backwardTime).toFixed(1) + 's)';
     labelFileButton.textContent = loc.chooseVideo;
     fileButton.type             = "file";
     fileButton.accept           = "video/*";
@@ -696,7 +698,6 @@ function createVideoStruct()
     backButton.addEventListener('click', function(event)
     {
         // Retourne dans la vidéo de A7Settings.videoDelay secondes
-        // (plus A7Settings.videoDelay ajoutés par videoBarSetTime)
         videoBarSetTime(-A7Settings.videoDelay);
         event.stopImmediatePropagation();
     }, false);
