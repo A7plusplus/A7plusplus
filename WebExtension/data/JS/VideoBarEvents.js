@@ -174,7 +174,7 @@ function triggerVideoBar(bar)
 function videoBarPlay(file)
 {
     var videoBar  = getVideoBar(),
-        videoNode = videoBar.lastElementChild.firstElementChild;
+        videoNode = videoBar.lastElementChild.lastElementChild;
 
     // Vérification de la jouabilité
     var isPlayable = videoNode.canPlayType(file.type);
@@ -232,7 +232,7 @@ function videoBarPause()
     }
     else
     {
-        var video = getVideoBar().lastElementChild.firstElementChild;
+        var video = getVideoBar().lastElementChild.lastElementChild;
         video.pause();
     }
 }
@@ -333,7 +333,7 @@ function videoBarSetTime(time)
     }
     else
     {
-        var video = getVideoBar().lastElementChild.firstElementChild;
+        var video = getVideoBar().lastElementChild.lastElementChild;
 
         if (time < 0)
         {

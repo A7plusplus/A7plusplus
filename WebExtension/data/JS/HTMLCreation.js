@@ -653,8 +653,8 @@ function createVideoStruct()
     // Création des éléments
     var videoBar          = document.createElement('div');
 
-    var videoContainer    = document.createElement('div');
     var fileContainer     = document.createElement('div');
+    var videoContainer    = document.createElement('div');
 
     var videoBarButton    = document.createElement('span');
     var backButton        = document.createElement('span');
@@ -662,6 +662,8 @@ function createVideoStruct()
     var fileButtonWrapper = document.createElement('div');
     var fileButton        = document.createElement('input');
 
+    var subtitleContainer = document.createElement('div');
+    var subtitle          = document.createElement('p');
     var video             = document.createElement('video');
 
 
@@ -670,7 +672,6 @@ function createVideoStruct()
     else                       videoBar.title = loc.videoBar;
 
     var backwardTime = A7Settings.videoDelay;
-    
     if (A7Settings.useExtSoft && A7Settings.extSoft === 'MPC-HC')
         backwardTime = A7Settings.videoDelay >= 2.5 ? 5 : 1;
 
@@ -696,8 +697,6 @@ function createVideoStruct()
         triggerVideoBar(videoBar);
     }, false);
 
-
-    // Ajout des events
     backButton.addEventListener('click', function(event)
     {
         // Retourne dans la vidéo de A7Settings.videoDelay secondes
@@ -733,6 +732,11 @@ function createVideoStruct()
         // Replace le tout dans la fenêtre
         updateVideoBarSize(getVideoBar());
     }, false);
+    // Calcul de l'affichage des sous-titres
+    video.addEventListener('timeupdate', function(event)
+    {
+        updateVideoBarSubtitle();
+    }, false);
     fileButton.addEventListener('click', function(event)
     {
         event.stopImmediatePropagation();
@@ -751,6 +755,9 @@ function createVideoStruct()
     fileContainer.appendChild(labelFileButton);
     fileContainer.appendChild(fileButtonWrapper);
 
+    subtitleContainer.appendChild(subtitle);
+
+    videoContainer.appendChild(subtitleContainer);
     videoContainer.appendChild(video);
 
     videoBar.appendChild(fileContainer);

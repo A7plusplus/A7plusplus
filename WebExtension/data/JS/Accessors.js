@@ -62,20 +62,22 @@ function getStateOfTextCell(textCell)
 
 
 /**
-* @fn getStateOfTimeCell Récupère le timestamp du début de séquence
+* @fn getTimeFromTimeCell Récupère le timestamp du début (ou fin, si end est true) de séquence
 * @param {!Object} timeCell Cellule des timings
+* @param {!Boolean} end Si on doit récupérer la fin de séquence
 * @return {int} timestamp
 */
-function getTimeFromTimeCell(timeCell)
+function getTimeFromTimeCell(timeCell, end)
 {
-    var time = 0;
+    var time = 0,
+        index = typeof end === 'undefined' || end === false ? 0 : 1;
 
     // On détermine l'état de la cellule des timings
     if (timeCell.childElementCount === 0 || timeCell.firstElementChild.tagName === 'DIV')
-        time = timeCell.textContent.split(" -->")[0];
+            time = timeCell.textContent.split(" --> ")[index].substr(0, 12);
 
     else
-        time = timeCell.firstElementChild.children[1].value;
+        time = timeCell.firstElementChild.children[1 + index * 5].value;
 
     // Calcul du timestamp
     var tmp  = time.split(':'),

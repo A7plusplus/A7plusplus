@@ -115,6 +115,11 @@
     justify-content: center;
 }
 
+#videoBar > div:first-of-type > div > input {
+    width: 90%;
+    background-color: #FFFFFF10;
+}
+
 /* Icône dans l'édition */
 body:not(.videoBarEnabled) a7button.videoBarButton,
 body:not(.videoBarEnabled) a7button.videoBarButton + separator {
@@ -167,8 +172,9 @@ body:not(.videoBarEnabled) a7button.videoBarButton + separator {
 }
 
 #videoBar.videoBarOpened > div:last-of-type {
-    display: flex;
+    display: block;
     overflow-y: auto;
+    position: relative;
     box-sizing: border-box;
     justify-content: center;
     background-color: white;
@@ -182,6 +188,25 @@ body:not(.videoBarEnabled) a7button.videoBarButton + separator {
     border-radius: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+#videoBar.videoBarOpened > div:last-of-type > div {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    top: calc(100% - 100px);
+}
+
+#videoBar.videoBarOpened > div:last-of-type > div > p {
+    margin: 0;
+    max-width: 80%;
+    overflow: hidden;
+    font-size: small;
+    max-height: 90px;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 2px 2px #555555;
+    background-color: #FFFFFFBB;
 }
 
 /* ============================= Classes Sticky ============================= */

@@ -240,6 +240,12 @@ function addTagToSequence(seqNumber, tagType)
     // Actualise la taille de la textArea
     updateTextAreaSize(textArea);
 
+    // Actualise les sous-titres de la vidéo
+    if (!A7Settings.disableVideoBar && !A7Settings.useExtSoft)
+    {
+        updateVideoBarSubtitle();
+    }
+
     // Remet le focus sur la textArea
     textArea.focus();
 }
@@ -263,6 +269,12 @@ function removeTagsFromSequence(seqNumber)
 
     // Actualise la taille de la textArea
     updateTextAreaSize(textArea);
+
+    // Actualise les sous-titres de la vidéo
+    if (!A7Settings.disableVideoBar && !A7Settings.useExtSoft)
+    {
+        updateVideoBarSubtitle();
+    }
 
     // Remet le focus sur la textArea
     textArea.focus();

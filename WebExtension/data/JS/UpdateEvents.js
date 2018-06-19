@@ -124,6 +124,12 @@ function updateRsRatingAndCharCount(seqNumber)
 
         updateTextAreaSize(textArea);
     }
+
+    // Actualise les sous-titres de la vidéo
+    if (!A7Settings.disableVideoBar && !A7Settings.useExtSoft)
+    {
+        updateVideoBarSubtitle();
+    }
 }
 
 
@@ -186,11 +192,9 @@ function updateCharCountCell(countCell, counts)
                 span.className = 'ccc_green';
                 return 'ok';
             }
-            else
-            {
-                span.className = 'ccc_red';
-                return 'bad';
-            }
+
+            span.className = 'ccc_red';
+            return 'bad';
 
 
         // Multi-lignes
@@ -439,4 +443,64 @@ function removeCommentPopup()
         commentSection.children[1].children[1].lastElementChild.textContent = '';
     }
 
+}
+
+
+/**
+* @fn updateVideoBarSubtitle Affiche la bonne séquence de sous-titre en fonction de l'avancement de la vidéo
+*/
+function updateVideoBarSubtitle()
+{
+    var videoBar = getVideoBar();
+        video    = videoBar.lastElementChild.lastElementChild;
+        subtitle = videoBar.lastElementChild.firstElementChild.firstElementChild;
+
+    // Première ligne
+    var line = document.getElementById('seqsTbody').firstElementChild,
+        timeCell, textCell,
+        startTime, text;
+
+    // Reset le contenu
+    subtitle.textContent = '';
+
+    // Chaque ligne
+    while ((line = line.nextElementSibling))
+    {
+        timeCell = line.children[page.lock + 4];
+
+        // Est une ligne courante
+        if (timeCell.classList.contains('timeInitial') || timeCell.classList.contains('timeClicked'))
+        {
+            startTime = getTimeFromTimeCell(timeCell);
+
+            // La séquence est à l'écran
+            if (
+                video.currentTime >= startTime &&
+                video.currentTime <= getTimeFromTimeCell(timeCell, true)
+            )
+            {
+                textCell = line.children[page.lock + 7];
+
+                if (getStateOfTextCell(textCell) === 'initial')
+                {
+                    text = getTextFromHTML(textCell.innerHTML);
+                }
+                else
+                {
+                    // getTextFromHTML retire les balises non conformes, ici
+                    text = getTextFromHTML(textCell.firstElementChild.firstElementChild.value);
+                }
+
+                // Re-transforme les retours à la ligne en code HTML
+                text = text.replace(/\n/g, "<br>");
+
+                // Ajoute à l'affichage (en cas de multi-séquences affichées)
+                if (subtitle.textContent === '') subtitle.innerHTML  = text;
+                else                             subtitle.innerHTML += '<br>' + text;
+            }
+
+            // Si on a dépassé le temps
+            if (video.currentTime < startTime) break;
+        }
+    }
 }
