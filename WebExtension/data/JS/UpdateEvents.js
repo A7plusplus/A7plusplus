@@ -455,6 +455,13 @@ function updateVideoBarSubtitle()
         video    = videoBar.lastElementChild.lastElementChild;
         subtitle = videoBar.lastElementChild.firstElementChild.firstElementChild;
 
+    // Page en chargement
+    if (document.getElementById('seqsTbody') === null)
+    {
+        subtitle.textContent = '';
+        return;
+    }
+
     // Première ligne
     var line = document.getElementById('seqsTbody').firstElementChild,
         timeCell, textCell,
