@@ -194,7 +194,7 @@ body:not(.videoBarEnabled) a7button.videoBarButton + separator {
     width: 100%;
     position: absolute;
     text-align: center;
-    top: calc(100% - 100px);
+    top: calc(100% - 90px);
 }
 
 #videoBar.videoBarOpened > div:last-of-type > div > p {

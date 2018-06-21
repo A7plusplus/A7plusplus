@@ -488,9 +488,24 @@ function updateVideoBarSubtitle()
             {
                 textCell = line.children[page.lock + 7];
 
+                // Détermine si la cellule de la VO doit être prise
+                if (
+                    page.translatePage &&                      // Page traduction
+                    line.classList.contains('originalText') && // Et texte non traduit
+                    (                                          // Et traduction non en cours
+                        getStateOfTextCell(textCell) === 'initial' ||
+                        textCell.firstElementChild.firstElementChild.value === ''
+                    )
+
+                )
+                {
+                    textCell = line.children[page.lock + 5];
+                }
+
+                // Récupère le texte de la séquence
                 if (getStateOfTextCell(textCell) === 'initial')
                 {
-                    text = getTextFromHTML(textCell.innerHTML);
+                    text = getTextFromHTML(textCell.innerHTML.replace(/\n/g, ''));
                 }
                 else
                 {
