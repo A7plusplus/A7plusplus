@@ -171,6 +171,10 @@ body:not(.videoBarEnabled) a7button.videoBarButton + separator {
     border-top-right-radius: 0;
 }
 
+#videoBar > div:last-of-type * {
+    cursor: default;
+}
+
 #videoBar.videoBarOpened > div:last-of-type {
     display: block;
     overflow-y: auto;
