@@ -65,7 +65,7 @@
         "description": "Disable videoBar."
     },
     "A7pp_optionPageuseExtSoftLabel": {
-        "message": "Use an external software instead of default videoBar (need setup):",
+        "message": "Use an external software instead of default videoBar (need the software to be setup):",
         "description": "Use an external software instead of default videoBar."
     },
     "A7pp_optionPageVideoSoftwareLabel": {

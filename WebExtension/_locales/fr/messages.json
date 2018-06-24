@@ -65,7 +65,7 @@
         "description": "Disable videoBar."
     },
     "A7pp_optionPageuseExtSoftLabel": {
-        "message": "Utiliser un logiciel tiers à la place du lecteur par défaut (nescessite une mise en place) :",
+        "message": "Utiliser un logiciel tiers à la place du lecteur par défaut (un réglage est nécessaire dans le logiciel) :",
         "description": "Use an external software instead of default videoBar."
     },
     "A7pp_optionPageVideoSoftwareLabel": {

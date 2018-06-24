@@ -57,9 +57,9 @@ var loc =
         reloadPage        : 'Recharger les séquences de la page courante',
         clickToShowHelp   : "(cliquer pour afficher l'aide)",
         videoBar          : 'Barre vidéo',
-        playPause         : 'Jouer / mettre en pause',
-        getToVideoLoc     : 'Allez à cette séquence dans la vidéo',
-        backInVideo       : 'Retourer en arrière',
+        playPause         : 'Lire / mettre en pause',
+        getToVideoLoc     : 'Aller à cette séquence dans la vidéo',
+        backInVideo       : 'Retounrer en arrière',
         chooseVideo       : 'Choisir une vidéo :',
         unsupportedFormat : 'Format vidéo non supporté par le navigateur',
         helpURL           : 'http://www.sub-talk.net/topic/4687-/'
