@@ -8,7 +8,7 @@
 var A7Settings = {
 
     MAJOR_VERSION_INFO   : 'A7++ 2.3',
-    MINOR_VERSION_INFO   : '2.3 bêta',
+    MINOR_VERSION_INFO   : '2.3 stable',
 
     // Longueur en caractères
     maxPerLineOneLineSETTING : 37,
