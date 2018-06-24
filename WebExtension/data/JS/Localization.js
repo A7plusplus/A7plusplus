@@ -59,7 +59,7 @@ var loc =
         videoBar          : 'Barre vidéo',
         playPause         : 'Lire / mettre en pause',
         getToVideoLoc     : 'Aller à cette séquence dans la vidéo',
-        backInVideo       : 'Retounrer en arrière',
+        backInVideo       : 'Retourner en arrière',
         chooseVideo       : 'Choisir une vidéo :',
         unsupportedFormat : 'Format vidéo non supporté par le navigateur',
         helpURL           : 'http://www.sub-talk.net/topic/4687-/'
