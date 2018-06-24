@@ -717,6 +717,10 @@ function createVideoStruct()
         event.stopImmediatePropagation();
     }, false);
     videoContainer.addEventListener('mousedown', videoBarMouseDown, false);
+    subtitleContainer.addEventListener('mousedown', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
     video.addEventListener('mousedown', function(event)
     {
         event.stopImmediatePropagation();
