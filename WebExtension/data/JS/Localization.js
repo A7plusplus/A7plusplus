@@ -56,6 +56,12 @@ var loc =
         showAll           : 'Afficher toutes les séquences',
         reloadPage        : 'Recharger les séquences de la page courante',
         clickToShowHelp   : "(cliquer pour afficher l'aide)",
+        videoBar          : 'Barre vidéo',
+        playPause         : 'Lire / mettre en pause',
+        getToVideoLoc     : 'Aller à cette séquence dans la vidéo',
+        backInVideo       : 'Retounrer en arrière',
+        chooseVideo       : 'Choisir une vidéo :',
+        unsupportedFormat : 'Format vidéo non supporté par le navigateur',
         helpURL           : 'http://www.sub-talk.net/topic/4687-/'
 
     },
@@ -110,6 +116,12 @@ var loc =
         showAll           : 'Show all sequences',
         reloadPage        : 'Reload current page sequences',
         clickToShowHelp   : '(click to show some help)',
+        videoBar          : 'Video Bar',
+        playPause         : 'Play / Pause',
+        getToVideoLoc     : 'Go to that sequence in the video',
+        backInVideo       : 'Back in video',
+        chooseVideo       : 'Video selection:',
+        unsupportedFormat : "The browser doesn't support that video format",
         helpURL           : 'http://www.sub-talk.net/topic/5720-/'
 
     }

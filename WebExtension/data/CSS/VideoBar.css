@@ -1,0 +1,226 @@
+#videoBar {
+    top: 100px;
+    left: 100px;
+    width: 80px;
+    display: flex;
+    cursor: pointer;
+    position: fixed;
+    min-height: 80px;
+    border-radius: 40px;
+    background-color: black;
+    flex-direction: column;
+}
+
+#videoBar.videoBarOpened {
+    border-radius: 20px;
+}
+
+#videoBar.videoBarOpened > div:first-of-type {
+    border-radius: inherit;
+}
+
+#videoBar.videoLoaded:not(.videoBarLeft) > div:first-of-type {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#videoBar.videoLoaded.videoBarLeft > div:first-of-type {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#videoBar.videoBarOpened.videoBarTop > div:first-of-type {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Arrondi du bouton */
+#videoBar.videoLoaded:not(.videoBarLeft):not(.videoBarTop) > div:first-of-type > span:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+/* Ouvert horizontal */
+#videoBar.videoBarOpened {
+    width: 600px;
+}
+
+/* Ouvert horizontal - Mode logiciel tiers */
+#videoBar.useExtSoft {
+    min-width: 160px;
+}
+
+#videoBar.useExtSoft > div:first-of-type {
+    display: inherit;
+}
+
+/* Gestions des radius en mode logiciel tiers */
+#videoBar.useExtSoft:not(.videoBarTop):not(.videoBarLeft) > div:first-of-type > span:first-of-type {
+    border-top-left-radius: 40px;
+}
+
+#videoBar.useExtSoft:not(.videoBarLeft) > div:first-of-type > span:first-of-type {
+    border-bottom-left-radius: 40px;
+}
+
+#videoBar.useExtSoft:not(.videoBarTop) > div:first-of-type > span:last-of-type {
+    border-top-right-radius: 40px;
+}
+
+#videoBar.useExtSoft > div:first-of-type > span:last-of-type {
+    border-bottom-right-radius: 40px;
+}
+
+/* Boutons quand la barre est fermée*/
+#videoBar:not(.videoBarOpened) > div:first-of-type > :not(span),
+#videoBar:not(.videoBarOpened) > div:first-of-type > span:not(:first-of-type) {
+    display: none;
+}
+
+/* Mode logiciel tiers - affiche le retour direct */
+#videoBar:not(.videoBarOpened).useExtSoft > div:first-of-type > span:nth-child(2) {
+    display: inherit;
+}
+
+/* Ouvert horizontal */
+#videoBar.videoBarOpened > div:first-of-type {
+    color: white;
+    display: flex;
+    min-height: 80px;
+    background:linear-gradient(black, #111, #333, #222, #111);
+}
+
+#videoBar > div:first-of-type > span {
+    flex: 2;
+    min-width: 78px;
+    min-height: 80px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#videoBar > div:first-of-type > label {
+    flex: 2;
+    display: flex;
+    text-align: end;
+    padding-right: 10px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#videoBar > div:first-of-type > div {
+    flex: 8;
+    display: flex;
+    cursor: default;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#videoBar > div:first-of-type > div > input {
+    width: 90%;
+    background-color: #FFFFFF10;
+}
+
+/* Icône dans l'édition */
+body:not(.videoBarEnabled) a7button.videoBarButton,
+body:not(.videoBarEnabled) a7button.videoBarButton + separator {
+    display: none;
+}
+
+/* Icônes */
+/* Icône générale (play) */
+#videoBar > div:first-of-type > span:first-of-type,
+#videoBar.useExtSoft.videoBarPlay > div:first-of-type > span:first-of-type {
+    max-width: 80px;
+    display: inherit;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQAQMAAAC032DuAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAHZJREFUeNrd0bENwCAMBEAjCjqoI6GIESgpMhRlSkZjFEbICFEK/EH6CXB1zWNsi2xYoSmPrswPWMATdKDVXJYB3mAEA2ib0gylVPACPeia0nTlbP0xgZkysdjvMUcbF/bJmVoH8nT4yhalqWWpkR5gsGMF2bNeYFoYxOsBcdMAAAAASUVORK5CYII=');
+}
+
+/* Icone pause */
+#videoBar.useExtSoft:not(.videoBarPlay) > div:first-of-type > span:first-of-type {
+    max-width: 80px;
+    display: inherit;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQAQMAAAC032DuAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAB9JREFUeNpjYBjegImBQQHKZGNgMBhlDmYmUmQNVwAANk4ISRLgH+YAAAAASUVORK5CYII=');
+}
+
+/* Icône retour */
+#videoBar:not(.videoLoaded) > div:first-of-type > span:last-of-type {
+    display: none;
+}
+
+#videoBar > div:first-of-type > span:last-of-type {
+    max-width: 80px;
+    display: inherit;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABd0lEQVR42mNgGAWjYBSMglEwCkAgJiamA480U2hoqD1QTR8Qn4iOjn4XGxv7H0j/A+IXQLG9QH4NUI0KzR0KshjdsQ4ODixAh2QA5e6A5InBQDPW09TBSBaBHRsREWEFdORVYh2Ihr8DcRpNHQrFu4GO/EOmI/+je5qWDqUajoyMLBgSDgXGzO/w8HD9gXDoK2CUzgTS2cDQCgDSoUDcCHTQITx6DtDTofeBOMLY2JgVTxGnDnTwNmz6gaFqSheHgspQEsrkInT9UVFRE+gW9aTkYmCyaEPTf46uaZRYx4KSCDS5wDLVN6o4FGjQAmIxMBrNyEkCg7b9AHScDlKI/hm0DgXW+cxIIXpnULfKkNL2ksEcotJI5WjQoHUosIgKhjr0Eb6KYjBE+wpowyRmMEe7HNCRv4B486DORMDiaDHQkTeBZa7goHUk0HHuwFx+OygoSGbQOhLkOGBIrgViscGcLnmAIRk2qHP4KBgFo2AUjIJRQBIAANwr7Dv/e3ltAAAAAElFTkSuQmCC');
+}
+
+#videoBar > div:first-of-type > span:last-of-type:hover,
+#videoBar.useExtSoft > div:first-of-type > span:hover {
+    background-color: #FFFFFF20;
+}
+
+/* Vidéo incrustée */
+#videoBar.videoBarOpened:not(.videoLoaded) > div:last-of-type {
+    display: none;
+}
+
+#videoBar > div:last-of-type {
+    display: none;
+    cursor: n-resize;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#videoBar > div:last-of-type * {
+    cursor: default;
+}
+
+#videoBar.videoBarOpened > div:last-of-type {
+    display: block;
+    overflow-y: auto;
+    position: relative;
+    box-sizing: border-box;
+    justify-content: center;
+    background-color: white;
+    border-bottom: 1px solid #111;
+}
+
+#videoBar.videoBarOpened > div:last-of-type > video {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 3px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#videoBar.videoBarOpened > div:last-of-type > div {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    top: calc(100% - 90px);
+}
+
+#videoBar.videoBarOpened > div:last-of-type > div > p {
+    margin: 0;
+    max-width: 80%;
+    overflow: hidden;
+    font-size: small;
+    max-height: 90px;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 2px 2px #555555;
+    background-color: #FFFFFFBB;
+}
+
+/* ============================= Classes Sticky ============================= */
+
+#videoBar.videoBarLeft {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#videoBar.videoBarTop {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

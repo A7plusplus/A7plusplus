@@ -240,6 +240,12 @@ function addTagToSequence(seqNumber, tagType)
     // Actualise la taille de la textArea
     updateTextAreaSize(textArea);
 
+    // Actualise les sous-titres de la vidéo
+    if (!A7Settings.disableVideoBar && !A7Settings.useExtSoft)
+    {
+        updateVideoBarSubtitle();
+    }
+
     // Remet le focus sur la textArea
     textArea.focus();
 }
@@ -263,6 +269,12 @@ function removeTagsFromSequence(seqNumber)
 
     // Actualise la taille de la textArea
     updateTextAreaSize(textArea);
+
+    // Actualise les sous-titres de la vidéo
+    if (!A7Settings.disableVideoBar && !A7Settings.useExtSoft)
+    {
+        updateVideoBarSubtitle();
+    }
 
     // Remet le focus sur la textArea
     textArea.focus();
@@ -348,8 +360,7 @@ function textCancel(seqNumber)
         ajax({
             action:               'GET',
             url:                  '/translate_release.php' + '?' + params,
-            forwardData:          seqNumber,
-            readyFunction:        post_release
+            forwardData:          seqNumber
         });
     }
 
@@ -448,6 +459,12 @@ function post_select(isError, data, seqNumber, translateMode)
     // Récupération de l'état des cellules
     var timeState = getStateOfTimeCell(timeCell);
 
+    // Décale la vidéo, si activé
+    if (!A7Settings.disableVideoBar)
+    {
+        videoBarSetTime(getTimeFromTimeCell(timeCell));
+    }
+
 
     // On s'occupe de l'état du temps : si le grand indicateur n'est pas là, on le crée
     if (timeState === 'initial')
@@ -501,15 +518,6 @@ function post_select(isError, data, seqNumber, translateMode)
 
     // Actualise les compteurs (permet d'afficher l'avertissement en cas de dépassement nombre de lignes / nombre de caractères)
     updateRsRatingAndCharCount(seqNumber);
-}
-
-
-/**
-* @fn post_release Fonction sans but si ce n'est la réception des données des releases
-*/
-function post_release()
-{
-    return;
 }
 
 

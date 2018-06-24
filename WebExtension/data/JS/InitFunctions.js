@@ -158,6 +158,9 @@ function linesChanged()
     // Actualise directement l'avancement
     updateStateOfTranslation();
 
+    // Vérifie si la langue secondaire est bien présente (en mode edition)
+    var slangMissing = (!page.translatePage) && document.getElementById('slang') === null;
+
     var headerRow = null;
     if (page.translatePage)
     {
@@ -185,6 +188,9 @@ function linesChanged()
     headerRow.children[page.lock + 1].firstElementChild.title = loc.version;
     headerRow.children[page.lock + 4].firstElementChild.textContent = loc.duration + ' + RS Rating';
 
+    // Retire la colonne langue secondaire si non présente
+    if(slangMissing) headerRow.children[page.lock + 5].remove();
+
     // Récupère le nombre de lignes
     var tableOfLine = headerRow.parentElement;
     var lineNumbers = tableOfLine.childElementCount;
@@ -196,6 +202,9 @@ function linesChanged()
     {
         currentLine = tableOfLine.children[i];
 
+        // Retire la colonne langue secondaire si non présente
+        if(slangMissing) currentLine.children[page.lock + 5].remove();
+
         // Création de la cellule pour le nombre de caractères
         var cell = document.createElement('td');
         cell.setAttribute('class', 'counter');
@@ -203,6 +212,12 @@ function linesChanged()
         // Cellules utiles
         var timeCell = currentLine.children[page.lock + 4];
         var textCell = currentLine.lastElementChild;
+
+        // Déplace la vidéo, si activé
+        if (i == 1 && !A7Settings.disableVideoBar)
+        {
+            videoBarSetTime(getTimeFromTimeCell(timeCell));
+        }
 
         // Ajoute un tabindex à la cellule et permet le clic
         if (page.translatePage || currentLine.classList.contains('originalText'))
@@ -338,10 +353,10 @@ function linesChanged()
             lista.appendChild(rsText);
         }
 
-    // Rend visible le tableau des séquences maintenant que le chargement est terminé
-    var tables = lista.getElementsByTagName('table');
-    tables[0].style.setProperty('visibility', 'visible');
-    tables[1].style.setProperty('visibility', 'visible');
+        // Rend visible le tableau des séquences maintenant que le chargement est terminé
+        var tables = lista.getElementsByTagName('table');
+        tables[0].style.setProperty('visibility', 'visible');
+        tables[1].style.setProperty('visibility', 'visible');
     }
 
     // Si la barre utilisateur est activée
@@ -349,7 +364,7 @@ function linesChanged()
     {
         // Charge la liste des utilisateurs dans la userBar
         if (page.translatePage) loadUserBarUsersFromTranslate();
-        else                   loadUserBarUsers();
+        else                    loadUserBarUsers();
     }
 
     // Focus sur la première ligne

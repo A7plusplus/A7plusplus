@@ -122,7 +122,7 @@ function getRSRatingIndex(counts, duration)
     rsr = totalChars * 1000 / (ms - 500);
 
     for (i = 0; i < 10; i++)
-        if (rsr > A7Settings.RSR[i-1][0] && rsr <= A7Settings.RSR[i][0])
+        if (rsr > A7Settings.RSR[i-1].ratio && rsr <= A7Settings.RSR[i].ratio)
             return i;
 
     return 0;
@@ -214,16 +214,28 @@ function openHelpPage(evt)
 /**
 * @fn displayAjaxError Affiche un petit message en haut de la fenêtre
 * @param {string=} text Message additionnel à afficher
+* @param {Object} params Options à appliquer (textOnly, ici)
 */
-function displayAjaxError(text)
+function displayAjaxError(text, params)
 {
     var popup = document.getElementById('A7Popup');
 
+    // Traitement des paramètres
+    if (typeof params === 'undefined' | params === null) params = {};
+    if (typeof params.textOnly === 'undefined') params.textOnly = false;
+
     // Lui affecte son text
-    popup.firstElementChild.innerText = loc.ajaxErrorOccurred;
-    if(typeof text !== 'undefined')
+    if (params.textOnly)
     {
-        popup.firstElementChild.innerText += '\n(' + text + ')';
+        popup.firstElementChild.innerText = text;
+    }
+    else
+    {
+        popup.firstElementChild.innerText = loc.ajaxErrorOccurred;
+        if (typeof text !== 'undefined')
+        {
+            popup.firstElementChild.innerText += '\n(' + text + ')';
+        }
     }
 
     // Annule le précedent timeout
@@ -262,6 +274,9 @@ function displayAjaxError(text)
 *
 * @param {Object=} forwardData Objet à passer à la readyFunction, même en cas d'échec (optionnel)
 * @param {Object=} backupInfos Informations à envoyer en cas d'erreur (optionnel)
+*
+* @param {string=} user   Nom d'utilisateur pour l'authentification Basic (optionnel)
+* @param {string=} passwd Mot de passe de l'utilisateur pour l'authentification Basic (optionnel)
 */
 function ajax(params)
 {
@@ -270,6 +285,8 @@ function ajax(params)
     if (typeof params.forwardData === 'undefined') params.forwardData = null;
     if (typeof params.backupInfos === 'undefined') params.backupInfos = null;
     if (typeof params.timeout     === 'undefined') params.timeout = A7Settings.updateTimeout;
+    if (typeof params.user        === 'undefined') params.user    = null;
+    if (typeof params.passwd      === 'undefined') params.passwd  = null;
 
     // Crée la requête
     var xhr = new XMLHttpRequest();
@@ -283,13 +300,20 @@ function ajax(params)
     xhr.open(params.action, params.url, true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
+    // Auth
+    if (params.user !== null && params.passwd !== null)
+        xhr.setRequestHeader("Authorization", "Basic " + btoa(params.user + ":" + params.passwd));
+
     // Gère le retour
     xhr.onreadystatechange = function()
     {
         if (xhr.readyState === 4)
         {
             var isError = xhr.status !== 200;
-            params.readyFunction(isError, isError ? params.backupInfos : xhr.response, params.forwardData);
+            if (typeof params.readyFunction !== 'undefined')
+            {
+                params.readyFunction(isError, isError ? params.backupInfos : xhr.response, params.forwardData);
+            }
         }
     };
 

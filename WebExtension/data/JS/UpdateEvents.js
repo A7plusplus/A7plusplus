@@ -106,7 +106,7 @@ function updateRsRatingAndCharCount(seqNumber)
         var bigIndicator = timeCell.lastElementChild;
 
         // Actualise son texte
-        bigIndicator.children[bigIndicator.childElementCount - 2].value = A7Settings.RSR[index][1];
+        bigIndicator.children[bigIndicator.childElementCount - 2].value = A7Settings.RSR[index].description;
 
         // Met l'indicateur de temps en couleur et affiche sa valeur
         updateBigIndicatorLegend(timeCell, duration);
@@ -124,6 +124,12 @@ function updateRsRatingAndCharCount(seqNumber)
 
         updateTextAreaSize(textArea);
     }
+
+    // Actualise les sous-titres de la vidéo
+    if (!A7Settings.disableVideoBar && !A7Settings.useExtSoft)
+    {
+        updateVideoBarSubtitle();
+    }
 }
 
 
@@ -136,19 +142,19 @@ function updateRsRatingAndCharCount(seqNumber)
 function updateTimeCellClass(timeCell, rsIndex, duration)
 {
     // Une mise à jour est à faire
-    if (!timeCell.classList.contains(A7Settings.RSR[rsIndex][2]))
+    if (!timeCell.classList.contains(A7Settings.RSR[rsIndex].class))
     {
         // Retire la vielle classe
         Object.keys(A7Settings.RSR).forEach(function(item)
         {
-            timeCell.classList.remove(A7Settings.RSR[item][2]);
+            timeCell.classList.remove(A7Settings.RSR[item].class);
         });
 
         // Applique la nouvelle
-        timeCell.classList.add(A7Settings.RSR[rsIndex][2]);
+        timeCell.classList.add(A7Settings.RSR[rsIndex].class);
     }
 
-    timeCell.title = loc.duration + ' : ' + duration.toFixed(3) + " s\nRS Rating : " + A7Settings.RSR[rsIndex][1];
+    timeCell.title = loc.duration + ' : ' + duration.toFixed(3) + " s\nRS Rating : " + A7Settings.RSR[rsIndex].description;
 }
 
 
@@ -186,11 +192,9 @@ function updateCharCountCell(countCell, counts)
                 span.className = 'ccc_green';
                 return 'ok';
             }
-            else
-            {
-                span.className = 'ccc_red';
-                return 'bad';
-            }
+
+            span.className = 'ccc_red';
+            return 'bad';
 
 
         // Multi-lignes
@@ -439,4 +443,86 @@ function removeCommentPopup()
         commentSection.children[1].children[1].lastElementChild.textContent = '';
     }
 
+}
+
+
+/**
+* @fn updateVideoBarSubtitle Affiche la bonne séquence de sous-titre en fonction de l'avancement de la vidéo
+*/
+function updateVideoBarSubtitle()
+{
+    var videoBar = getVideoBar();
+        video    = videoBar.lastElementChild.lastElementChild;
+        subtitle = videoBar.lastElementChild.firstElementChild.firstElementChild;
+
+    // Page en chargement
+    if (document.getElementById('seqsTbody') === null)
+    {
+        subtitle.textContent = '';
+        return;
+    }
+
+    // Première ligne
+    var line = document.getElementById('seqsTbody').firstElementChild,
+        timeCell, textCell,
+        startTime, text;
+
+    // Reset le contenu
+    subtitle.textContent = '';
+
+    // Chaque ligne
+    while ((line = line.nextElementSibling))
+    {
+        timeCell = line.children[page.lock + 4];
+
+        // Est une ligne courante
+        if (timeCell.classList.contains('timeInitial') || timeCell.classList.contains('timeClicked'))
+        {
+            startTime = getTimeFromTimeCell(timeCell);
+
+            // La séquence est à l'écran
+            if (
+                video.currentTime >= startTime &&
+                video.currentTime <= getTimeFromTimeCell(timeCell, true)
+            )
+            {
+                textCell = line.children[page.lock + 7];
+
+                // Détermine si la cellule de la VO doit être prise
+                if (
+                    page.translatePage &&                      // Page traduction
+                    line.classList.contains('originalText') && // Et texte non traduit
+                    (                                          // Et traduction non en cours
+                        getStateOfTextCell(textCell) === 'initial' ||
+                        textCell.firstElementChild.firstElementChild.value === ''
+                    )
+
+                )
+                {
+                    textCell = line.children[page.lock + 5];
+                }
+
+                // Récupère le texte de la séquence
+                if (getStateOfTextCell(textCell) === 'initial')
+                {
+                    text = getTextFromHTML(textCell.innerHTML.replace(/\n/g, ''));
+                }
+                else
+                {
+                    // getTextFromHTML retire les balises non conformes, ici
+                    text = getTextFromHTML(textCell.firstElementChild.firstElementChild.value);
+                }
+
+                // Re-transforme les retours à la ligne en code HTML
+                text = text.replace(/\n/g, "<br>");
+
+                // Ajoute à l'affichage (en cas de multi-séquences affichées)
+                if (subtitle.textContent === '') subtitle.innerHTML  = text;
+                else                             subtitle.innerHTML += '<br>' + text;
+            }
+
+            // Si on a dépassé le temps
+            if (video.currentTime < startTime) break;
+        }
+    }
 }

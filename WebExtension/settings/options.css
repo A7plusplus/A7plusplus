@@ -63,3 +63,13 @@ form > div > input, form > div > select {
 #forcedLangCBData:not(:checked) + div + span + select {
     display: none;
 }
+
+/* Cacher l'adresse de l'API si non coché */
+#useExtSoftCBData:not(:checked) + div,
+#useExtSoftCBData:not(:checked) + div + label,
+#useExtSoftCBData:not(:checked) + div + label + select,
+#useExtSoftCBData:not(:checked) + div + label + select + div,
+#useExtSoftCBData:not(:checked) + div + label + select + div + span,
+#useExtSoftCBData:not(:checked) + div + label + select + div + span + input {
+    display: none;
+}

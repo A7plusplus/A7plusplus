@@ -18,6 +18,12 @@ function pre_timeclick(seqNumber)
     // Récupération de l'état des cellules
     var timeState = getStateOfTimeCell(timeCell);
 
+    // Décale la vidéo, si activé
+    if (!A7Settings.disableVideoBar)
+    {
+        videoBarSetTime(getTimeFromTimeCell(timeCell));
+    }
+
     // Si la cellule possède un grand indicateur
     if (timeState === 'opened')
     {

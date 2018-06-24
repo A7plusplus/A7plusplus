@@ -60,6 +60,22 @@
         "message": "Désactiver la barre utilisateur :",
         "description": "Disable userBar."
     },
+    "A7pp_optionPageDisableVideoBarLabel": {
+        "message": "Désactiver la barre vidéo :",
+        "description": "Disable videoBar."
+    },
+    "A7pp_optionPageuseExtSoftLabel": {
+        "message": "Utiliser un logiciel tiers à la place du lecteur par défaut (un réglage est nécessaire dans le logiciel) :",
+        "description": "Use an external software instead of default videoBar."
+    },
+    "A7pp_optionPageVideoSoftwareLabel": {
+        "message": "Logiciel vidéo à utiliser :",
+        "description": "Video software to use."
+    },
+    "A7pp_optionPageAPIAddressLabel": {
+        "message": "Adresse de l'API HTTP du logiciel choisi :",
+        "description": "Software HTTP API address."
+    },
     "A7pp_optionPageSaveLabel": {
         "message": "Enregistrer",
         "description": "Save."

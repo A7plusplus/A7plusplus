@@ -38,6 +38,9 @@ function createTextUtils(seqNumber)
 
     var textButtons       = document.createElement('span');
 
+    var videoSeparator    = document.createElement('separator');
+
+    var videoButton       = createA7button();
     var boldButton        = createA7button();
     var italicButton      = createA7button();
     var underlineButton   = createA7button();
@@ -53,38 +56,71 @@ function createTextUtils(seqNumber)
     textArea.setAttribute('oninput', 'updateRsRatingAndCharCount(' + seqNumber + ');');
 
     // Contrôles
+    videoButton.title            = loc.getToVideoLoc;
+    videoButton.setAttribute('tabIndex', seqNumber);
+    videoButton.classList.add('videoBarButton');
+    videoButton.addEventListener('click', function()
+    {
+        videoBarSetTime(getTimeFromTimeCell(getTimeCell(seqNumber)));
+    });
+
+    videoSeparator.classList.add('videoBarButton');
+
     boldButton.title            = loc.selectedTextTo + ' ' + loc.bold;
     boldButton.setAttribute('tabIndex', seqNumber);
-    boldButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'b');");
+    boldButton.addEventListener('click', function()
+    {
+        addTagToSequence(seqNumber, 'b');
+    });
 
     italicButton.title          = loc.selectedTextTo + ' ' + loc.italic;
     italicButton.setAttribute('tabIndex', seqNumber);
-    italicButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'i');");
+    italicButton.addEventListener('click', function()
+    {
+        addTagToSequence(seqNumber, 'i');
+    });
 
     underlineButton.title       = loc.selectedTextTo + ' ' + loc.underline;
     underlineButton.setAttribute('tabIndex', seqNumber);
-    underlineButton.setAttribute('onclick', 'addTagToSequence(' + seqNumber + ", 'u');");
+    underlineButton.addEventListener('click', function()
+    {
+        addTagToSequence(seqNumber, 'u');
+    });
 
     removeTagsButton.title      = loc.removeTags;
     removeTagsButton.setAttribute('tabIndex', seqNumber);
-    removeTagsButton.setAttribute('onclick', 'removeTagsFromSequence(' + seqNumber + ');');
+    removeTagsButton.addEventListener('click', function()
+    {
+        removeTagsFromSequence(seqNumber);
+    });
 
 
     restoreTextButton.title     = loc.restoreText;
     restoreTextButton.setAttribute('tabIndex', seqNumber);
-    restoreTextButton.setAttribute('onclick', 'textRestore(' + seqNumber + ');');
+    restoreTextButton.addEventListener('click', function()
+    {
+        textRestore(seqNumber);
+    });
 
     cancelTextButton.title = loc.cancel;
     cancelTextButton.setAttribute('tabIndex', seqNumber);
-    cancelTextButton.setAttribute('onclick', 'textCancel(' + seqNumber + ');');
+    cancelTextButton.addEventListener('click', function()
+    {
+        textCancel(seqNumber);
+    });
 
 
     saveButton.title = loc.save;
     saveButton.setAttribute('tabIndex', seqNumber);
-    saveButton.setAttribute('onclick', "pre_update('o', " + seqNumber + ');');
+    saveButton.addEventListener('click', function()
+    {
+        pre_update('o', seqNumber);
+    });
 
 
     // Création du span
+    textButtons.appendChild(videoButton);
+    textButtons.appendChild(videoSeparator);
     textButtons.appendChild(boldButton);
     textButtons.appendChild(italicButton);
     textButtons.appendChild(underlineButton);
@@ -604,6 +640,134 @@ function createUserBarStruct()
     useBarContainer.appendChild(dataContainer);
 
     return useBarContainer;
+}
+
+                                  // Video //
+
+/**
+* @fn createUserBarStruct Crée la structure qui accueillera la vidéo
+* @return {!Object} Nœud HTML de la structure
+*/
+function createVideoStruct()
+{
+    // Création des éléments
+    var videoBar          = document.createElement('div');
+
+    var fileContainer     = document.createElement('div');
+    var videoContainer    = document.createElement('div');
+
+    var videoBarButton    = document.createElement('span');
+    var backButton        = document.createElement('span');
+    var labelFileButton   = document.createElement('label');
+    var fileButtonWrapper = document.createElement('div');
+    var fileButton        = document.createElement('input');
+
+    var subtitleContainer = document.createElement('div');
+    var subtitle          = document.createElement('p');
+    var video             = document.createElement('video');
+
+
+    // Mise en place des infos
+    if (A7Settings.useExtSoft) videoBar.title = loc.playPause;
+    else                       videoBar.title = loc.videoBar;
+
+    var backwardTime = A7Settings.videoDelay;
+    if (A7Settings.useExtSoft && A7Settings.extSoft === 'MPC-HC')
+        backwardTime = A7Settings.videoDelay >= 2.5 ? 5 : 1;
+
+    backButton.title = loc.backInVideo + ' (' + (backwardTime).toFixed(1) + 's)';
+    labelFileButton.textContent = loc.chooseVideo;
+    fileButton.type             = "file";
+    fileButton.accept           = "video/*";
+
+    if (A7Settings.useExtSoft)
+    {
+        videoBar.classList.add('useExtSoft');
+        videoBar.classList.add('videoBarPlay');
+    }
+
+    // Ajout des events
+    fileButton.setAttribute('id', 'A7VideoInput');
+    labelFileButton.setAttribute('for', 'A7VideoInput');
+
+    videoBar.setAttribute('id', 'videoBar');
+    videoBar.setAttribute('draggable', 'true');
+    videoBar.addEventListener('click', function()
+    {
+        triggerVideoBar(videoBar);
+    }, false);
+
+    backButton.addEventListener('click', function(event)
+    {
+        // Retourne dans la vidéo de A7Settings.videoDelay secondes
+        videoBarSetTime(-A7Settings.videoDelay);
+        event.stopImmediatePropagation();
+    }, false);
+    labelFileButton.addEventListener('click', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
+    fileButtonWrapper.addEventListener('click', function(event)
+    {
+        fileButton.click();
+        event.stopImmediatePropagation();
+    }, false);
+    videoContainer.addEventListener('click', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
+    videoContainer.addEventListener('mousedown', videoBarMouseDown, false);
+    subtitleContainer.addEventListener('mousedown', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
+    video.addEventListener('mousedown', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
+    video.addEventListener('loadedmetadata', function(event)
+    {
+        var videoRatio = video.videoWidth / video.videoHeight;
+        videoContainer.dataset.ratio = videoRatio;
+
+        // Application du ratio
+        setVideoBarSize(videoBar.offsetWidth / videoRatio, videoBar.offsetWidth);
+
+        // Replace le tout dans la fenêtre
+        updateVideoBarSize(getVideoBar());
+    }, false);
+    // Calcul de l'affichage des sous-titres
+    video.addEventListener('timeupdate', function(event)
+    {
+        updateVideoBarSubtitle();
+    }, false);
+    fileButton.addEventListener('click', function(event)
+    {
+        event.stopImmediatePropagation();
+    }, false);
+    fileButton.addEventListener('change', function(event)
+    {
+        videoBarPlay(this.files[0]);
+    }, false);
+
+
+    // Ajout des nœuds
+    fileButtonWrapper.appendChild(fileButton);
+
+    fileContainer.appendChild(videoBarButton);
+    fileContainer.appendChild(backButton);
+    fileContainer.appendChild(labelFileButton);
+    fileContainer.appendChild(fileButtonWrapper);
+
+    subtitleContainer.appendChild(subtitle);
+
+    videoContainer.appendChild(subtitleContainer);
+    videoContainer.appendChild(video);
+
+    videoBar.appendChild(fileContainer);
+    videoBar.appendChild(videoContainer);
+
+    return videoBar;
 }
 
                                    // Misc //

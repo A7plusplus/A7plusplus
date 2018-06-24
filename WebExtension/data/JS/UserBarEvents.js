@@ -254,7 +254,7 @@ function triggerUserBar(bar)
 
     // Replace la barre
     var offsets = bar.getBoundingClientRect();
-    setUserBarSize(offsets.left, offsets.top + (bar.classList.contains('userBarBottom') ? window.innerHeight : 0));
+    setUserBarSize(offsets.left, offsets.top);
 }
 
 
