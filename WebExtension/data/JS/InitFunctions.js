@@ -158,9 +158,6 @@ function linesChanged()
     // Actualise directement l'avancement
     updateStateOfTranslation();
 
-    // Vérifie si la langue secondaire est bien présente (en mode edition)
-    var slangMissing = (!page.translatePage) && document.getElementById('slang') === null;
-
     var headerRow = null;
     if (page.translatePage)
     {
@@ -171,6 +168,9 @@ function linesChanged()
         headerRow = document.getElementById('trseqtop');
     }
     headerRow.parentElement.setAttribute('id', 'seqsTbody');
+
+    // Vérifie si la langue secondaire est bien présente (en mode edition)
+    var slangMissing = (!page.translatePage) && document.getElementById('slang') === null && headerRow.children.length > page.lock + 6;
 
     // Création de la colonne compteur
     var counterCol    = document.createElement('td');
