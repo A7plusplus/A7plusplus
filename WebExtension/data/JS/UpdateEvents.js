@@ -486,7 +486,7 @@ function updateVideoBarSubtitle()
                 video.currentTime <= getTimeFromTimeCell(timeCell, true)
             )
             {
-                textCell = line.children[page.lock + 7];
+                textCell = line.children[line.children.length - 1];
 
                 // Détermine si la cellule de la VO doit être prise
                 if (
