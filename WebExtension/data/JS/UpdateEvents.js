@@ -496,7 +496,6 @@ function updateVideoBarSubtitle()
                         getStateOfTextCell(textCell) === 'initial' ||
                         textCell.firstElementChild.firstElementChild.value === ''
                     )
-
                 )
                 {
                     textCell = line.children[page.lock + 5];

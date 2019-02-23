@@ -139,6 +139,18 @@ function preInit()
             loc = loc[choosen] ? loc[choosen] : loc.en;
         }
 
+        // Change de charset car Addic7ed le change en fonction de la langue
+        if (document.characterSet === "windows-1252")
+        {
+            for (var string in loc)
+            {
+                if (loc.hasOwnProperty(string))
+                {
+                    loc[string] = decodeURIComponent(escape(loc[string]));
+                }
+            }
+        }
+
         // Lance l'initialisation
         init();
     });
