@@ -425,7 +425,10 @@ function post_select(isError, data, seqNumber, translateMode)
                     var links = document.getElementById('comments').previousElementSibling.getElementsByTagName('a');
                     for (var i = 0; i < links.length; i++)
                     {
-                        if (links[i].text === username && links[i].href.startsWith('http://www.addic7ed.com/user/'))
+                        if (
+                            links[i].text === username &&
+                            (links[i].href.startsWith('https://www.addic7ed.com/user/')) || links[i].href.startsWith('http://www.addic7ed.com/user/')
+                        )
                         {
                             textCell.firstElementChild.href = links[i].href;
                             break;
