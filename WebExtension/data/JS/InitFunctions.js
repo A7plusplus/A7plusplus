@@ -458,7 +458,10 @@ function post_requestHICheck(isError, episodeHTMLDocument)
     }
 
     // Vérifie la présence du hearingImpaired
-    if (img.tagName === 'IMG' && img.src === 'http://www.addic7ed.com/images/hi.jpg')
+    if (
+        img.tagName === 'IMG' &&
+        (img.src === 'https://www.addic7ed.com/images/hi.jpg' || img.src === 'http://www.addic7ed.com/images/hi.jpg')
+    )
     {
         // Ajoute le logo
         var parentDiv = document.getElementById('spanState').parentElement;

@@ -1,0 +1,87 @@
+{
+    "A7pp_extensionDescription": {
+        "message": "Ferramentas de ajuda para tradutores e revisadores em Addic7ed.com",
+        "description": "Description of the extension."
+    },
+
+
+    "A7pp_optionPageTitle": {
+        "message": "Configurações de A7++",
+        "description": "Settings page title."
+    },
+    "A7pp_optionPageForcedLangCheckBoxLabel": {
+        "message": "Idioma selecionado:",
+        "description": "Checkbox to force a specific language."
+    },
+    "A7pp_optionPageSelectedLangLabel": {
+        "message": "Idioma selecionado:",
+        "description": "Selected language."
+    },
+    "A7pp_optionPageLockPositionLabel": {
+        "message": "Posição do botão de bloqueio dos comentários:",
+        "description": "Comments lock button position."
+    },
+    "A7pp_optionPageLockPositionOpt1Label": {
+        "message": "Próximo aos comentários",
+        "description": "Comments lock button position, first option."
+    },
+    "A7pp_optionPageLockPositionOpt2Label": {
+        "message": "No topo direito da coluna de sequência",
+        "description": "On top right of the sequence table."
+    },
+    "A7pp_optionPagestateUpdateLabel": {
+        "message": "Processo do estado da legenda (em segundos, padrão: $DEFAULT$ segundos):",
+        "description": "Subtitle progress state update interval (in seconds, default: $DEFAULT$ seconds).",
+        "placeholders": {
+            "default": {
+                "content": "$1"
+            }
+        }
+    },
+    "A7pp_optionPageCommentUpdateLabel": {
+        "message": "Atualização dos comentários (em segundos, padrão: $DEFAULT$ segundos):",
+        "description": "Comments update interval (in seconds, default: $DEFAULT$ sec).",
+        "placeholders": {
+            "default": {
+                "content": "$1"
+            }
+        }
+    },
+    "A7pp_optionPagePopupTimeoutLabel": {
+        "message": "Pop-up de erro antes de desaparecer (em segundos, padrão: $DEFAULT$ segundos):",
+        "description": "Popup timeout before disapearing (in seconds, default: $DEFAULT$ sec).",
+        "placeholders": {
+            "default": {
+                "content": "$1"
+            }
+        }
+    },
+    "A7pp_optionPageDisableUserBarLabel": {
+        "message": "Desabilitar barra de usuário",
+        "description": "Disable userBar."
+    },
+    "A7pp_optionPageDisableVideoBarLabel": {
+        "message": "Desabilitar barra de vídeo",
+        "description": "Disable videoBar."
+    },
+    "A7pp_optionPageuseExtSoftLabel": {
+        "message": "Use um programa externo invés da barra de vídeo padrão (necessita configuração)",
+        "description": "Use an external software instead of default videoBar."
+    },
+    "A7pp_optionPageVideoSoftwareLabel": {
+        "message": "Programa de vídeo para usar:",
+        "description": "Video software to use."
+    },
+    "A7pp_optionPageAPIAddressLabel": {
+        "message": "Escolha o endereço de HTTP API do programa:",
+        "description": "Software HTTP API address."
+    },
+    "A7pp_optionPageSaveLabel": {
+        "message": "Salvar",
+        "description": "Save."
+    },
+    "A7pp_optionPageSavedMessage": {
+        "message": "Configurações salvas, por favor recarregue a página para aplicar as mudanças.",
+        "description": "Saved settings message."
+    }
+}
