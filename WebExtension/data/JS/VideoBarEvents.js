@@ -209,20 +209,26 @@ function videoBarPause()
         switch (A7Settings.extSoft)
         {
             case 'VLC':
-                ajax({
-                    action:        'GET',
-                    responseType:  'document',
-                    url:           A7Settings.extSoftAddress + '/requests/status.xml?command=pl_forcepause'
-                });
+                window.dispatchEvent(
+                    new CustomEvent("A7pp_player_request", {
+                        detail: JSON.stringify({
+                            action:        'GET',
+                            url:           '/requests/status.xml?command=pl_forcepause'
+                        })
+                    })
+                );
                 break;
 
             case 'MPC-HC':
-                ajax({
-                    action:        'POST',
-                    responseType:  'document',
-                    url:           A7Settings.extSoftAddress + '/command.html',
-                    params:        'wm_command=888'
-                });
+                window.dispatchEvent(
+                    new CustomEvent("A7pp_player_request", {
+                        detail: JSON.stringify({
+                            action: 'POST',
+                            url:    '/command.html',
+                            params: 'wm_command=888'
+                        })
+                    })
+                );
                 break;
 
             default:
@@ -246,20 +252,26 @@ function videoBarResume()
     switch (A7Settings.extSoft)
     {
         case 'VLC':
-            ajax({
-                action:        'GET',
-                responseType:  'document',
-                url:           A7Settings.extSoftAddress + '/requests/status.xml?command=pl_play'
-            });
+            window.dispatchEvent(
+                new CustomEvent("A7pp_player_request", {
+                    detail: JSON.stringify({
+                        action: 'GET',
+                        url:    '/requests/status.xml?command=pl_play'
+                    })
+                })
+            );
             break;
 
         case 'MPC-HC':
-            ajax({
-                action:        'POST',
-                responseType:  'document',
-                url:           A7Settings.extSoftAddress + '/command.html',
-                params:        'wm_command=887'
-            });
+            window.dispatchEvent(
+                new CustomEvent("A7pp_player_request", {
+                    detail: JSON.stringify({
+                        action: 'POST',
+                        url:    '/command.html',
+                        params: 'wm_command=887'
+                    })
+                })
+            );
             break;
 
         default:
@@ -293,11 +305,14 @@ function videoBarSetTime(time)
         switch (A7Settings.extSoft)
         {
             case 'VLC':
-                ajax({
-                    action:        'GET',
-                    responseType:  'document',
-                    url:           A7Settings.extSoftAddress + '/requests/status.xml?command=seek&val=' + parseInt(time, 10) + 's'
-                });
+                window.dispatchEvent(
+                    new CustomEvent("A7pp_player_request", {
+                        detail: JSON.stringify({
+                            action: 'GET',
+                            url:    '/requests/status.xml?command=seek&val=' + parseInt(time, 10) + 's'
+                        })
+                    })
+                );
                 break;
 
             case 'MPC-HC':
@@ -318,12 +333,15 @@ function videoBarSetTime(time)
                     command = '-1&position=' + date.toISOString().substr(11, 8);
                 }
 
-                ajax({
-                    action:        'POST',
-                    responseType:  'document',
-                    url:           A7Settings.extSoftAddress + '/command.html',
-                    params:        'wm_command=' + command
-                });
+                window.dispatchEvent(
+                    new CustomEvent("A7pp_player_request", {
+                        detail: JSON.stringify({
+                            action: 'POST',
+                            url:    '/command.html',
+                            params: 'wm_command=' + command
+                        })
+                    })
+                );
                 break;
 
             default:

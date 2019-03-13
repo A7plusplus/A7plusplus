@@ -121,7 +121,6 @@ function preInit()
             {
                 A7Settings.useExtSoft     = options.extVideo.enabled;
                 A7Settings.extSoft        = options.extVideo.software;
-                A7Settings.extSoftAddress = options.extVideo.address;
             }
         }
 
