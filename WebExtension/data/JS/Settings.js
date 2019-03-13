@@ -7,8 +7,8 @@
 // Déclaration de l'objet contenant tous les réglages
 var A7Settings = {
 
-    MAJOR_VERSION_INFO   : 'A7++ 2.3.3',
-    MINOR_VERSION_INFO   : '2.3.3 stable',
+    MAJOR_VERSION_INFO   : 'A7++ 2.3.4',
+    MINOR_VERSION_INFO   : '2.3.4 stable',
 
     // Longueur en caractères
     maxPerLineOneLineSETTING : 37,
@@ -55,7 +55,6 @@ var A7Settings = {
     // Barre vidéo
     useExtSoft: false,
     extSoft:    'VLC',
-    extSoftAddress: 'http://localhost:8080',
 
     // Nombre maximal de tentative de récupération de l'indicateur HI
     maxHICheck: 4

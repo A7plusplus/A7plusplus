@@ -1,3 +1,43 @@
+/*
+ * Partie communication lecteurs
+ */
+function customAjax(url, action, params)
+{
+    // Crée la requête
+    var xhr = new XMLHttpRequest();
+
+    // L'initialise
+    xhr.responseType = 'document';
+    xhr.open(action, url, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    // Envoie
+    xhr.send(params);
+}
+
+window.addEventListener("A7pp_player_request", function(data)
+{
+    var options = JSON.parse(data.detail);
+
+    // Si des options sont présentes
+    if (options !== null &&
+        typeof(options.url) !== 'undefined' &&
+        typeof(options.action) !== 'undefined'
+    )
+    {
+        // Envoi la requête
+        customAjax(
+            'http://localhost:8080' + options.url,
+            options.action,
+            (typeof(options.params) !== 'undefined' ? options.params : '')
+        );
+    }
+}, false);
+
+
+/*
+ * Partie injection
+ */
 function createScript(fileToLoad)
 {
     var script  = document.createElement('script');
@@ -7,7 +47,6 @@ function createScript(fileToLoad)
 
     return script;
 }
-
 
 // Non conforme aux normes... Mais c'est le seul fix pour le moment
 document.documentElement.appendChild(document.createElement('head'));
@@ -32,7 +71,9 @@ document.head.appendChild(createScript('Extra.js'));
 document.head.appendChild(createScript('A7Init.js'));
 
 
-// Demande d'envoi des options
+/*
+ * Partie options
+ */
 window.addEventListener("A7pp_option_request", function()
 {
     chrome.storage.local.get(

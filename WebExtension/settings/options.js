@@ -65,7 +65,6 @@ function populate()
     // Lecteur vidéo
     document.getElementById("useExtSoftCB").innerText = chrome.i18n.getMessage('A7pp_optionPageuseExtSoftLabel');
     document.getElementById("extSoft").innerText      = chrome.i18n.getMessage('A7pp_optionPageVideoSoftwareLabel');
-    document.getElementById("APIaddress").innerText   = chrome.i18n.getMessage('A7pp_optionPageAPIAddressLabel');
 
     // Sauvegarde
     document.getElementById("save").innerText = chrome.i18n.getMessage('A7pp_optionPageSaveLabel');
@@ -110,7 +109,6 @@ function getData()
                 // VideoBar
                 document.getElementById("videoBarCBData").checked   = item.videoBar ? item.videoBar.disable : A7Settings.disableVideoBar;
                 document.getElementById("useExtSoftCBData").checked = item.extVideo ? item.extVideo.enabled : A7Settings.useExtSoft;
-                document.getElementById("APIaddressData").value     = item.extVideo ? item.extVideo.address : A7Settings.extSoftAddress;
 
                 // Choix du soft
                 var select = document.getElementById("extSoftData");
@@ -148,7 +146,6 @@ function getData()
                 // VideoBar
                 document.getElementById("videoBarCBData").checked   = A7Settings.disableVideoBar;
                 document.getElementById("useExtSoftCBData").checked = A7Settings.useExtSoft;
-                document.getElementById("APIaddressData").value     = A7Settings.extSoftAddress;
                 document.getElementById("extSoftData").options[0].selected = 'selected';
             }
         }
@@ -191,8 +188,7 @@ function setData(event)
             },
             'extVideo': {
                 'enabled':  document.getElementById("useExtSoftCBData").checked,
-                'software': document.getElementById("extSoftData").value,
-                'address':  document.getElementById("APIaddressData").value
+                'software': document.getElementById("extSoftData").value
             }
         },
         function()

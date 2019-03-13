@@ -72,10 +72,6 @@
         "message": "Logiciel vidéo à utiliser :",
         "description": "Video software to use."
     },
-    "A7pp_optionPageAPIAddressLabel": {
-        "message": "Adresse de l'API HTTP du logiciel choisi :",
-        "description": "Software HTTP API address."
-    },
     "A7pp_optionPageSaveLabel": {
         "message": "Enregistrer",
         "description": "Save."
