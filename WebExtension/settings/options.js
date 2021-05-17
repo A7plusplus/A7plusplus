@@ -65,6 +65,7 @@ function populate()
     // Lecteur vidéo
     document.getElementById("useExtSoftCB").innerText = chrome.i18n.getMessage('A7pp_optionPageuseExtSoftLabel');
     document.getElementById("extSoft").innerText      = chrome.i18n.getMessage('A7pp_optionPageVideoSoftwareLabel');
+    document.getElementById("extSoftPwd").innerText   = chrome.i18n.getMessage('A7pp_optionPageVideoSoftwarePwdLabel');
 
     // Sauvegarde
     document.getElementById("save").innerText = chrome.i18n.getMessage('A7pp_optionPageSaveLabel');
@@ -125,6 +126,18 @@ function getData()
                         }
                     }
                 }
+                // Mot de passe VLC
+                var pwdInput = document.getElementById("extSoftPwdData");
+                if (item.extVideo.password)
+                {
+                    pwdInput.value = item.extVideo.password;
+                }
+                else
+                {
+                    // Generates a password and save it
+                    pwdInput.value = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+                    setData(document.createEvent("MouseEvent"));
+                }
             }
             else
             {
@@ -147,6 +160,7 @@ function getData()
                 document.getElementById("videoBarCBData").checked   = A7Settings.disableVideoBar;
                 document.getElementById("useExtSoftCBData").checked = A7Settings.useExtSoft;
                 document.getElementById("extSoftData").options[0].selected = 'selected';
+                document.getElementById("extSoftPwdData").value = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
             }
         }
     );
@@ -188,7 +202,8 @@ function setData(event)
             },
             'extVideo': {
                 'enabled':  document.getElementById("useExtSoftCBData").checked,
-                'software': document.getElementById("extSoftData").value
+                'software': document.getElementById("extSoftData").value,
+                'password': document.getElementById("extSoftPwdData").value
             }
         },
         function()

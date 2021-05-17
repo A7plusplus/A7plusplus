@@ -1,7 +1,7 @@
 /*
  * Partie communication lecteurs
  */
-function customAjax(url, action, params)
+function customAjax(url, action, params, auth)
 {
     // Crée la requête
     var xhr = new XMLHttpRequest();
@@ -10,6 +10,11 @@ function customAjax(url, action, params)
     xhr.responseType = 'document';
     xhr.open(action, url, true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    // Auth, for VLC
+    if (auth !== null && typeof(auth.password) !== 'undefined' && auth.password !== null)
+    {
+        xhr.setRequestHeader('Authorization', "Basic " + window.btoa(auth.username + ':' + auth.password));
+    }
 
     // Envoie
     xhr.send(params);
@@ -29,7 +34,8 @@ window.addEventListener("A7pp_player_request", function(data)
         customAjax(
             'http://localhost:8080' + options.url,
             options.action,
-            (typeof(options.params) !== 'undefined' ? options.params : '')
+            (typeof(options.params) !== 'undefined' ? options.params : ''),
+            (typeof(options.auth) !== 'undefined' ? options.auth : '')
         );
     }
 }, false);

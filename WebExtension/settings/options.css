@@ -64,12 +64,12 @@ form > div > input, form > div > select {
     display: none;
 }
 
-/* Cacher l'adresse de l'API si non coché */
+/* Cacher la liste des soft externes si non cochés */
 #useExtSoftCBData:not(:checked) + div,
 #useExtSoftCBData:not(:checked) + div + label,
 #useExtSoftCBData:not(:checked) + div + label + select,
 #useExtSoftCBData:not(:checked) + div + label + select + div,
-#useExtSoftCBData:not(:checked) + div + label + select + div + span,
-#useExtSoftCBData:not(:checked) + div + label + select + div + span + input {
+#useExtSoftCBData:not(:checked) + div + label + select + div + label,
+#useExtSoftCBData:not(:checked) + div + label + select + div + label + input {
     display: none;
 }
