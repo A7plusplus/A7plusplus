@@ -72,6 +72,10 @@
         "message": "Video software to use:",
         "description": "Video software to use."
     },
+    "A7pp_optionPageVideoSoftwarePwdLabel": {
+        "message": "Password:",
+        "description": "Password"
+    },
     "A7pp_optionPageSaveLabel": {
         "message": "Save",
         "description": "Save."

@@ -121,6 +121,7 @@ function preInit()
             {
                 A7Settings.useExtSoft     = options.extVideo.enabled;
                 A7Settings.extSoft        = options.extVideo.software;
+                A7Settings.extSoftPwd     = options.extVideo.password ? options.extVideo.password : '';
             }
         }
 

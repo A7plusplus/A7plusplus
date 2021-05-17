@@ -213,7 +213,11 @@ function videoBarPause()
                     new CustomEvent("A7pp_player_request", {
                         detail: JSON.stringify({
                             action:        'GET',
-                            url:           '/requests/status.xml?command=pl_forcepause'
+                            url:           '/requests/status.xml?command=pl_forcepause',
+                            auth: {
+                                username: '',
+                                password: A7Settings.extSoftPwd
+                            }
                         })
                     })
                 );
@@ -256,7 +260,11 @@ function videoBarResume()
                 new CustomEvent("A7pp_player_request", {
                     detail: JSON.stringify({
                         action: 'GET',
-                        url:    '/requests/status.xml?command=pl_play'
+                        url:    '/requests/status.xml?command=pl_play',
+                        auth: {
+                            username: '',
+                            password: A7Settings.extSoftPwd
+                        }
                     })
                 })
             );
@@ -309,7 +317,11 @@ function videoBarSetTime(time)
                     new CustomEvent("A7pp_player_request", {
                         detail: JSON.stringify({
                             action: 'GET',
-                            url:    '/requests/status.xml?command=seek&val=' + parseInt(time, 10) + 's'
+                            url:    '/requests/status.xml?command=seek&val=' + parseInt(time, 10) + 's',
+                            auth: {
+                                username: '',
+                                password: A7Settings.extSoftPwd
+                            }
                         })
                     })
                 );
