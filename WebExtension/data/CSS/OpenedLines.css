@@ -256,8 +256,19 @@ a7button:hover {
     width: 20px;
 }
 
+/* button video */
+.videoPlayButton {
+  max-width: 20px;
+  min-width: 20px;
+  width: 20px;
+  text-align: center;
+}
+.videoPlayButton .videoBarButton {
+  width:22px;
+  height:22px;
+}
 /* Temprs Vidéo */
-.textClicked a7button:nth-of-type(1) {
+.videoPlayButton .videoBarButton, .textClicked a7button:nth-of-type(1) {
     background-position: center;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQAQMAAAC032DuAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP/AOW3MEoAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACESURBVHja1dKxEYUgEARQjQwpgRbs4Nr6kRcQWJdjIforkJCAAWf8f3aTbUCil+xw7DF0nOHdvMgEthGss4MfA5cA+kRu5EkWA2sE+0Qm8iSzg0/uxxbAJ/fnRmayONiMjJKmYllekdQ41dToX/nMoCoprurbVdVLVGuZ1Qr7Sh7v/Kk3rQDthNaZDJsAAAAASUVORK5CYII=');
 }
