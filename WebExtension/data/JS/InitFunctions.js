@@ -172,6 +172,16 @@ function linesChanged()
     // Vérifie si la langue secondaire est bien présente (en mode edition)
     var slangMissing = (!page.translatePage) && document.getElementById('slang') === null && headerRow.children.length > page.lock + 6;
 
+    // Création de la colonne lecture
+    var playCol    = document.createElement('td');
+    var playColDiv = document.createElement('div');
+    playCol.className      = 'NewsTitle';
+    playColDiv.title       = loc.getToVideoLoc;
+    playColDiv.textContent = loc.getToVideoLocTiny;
+    playCol.appendChild(playColDiv);
+    // Ajoute la nouvelle colonne avant la colonne Text
+    headerRow.insertBefore(playCol, headerRow.lastElementChild);
+
     // Création de la colonne compteur
     var counterCol    = document.createElement('td');
     var counterColDiv = document.createElement('div');
@@ -205,13 +215,34 @@ function linesChanged()
         // Retire la colonne langue secondaire si non présente
         if(slangMissing) currentLine.children[page.lock + 5].remove();
 
-        // Création de la cellule pour le nombre de caractères
-        var cell = document.createElement('td');
-        cell.setAttribute('class', 'counter');
-
         // Cellules utiles
         var timeCell = currentLine.children[page.lock + 4];
         var textCell = currentLine.lastElementChild;
+        // on récupère la séquence
+        var aLink = currentLine.children[0].querySelector('a');
+        var seqNumber = (aLink ? aLink.innerHTML : "");
+
+        // Création de la cellule pour la lecture
+        var cellPlay = document.createElement('td');
+        cellPlay.setAttribute('class', 'videoPlayButton');
+        // on ajoute le bouton/icone
+        var videoButton = createA7button();
+        videoButton.title = loc.getToVideoLoc;
+        videoButton.dataset.seqnumber = seqNumber;
+        videoButton.classList.add('videoBarButton');
+        videoButton.addEventListener('click', function()
+        {
+            // on cherche le bon timing
+            let timeCell = document.querySelector("#time" + this.dataset.seqnumber);
+            if (timeCell) videoBarSetTime(getTimeFromTimeCell(timeCell));
+        });
+        cellPlay.appendChild(videoButton);
+        // Ajoute la cellule dans la ligne
+        currentLine.insertBefore(cellPlay, textCell);
+
+        // Création de la cellule pour le nombre de caractères
+        var cell = document.createElement('td');
+        cell.setAttribute('class', 'counter');
 
         // Déplace la vidéo, si activé
         if (i == 1 && !A7Settings.disableVideoBar)
