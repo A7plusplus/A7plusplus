@@ -3,6 +3,57 @@
 * @brief Script des fonctions utilitaires
 */
 
+/**
+ * On remplace Ajax() du vieux mootools
+ */
+function waitForMooAjax() {
+  if (typeof Ajax === "undefined") {
+    setTimeout(function() { waitForMooAjax() }, 1);
+  } else {
+    window.Ajax = function(uri, options) {
+      let params = {
+        method:options.method||"GET"
+      }
+      if (options.postBody) params.body = options.postBody;
+
+      // si on a 'page' dans les paramètres de l'url de la page
+      // et si la requête ajax actuelle est /translate_ajaxlist.php
+      // -> alors on modifie le paramètre "start" pour être en accord avec le numéro de page demandé
+      if (uri.startsWith("/ajax_list.php") || uri.startsWith('/translate_ajaxlist.php')) {
+        let urlObject = new URL(window.location.href);
+        if (urlObject.searchParams.has("sequence")) {
+          uri = uri.replace(/start=-?\d+/, "start=" + (urlObject.searchParams.get("sequence")-1));
+        }
+      }
+
+      // on fait la requête avec fetch
+      fetch(uri, options)
+      .then(response => response.text())
+      .then(data => {
+        if (options.update) {
+          options.update.innerHTML = data;
+        }
+        if (typeof options.onComplete === "function") options.onComplete();
+        if (typeof options.readyFunction === "function") {
+          if (options.responseType === 'document') {
+            // 'data' est du texte qu'on veut transformer en node
+            let body = document.createElement('div');
+            body.innerHTML = data;
+            options.readyFunction(false, {body:body});
+          } else {
+            options.readyFunction(false, data);
+          }
+        }
+      })
+      .catch(error => {
+        if (typeof options.readyFunction === "function") options.readyFunction(true, error);
+      })
+
+      return {request:function(){}};
+    }
+  }
+}
+waitForMooAjax();
 
 /**
 * @fn getDurationFromTime Retourne une durée en fonction des codes temporels passés
@@ -256,7 +307,6 @@ function displayAjaxError(text, params)
     popup.dataset.timeoutId = id;
 }
 
-
 /**
 * @fn ajax Effectue une requête AJAX
 * @param {Object} params Paramètres globaux de la requête
@@ -287,6 +337,11 @@ function ajax(params)
     if (typeof params.timeout     === 'undefined') params.timeout = A7Settings.updateTimeout;
     if (typeof params.user        === 'undefined') params.user    = null;
     if (typeof params.passwd      === 'undefined') params.passwd  = null;
+
+    // si l'url commence par /ajax_list.php, on va utiliser "Ajax()"
+    if (params.url.startsWith("/ajax_list.php")) {
+      return Ajax(params.url, params);
+    }
 
     // Crée la requête
     var xhr = new XMLHttpRequest();

@@ -86,8 +86,7 @@ function removeTitleIndicator()
     title.lastChild.remove();
     title.parentElement.parentElement.style.setProperty('visibility', 'visible');
 }
-
-
+ 
 /**
 * @fn linesChanged Met en cache les lignes et ajoute un événement sur les liens
 */
@@ -218,6 +217,7 @@ function linesChanged()
         // Cellules utiles
         var timeCell = currentLine.children[page.lock + 4];
         var textCell = currentLine.lastElementChild;
+        
         // on récupère la séquence
         var aLink = currentLine.children[0].querySelector('a');
         var seqNumber = (aLink ? aLink.innerHTML : "");
@@ -388,6 +388,36 @@ function linesChanged()
         var tables = lista.getElementsByTagName('table');
         tables[0].style.setProperty('visibility', 'visible');
         tables[1].style.setProperty('visibility', 'visible');
+    }
+
+    // on cherche à composer un lien unique qu'on pourra réutiliser plus tard sans devoir se rappeler à quelle page on est
+    let urlObject=new URL(window.location.href);
+    // si on n'a pas les paramètres dans l'URL, alors on va recharger la page avec les bons paramètres
+    if (!urlObject.searchParams.has("id")) {
+      // cherche les paramètres relatives à la page dans les scripts
+      let scripts = document.querySelectorAll('script');
+      for (let i=0; i<scripts.length; i++) {
+        let res = scripts[i].innerHTML.match(/translate_ajaxselect\.php\?(id=\d+&fversion=\d&langto=\d+&langfrom=\d+)/);
+        if (res) window.location.href = "?" + res[1];
+      }
+    }
+    // on modifie le lien de changement de page afin d'y ajouter le numéro de sequence
+    // exemple du code appelé sur ces liens: javascript:list('210');linesChanged();
+    // on change donc par une url avec tous les paramètres voulus
+    let linkPages = document.querySelectorAll("#lista > a");
+    let pageSourceUrl = window.location.href.replace(/&sequence=\d+/, "");
+    for (let i=0; i<linkPages.length; i++) {
+      let code = linkPages[i].getAttribute("href");
+      let sequence = (linkPages[i].innerText-1)*30 + 1;
+      linkPages[i].setAttribute("href", pageSourceUrl + "&sequence=" + sequence);
+      linkPages[i].onclick = function(event) {
+        event.preventDefault();
+        if (window.history.pushState) {
+          let newUrl = pageSourceUrl + "&sequence=" + sequence;
+          window.history.pushState({}, '', newUrl);
+        }
+        eval(code);
+      };
     }
 
     // Si la barre utilisateur est activée

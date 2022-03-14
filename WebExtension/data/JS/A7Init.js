@@ -233,7 +233,7 @@ function init()
 
     // Ajoute la structure d'accueil des commentaires et de la barre utilisateur
     var listaParent = list.parentElement;
-
+    
     // Ajoute la barre utilisateur si non désactivée
     if (!A7Settings.disableUserBar)
     {
