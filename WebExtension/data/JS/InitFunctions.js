@@ -394,11 +394,15 @@ function linesChanged()
     let urlObject=new URL(window.location.href);
     // si on n'a pas les paramètres dans l'URL, alors on va recharger la page avec les bons paramètres
     if (!urlObject.searchParams.has("id")) {
-      // cherche les paramètres relatives à la page dans les scripts
-      let scripts = document.querySelectorAll('script');
-      for (let i=0; i<scripts.length; i++) {
-        let res = scripts[i].innerHTML.match(/translate_ajaxselect\.php\?(id=\d+&fversion=\d&langto=\d+&langfrom=\d+)/);
-        if (res) window.location.href = "?" + res[1];
+      // cherche les paramètres relatives à la page
+      if (page.queryInfos && page.queryInfos.id) window.location.href = `?id=${page.queryInfos.id}&fversion=${page.queryInfos.fversion}&langto=${page.queryInfos.lang}&langfrom=${page.queryInfos.langfrom}`;
+      else {
+        // si les infos ne sont pas dans l'objet `page` alors on les cherche dans les scripts
+        let scripts = document.querySelectorAll('script');
+        for (let i=0; i<scripts.length; i++) {
+          let res = scripts[i].innerHTML.match(/translate_ajaxselect\.php\?(id=\d+&fversion=\d&langto=\d+&langfrom=\d+)/);
+          if (res) window.location.href = "?" + res[1];
+        }
       }
     }
     // on modifie le lien de changement de page afin d'y ajouter le numéro de sequence
@@ -520,6 +524,7 @@ function post_requestHICheck(isError, episodeHTMLDocument)
 
     // Vérifie la présence du hearingImpaired
     if (
+        img &&
         img.tagName === 'IMG' &&
         (img.src === 'https://www.addic7ed.com/images/hi.jpg' || img.src === 'http://www.addic7ed.com/images/hi.jpg')
     )
