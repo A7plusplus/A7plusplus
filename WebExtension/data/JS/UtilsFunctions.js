@@ -286,11 +286,6 @@ function ajax(params)
     if (typeof params.user        === 'undefined') params.user    = null;
     if (typeof params.passwd      === 'undefined') params.passwd  = null;
 
-    // si l'url commence par /ajax_list.php, on va utiliser "Ajax()"
-    if (params.url.startsWith("/ajax_list.php")) {
-      return Ajax(params.url, params);
-    }
-
     // Crée la requête
     var xhr = new XMLHttpRequest();
 
