@@ -411,7 +411,6 @@ function linesChanged()
     let linkPages = document.querySelectorAll("#lista > a");
     let pageSourceUrl = window.location.href.replace(/&sequence=\d+/, "");
     for (let i=0; i<linkPages.length; i++) {
-      let code = linkPages[i].getAttribute("href");
       let sequence = (linkPages[i].innerText-1)*30 + 1;
       linkPages[i].setAttribute("href", pageSourceUrl + "&sequence=" + sequence);
       linkPages[i].onclick = function(event) {
@@ -420,7 +419,8 @@ function linesChanged()
           let newUrl = pageSourceUrl + "&sequence=" + sequence;
           window.history.pushState({}, '', newUrl);
         }
-        eval(code);
+        list(''+(sequence-1));
+        linesChanged();
       };
     }
 
