@@ -396,14 +396,7 @@ function linesChanged()
     if (!urlObject.searchParams.has("id")) {
       // cherche les paramètres relatives à la page
       if (page.queryInfos && page.queryInfos.id) window.location.href = `?id=${page.queryInfos.id}&fversion=${page.queryInfos.fversion}&langto=${page.queryInfos.lang}&langfrom=${page.queryInfos.langfrom}`;
-      else {
-        // si les infos ne sont pas dans l'objet `page` alors on les cherche dans les scripts
-        let scripts = document.querySelectorAll('script');
-        for (let i=0; i<scripts.length; i++) {
-          let res = scripts[i].innerHTML.match(/translate_ajaxselect\.php\?(id=\d+&fversion=\d&langto=\d+&langfrom=\d+)/);
-          if (res) window.location.href = "?" + res[1];
-        }
-      }
+      else console.log("[A7++ Error] `page.queryInfos.id` is not available. The URL cannot be built.");
     }
     // on modifie le lien de changement de page afin d'y ajouter le numéro de sequence
     // exemple du code appelé sur ces liens: javascript:list('210');linesChanged();
