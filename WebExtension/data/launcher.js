@@ -40,7 +40,6 @@ window.addEventListener("A7pp_player_request", function(data)
     }
 }, false);
 
-
 /*
  * Partie injection
  */
@@ -61,8 +60,8 @@ document.documentElement.appendChild(document.createElement('head'));
 document.head.appendChild(createScript('Settings.js'));
 document.head.appendChild(createScript('Localization.js'));
 
-document.head.appendChild(createScript('InitFunctions.js'));
 document.head.appendChild(createScript('UtilsFunctions.js'));
+document.head.appendChild(createScript('InitFunctions.js'));
 document.head.appendChild(createScript('HTMLCreation.js'));
 document.head.appendChild(createScript('Accessors.js'));
 

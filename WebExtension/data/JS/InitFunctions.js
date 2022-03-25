@@ -86,8 +86,7 @@ function removeTitleIndicator()
     title.lastChild.remove();
     title.parentElement.parentElement.style.setProperty('visibility', 'visible');
 }
-
-
+ 
 /**
 * @fn linesChanged Met en cache les lignes et ajoute un événement sur les liens
 */
@@ -218,6 +217,7 @@ function linesChanged()
         // Cellules utiles
         var timeCell = currentLine.children[page.lock + 4];
         var textCell = currentLine.lastElementChild;
+        
         // on récupère la séquence
         var aLink = currentLine.children[0].querySelector('a');
         var seqNumber = (aLink ? aLink.innerHTML : "");
@@ -390,6 +390,33 @@ function linesChanged()
         tables[1].style.setProperty('visibility', 'visible');
     }
 
+    // on cherche à composer un lien unique qu'on pourra réutiliser plus tard sans devoir se rappeler à quelle page on est
+    let urlObject=new URL(window.location.href);
+    // si on n'a pas les paramètres dans l'URL, alors on va recharger la page avec les bons paramètres
+    if (!urlObject.searchParams.has("id")) {
+      // cherche les paramètres relatives à la page
+      if (page.queryInfos && page.queryInfos.id) window.location.href = `?id=${page.queryInfos.id}&fversion=${page.queryInfos.fversion}&langto=${page.queryInfos.lang}&langfrom=${page.queryInfos.langfrom}`;
+      else console.log("[A7++ Error] `page.queryInfos.id` is not available. The URL cannot be built.");
+    }
+    // on modifie le lien de changement de page afin d'y ajouter le numéro de sequence
+    // exemple du code appelé sur ces liens: javascript:list('210');linesChanged();
+    // on change donc par une url avec tous les paramètres voulus
+    let linkPages = document.querySelectorAll("#lista > a");
+    let pageSourceUrl = window.location.href.replace(/&sequence=\d+/, "");
+    for (let i=0; i<linkPages.length; i++) {
+      let sequence = (linkPages[i].innerText-1)*30 + 1;
+      linkPages[i].setAttribute("href", pageSourceUrl + "&sequence=" + sequence);
+      linkPages[i].onclick = function(event) {
+        event.preventDefault();
+        if (window.history.pushState) {
+          let newUrl = pageSourceUrl + "&sequence=" + sequence;
+          window.history.pushState({}, '', newUrl);
+        }
+        list(''+(sequence-1));
+        linesChanged();
+      };
+    }
+
     // Si la barre utilisateur est activée
     if (!A7Settings.disableUserBar)
     {
@@ -490,6 +517,7 @@ function post_requestHICheck(isError, episodeHTMLDocument)
 
     // Vérifie la présence du hearingImpaired
     if (
+        img &&
         img.tagName === 'IMG' &&
         (img.src === 'https://www.addic7ed.com/images/hi.jpg' || img.src === 'http://www.addic7ed.com/images/hi.jpg')
     )

@@ -3,7 +3,6 @@
 * @brief Script des fonctions utilitaires
 */
 
-
 /**
 * @fn getDurationFromTime Retourne une durée en fonction des codes temporels passés
 * @param {Array.<string>} tempCodes Tableau de deux codes temporels sous forme HH:MM:SS,mmm
@@ -255,7 +254,6 @@ function displayAjaxError(text, params)
     // Place l'ID du timeout pour clear en cas de besoin
     popup.dataset.timeoutId = id;
 }
-
 
 /**
 * @fn ajax Effectue une requête AJAX
