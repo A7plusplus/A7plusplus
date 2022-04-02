@@ -139,10 +139,29 @@ function getVideoBar()
 }
 
 /**
-* @fn getUntranslatedInput Retourne l'input indiquant si on veut que les séquences non traduites
+* @fn getUntranslatedInput Retourne l'input indiquant si on ne veut que les séquences non traduites
 * @return {!Object} Input
 */
 function getUntranslatedInput()
 {
     return document.getElementById('unt');
+}
+
+/**
+* @fn getMostUpdatedInput Retourne l'input indiquant si on ne veut que les séquences les plus à jour
+* @return {!Object} Input
+*/
+function getMostUpdatedInput()
+{
+    var list = document.getElementsByName("updated");
+    return list.length >= 1 ? list[0] : null;
+}
+
+/**
+* @fn getSlangInput Retourne l'input indiquant la langue d'origine
+* @return {!Object} Input
+*/
+function getSlangInput()
+{
+    return document.getElementById('slang');
 }

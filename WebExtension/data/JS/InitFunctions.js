@@ -5,7 +5,7 @@
 
 
 /**
-* @fn addFunctionToLinks Ajoute la fonction nameOfFunction aux liens présents sur la page et place changePage aux liens qui rechargent la page
+* @fn addFunctionToLinks Ajoute la fonction nameOfFunction aux liens présents sur la page (dans le cas où changePage ne peut pas être appelé)
 * @param {string} nameOfFunction Nom de la fonction devant être appelée
 * @warning La fonction passée ne doit pas prendre d'arguments
 * @TODO Ajouter des arguments à la fonction
@@ -19,9 +19,16 @@ function addFunctionToLinks(nameOfFunction)
         // Liens du mode view & edit
         if (allElements[i].getAttribute('href') === 'noscript.php' && typeof allElements[i].onclick === 'function')
         {
-            allElements[i].setAttribute('onclick', allElements[i].getAttribute('onclick').substr(0, allElements[i].getAttribute('onclick').length - 13) + nameOfFunction + '(); return false;');
-            allElements[i].setAttribute('href', '#');
+            let pageFirstSequence = (allElements[i].innerText - 1) * 30 + 1;
+
+            allElements[i].setAttribute('href', page.pageUrl.toString().replace(/&sequence=\d+/, ("&sequence=" + pageFirstSequence)));
             allElements[i].setAttribute('tabIndex', 32766);
+            allElements[i].setAttribute('onclick', null);
+            allElements[i].addEventListener('click', function(event)
+            {
+                event.preventDefault();
+                changePage(event.target.href);
+            });
         }
 
         // Liens du mode translate
@@ -31,6 +38,7 @@ function addFunctionToLinks(nameOfFunction)
 
             allElements[i].setAttribute('href', page.pageUrl.toString().replace(/&sequence=\d+/, ("&sequence=" + pageFirstSequence)));
             allElements[i].setAttribute('tabIndex', 32766);
+            allElements[i].setAttribute('onclick', null);
             allElements[i].addEventListener('click', function(event)
             {
                 event.preventDefault();
@@ -41,8 +49,8 @@ function addFunctionToLinks(nameOfFunction)
         // Liens des séquences
         else
         {
-            // Ne prends que les liens de cet épisode
-            var raw = allElements[i].getAttribute('href').match(/translate.php\?id=(\d+)&fversion=(\d+)&langto=(\d+)&langfrom=(\d+)&sequence=(\d+)/);
+            // Ne prends que les liens de cet épisode -- Traduction
+            var raw = allElements[i].getAttribute('href').match(/translate\.php\?id=(\d+)&fversion=(\d+)&langto=(\d+)&langfrom=(\d+)&sequence=(\d+)/);
             if (raw !== null && raw.length >= 6 &&
                 page.queryInfos.id       === raw[1] &&
                 page.queryInfos.fversion === raw[2] &&
@@ -50,7 +58,23 @@ function addFunctionToLinks(nameOfFunction)
                 page.queryInfos.langfrom === raw[4])
             {
                 // Remplace aussi le mode untranslated, car on ne veut pas le garder sur le clic d'une séquence
-                allElements[i].setAttribute('href', page.pageUrl.toString().replace(/&sequence=\d+/, ("&sequence=" + (parseInt(raw[5]) + 1 ))).replace(/&untranslated=\d+/, "&untranslated=0"));
+                allElements[i].setAttribute('href', page.pageUrl.toString().replace(/&sequence=\d+/, ("&sequence=" + (parseInt(raw[5]) + 1 ))).replace(/&untranslated=\d/, "&untranslated=0"));
+                allElements[i].addEventListener('click', function(event)
+                {
+                    event.preventDefault();
+                    changePage(event.target.href);
+                });
+            }
+
+            // Ne prends que les liens de cet épisode -- View & edt list.php?id=170534&amp;fversion=0&amp;lang=8&amp;sequence=8
+            var raw = allElements[i].getAttribute('href').match(/list\.php\?id=(\d+)&fversion=(\d+)&lang=(\d+)&sequence=(\d+)/);
+            if (raw !== null && raw.length >= 5 &&
+                page.queryInfos.id       === raw[1] &&
+                page.queryInfos.fversion === raw[2] &&
+                page.queryInfos.lang     === raw[3])
+            {
+                // Remplace aussi le mode untranslated, car on ne veut pas le garder sur le clic d'une séquence
+                allElements[i].setAttribute('href', page.pageUrl.toString().replace(/&sequence=\d+/, ("&sequence=" + raw[4])));
                 allElements[i].addEventListener('click', function(event)
                 {
                     event.preventDefault();
@@ -61,15 +85,18 @@ function addFunctionToLinks(nameOfFunction)
     }
 
     // Recherche la checkBox faisant changer de page, et lui ajoute la recharge des lignes
-    var checkBoxUpdate = document.getElementsByName('updated');
-    for (i = checkBoxUpdate.length; i--;)
-        if (typeof checkBoxUpdate[i].onchange === 'function')
+    var checkBoxUpdate = getMostUpdatedInput();
+    if (checkBoxUpdate !== null && typeof checkBoxUpdate.onchange === 'function')
+    {
+        checkBoxUpdate.setAttribute('onchange', null);
+        checkBoxUpdate.addEventListener('change', function (event)
         {
-            checkBoxUpdate[i].setAttribute('onchange', checkBoxUpdate[i].getAttribute('onchange') + nameOfFunction + '();');
-        }
+            changePage(location.href.replace(/mostupdated=\d/, 'mostupdated=' + (event.target.checked ? '1' : '0')));
+        });
+    }
 
     // Recherche la comboBox faisant changer de page, et lui ajoute la recharge des lignes et le changement d'état de la langue
-    var comboBox = document.getElementById('slang');
+    var comboBox = getSlangInput();
     if (comboBox && typeof comboBox.onchange === 'function')
     {
         comboBox.setAttribute('onchange', comboBox.getAttribute('onchange') + nameOfFunction + '();');
@@ -131,14 +158,14 @@ function linesChanged()
 
     console.log('[A7++] ' + loc.loadingLines);
 
-    // Historique des pages et séquences en mode traduction
-    if (page.translatePage)
+    // Arrivée initiale sur la page - ajout des infos
+    if (page.translatePage && Array.from(page.pageUrl.searchParams).length === 0)
     {
-        // Arrivée initiale sur la page - ajout des infos
-        if (Array.from(page.pageUrl.searchParams).length === 0)
-        {
-            changePage(window.location.href + `?id=${page.queryInfos.id}&fversion=${page.queryInfos.fversion}&langto=${page.queryInfos.lang}&langfrom=${page.queryInfos.langfrom}&untranslated=0&sequence=1`, 'initial');
-        }
+        changePage(window.location.href + `?id=${page.queryInfos.id}&fversion=${page.queryInfos.fversion}&langto=${page.queryInfos.lang}&langfrom=${page.queryInfos.langfrom}&untranslated=0&sequence=1`, 'initial');
+    }
+    else if (!page.translatePage && !page.pageUrl.searchParams.has('mostupdated'))
+    {
+        changePage(window.location.href + '&sequence=1&mostupdated=0', 'initial');
     }
 
     // Détourne les fonctions de base
@@ -453,10 +480,14 @@ function changePage(url, fromState = 'normal')
     // Garde l'objet page à jour
     page.pageUrl = new URL(url);
 
-    // Mets à jour la checkbox untranslated
+    // Mets à jour la checkbox untranslated / most updated
     if (page.translatePage && page.pageUrl.searchParams.has("untranslated"))
     {
         getUntranslatedInput().checked = page.pageUrl.searchParams.get("untranslated") === "1";
+    }
+    else if (!page.translatePage && page.pageUrl.searchParams.has("mostupdated"))
+    {
+        getMostUpdatedInput().checked = page.pageUrl.searchParams.get("mostupdated") === "1";
     }
 
     // Réécrit l'historique au besoin
@@ -466,22 +497,24 @@ function changePage(url, fromState = 'normal')
     }
     else
     {
+        // Gère l'historique | nécessaire pour ne pas effacer l'historique en cas de retour
+        if (fromState !== 'popstate')
+        {
+            window.history.pushState(null, null, url);
+        }
+
         // Charge la nouvelle page
         if (page.translatePage)
         {
-            // Gère l'historique | nécessaire pour ne pas effacer l'historique en cas de retour
-            if (fromState !== 'popstate')
-            {
-                window.history.pushState(null, null, url);
-            }
-
             // Changement de numéro de séquence ou de mode (untrnslated)
             list('' + (page.pageUrl.searchParams.get('sequence') - 1));
             linesChanged();
         }
         else
         {
-            console.error("[A7++] Unsupported reloading");
+            var sourceLang = getSlangInput().value;
+            apply_filter(sourceLang === '0' ? '' : sourceLang, getMostUpdatedInput().checked, page.pageUrl.searchParams.get('sequence') - 1);
+            linesChanged();
         }
     }
 }

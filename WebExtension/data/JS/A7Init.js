@@ -9,6 +9,7 @@ var pageUrl = new URL(location.href);
 
 // On est en mode Join translation
 var translatePage = (pageUrl.pathname === '/translate.php');
+var langOverriden = false;
 
 if ((!translatePage && pageUrl.searchParams.get('lang') !== '1') || // Si la langue n'est pas anglais et qu'on est en mode view & edit (on doit charger une langue secondaire)
     (translatePage && (pageUrl.searchParams.has('untranslated') && pageUrl.searchParams.get('untranslated') === "1"))) // Mode traduction accompagné du mode untranslated
@@ -48,6 +49,7 @@ if ((!translatePage && pageUrl.searchParams.get('lang') !== '1') || // Si la lan
                 var updated = pageUrl.searchParams.has('sequence');
 
                 list(askedFirstSeq, updated, 1);
+                langOverriden = true;
         }
         }
     };
@@ -213,7 +215,7 @@ function init()
         pageInfos.id       = pageUrl.searchParams.get('id');
         pageInfos.fversion = pageUrl.searchParams.get('fversion');
         pageInfos.lang     = pageUrl.searchParams.get('lang');
-        pageInfos.langfrom = pageUrl.searchParams.get('langfrom');
+        pageInfos.langfrom = langOverriden ? 1 : '';
     }
     else
     {
@@ -325,15 +327,11 @@ function init()
         }
     }
 
-    // Seulement en mode traduction
-    if (page.translatePage)
+    // Gestion de l'historique et rechargement des bonnes séquences (revenir de page nous faisant rester sur la page courante - car injection via JS)
+    window.addEventListener('popstate', function()
     {
-        // Gestion de l'historique et rechargement des bonnes séquences (revenir de page nous faisant rester sur la page courante - car injection via JS)
-        window.addEventListener('popstate', function()
-        {
-            changePage(location.href, 'popstate');
-        });
-    }
+        changePage(location.href, 'popstate');
+    });
 
     // Initialise la requête pour savoir si on est en HI
     setTimeout(requestHICheck, 100);
