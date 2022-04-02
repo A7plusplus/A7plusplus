@@ -395,10 +395,7 @@ function createUntranslatedOption()
         input.checked = !input.checked;
         option.title = input.checked ? loc.showAll : loc.untranlsatedOnly;
 
-        // Appel à la fonction de base
-        untraslated();
-
-        linesChanged();
+        changePage(page.pageUrl.toString().replace(/&sequence=\d+/, "&sequence=1").replace(/&untranslated=\d+/, ("&untranslated=" + (input.checked ? "1" : "0"))));
     });
 
     input.id   = 'unt';

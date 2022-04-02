@@ -5,7 +5,7 @@
 
 
 /**
-* @fn addFunctionToLinks Ajoute la fonction nameOfFunction aux liens présents sur la page
+* @fn addFunctionToLinks Ajoute la fonction nameOfFunction aux liens présents sur la page et place changePage aux liens qui rechargent la page
 * @param {string} nameOfFunction Nom de la fonction devant être appelée
 * @warning La fonction passée ne doit pas prendre d'arguments
 * @TODO Ajouter des arguments à la fonction
@@ -16,6 +16,7 @@ function addFunctionToLinks(nameOfFunction)
     var allElements = document.getElementsByTagName('a');
     for (var i = allElements.length; i--;)
     {
+        // Liens du mode view & edit
         if (allElements[i].getAttribute('href') === 'noscript.php' && typeof allElements[i].onclick === 'function')
         {
             allElements[i].setAttribute('onclick', allElements[i].getAttribute('onclick').substr(0, allElements[i].getAttribute('onclick').length - 13) + nameOfFunction + '(); return false;');
@@ -23,10 +24,39 @@ function addFunctionToLinks(nameOfFunction)
             allElements[i].setAttribute('tabIndex', 32766);
         }
 
-        if (allElements[i].getAttribute('href').indexOf('javascript:list(') !== -1)
+        // Liens du mode translate
+        else if (allElements[i].getAttribute('href').indexOf('javascript:list(') !== -1)
         {
-            allElements[i].setAttribute('href', allElements[i].getAttribute('href') + nameOfFunction + '();');
+            let pageFirstSequence = (allElements[i].innerText - 1) * 30 + 1;
+
+            allElements[i].setAttribute('href', page.pageUrl.toString().replace(/&sequence=\d+/, ("&sequence=" + pageFirstSequence)));
             allElements[i].setAttribute('tabIndex', 32766);
+            allElements[i].addEventListener('click', function(event)
+            {
+                event.preventDefault();
+                changePage(event.target.href);
+            });
+        }
+
+        // Liens des séquences
+        else
+        {
+            // Ne prends que les liens de cet épisode
+            var raw = allElements[i].getAttribute('href').match(/translate.php\?id=(\d+)&fversion=(\d+)&langto=(\d+)&langfrom=(\d+)&sequence=(\d+)/);
+            if (raw !== null && raw.length >= 6 &&
+                page.queryInfos.id       === raw[1] &&
+                page.queryInfos.fversion === raw[2] &&
+                page.queryInfos.lang     === raw[3] &&
+                page.queryInfos.langfrom === raw[4])
+            {
+                // Remplace aussi le mode untranslated, car on ne veut pas le garder sur le clic d'une séquence
+                allElements[i].setAttribute('href', page.pageUrl.toString().replace(/&sequence=\d+/, ("&sequence=" + (parseInt(raw[5]) + 1 ))).replace(/&untranslated=\d+/, "&untranslated=0"));
+                allElements[i].addEventListener('click', function(event)
+                {
+                    event.preventDefault();
+                    changePage(event.target.href);
+                });
+            }
         }
     }
 
@@ -100,6 +130,16 @@ function linesChanged()
     }
 
     console.log('[A7++] ' + loc.loadingLines);
+
+    // Historique des pages et séquences en mode traduction
+    if (page.translatePage)
+    {
+        // Arrivée initiale sur la page - ajout des infos
+        if (Array.from(page.pageUrl.searchParams).length === 0)
+        {
+            changePage(window.location.href + `?id=${page.queryInfos.id}&fversion=${page.queryInfos.fversion}&langto=${page.queryInfos.lang}&langfrom=${page.queryInfos.langfrom}&untranslated=0&sequence=1`, 'initial');
+        }
+    }
 
     // Détourne les fonctions de base
     addFunctionToLinks('linesChanged');
@@ -390,45 +430,6 @@ function linesChanged()
         tables[1].style.setProperty('visibility', 'visible');
     }
 
-    // on cherche à composer un lien unique qu'on pourra réutiliser plus tard sans devoir se rappeler à quelle page on est
-    // ne s'applique qu'à la page de traduction
-    if (page.translatePage) {
-      // on met à jour page.pageUrl
-      page.pageUrl = new URL(window.location.href);
-      // si on n'a pas les paramètres dans l'URL, alors on va recharger la page avec les bons paramètres
-      if (!page.pageUrl.searchParams.has("id")) {
-        // cherche les paramètres relatives à la page
-        if (page.queryInfos && page.queryInfos.id) window.location.href = `?id=${page.queryInfos.id}&fversion=${page.queryInfos.fversion}&langto=${page.queryInfos.lang}&langfrom=${page.queryInfos.langfrom}&sequence=1`;
-        else console.log("[A7++ Error] `page.queryInfos.id` is not available. The URL cannot be built.");
-      }
-      // enregistre le numéro de séquence
-      if (page.pageUrl.searchParams.has("sequence")) {
-        page.queryInfos.sequence = page.pageUrl.searchParams.get("sequence");
-      }
-      // on modifie le lien de changement de page afin d'y ajouter le numéro de sequence
-      // exemple du code appelé sur ces liens :
-      //  - pour translate.php: href="javascript:list('210');linesChanged();""
-      //  - pour list.php: href="noscript.php" onclick="apply_filter('', 'true', '630');return false;"
-      // on change donc par une url avec tous les paramètres voulus
-      let linkPages = document.querySelectorAll("#lista > a");
-      let pageSourceUrl = window.location.href.replace(/&sequence=\d+/, "");
-      for (let i=0; i<linkPages.length; i++) {
-        let sequence = (linkPages[i].innerText-1)*30 + 1;
-        linkPages[i].setAttribute("href", pageSourceUrl + "&sequence=" + sequence);
-        linkPages[i].onclick = function(event) {
-          event.preventDefault();
-          if (window.history.pushState) {
-            let newUrl = pageSourceUrl + "&sequence=" + sequence;
-            window.history.pushState({}, '', newUrl);
-          }
-          
-          page.queryInfos.sequence = sequence;
-          list(''+(sequence-1));
-          linesChanged();
-        };
-      }
-    }
-
     // Si la barre utilisateur est activée
     if (!A7Settings.disableUserBar)
     {
@@ -439,6 +440,50 @@ function linesChanged()
 
     // Focus sur la première ligne
     if (firstEditableLine) firstEditableLine.focus();
+}
+
+
+/**
+* @fn changePage Change de page en fonction de l'url (seul "sequence" est lu pour déterminer la page)
+* @param url La nouvelle URL
+* @param fromState Origine de la requête (initial [réécriture de l'historique sans rechargement], popstate [pas de changement d'historique], normal)
+*/
+function changePage(url, fromState = 'normal')
+{
+    // Garde l'objet page à jour
+    page.pageUrl = new URL(url);
+
+    // Mets à jour la checkbox untranslated
+    if (page.translatePage && page.pageUrl.searchParams.has("untranslated"))
+    {
+        getUntranslatedInput().checked = page.pageUrl.searchParams.get("untranslated") === "1";
+    }
+
+    // Réécrit l'historique au besoin
+    if (fromState === 'initial')
+    {
+        window.history.replaceState(null, null, url);
+    }
+    else
+    {
+        // Charge la nouvelle page
+        if (page.translatePage)
+        {
+            // Gère l'historique | nécessaire pour ne pas effacer l'historique en cas de retour
+            if (fromState !== 'popstate')
+            {
+                window.history.pushState(null, null, url);
+            }
+
+            // Changement de numéro de séquence ou de mode (untrnslated)
+            list('' + (page.pageUrl.searchParams.get('sequence') - 1));
+            linesChanged();
+        }
+        else
+        {
+            console.error("[A7++] Unsupported reloading");
+        }
+    }
 }
 
 

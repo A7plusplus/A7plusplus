@@ -10,8 +10,8 @@ var pageUrl = new URL(location.href);
 // On est en mode Join translation
 var translatePage = (pageUrl.pathname === '/translate.php');
 
-// Si la langue n'est pas anglais et qu'on est en mode view & edit
-if (!translatePage && pageUrl.searchParams.get('lang') !== '1')
+if ((!translatePage && pageUrl.searchParams.get('lang') !== '1') || // Si la langue n'est pas anglais et qu'on est en mode view & edit (on doit charger une langue secondaire)
+    (translatePage && (pageUrl.searchParams.has('untranslated') && pageUrl.searchParams.get('untranslated') === "1"))) // Mode traduction accompagné du mode untranslated
 {
     // Remplacement des AJAX
     var xhrProto = XMLHttpRequest.prototype,
@@ -32,11 +32,23 @@ if (!translatePage && pageUrl.searchParams.get('lang') !== '1')
             XMLHttpRequest.prototype.open = origOpen;
             XMLHttpRequest.prototype = xhrProto;
 
-            // Demande la page avec anglais en langue secondaire
-            var askedFirstSeq = pageUrl.searchParams.get('sequence') ? pageUrl.searchParams.get('sequence') - 1 : 0;
-            var updated       = pageUrl.searchParams.has('sequence');
+            var askedFirstSeq = pageUrl.searchParams.has('sequence') ? pageUrl.searchParams.get('sequence') - 1 : 0;
+            if (translatePage)
+            {
+                // Créé une input pour que list envoi la bonne requête
+                var translateOption = createUntranslatedOption();
+                translateOption.firstElementChild.checked = true;
+                document.getElementById('lista').appendChild(translateOption);
 
-            list(askedFirstSeq, updated, 1);
+                list(askedFirstSeq);
+            }
+            else
+            {
+                // Demande la page avec anglais en langue secondaire
+                var updated = pageUrl.searchParams.has('sequence');
+
+                list(askedFirstSeq, updated, 1);
+        }
         }
     };
 
@@ -47,14 +59,24 @@ if (!translatePage && pageUrl.searchParams.get('lang') !== '1')
         var parsedUrl = new URL(url, pageUrl.origin);
 
         // Fait échouer la première requête
-        if (parsedUrl.pathname === '/ajax_list.php' &&
-            parsedUrl.searchParams.get('id') === pageUrl.searchParams.get('id') &&
-            parsedUrl.searchParams.get('lang') === pageUrl.searchParams.get('lang') &&
-            parsedUrl.searchParams.get('fversion') === pageUrl.searchParams.get('fversion') &&
-            parsedUrl.searchParams.get('slang') === ''
-        )
+        if (translatePage)
         {
-            return;
+            if (parsedUrl.pathname === '/translate_ajaxlist.php')
+            {
+                return;
+            }
+        }
+        else
+        {
+            if (parsedUrl.pathname === '/ajax_list.php' &&
+                parsedUrl.searchParams.get('id') === pageUrl.searchParams.get('id') &&
+                parsedUrl.searchParams.get('lang') === pageUrl.searchParams.get('lang') &&
+                parsedUrl.searchParams.get('fversion') === pageUrl.searchParams.get('fversion') &&
+                parsedUrl.searchParams.get('slang') === ''
+            )
+            {
+                return;
+            }
         }
 
         return origOpen.apply(this, arguments);
@@ -157,18 +179,6 @@ function preInit()
 
     // Effectue la requête des options
     window.dispatchEvent(new CustomEvent("A7pp_option_request", {}));
-    
-    // on ajoute un event sur 'popstate' pour détecter le changement de page via l'historique de navigation
-    window.addEventListener('popstate', function() {
-      // on regarde si on a changé de numéro de séquence
-      let urlObject=new URL(window.location.href);
-      if (urlObject.searchParams.has("sequence") && urlObject.searchParams.get('sequence') != page.queryInfos.sequence) {
-        page.queryInfos.sequence = urlObject.searchParams.get('sequence');
-        // on charge la séquence demandée
-        list(''+(page.queryInfos.sequence-1));
-        linesChanged();
-      }
-    });
 }
 
 /**
@@ -180,7 +190,7 @@ function init()
     var list = document.getElementById('lista');
 
     // Attend le chargement des séquences
-    if (list.innerHTML === '<img src="/images/loader.gif">' || list.innerHTML === '&nbsp;')
+    if (list.innerHTML.startsWith('<img src="/images/loader.gif">') || list.innerHTML === '&nbsp;')
     {
         setTimeout(init, 250);
         return;
@@ -313,6 +323,16 @@ function init()
             videoBar.dataset.height = data.height;
             videoBar.dataset.width  = data.width;
         }
+    }
+
+    // Seulement en mode traduction
+    if (page.translatePage)
+    {
+        // Gestion de l'historique et rechargement des bonnes séquences (revenir de page nous faisant rester sur la page courante - car injection via JS)
+        window.addEventListener('popstate', function()
+        {
+            changePage(location.href, 'popstate');
+        });
     }
 
     // Initialise la requête pour savoir si on est en HI

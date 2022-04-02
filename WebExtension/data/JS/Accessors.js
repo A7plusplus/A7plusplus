@@ -137,3 +137,12 @@ function getVideoBar()
 {
     return document.getElementById('videoBar');
 }
+
+/**
+* @fn getUntranslatedInput Retourne l'input indiquant si on veut que les séquences non traduites
+* @return {!Object} Input
+*/
+function getUntranslatedInput()
+{
+    return document.getElementById('unt');
+}
