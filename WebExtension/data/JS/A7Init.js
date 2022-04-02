@@ -157,8 +157,19 @@ function preInit()
 
     // Effectue la requête des options
     window.dispatchEvent(new CustomEvent("A7pp_option_request", {}));
+    
+    // on ajoute un event sur 'popstate' pour détecter le changement de page via l'historique de navigation
+    window.addEventListener('popstate', function() {
+      // on regarde si on a changé de numéro de séquence
+      let urlObject=new URL(window.location.href);
+      if (urlObject.searchParams.has("sequence") && urlObject.searchParams.get('sequence') != page.queryInfos.sequence) {
+        page.queryInfos.sequence = urlObject.searchParams.get('sequence');
+        // on charge la séquence demandée
+        list(''+(page.queryInfos.sequence-1));
+        linesChanged();
+      }
+    });
 }
-
 
 /**
  * @fn init Initialise les différents composants

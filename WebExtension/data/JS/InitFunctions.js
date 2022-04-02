@@ -405,17 +405,6 @@ function linesChanged()
       if (page.pageUrl.searchParams.has("sequence")) {
         page.queryInfos.sequence = page.pageUrl.searchParams.get("sequence");
       }
-      // on ajoute un event sur 'popstate' pour détecter le changement de page via l'historique de navigation
-      window.addEventListener('popstate', function() {
-        // on regarde si on a changé de numéro de séquence
-        let urlObject=new URL(window.location.href);
-        if (urlObject.searchParams.has("sequence") && urlObject.searchParams.get('sequence') != page.queryInfos.sequence) {
-          page.queryInfos.sequence = urlObject.searchParams.get('sequence');
-          // on charge la séquence demandée
-          list(''+(page.queryInfos.sequence-1));
-          linesChanged();
-        }
-      });
       // on modifie le lien de changement de page afin d'y ajouter le numéro de sequence
       // exemple du code appelé sur ces liens :
       //  - pour translate.php: href="javascript:list('210');linesChanged();""
