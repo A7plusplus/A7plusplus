@@ -512,7 +512,8 @@ function changePage(url, fromState = 'normal')
         }
         else
         {
-            var sourceLang = getSlangInput().value;
+            var sourceLangInput = getSlangInput();
+            var sourceLang = sourceLangInput === null ? '' :sourceLangInput.value;
             apply_filter(sourceLang === '0' ? '' : sourceLang, getMostUpdatedInput().checked, page.pageUrl.searchParams.get('sequence') - 1);
             linesChanged();
         }
@@ -570,12 +571,7 @@ function post_requestHICheck(isError, episodeHTMLDocument)
         return;
     }
 
-    // Info et stockage
-    var currentUrl = new URL(window.location.href),
-        img = null;
-
-    // Retire le paramètre 'sequence' qui ne sert à rien
-    currentUrl.searchParams.delete('sequence');
+    var img = null;
 
     // Repère le lien de l'épisode
     var links = episodeHTMLDocument.getElementsByTagName('a');
@@ -596,7 +592,12 @@ function post_requestHICheck(isError, episodeHTMLDocument)
         }
         else
         {
-            if (links[i].href === currentUrl.href)
+            // https://www.addic7ed.com/173989&fversion=1&lang=8
+            if (links[i].href.indexOf(
+                'list.php?id=' + page.queryInfos.id +
+                '&fversion=' + page.queryInfos.fversion +
+                '&lang=' + page.queryInfos.lang) !== -1
+            )
             {
                 // Récupère l'indicateur
                 img = links[i].parentElement.previousElementSibling.children[1];

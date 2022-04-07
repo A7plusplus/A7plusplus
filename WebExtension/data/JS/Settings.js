@@ -7,8 +7,8 @@
 // Déclaration de l'objet contenant tous les réglages
 var A7Settings = {
 
-    MAJOR_VERSION_INFO   : 'A7++ 2.3.8',
-    MINOR_VERSION_INFO   : '2.3.8 stable',
+    MAJOR_VERSION_INFO   : 'A7++ 2.3.9',
+    MINOR_VERSION_INFO   : '2.3.9 stable',
 
     // Longueur en caractères
     maxPerLineOneLineSETTING : 37,

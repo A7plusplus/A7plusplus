@@ -183,7 +183,7 @@ var loc =
         backInVideo       : 'Retourner en arrière',
         chooseVideo       : 'Choisir une vidéo :',
         unsupportedFormat : 'Format vidéo non supporté par le navigateur',
-        helpURL           : 'http://www.sub-talk.net/topic/4687-/'
+        helpURL           : 'https://www.sub-talk.net/topic/4687-a7-am%C3%A9liorations-pour-les-modes-view-edit-et-join-translation/'
     },
 
     pt: {
