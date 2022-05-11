@@ -47,8 +47,8 @@ function charCount(array, countTag)
         }
         else
         {
-            // On ne compte ni les balises HTML, ni les tags de position
-            lengths.push(array[i].replace(/(<[^>]*>|\{[^\}]*\})/g, '').length);
+            // On ne compte ni les balises HTML, ni les tags de position, ni les espaces spéciaux
+            lengths.push(array[i].replace(/(<[^>]*>|\{[^\}]*\})/g, '').replace("&nbsp;", " ").length);
         }
     }
 
