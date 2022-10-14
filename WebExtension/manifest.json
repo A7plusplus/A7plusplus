@@ -1,8 +1,8 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
 
     "name": "A7++",
-    "version": "2.3.9",
+    "version": "2.4.0",
     "description": "__MSG_A7pp_extensionDescription__",
     "author": "Acc\u00eant, HitOrRun, Retrojex & Mmoi",
     "homepage_url": "https://github.com/A7plusplus/A7plusplus",
@@ -19,27 +19,31 @@
         "open_in_tab": true
     },
 
-    "web_accessible_resources": [
-        "data/JS/A7Init.js",
-        "data/JS/Accessors.js",
-        "data/JS/CommentEvents.js",
-        "data/JS/Extra.js",
-        "data/JS/HTMLCreation.js",
-        "data/JS/InitFunctions.js",
-        "data/JS/Localization.js",
-        "data/JS/Settings.js",
-        "data/JS/TextEvents.js",
-        "data/JS/TimeEvents.js",
-        "data/JS/UpdateEvents.js",
-        "data/JS/UserBarEvents.js",
-        "data/JS/VideoBarEvents.js",
-        "data/JS/UtilsFunctions.js"
-    ],
+    "web_accessible_resources": [{
+        "resources": [
+            "data/JS/A7Init.js",
+            "data/JS/Accessors.js",
+            "data/JS/CommentEvents.js",
+            "data/JS/Extra.js",
+            "data/JS/HTMLCreation.js",
+            "data/JS/InitFunctions.js",
+            "data/JS/Localization.js",
+            "data/JS/Settings.js",
+            "data/JS/TextEvents.js",
+            "data/JS/TimeEvents.js",
+            "data/JS/UpdateEvents.js",
+            "data/JS/UserBarEvents.js",
+            "data/JS/VideoBarEvents.js",
+            "data/JS/UtilsFunctions.js"
+        ],
+        "matches": [
+            "https://www.addic7ed.com/*"
+        ]
+    }],
 
     "content_scripts": [
         {
             "matches": [
-                "http://www.addic7ed.com/list.php*",
                 "https://www.addic7ed.com/list.php*"
             ],
             "css": [
@@ -55,7 +59,6 @@
         },
         {
             "matches": [
-                "http://www.addic7ed.com/translate.php*",
                 "https://www.addic7ed.com/translate.php*"
             ],
             "css": [
@@ -73,7 +76,10 @@
     ],
 
     "permissions": [
-        "storage",
+        "storage"
+    ],
+
+    "host_permissions": [
         "http://localhost/*"
     ],
 

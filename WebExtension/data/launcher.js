@@ -1,3 +1,6 @@
+// Compatibilité
+let chrowser = chrome || browser;
+
 /*
  * Partie communication lecteurs
  */
@@ -48,7 +51,7 @@ function createScript(fileToLoad)
     var script  = document.createElement('script');
 
     script.setAttribute('type', 'text/javascript');
-    script.setAttribute('src', chrome.extension.getURL('data/JS/' + fileToLoad));
+    script.setAttribute('src', chrowser.runtime.getURL('data/JS/' + fileToLoad));
 
     return script;
 }
